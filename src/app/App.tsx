@@ -6,6 +6,38 @@ import DesignerMind from "./DesignerMind";
 import girlImg from "../imports/ChatGPT_Image_May_26__2026__08_22_25_PM.png";
 import profileImg from "./components/Pictures/Group 17.jpg";
 
+function YouTubeFacade({ videoId, title, borderRadius = "14px" }: { videoId: string; title: string; borderRadius?: string }) {
+  const [active, setActive] = React.useState(false);
+  if (active) {
+    return (
+      <iframe
+        src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&controls=1&rel=0&modestbranding=1`}
+        title={title}
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        style={{ width: "100%", aspectRatio: "16/9", borderRadius, border: "none", display: "block" }}
+      />
+    );
+  }
+  return (
+    <div
+      onClick={() => setActive(true)}
+      style={{ position: "relative", width: "100%", aspectRatio: "16/9", borderRadius, overflow: "hidden", cursor: "pointer", background: "#000" }}
+    >
+      <img
+        src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+        alt={title}
+        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+      />
+      <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.3)" }}>
+        <div style={{ width: 64, height: 64, borderRadius: "50%", background: "rgba(255,255,255,0.15)", backdropFilter: "blur(8px)", display: "flex", alignItems: "center", justifyContent: "center", border: "2px solid rgba(255,255,255,0.3)" }}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><polygon points="8,5 19,12 8,19" /></svg>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function lerp(a: number, b: number, t: number) {
   return a + (b - a) * t;
 }
@@ -1659,20 +1691,7 @@ export default function App() {
             <div aria-hidden="true" style={{ position: "absolute", bottom: -6, right: -6, width: 6, height: 6, borderRadius: "50%", background: "#FAFFC7", opacity: 0.8, zIndex: 2 }} />
 
             {/* iframe */}
-            <iframe
-              src="https://www.youtube-nocookie.com/embed/CGPjBUCOn2M"
-              title="Introduction video"
-              allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              loading="lazy"
-              style={{
-                width: "100%",
-                aspectRatio: "16/9",
-                borderRadius: "14px",
-                border: "none",
-                display: "block"
-              }}
-            />
+            <YouTubeFacade videoId="CGPjBUCOn2M" title="Introduction video" borderRadius="14px" />
           </div>
 
           {/* Content Below */}
@@ -1914,20 +1933,7 @@ export default function App() {
 
                  {/* Promo Video Cover Box */}
                  <div style={{ background: "rgba(20,20,20,0.4)", borderRadius: "16px", border: "1px solid rgba(255,255,255,0.05)", padding: "8px", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" }}>
-                    <iframe
-                      src="https://www.youtube-nocookie.com/embed/oaA4V-_D63A?controls=1&rel=0&modestbranding=1"
-                      title="Margdarshak Promo Video"
-                      allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      loading="lazy"
-                      style={{
-                        width: "100%",
-                        aspectRatio: "16/9",
-                        borderRadius: "12px",
-                        border: "none",
-                        display: "block",
-                      }}
-                    />
+                    <YouTubeFacade videoId="oaA4V-_D63A" title="Margdarshak Promo Video" borderRadius="12px" />
                  </div>
 
                  {/* STAR Framework Summary Box */}
