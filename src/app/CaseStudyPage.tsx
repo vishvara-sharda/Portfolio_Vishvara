@@ -766,7 +766,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
               onClick={(e) => { e.stopPropagation(); handleCollect(id); }}
               title="Collect me!"
             >
-              <div className="w-16 h-20 bg-[#FAFFC7] backdrop-blur-md border border-[#FAFFC7] rounded-xl shadow-[0_0_15px_rgba(250,255,199,0.35)] flex flex-col items-center justify-center transition-all duration-300 text-center px-1">
+              <div className="w-16 h-20 bg-[#FAFFC7] border border-[#FAFFC7] rounded-xl shadow-[0_0_15px_rgba(250,255,199,0.35)] flex flex-col items-center justify-center transition-all duration-300 text-center px-1">
                 <div className="relative flex justify-center items-center">
                   <Star className="w-6 h-6 text-[#B78494] relative z-10 drop-shadow-[0_2px_2px_rgba(0,0,0,0.2)] transition-transform duration-300 scale-100 group-hover:scale-110" fill="currentColor" />
                 </div>
