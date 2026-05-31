@@ -730,6 +730,14 @@ const GlobalStyles = React.memo(() => (
       to { opacity: 1; }
     }
 
+    /* Navbar */
+    .nav-desktop { display: flex; }
+    .nav-hamburger { display: none; }
+    @media (max-width: 639px) {
+      .nav-desktop { display: none !important; }
+      .nav-hamburger { display: flex !important; }
+    }
+
     @keyframes star-blink {
       0%, 100% { opacity: 0.45; }
       50% { opacity: 0.04; }
@@ -867,6 +875,7 @@ export default function App() {
   const rafRef = useRef<number | null>(null);
   const aboutSvgRef = useRef<SVGSVGElement>(null);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [navOpen, setNavOpen] = useState(false);
 
   const nextTestimonial = () => {
     setActiveTestimonial((prev) => (prev + 1) % TESTIMONIALS.length);
@@ -1081,6 +1090,176 @@ export default function App() {
       <div id="skew-container" style={{ transformOrigin: "center center", willChange: "transform" }}>
 
       <GlobalStyles />
+
+      {/* ── Navbar ── */}
+      <nav style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1000,
+        height: "60px",
+        padding: "0 clamp(24px, 5vw, 80px)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        background: "rgba(10, 4, 9, 0.65)",
+        backdropFilter: "blur(18px)",
+        WebkitBackdropFilter: "blur(18px)",
+        borderBottom: "1px solid rgba(255, 255, 255, 0.05)",
+      }}>
+        {/* Logo */}
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          style={{
+            background: "none",
+            border: "none",
+            fontFamily: "'Cormorant Garamond', serif",
+            fontWeight: 700,
+            fontSize: "22px",
+            color: "#F2A7C4",
+            letterSpacing: "-0.01em",
+            padding: 0,
+          }}
+        >
+          VG
+        </button>
+
+        {/* Desktop links */}
+        <div className="nav-desktop" style={{ gap: "28px", alignItems: "center" }}>
+          {(["About", "Work", "Contact"] as const).map((label) => (
+            <button
+              key={label}
+              onClick={() => document.getElementById(label.toLowerCase())?.scrollIntoView({ behavior: "smooth" })}
+              style={{
+                background: "none",
+                border: "none",
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: "11px",
+                fontWeight: 500,
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                color: "rgba(255,255,255,0.48)",
+                padding: 0,
+                transition: "color 0.2s ease",
+              }}
+              onMouseEnter={e => (e.currentTarget.style.color = "#F2A7C4")}
+              onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.48)")}
+            >
+              {label}
+            </button>
+          ))}
+          <a
+            href="/Vishvara_Gandharv_Resume.pdf"
+            download="Vishvara_Gandharv_Resume.pdf"
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: "11px",
+              fontWeight: 600,
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              color: "#111",
+              background: "#FAFFC7",
+              borderRadius: "9999px",
+              padding: "8px 20px",
+              textDecoration: "none",
+            }}
+          >
+            Resume
+          </a>
+        </div>
+
+        {/* Mobile hamburger */}
+        <button
+          className="nav-hamburger"
+          onClick={() => setNavOpen(prev => !prev)}
+          aria-label={navOpen ? "Close menu" : "Open menu"}
+          style={{
+            background: "none",
+            border: "none",
+            padding: "4px",
+            flexDirection: "column",
+            gap: "5px",
+          }}
+        >
+          <span style={{ display: "block", width: "22px", height: "1.5px", background: "rgba(255,255,255,0.7)", transition: "transform 0.3s ease, opacity 0.3s ease", transform: navOpen ? "translateY(6.5px) rotate(45deg)" : "none" }} />
+          <span style={{ display: "block", width: "22px", height: "1.5px", background: "rgba(255,255,255,0.7)", transition: "opacity 0.3s ease", opacity: navOpen ? 0 : 1 }} />
+          <span style={{ display: "block", width: "22px", height: "1.5px", background: "rgba(255,255,255,0.7)", transition: "transform 0.3s ease", transform: navOpen ? "translateY(-6.5px) rotate(-45deg)" : "none" }} />
+        </button>
+      </nav>
+
+      {/* Mobile nav drawer */}
+      <AnimatePresence>
+        {navOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            style={{
+              position: "fixed",
+              top: "60px",
+              left: 0,
+              right: 0,
+              zIndex: 999,
+              background: "rgba(10, 4, 9, 0.97)",
+              backdropFilter: "blur(20px)",
+              WebkitBackdropFilter: "blur(20px)",
+              borderBottom: "1px solid rgba(255, 255, 255, 0.06)",
+              padding: "16px clamp(24px, 5vw, 80px) 28px",
+              display: "flex",
+              flexDirection: "column",
+              gap: 0,
+            }}
+          >
+            {(["About", "Work", "Contact"] as const).map((label) => (
+              <button
+                key={label}
+                onClick={() => {
+                  document.getElementById(label.toLowerCase())?.scrollIntoView({ behavior: "smooth" });
+                  setNavOpen(false);
+                }}
+                style={{
+                  background: "none",
+                  border: "none",
+                  borderBottom: "1px solid rgba(255,255,255,0.05)",
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontWeight: 600,
+                  fontSize: "28px",
+                  color: "rgba(255,255,255,0.7)",
+                  padding: "18px 0",
+                  textAlign: "left",
+                  letterSpacing: "-0.01em",
+                }}
+              >
+                {label}
+              </button>
+            ))}
+            <a
+              href="/Vishvara_Gandharv_Resume.pdf"
+              download="Vishvara_Gandharv_Resume.pdf"
+              onClick={() => setNavOpen(false)}
+              style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: "12px",
+                fontWeight: 600,
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                color: "#111",
+                background: "#FAFFC7",
+                borderRadius: "9999px",
+                padding: "14px 28px",
+                textDecoration: "none",
+                textAlign: "center",
+                marginTop: "20px",
+                display: "block",
+              }}
+            >
+              Download Resume
+            </a>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Global Live Animated Grain Overlay */}
       <div className="live-grain" aria-hidden="true" />
@@ -1731,24 +1910,6 @@ export default function App() {
               marginTop: "24px"
             }}>
               <a
-                href="/Vishvara_Gandharv_Resume.pdf"
-                download="Vishvara_Gandharv_Resume.pdf"
-                className="featured-btn-primary btn-shine"
-                style={{
-                  display: "inline-block",
-                  fontWeight: "bold",
-                  padding: "10px 24px",
-                  borderRadius: "11px",
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontSize: "13px",
-                  cursor: "pointer",
-                  transition: "all 0.3s ease",
-                  textDecoration: "none",
-                }}
-              >
-                Download Resume
-              </a>
-              <a
                 href="https://www.linkedin.com/in/vishvara-gandharv"
                 target="_blank"
                 rel="noreferrer"
@@ -1775,7 +1936,7 @@ export default function App() {
       </section>
 
       {/* CASE STUDIES SECTION */}
-      <section className="case-studies-section" style={{
+      <section id="work" className="case-studies-section" style={{
         position: "relative",
         padding: "100px clamp(24px, 5vw, 80px)",
         background: "transparent",
