@@ -1491,7 +1491,7 @@ export default function App() {
           pointerEvents: "auto",
           flexWrap: "wrap",
         }}>
-          {[["3", "Projects", "2 ongoing"], ["2", "Domains", null], ["1", "Year", null]].map(([val, label, sub]) => (
+          {[["3", "Projects", "2 ongoing"], ["2", "Domains", null], ["6+", "Months", null]].map(([val, label, sub]) => (
             <div key={label} style={{
               background: "rgba(255, 255, 255, 0.03)",
               backdropFilter: "blur(6px)",
