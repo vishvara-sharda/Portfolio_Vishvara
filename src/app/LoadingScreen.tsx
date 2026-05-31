@@ -12,7 +12,7 @@ export default function LoadingScreen({ onStart }: { onStart: () => void }) {
 
   // Rapid icon toggle
   useEffect(() => {
-    const interval = setInterval(() => setShowHeart(v => !v), 110);
+    const interval = setInterval(() => setShowHeart(v => !v), 400);
     return () => clearInterval(interval);
   }, []);
 
