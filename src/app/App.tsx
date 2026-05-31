@@ -6,6 +6,8 @@ import DesignerMind from "./DesignerMind";
 import LoadingScreen from "./LoadingScreen";
 import girlImg from "../imports/ChatGPT_Image_May_26__2026__08_22_25_PM.png";
 import profileImg from "./components/Pictures/Group 17.jpg";
+import heartUrl from "../imports/logo/heart.svg";
+import starUrl from "../imports/logo/star.svg";
 
 function YouTubeFacade({ videoId, title, borderRadius = "14px" }: { videoId: string; title: string; borderRadius?: string }) {
   const [active, setActive] = React.useState(false);
@@ -730,13 +732,6 @@ const GlobalStyles = React.memo(() => (
       to { opacity: 1; }
     }
 
-    /* Navbar */
-    .nav-desktop { display: flex; }
-    .nav-hamburger { display: none; }
-    @media (max-width: 639px) {
-      .nav-desktop { display: none !important; }
-      .nav-hamburger { display: flex !important; }
-    }
 
     @keyframes star-blink {
       0%, 100% { opacity: 0.45; }
@@ -876,6 +871,9 @@ export default function App() {
   const aboutSvgRef = useRef<SVGSVGElement>(null);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [navOpen, setNavOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [navLogoHeart, setNavLogoHeart] = useState(true);
+  const [navBtnHovered, setNavBtnHovered] = useState(false);
 
   const nextTestimonial = () => {
     setActiveTestimonial((prev) => (prev + 1) % TESTIMONIALS.length);
@@ -890,7 +888,6 @@ export default function App() {
   const [showFullCaseStudy, setShowFullCaseStudy] = useState(false);
   const [siteReady, setSiteReady] = useState(false);
   const [activeStarNode, setActiveStarNode] = useState(0);
-  const [heroHoveredNode, setHeroHoveredNode] = useState<number | null>(null);
   const [passionTab, setPassionTab] = useState(0);
   const [orbitHover, setOrbitHover] = useState<{ label: string, content: string } | null>(null);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
@@ -1075,6 +1072,17 @@ export default function App() {
     return () => window.removeEventListener('mousemove', onMouseMove);
   }, []);
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 80);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
+    const id = setInterval(() => setNavLogoHeart(v => !v), 400);
+    return () => clearInterval(id);
+  }, []);
+
 
 
   return (
@@ -1091,56 +1099,59 @@ export default function App() {
 
       <GlobalStyles />
 
-      {/* ── Navbar ── */}
-      <nav style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 1000,
-        height: "60px",
-        padding: "0 clamp(24px, 5vw, 80px)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        background: "rgba(10, 4, 9, 0.65)",
-        backdropFilter: "blur(18px)",
-        WebkitBackdropFilter: "blur(18px)",
-        borderBottom: "1px solid rgba(255, 255, 255, 0.05)",
-      }}>
-        {/* Logo */}
+      {/* ── Top Navbar ── */}
+      <motion.nav
+        animate={{ opacity: scrolled ? 0 : 1, y: scrolled ? -12 : 0 }}
+        transition={{ duration: 0.35, ease: "easeInOut" }}
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 1000,
+          height: "60px",
+          padding: "0 clamp(24px, 5vw, 80px)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          background: "rgba(10, 4, 9, 0.65)",
+          backdropFilter: "blur(18px)",
+          WebkitBackdropFilter: "blur(18px)",
+          borderBottom: "1px solid rgba(255, 255, 255, 0.05)",
+          pointerEvents: scrolled ? "none" : "auto",
+        }}
+      >
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          style={{
-            background: "none",
-            border: "none",
-            fontFamily: "'Cormorant Garamond', serif",
-            fontWeight: 700,
-            fontSize: "22px",
-            color: "#F2A7C4",
-            letterSpacing: "-0.01em",
-            padding: 0,
-          }}
+          style={{ background: "none", border: "none", padding: 0, position: "relative", width: 40, height: 40 }}
         >
-          VG
+          {/* Ring — color matches icon, like loading screen */}
+          <svg width="40" height="40" style={{ position: "absolute", inset: 0, transform: "rotate(-90deg)", transition: "stroke 0.7s ease" }}>
+            <circle cx="20" cy="20" r="17" fill="none"
+              stroke={navLogoHeart ? "rgba(242,167,196,0.45)" : "rgba(250,255,199,0.45)"}
+              strokeWidth="1.5"
+              style={{ transition: "stroke 0.7s ease" }}
+            />
+          </svg>
+          {/* Icon — snaps like loading screen */}
+          <img
+            src={navLogoHeart ? heartUrl : starUrl}
+            alt=""
+            style={{ width: 22, height: 22, objectFit: "contain", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
+          />
         </button>
 
-        {/* Desktop links */}
-        <div className="nav-desktop" style={{ gap: "28px", alignItems: "center" }}>
+        <div style={{ display: "flex", gap: "clamp(16px, 3vw, 28px)", alignItems: "center" }}>
           {(["About", "Work", "Contact"] as const).map((label) => (
             <button
               key={label}
               onClick={() => document.getElementById(label.toLowerCase())?.scrollIntoView({ behavior: "smooth" })}
               style={{
-                background: "none",
-                border: "none",
+                background: "none", border: "none",
                 fontFamily: "'DM Sans', sans-serif",
-                fontSize: "11px",
-                fontWeight: 500,
-                letterSpacing: "0.14em",
-                textTransform: "uppercase",
-                color: "rgba(255,255,255,0.48)",
-                padding: 0,
+                fontSize: "11px", fontWeight: 500,
+                letterSpacing: "0.14em", textTransform: "uppercase",
+                color: "rgba(255,255,255,0.48)", padding: 0,
                 transition: "color 0.2s ease",
               }}
               onMouseEnter={e => (e.currentTarget.style.color = "#F2A7C4")}
@@ -1154,112 +1165,17 @@ export default function App() {
             download="Vishvara_Gandharv_Resume.pdf"
             style={{
               fontFamily: "'DM Sans', sans-serif",
-              fontSize: "11px",
-              fontWeight: 600,
-              letterSpacing: "0.14em",
-              textTransform: "uppercase",
-              color: "#111",
-              background: "#FAFFC7",
-              borderRadius: "9999px",
-              padding: "8px 20px",
+              fontSize: "11px", fontWeight: 600,
+              letterSpacing: "0.14em", textTransform: "uppercase",
+              color: "#111", background: "#FAFFC7",
+              borderRadius: "9999px", padding: "8px 20px",
               textDecoration: "none",
             }}
           >
             Resume
           </a>
         </div>
-
-        {/* Mobile hamburger */}
-        <button
-          className="nav-hamburger"
-          onClick={() => setNavOpen(prev => !prev)}
-          aria-label={navOpen ? "Close menu" : "Open menu"}
-          style={{
-            background: "none",
-            border: "none",
-            padding: "4px",
-            flexDirection: "column",
-            gap: "5px",
-          }}
-        >
-          <span style={{ display: "block", width: "22px", height: "1.5px", background: "rgba(255,255,255,0.7)", transition: "transform 0.3s ease, opacity 0.3s ease", transform: navOpen ? "translateY(6.5px) rotate(45deg)" : "none" }} />
-          <span style={{ display: "block", width: "22px", height: "1.5px", background: "rgba(255,255,255,0.7)", transition: "opacity 0.3s ease", opacity: navOpen ? 0 : 1 }} />
-          <span style={{ display: "block", width: "22px", height: "1.5px", background: "rgba(255,255,255,0.7)", transition: "transform 0.3s ease", transform: navOpen ? "translateY(-6.5px) rotate(-45deg)" : "none" }} />
-        </button>
-      </nav>
-
-      {/* Mobile nav drawer */}
-      <AnimatePresence>
-        {navOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
-            style={{
-              position: "fixed",
-              top: "60px",
-              left: 0,
-              right: 0,
-              zIndex: 999,
-              background: "rgba(10, 4, 9, 0.97)",
-              backdropFilter: "blur(20px)",
-              WebkitBackdropFilter: "blur(20px)",
-              borderBottom: "1px solid rgba(255, 255, 255, 0.06)",
-              padding: "16px clamp(24px, 5vw, 80px) 28px",
-              display: "flex",
-              flexDirection: "column",
-              gap: 0,
-            }}
-          >
-            {(["About", "Work", "Contact"] as const).map((label) => (
-              <button
-                key={label}
-                onClick={() => {
-                  document.getElementById(label.toLowerCase())?.scrollIntoView({ behavior: "smooth" });
-                  setNavOpen(false);
-                }}
-                style={{
-                  background: "none",
-                  border: "none",
-                  borderBottom: "1px solid rgba(255,255,255,0.05)",
-                  fontFamily: "'Cormorant Garamond', serif",
-                  fontWeight: 600,
-                  fontSize: "28px",
-                  color: "rgba(255,255,255,0.7)",
-                  padding: "18px 0",
-                  textAlign: "left",
-                  letterSpacing: "-0.01em",
-                }}
-              >
-                {label}
-              </button>
-            ))}
-            <a
-              href="/Vishvara_Gandharv_Resume.pdf"
-              download="Vishvara_Gandharv_Resume.pdf"
-              onClick={() => setNavOpen(false)}
-              style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: "12px",
-                fontWeight: 600,
-                letterSpacing: "0.14em",
-                textTransform: "uppercase",
-                color: "#111",
-                background: "#FAFFC7",
-                borderRadius: "9999px",
-                padding: "14px 28px",
-                textDecoration: "none",
-                textAlign: "center",
-                marginTop: "20px",
-                display: "block",
-              }}
-            >
-              Download Resume
-            </a>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      </motion.nav>
 
       {/* Global Live Animated Grain Overlay */}
       <div className="live-grain" aria-hidden="true" />
@@ -1345,63 +1261,6 @@ export default function App() {
                     <animate attributeName="opacity" values="0.1;0.7;0.1" dur={`${star.dur}s`} begin={`${star.delay}s`} repeatCount="indefinite" />
                   </circle>
                 ))}
-              </g>
-
-              {/* HERO EDGES */}
-              <g stroke="#ffffff" strokeWidth="0.5" opacity="0.3">
-                {HERO_EDGES.map((edge) => {
-                  const nodeA = HERO_NODES.find((n) => n.id === edge.a);
-                  const nodeB = HERO_NODES.find((n) => n.id === edge.b);
-                  if (!nodeA || !nodeB) return null;
-                  
-                  const isHovered = heroHoveredNode === nodeA.id || heroHoveredNode === nodeB.id;
-                  
-                  return (
-                    <line
-                      key={`hero-edge-${edge.id}`}
-                      x1={nodeA.x}
-                      y1={nodeA.y}
-                      x2={nodeB.x}
-                      y2={nodeB.y}
-                      stroke={isHovered ? "#FAFFC7" : "#ffffff"}
-                      strokeWidth={isHovered ? 1.5 : 0.5}
-                      opacity={isHovered ? 0.8 : 0.3}
-                      style={{ transition: "all 300ms ease" }}
-                    />
-                  );
-                })}
-              </g>
-
-              {/* HERO NODES */}
-              <g fill="#fff">
-                {HERO_NODES.map((node) => {
-                  const isHovered = heroHoveredNode === node.id;
-                  const isConnected = HERO_EDGES.some(
-                    (e) => (e.a === node.id && e.b === heroHoveredNode) || (e.b === node.id && e.a === heroHoveredNode)
-                  );
-                  const isHighlighted = isHovered || isConnected;
-                  
-                  return (
-                    <g 
-                      key={`hero-node-${node.id}`}
-                      onMouseEnter={() => setHeroHoveredNode(node.id)}
-                      onMouseLeave={() => setHeroHoveredNode(null)}
-                      style={{ cursor: "pointer" }}
-                    >
-                      <circle cx={node.x} cy={node.y} r={50} fill="transparent" />
-                      <circle
-                        cx={node.x}
-                        cy={node.y}
-                        r={isHighlighted ? 4 : 2}
-                        fill={isHovered ? "#F2A7C4" : isConnected ? "#FAFFC7" : "#ffffff"}
-                        opacity={isHighlighted ? 1 : 0.9}
-                        style={{ transition: "all 300ms ease", filter: isHighlighted ? "drop-shadow(0 0 4px rgba(250, 255, 199, 0.8))" : "drop-shadow(0 0 2px rgba(255,255,255,0.5))" }}
-                      >
-                        {!isHighlighted && <animate attributeName="opacity" values="1;0.3;1" dur={`${2 + (node.id % 3)}s`} begin={`${node.id * 0.1}s`} repeatCount="indefinite" />}
-                      </circle>
-                    </g>
-                  );
-                })}
               </g>
 
               <circle cx="700" cy="160" r="64" fill="url(#moonGlow)" />
@@ -3108,6 +2967,152 @@ export default function App() {
       </section>
 
       </div>
+
+      {/* ── Floating Nav Trigger (outside skew-container so position:fixed works) ── */}
+      <AnimatePresence>
+        {(scrolled || navOpen) && (
+          <motion.button
+            key="nav-trigger"
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.5 }}
+            transition={{ duration: 0.3, ease: [0.34, 1.56, 0.64, 1] }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setNavOpen(prev => !prev)}
+            onMouseEnter={() => setNavBtnHovered(true)}
+            onMouseLeave={() => setNavBtnHovered(false)}
+            aria-label={navOpen ? "Close menu" : "Open menu"}
+            style={{
+              position: "fixed",
+              bottom: "64px",
+              right: "24px",
+              zIndex: 1002,
+              width: "76px",
+              height: "76px",
+              borderRadius: "50%",
+              background: navOpen || navBtnHovered ? "#FAFFC7" : "#F2A7C4",
+              border: "none",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: navOpen || navBtnHovered
+                ? "0 4px 28px rgba(250,255,199,0.45)"
+                : "0 4px 28px rgba(242,167,196,0.4)",
+              transition: "background 0.25s ease, box-shadow 0.25s ease",
+            }}
+          >
+            {navOpen || navBtnHovered ? (
+              <img src={starUrl} alt="" style={{ width: 40, height: 40, objectFit: "contain" }} />
+            ) : (
+              /* Heart with swapped colors: yellow outer star, pink torso — closed eyes */
+              <svg width="32" height="32" viewBox="0 0 530 530" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <mask id="nav-heart-mask" style={{maskType:"alpha"} as React.CSSProperties} maskUnits="userSpaceOnUse" x="0" y="0" width="530" height="530">
+                  <rect width="530" height="530" fill="#D9D9D9"/>
+                </mask>
+                {/* Outer star — yellow */}
+                <g mask="url(#nav-heart-mask)">
+                  <path d="M161.673 132.598L226.355 48.5822C231.14 42.3253 236.953 37.5405 243.795 34.228C250.634 30.9155 257.719 29.2593 265.05 29.2593C272.378 29.2593 279.447 30.9155 286.256 34.228C293.065 37.5405 298.862 42.3253 303.646 48.5822L368.329 132.598L466.511 165.624C477.185 169.304 485.374 175.582 491.079 184.455C496.784 193.329 499.636 202.939 499.636 213.285C499.636 217.949 498.894 222.788 497.411 227.805C495.924 232.822 493.721 237.49 490.803 241.811L428.417 331.249L430.626 426.759C430.626 440.745 425.473 452.615 415.167 462.369C404.862 472.122 392.867 476.999 379.183 476.999C378.881 476.999 375.233 476.631 368.24 475.895L265.001 447.186L161.883 475.851C159.593 476.248 157.435 476.631 155.407 476.999C153.379 477.367 151.52 477.551 149.831 477.551C135.701 477.551 123.667 472.547 113.73 462.54C103.792 452.536 99.1916 440.425 99.9277 426.207L102.136 331.111L39.1986 241.259C35.9118 236.905 33.617 232.203 32.3141 227.154C31.0149 222.1 30.3652 217.233 30.3652 212.551C30.3652 201.877 33.2029 192.196 38.8784 183.506C44.5538 174.82 52.9418 168.859 64.0423 165.624L161.673 132.598Z" fill="#FAFFC7"/>
+                </g>
+                {/* Inner torso — pink */}
+                <path d="M302.131 448.233V246.913H226.495V448.233H302.131ZM264.314 225.942C274.545 225.942 283.313 222.709 290.621 216.243C297.929 209.777 301.583 202 301.583 192.913C301.583 183.825 297.929 176.049 290.621 169.582C283.313 163.117 274.545 159.884 264.314 159.884C253.992 159.884 245.223 163.117 238.007 169.582C230.697 176.049 227.043 183.825 227.043 192.913C227.043 202 230.697 209.777 238.007 216.243C245.223 222.709 253.992 225.942 264.314 225.942Z" fill="#F2A7C4"/>
+                {/* Closed eye strokes */}
+                <path d="M267.053 188.718C267.053 188.718 271.707 185.685 275.494 185.841C278.881 185.98 282.728 188.718 282.728 188.718C284.202 188.216 285.14 186.56 285.14 186.56" stroke="#6D1F2A" strokeWidth="2" strokeLinecap="round"/>
+                <path d="M254.996 206.02C254.996 206.02 259.65 209.053 263.436 208.897C266.825 208.758 270.671 206.02 270.671 206.02" stroke="#6D1F2A" strokeWidth="2" strokeLinecap="round"/>
+                <path d="M258.01 188.718C258.01 188.718 253.355 185.685 249.569 185.841C246.181 185.98 242.335 188.718 242.335 188.718C240.861 188.216 239.923 186.56 239.923 186.56" stroke="#6D1F2A" strokeWidth="2" strokeLinecap="round"/>
+                {/* Body ribbon — pink */}
+                <path d="M264.416 274.935L300.74 247.138C301.135 246.836 301.719 247.105 301.719 247.588V447.657C301.719 447.974 302.052 457 301.719 457L264.039 448.233L226.359 457.5C226.359 457.5 226.359 447.974 226.359 447.657V247.588C226.359 247.105 226.944 246.836 227.339 247.138L263.662 274.935C263.882 275.102 264.196 275.102 264.416 274.935Z" fill="#F2A7C4" stroke="#F2A7C4"/>
+                <path d="M301.001 247L264.54 273.69" stroke="#6D1F2A" strokeLinecap="round"/>
+                <path d="M227.001 247L264.253 273.967" stroke="#6D1F2A" strokeLinecap="round"/>
+                {/* Hair — yellow */}
+                <path d="M301.72 188.718C286.647 187.277 262.531 159.883 262.531 159.883C262.531 159.883 238.416 184.393 226.358 188.718C214.304 193.044 226.358 157 226.358 157H301.72C301.72 157 316.793 190.16 301.72 188.718Z" fill="#FAFFC7" stroke="#FAFFC7"/>
+              </svg>
+            )}
+          </motion.button>
+        )}
+      </AnimatePresence>
+
+      {/* ── Nav Overlay ── */}
+      <AnimatePresence>
+        {navOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            onClick={() => setNavOpen(false)}
+            style={{
+              position: "fixed",
+              inset: 0,
+              zIndex: 1001,
+              background: "rgba(10,4,9,0.95)",
+              backdropFilter: "blur(24px)",
+              WebkitBackdropFilter: "blur(24px)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "4px",
+            }}
+          >
+            {(["About", "Work", "Contact"] as const).map((label, i) => (
+              <motion.button
+                key={label}
+                initial={{ opacity: 0, y: 28 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 16 }}
+                transition={{ delay: i * 0.07, duration: 0.4, ease: [0.25, 1, 0.5, 1] }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  document.getElementById(label.toLowerCase())?.scrollIntoView({ behavior: "smooth" });
+                  setNavOpen(false);
+                }}
+                style={{
+                  background: "none",
+                  border: "none",
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontWeight: 700,
+                  fontSize: "clamp(3.5rem, 9vw, 7rem)",
+                  color: "rgba(255,255,255,0.6)",
+                  cursor: "pointer",
+                  letterSpacing: "-0.02em",
+                  lineHeight: 1.1,
+                  padding: "4px 0",
+                  transition: "color 0.2s ease",
+                }}
+                onMouseEnter={e => (e.currentTarget.style.color = "#F2A7C4")}
+                onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.6)")}
+              >
+                {label}
+              </motion.button>
+            ))}
+            <motion.a
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.28, duration: 0.4 }}
+              href="/Vishvara_Gandharv_Resume.pdf"
+              download="Vishvara_Gandharv_Resume.pdf"
+              onClick={() => setNavOpen(false)}
+              style={{
+                marginTop: "36px",
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: "11px",
+                fontWeight: 600,
+                letterSpacing: "0.18em",
+                textTransform: "uppercase",
+                color: "#111",
+                background: "#FAFFC7",
+                borderRadius: "9999px",
+                padding: "14px 40px",
+                textDecoration: "none",
+              }}
+            >
+              Download Resume
+            </motion.a>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {!siteReady && <LoadingScreen onStart={() => setSiteReady(true)} />}
 
