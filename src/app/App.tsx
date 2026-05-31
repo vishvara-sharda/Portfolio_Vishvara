@@ -1125,19 +1125,19 @@ export default function App() {
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           style={{ background: "none", border: "none", padding: 0, position: "relative", width: 40, height: 40 }}
         >
-          {/* Ring — color matches icon, like loading screen */}
-          <svg width="40" height="40" style={{ position: "absolute", inset: 0, transform: "rotate(-90deg)", transition: "stroke 0.7s ease" }}>
+          {/* Ring — color matches active icon, like loading screen */}
+          <svg width="40" height="40" style={{ position: "absolute", inset: 0, transform: "rotate(-90deg)" }}>
             <circle cx="20" cy="20" r="17" fill="none"
-              stroke={navLogoHeart ? "rgba(242,167,196,0.45)" : "rgba(250,255,199,0.45)"}
+              stroke={navLogoHeart ? "rgba(242,167,196,0.5)" : "rgba(250,255,199,0.5)"}
               strokeWidth="1.5"
-              style={{ transition: "stroke 0.7s ease" }}
+              style={{ transition: "stroke 0.12s ease" }}
             />
           </svg>
-          {/* Icon — snaps like loading screen */}
+          {/* Icon snaps like loading screen */}
           <img
             src={navLogoHeart ? heartUrl : starUrl}
             alt=""
-            style={{ width: 22, height: 22, objectFit: "contain", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
+            style={{ width: 24, height: 24, objectFit: "contain", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
           />
         </button>
 
