@@ -1505,7 +1505,7 @@ export default function App() {
               flexDirection: "column",
             }}>
               <div style={{
-                fontFamily: "'Cormorant Garamond', serif",
+                fontFamily: "'Space Mono', monospace",
                 color: "#F2A7C4",
                 fontSize: "clamp(2rem, 3.5vw, 3rem)",
                 fontWeight: 700,
