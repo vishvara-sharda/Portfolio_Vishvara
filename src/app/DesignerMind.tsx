@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useRef, useCallback, useEffect, memo } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
 
 const VW = 1000;
@@ -674,39 +675,42 @@ export default function DesignerMind() {
         )}
       </div>
 
-      {/* Philosophy drawer */}
-      <AnimatePresence>
-        {activePhilosophy && (
-          <>
-            <motion.div
-              initial={{ opacity:0 }} animate={{ opacity:1 }} exit={{ opacity:0 }}
-              onClick={() => setActivePhilosophy(null)}
-              style={{ position:'fixed', inset:0, background:'rgba(0,0,0,0.6)', zIndex:50 }} />
-            <motion.div
-              initial={{ y:'100%' }} animate={{ y:0 }} exit={{ y:'100%' }}
-              transition={{ type:'spring', damping:26, stiffness:200 }}
-              style={{
-                position:'fixed', bottom:0, left:'50%', transform:'translateX(-50%)',
-                width:'100%', maxWidth:'600px', background:'rgba(20,12,16,0.97)',
-                borderTop:'1px solid rgba(242,167,196,0.15)', borderRadius:'20px 20px 0 0',
-                padding:'32px', zIndex:60, boxShadow:'0 -20px 40px rgba(0,0,0,0.5)',
-              }}>
-              <button onClick={() => setActivePhilosophy(null)} style={{
-                position:'absolute', top:'20px', right:'20px', background:'none',
-                border:'1px solid rgba(255,255,255,0.15)', color:'rgba(255,255,255,0.5)',
-                borderRadius:'6px', width:'32px', height:'32px', fontSize:'18px', lineHeight:1,
-                cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center',
-              }}>&times;</button>
-              <h3 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'28px', color:activePhilosophy.color, margin:'0 0 16px 0', fontWeight:700 }}>
-                {activePhilosophy.label}
-              </h3>
-              <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'15px', color:'rgba(255,255,255,0.7)', lineHeight:1.8, margin:0 }}>
-                {activePhilosophy.philosophy}
-              </p>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+      {/* Philosophy drawer — portalled to body to escape willChange:transform ancestor */}
+      {createPortal(
+        <AnimatePresence>
+          {activePhilosophy && (
+            <>
+              <motion.div
+                initial={{ opacity:0 }} animate={{ opacity:1 }} exit={{ opacity:0 }}
+                onClick={() => setActivePhilosophy(null)}
+                style={{ position:'fixed', inset:0, background:'rgba(0,0,0,0.6)', zIndex:50 }} />
+              <motion.div
+                initial={{ y:'100%' }} animate={{ y:0 }} exit={{ y:'100%' }}
+                transition={{ type:'spring', damping:26, stiffness:200 }}
+                style={{
+                  position:'fixed', bottom:0, left:'50%', transform:'translateX(-50%)',
+                  width:'100%', maxWidth:'600px', background:'rgba(20,12,16,0.97)',
+                  borderTop:'1px solid rgba(242,167,196,0.15)', borderRadius:'20px 20px 0 0',
+                  padding:'32px', zIndex:60, boxShadow:'0 -20px 40px rgba(0,0,0,0.5)',
+                }}>
+                <button onClick={() => setActivePhilosophy(null)} style={{
+                  position:'absolute', top:'20px', right:'20px', background:'none',
+                  border:'1px solid rgba(255,255,255,0.15)', color:'rgba(255,255,255,0.5)',
+                  borderRadius:'6px', width:'32px', height:'32px', fontSize:'18px', lineHeight:1,
+                  cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center',
+                }}>&times;</button>
+                <h3 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'28px', color:activePhilosophy.color, margin:'0 0 16px 0', fontWeight:700 }}>
+                  {activePhilosophy.label}
+                </h3>
+                <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'15px', color:'rgba(255,255,255,0.7)', lineHeight:1.8, margin:0 }}>
+                  {activePhilosophy.philosophy}
+                </p>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </section>
   );
 }
