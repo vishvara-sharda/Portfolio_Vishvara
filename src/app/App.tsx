@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState, Fragment } from "react";
 import emailjs from "@emailjs/browser";
-import { ReactLenis } from 'lenis/react';
 import { motion, AnimatePresence } from 'motion/react';
 import CaseStudyPage from "./CaseStudyPage";
 import DesignerMind from "./DesignerMind";
-import 'lenis/dist/lenis.css';
 import girlImg from "../imports/ChatGPT_Image_May_26__2026__08_22_25_PM.png";
 import profileImg from "./components/Pictures/Group 17.jpg";
 
@@ -886,78 +884,33 @@ export default function App() {
       return;
     }
 
-    let lastScroll = window.scrollY;
-    let currentScale = 0;
-    
-    // Parallax & Liquid Warp tracking
-    let mouseX = 0;
-    let mouseY = 0;
-    let currentX = 0;
-    let currentY = 0;
-    
     let lastMouseX = 0;
     let lastMouseY = 0;
     let liquidScale = 0;
 
     const onGlobalMouse = (e: MouseEvent) => {
-      mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-      mouseY = (e.clientY / window.innerHeight) * 2 - 1;
-      
-      // Calculate mouse velocity for liquid warp
       const dx = e.clientX - lastMouseX;
       const dy = e.clientY - lastMouseY;
       const speed = Math.sqrt(dx * dx + dy * dy);
       lastMouseX = e.clientX;
       lastMouseY = e.clientY;
-
-      // Add to liquid scale (max 25 to prevent tearing)
       liquidScale = Math.min(25, liquidScale + speed * 0.12);
     };
     window.addEventListener('mousemove', onGlobalMouse, { passive: true });
 
+    const waterMap = document.getElementById("liquid-map");
+    const vh = window.innerHeight || 800;
+
     const tick = () => {
-const section = sectionRef.current;
       const nameEl = nameRef.current;
-      
-      if (section && nameEl) {
+
+      if (nameEl) {
         const scrollY = window.scrollY;
-        // Subtle parallax: name moves down slightly but not enough to intrude
-        nameEl.style.top = `calc(42vh + ${scrollY * 0.5}px)`;
-        
-        // Fade out completely well before reaching the About Me section
-        const vh = window.innerHeight || 800;
         const opacity = 1 - Math.max(0, Math.min(1, (scrollY - vh * 0.1) / (vh * 0.5)));
         nameEl.style.opacity = opacity.toString();
       }
 
-      // Calculate delta for velocity
-      const delta = window.scrollY - lastScroll;
-      lastScroll = window.scrollY;
-
-      // 3D Scroll Wrap
-      const targetRotate = Math.min(12, Math.max(-12, delta * 0.15));
-      currentScale = lerp(currentScale, targetRotate, 0.1);
-
-      // Mouse Parallax (Slow and subtle)
-      currentX = lerp(currentX, mouseX, 0.015);
-      currentY = lerp(currentY, mouseY, 0.015);
-      const translateX = currentX * -18; // Max 18px shift
-      const translateY = currentY * -18;
-
-      // Apply skew specifically to the hero name (maintain original transform)
-      if (nameEl) {
-        nameEl.style.transform = `translateX(-50%)`;
-      }
-
-      // Apply 3D wrap and mouse parallax to the entire page wrapper
-      const skewContainer = document.getElementById("skew-container");
-      if (skewContainer) {
-        // skewContainer.style.transform = `perspective(1500px) rotateX(${currentScale}deg) translate3d(${translateX}px, ${translateY}px, 0)`;
-      }
-
-      // Decay the liquid warp and apply to SVG map
-      liquidScale = lerp(liquidScale, 0, 0.08); // Spring back to 0
-      const waterMap = document.getElementById("liquid-map");
+      liquidScale = lerp(liquidScale, 0, 0.08);
       if (waterMap) {
         waterMap.setAttribute("scale", String(liquidScale));
       }
@@ -1075,7 +1028,7 @@ const section = sectionRef.current;
 
 
   return (
-    <ReactLenis root options={{ lerp: 0.15, duration: 0.8, smoothWheel: true }}>
+    <>
       {/* Liquid Warp Definition */}
       <svg style={{ position: 'absolute', width: 0, height: 0 }} aria-hidden="true">
         <filter id="liquid-warp">
@@ -2967,6 +2920,6 @@ const section = sectionRef.current;
           }}
         />
       )}
-    </ReactLenis>
+    </>
   );
 }
