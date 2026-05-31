@@ -3,6 +3,7 @@ import emailjs from "@emailjs/browser";
 import { motion, AnimatePresence } from 'motion/react';
 import CaseStudyPage from "./CaseStudyPage";
 import DesignerMind from "./DesignerMind";
+import LoadingScreen from "./LoadingScreen";
 import girlImg from "../imports/ChatGPT_Image_May_26__2026__08_22_25_PM.png";
 import profileImg from "./components/Pictures/Group 17.jpg";
 
@@ -878,6 +879,7 @@ export default function App() {
   const [margImage, setMargImage] = useState(0);
   const [activeTab, setActiveTab] = useState(0);
   const [showFullCaseStudy, setShowFullCaseStudy] = useState(false);
+  const [siteReady, setSiteReady] = useState(false);
   const [activeStarNode, setActiveStarNode] = useState(0);
   const [heroHoveredNode, setHeroHoveredNode] = useState<number | null>(null);
   const [passionTab, setPassionTab] = useState(0);
@@ -2932,6 +2934,8 @@ export default function App() {
       </section>
 
       </div>
+
+      {!siteReady && <LoadingScreen onStart={() => setSiteReady(true)} />}
 
       {showFullCaseStudy && (
         <CaseStudyPage
