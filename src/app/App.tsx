@@ -1733,19 +1733,26 @@ export default function App() {
               }}>
                 Download Resume
               </button>
-              <button className="featured-btn-secondary" style={{
-                background: "transparent",
-                border: "1px solid rgba(250, 255, 199, 0.4)",
-                color: "#FAFFC7",
-                padding: "10px 24px",
-                borderRadius: "11px",
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: "13px",
-                cursor: "pointer",
-                transition: "all 0.3s ease"
-              }}>
+              <a
+                href="https://www.linkedin.com/in/vishvara-gandharv"
+                target="_blank"
+                rel="noreferrer"
+                className="featured-btn-secondary"
+                style={{
+                  display: "inline-block",
+                  background: "transparent",
+                  border: "1px solid rgba(250, 255, 199, 0.4)",
+                  color: "#FAFFC7",
+                  padding: "10px 24px",
+                  borderRadius: "11px",
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: "13px",
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                  textDecoration: "none"
+                }}>
                 Connect on LinkedIn
-              </button>
+              </a>
             </div>
           </div>
 
