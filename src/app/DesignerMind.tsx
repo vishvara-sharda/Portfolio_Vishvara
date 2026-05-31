@@ -682,7 +682,16 @@ export default function DesignerMind() {
             <>
               <motion.div
                 initial={{ opacity:0 }} animate={{ opacity:1 }} exit={{ opacity:0 }}
-                onClick={() => setActivePhilosophy(null)}
+                onPointerDown={(e) => {
+                  const startY = e.clientY;
+                  const startX = e.clientX;
+                  const onUp = (upE: PointerEvent) => {
+                    const moved = Math.abs(upE.clientY - startY) > 8 || Math.abs(upE.clientX - startX) > 8;
+                    if (!moved) setActivePhilosophy(null);
+                    window.removeEventListener('pointerup', onUp);
+                  };
+                  window.addEventListener('pointerup', onUp);
+                }}
                 style={{ position:'fixed', inset:0, background:'rgba(0,0,0,0.6)', zIndex:50 }} />
               <motion.div
                 initial={{ y:'100%' }} animate={{ y:0 }} exit={{ y:'100%' }}
