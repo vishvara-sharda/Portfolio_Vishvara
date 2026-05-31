@@ -648,6 +648,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
 
   // Refs for scroll performance (prevents glitchy re-renders on every scroll tick)
   const progressBarRef = useRef<HTMLDivElement>(null);
+  const mobileProgressBarRef = useRef<HTMLDivElement>(null);
   const xpTextRef = useRef<HTMLSpanElement>(null);
   const collectedCardsRef = useRef<number[]>([]);
   const scrollTrackerRef = useRef(0);
@@ -682,6 +683,9 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
     if (progressBarRef.current && xpTextRef.current) {
         progressBarRef.current.style.height = `${progress}%`;
         xpTextRef.current.innerText = `${Math.round(progress)}%`;
+    }
+    if (mobileProgressBarRef.current) {
+        mobileProgressBarRef.current.style.width = `${progress}%`;
     }
 
     if (progress > 2 && !isNavScrolledRef.current) {
@@ -860,7 +864,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
           backdropFilter: isNavScrolled ? 'blur(24px)' : 'blur(16px)',
         }}
         transition={{ duration: 0.4, ease: "easeOut" }}
-        className="fixed top-6 left-1/2 -translate-x-1/2 z-[120] border border-[#333] rounded-full px-4 py-2 flex items-center justify-between gap-6 shadow-[0_4px_24px_rgba(0,0,0,0.5)] origin-top"
+        className="fixed top-4 left-1/2 -translate-x-1/2 z-[120] border border-[#333] rounded-full px-4 py-2 flex items-center justify-between gap-4 shadow-[0_4px_24px_rgba(0,0,0,0.5)] origin-top w-[calc(100%-2rem)] max-w-[600px]"
       >
         <button
           onClick={onClose}
@@ -869,7 +873,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
           <ArrowLeft className="w-4 h-4" />
         </button>
 
-        <ul className="flex gap-6 list-none m-0 p-0 hidden lg:flex items-center">
+        <ul className="flex gap-4 list-none m-0 p-0 items-center">
           {[
             { id: 'problem', label: 'Problem' },
             { id: 'users', label: 'Users' },
@@ -887,7 +891,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
         </ul>
 
         {/* HUD Cards Tracker */}
-        <div className="flex items-center gap-2 hidden md:flex">
+        <div className="flex items-center gap-2">
           <div className="w-5 h-6 bg-[#FAFFC7] border border-[#FAFFC7] rounded shadow-[0_0_10px_rgba(250,255,199,0.4)] flex items-center justify-center">
             <Star className="w-3 h-3 text-[#F2A7C4] drop-shadow-[0_1px_1px_rgba(0,0,0,0.3)]" fill="currentColor" />
           </div>
@@ -901,8 +905,17 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
         </button>
       </motion.nav>
 
+      {/* Mobile top progress bar */}
+      <div className="fixed top-[4.5rem] left-0 right-0 z-[120] h-0.5 bg-[#1E1E1E] md:hidden pointer-events-none">
+        <div
+          ref={mobileProgressBarRef}
+          className="h-full bg-gradient-to-r from-[#FAFFC7] to-[#F2A7C4]"
+          style={{ width: '0%', transition: 'width 0.3s ease' }}
+        />
+      </div>
+
       {/* Right side Vertical XP/Progress Bar */}
-      <div className="fixed right-6 top-1/2 -translate-y-1/2 z-[120] h-[40vh] flex flex-col items-center gap-4 hidden md:flex pointer-events-none">
+      <div className="fixed right-6 top-1/2 -translate-y-1/2 z-[120] h-[40vh] flex-col items-center gap-4 hidden md:flex pointer-events-none">
         <span ref={xpTextRef} className="text-[9px] font-bold tracking-[0.2em] text-gray-500 uppercase h-10 flex justify-center items-center" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>0%</span>
         <div className="w-1.5 flex-1 bg-[#1E1E1E] border border-[#333] rounded-full overflow-hidden relative flex flex-col justify-start">
           <div 
