@@ -245,6 +245,14 @@ export default function DesignerMind() {
   const [cardPos,          setCardPos]           = useState({ x: 0, y: 0 });
   const lastScrollRef = useRef(0);
 
+  // Close drawer on scroll
+  useEffect(() => {
+    if (!activePhilosophy) return;
+    const onScroll = () => setActivePhilosophy(null);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [activePhilosophy]);
+
   // ─── Idle glow via direct DOM manipulation (no re-renders) ───
   const idleTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const idleIndexRef = useRef(0);
