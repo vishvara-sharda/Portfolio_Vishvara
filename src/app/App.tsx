@@ -1664,6 +1664,7 @@ export default function App() {
               title="Introduction video"
               allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
+              loading="lazy"
               style={{
                 width: "100%",
                 aspectRatio: "16/9",
@@ -1918,6 +1919,7 @@ export default function App() {
                       title="Margdarshak Promo Video"
                       allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
+                      loading="lazy"
                       style={{
                         width: "100%",
                         aspectRatio: "16/9",
