@@ -136,7 +136,13 @@ const FlipCard = ({ card }: { card: {title: string, text: string, image?: string
 
 // ── Secret Level ─────────────────────────────────────────────────────────────
 
-const SECRET_GRAIN_BG = "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='sl-n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23sl-n)'/%3E%3C/svg%3E\")";
+const SECRET_GRAIN_STYLE: React.CSSProperties = {
+  backgroundImage: [
+    'repeating-linear-gradient(0deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 4px)',
+    'repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 4px)',
+  ].join(', '),
+  backgroundSize: '4px 4px',
+};
 
 interface SecretCardProps {
   fileLabel: string;
@@ -286,12 +292,11 @@ function SecretLevelCard({ fileLabel, title, subtitle, dataReadout, image, image
         transition: developed ? 'opacity 1s ease' : noT,
       }} />
 
-      {/* Layer 3 — Grain noise */}
+      {/* Layer 3 — Grain noise (CSS-only, no SVG filter) */}
       <div aria-hidden="true" style={{
         position: 'absolute', inset: 0, zIndex: 2, pointerEvents: 'none',
-        backgroundImage: SECRET_GRAIN_BG,
-        mixBlendMode: 'overlay' as React.CSSProperties['mixBlendMode'],
-        opacity: developed ? 0 : 0.55,
+        ...SECRET_GRAIN_STYLE,
+        opacity: developed ? 0 : 1,
         transition: developed ? 'opacity 1.2s ease' : noT,
       }} />
 
@@ -333,8 +338,8 @@ function SecretLevelCard({ fileLabel, title, subtitle, dataReadout, image, image
         opacity: 0,
       }} />
 
-      {/* Color channels */}
-      {(
+      {/* Color channels — only mounted while hovered to avoid idle compositing layers */}
+      {isHovered && (
         [
           ['rgba(109,31,42,0.4)', redOn],
           ['rgba(250,255,199,0.25)', yellowOn],
@@ -345,8 +350,8 @@ function SecretLevelCard({ fileLabel, title, subtitle, dataReadout, image, image
           position: 'absolute', inset: 0, zIndex: 4, pointerEvents: 'none',
           background: color,
           mixBlendMode: 'color' as React.CSSProperties['mixBlendMode'],
-          opacity: isHovered ? (on ? 1 : 0) : 0,
-          transition: isHovered ? 'opacity 0.4s ease' : noT,
+          opacity: on ? 1 : 0,
+          transition: 'opacity 0.4s ease',
         }} />
       ))}
 
@@ -848,10 +853,10 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
       onScroll={handleScroll}
     >
       
-      {/* Noise Overlay */}
-      <div 
-        className="pointer-events-none fixed inset-0 z-[110] opacity-[0.04]" 
-        style={{ backgroundImage: "url('https://grainy-gradients.vercel.app/noise.svg')" }}
+      {/* Noise Overlay — static data URI, no external fetch or animation */}
+      <div
+        className="pointer-events-none fixed inset-0 z-[110] opacity-[0.04]"
+        style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='cs-noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23cs-noise)'/%3E%3C/svg%3E\")" }}
       ></div>
 
       {/* Floating HUD Navbar */}
