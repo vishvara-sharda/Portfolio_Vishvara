@@ -803,6 +803,13 @@ const GlobalStyles = React.memo(() => (
       }
       .about-ctas {
         justify-content: center !important;
+        width: 100% !important;
+      }
+      .about-ctas button {
+        flex: 1 1 0 !important;
+        min-width: 0 !important;
+        font-size: clamp(13px, 3.5vw, 15px) !important;
+        padding: 14px 20px !important;
       }
       .about-section .photo-card-outer {
         justify-self: center !important;
