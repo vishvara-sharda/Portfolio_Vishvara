@@ -243,6 +243,7 @@ export default function DesignerMind() {
   const [impactActive,     setImpactActive]      = useState(false);
   const [activePhilosophy, setActivePhilosophy]  = useState<typeof CLUSTERS[0] | null>(null);
   const [cardPos,          setCardPos]           = useState({ x: 0, y: 0 });
+  const lastScrollRef = useRef(0);
 
   // ─── Idle glow via direct DOM manipulation (no re-renders) ───
   const idleTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -682,16 +683,11 @@ export default function DesignerMind() {
             <>
               <motion.div
                 initial={{ opacity:0 }} animate={{ opacity:1 }} exit={{ opacity:0 }}
-                onPointerDown={(e) => {
-                  const startY = e.clientY;
-                  const startX = e.clientX;
-                  const onUp = (upE: PointerEvent) => {
-                    const moved = Math.abs(upE.clientY - startY) > 8 || Math.abs(upE.clientX - startX) > 8;
-                    if (!moved) setActivePhilosophy(null);
-                    window.removeEventListener('pointerup', onUp);
-                  };
-                  window.addEventListener('pointerup', onUp);
+                onClick={() => {
+                  if (Date.now() - lastScrollRef.current > 400) setActivePhilosophy(null);
                 }}
+                onWheel={() => { lastScrollRef.current = Date.now(); }}
+                onTouchMove={() => { lastScrollRef.current = Date.now(); }}
                 style={{ position:'fixed', inset:0, background:'rgba(0,0,0,0.6)', zIndex:50 }} />
               <motion.div
                 initial={{ y:'100%' }} animate={{ y:0 }} exit={{ y:'100%' }}
