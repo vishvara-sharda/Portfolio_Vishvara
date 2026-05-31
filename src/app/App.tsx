@@ -1914,9 +1914,9 @@ export default function App() {
                  {/* Promo Video Cover Box */}
                  <div style={{ background: "rgba(20,20,20,0.4)", borderRadius: "16px", border: "1px solid rgba(255,255,255,0.05)", padding: "8px", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" }}>
                     <iframe
-                      src="https://www.youtube-nocookie.com/embed/oaA4V-_D63A?autoplay=1&mute=1&loop=1&playlist=oaA4V-_D63A&controls=1&rel=0&modestbranding=1"
+                      src="https://www.youtube-nocookie.com/embed/oaA4V-_D63A?controls=1&rel=0&modestbranding=1"
                       title="Margdarshak Promo Video"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
                       style={{
                         width: "100%",
