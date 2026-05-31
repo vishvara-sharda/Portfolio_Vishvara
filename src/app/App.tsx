@@ -1552,19 +1552,25 @@ export default function App() {
           }}>
             Contact Me
           </button>
-          <button style={{
-            background: "transparent",
-            border: "1px solid rgba(250,255,199,0.25)",
-            color: "#FAFFC7",
-            padding: "12px 28px",
-            borderRadius: "8px",
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: "13px",
-            letterSpacing: "0.02em",
-            cursor: "pointer",
-          }}>
+          <a
+            href="/Vishvara_Gandharv_Resume.pdf"
+            download="Vishvara_Gandharv_Resume.pdf"
+            style={{
+              display: "inline-block",
+              background: "transparent",
+              border: "1px solid rgba(250,255,199,0.25)",
+              color: "#FAFFC7",
+              padding: "12px 28px",
+              borderRadius: "8px",
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: "13px",
+              letterSpacing: "0.02em",
+              cursor: "pointer",
+              textDecoration: "none",
+            }}
+          >
             Download Resume
-          </button>
+          </a>
 
         </div>
 
@@ -1724,17 +1730,24 @@ export default function App() {
               justifyContent: "center",
               marginTop: "24px"
             }}>
-              <button className="featured-btn-primary btn-shine" style={{
-                fontWeight: "bold",
-                padding: "10px 24px",
-                borderRadius: "11px",
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: "13px",
-                cursor: "pointer",
-                transition: "all 0.3s ease"
-              }}>
+              <a
+                href="/Vishvara_Gandharv_Resume.pdf"
+                download="Vishvara_Gandharv_Resume.pdf"
+                className="featured-btn-primary btn-shine"
+                style={{
+                  display: "inline-block",
+                  fontWeight: "bold",
+                  padding: "10px 24px",
+                  borderRadius: "11px",
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: "13px",
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                  textDecoration: "none",
+                }}
+              >
                 Download Resume
-              </button>
+              </a>
               <a
                 href="https://www.linkedin.com/in/vishvara-gandharv"
                 target="_blank"
