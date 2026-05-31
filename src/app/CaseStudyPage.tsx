@@ -640,6 +640,63 @@ function IAConstellation() {
   );
 }
 
+const NUDGE_MESSAGES = [
+  "Take your time.",
+  "There's no rush.",
+  "Breathe.",
+  "Enjoy the details.",
+  "Almost there."
+];
+
+interface CollectibleCardProps {
+  id: number;
+  style?: React.CSSProperties;
+  isCollected: boolean;
+  showNudge: boolean;
+  onCollect: (id: number) => void;
+}
+
+function CollectibleCard({ id, style, isCollected, showNudge, onCollect }: CollectibleCardProps) {
+  return (
+    <div className="absolute z-[80] flex justify-center items-center" style={style}>
+      <AnimatePresence mode="wait">
+        {!isCollected ? (
+          <motion.div
+            key="card"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.5, y: -300, x: 200 }}
+            transition={{ duration: 0.5 }}
+            className="cursor-pointer group"
+            onClick={(e) => { e.stopPropagation(); onCollect(id); }}
+            title="Collect me!"
+          >
+            <motion.div
+              animate={{ y: [0, -3, 0] }}
+              transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+            >
+              <div className="w-16 h-20 bg-[#FAFFC7] border border-[#FAFFC7] rounded-xl shadow-[0_0_15px_rgba(250,255,199,0.35)] flex flex-col items-center justify-center text-center px-1">
+                <Star className="w-6 h-6 text-[#B78494] group-hover:scale-110 transition-transform duration-300" fill="currentColor" />
+              </div>
+            </motion.div>
+          </motion.div>
+        ) : showNudge ? (
+          <motion.div
+            key="nudge"
+            initial={{ opacity: 0, y: 10, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.9 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="text-[#FAFFC7] font-serif italic text-sm pointer-events-none whitespace-nowrap drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] bg-[#121212]/80 px-4 py-2 rounded-full border border-[#333] shadow-[0_4px_24px_rgba(0,0,0,0.5)]"
+          >
+            "{NUDGE_MESSAGES[id - 1]}"
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 
 export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) {
@@ -733,61 +790,12 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
     }
   };
 
-  const nudgeMessages = [
-    "Take your time.",
-    "There's no rush.",
-    "Breathe.",
-    "Enjoy the details.",
-    "Almost there."
-  ];
-
   const unlockAll = () => {
     setCollectedCards([1, 2, 3, 4, 5]);
     setHasReachedEnd(true);
     setTimeout(() => scrollToSection('messy-middle'), 100);
   };
 
-  // Redesigned Square Collectible Card
-  const Collectible = ({ id, style }: { id: number, style?: React.CSSProperties }) => {
-    const isCollected = collectedCards.includes(id);
-    const showNudge = nudgeStates[id];
-
-    return (
-      <div className="absolute z-[80] flex justify-center items-center" style={style}>
-        <AnimatePresence mode="wait">
-          {!isCollected ? (
-            <motion.div
-              key="card"
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1, y: [0, -3, 0] }}
-              exit={{ opacity: 0, scale: 0.5, y: -300, x: 200 }} 
-              transition={{ duration: 0.5, y: { repeat: Infinity, duration: 4, ease: "easeInOut" } }}
-              className="cursor-pointer group"
-              onClick={(e) => { e.stopPropagation(); handleCollect(id); }}
-              title="Collect me!"
-            >
-              <div className="w-16 h-20 bg-[#FAFFC7] border border-[#FAFFC7] rounded-xl shadow-[0_0_15px_rgba(250,255,199,0.35)] flex flex-col items-center justify-center transition-all duration-300 text-center px-1">
-                <div className="relative flex justify-center items-center">
-                  <Star className="w-6 h-6 text-[#B78494] relative z-10 drop-shadow-[0_2px_2px_rgba(0,0,0,0.2)] transition-transform duration-300 scale-100 group-hover:scale-110" fill="currentColor" />
-                </div>
-              </div>
-            </motion.div>
-          ) : showNudge ? (
-            <motion.div
-              key="nudge"
-              initial={{ opacity: 0, y: 10, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -10, scale: 0.9 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="text-[#FAFFC7] font-serif italic text-sm pointer-events-none whitespace-nowrap drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] bg-[#121212]/80 px-4 py-2 rounded-full backdrop-blur-md border border-[#333] shadow-[0_4px_24px_rgba(0,0,0,0.5)]"
-            >
-              "{nudgeMessages[id - 1]}"
-            </motion.div>
-          ) : null}
-        </AnimatePresence>
-      </div>
-    );
-  };
 
   const getPhoneStyle = (idx: number) => {
     const slot = phonePositions[idx];
@@ -933,7 +941,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
 
       {/* Hero Section */}
       <section className="pt-[160px] pb-24 border-b border-[#333] relative">
-        <Collectible id={1} style={{ top: '20%', right: '15%' }} />
+        <CollectibleCard id={1} style={{ top: '20%', right: '15%' }} isCollected={collectedCards.includes(1)} showNudge={!!nudgeStates[1]} onCollect={handleCollect} />
         
         <motion.div className="max-w-[960px] mx-auto px-8" {...fadeUpConfig}>
           <div className="flex items-center gap-3 mb-6">
@@ -1017,7 +1025,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
 
       {/* The Problem */}
       <section id="problem" className="py-32 border-b border-[#333] relative">
-        <Collectible id={2} style={{ bottom: '20%', left: '10%' }} />
+        <CollectibleCard id={2} style={{ bottom: '20%', left: '10%' }} isCollected={collectedCards.includes(2)} showNudge={!!nudgeStates[2]} onCollect={handleCollect} />
 
         <motion.div className="max-w-[960px] mx-auto px-8" {...fadeUpConfig}>
           <div className="flex items-center gap-3 mb-6">
@@ -1067,7 +1075,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
 
       {/* Understanding the Users */}
       <section id="users" className="py-32 border-b border-[#333] relative">
-        <Collectible id={3} style={{ top: '40%', right: '10%' }} />
+        <CollectibleCard id={3} style={{ top: '40%', right: '10%' }} isCollected={collectedCards.includes(3)} showNudge={!!nudgeStates[3]} onCollect={handleCollect} />
 
         <motion.div className="max-w-[960px] mx-auto px-8" {...fadeUpConfig}>
           <div className="flex items-center gap-3 mb-6">
@@ -1133,7 +1141,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
 
       {/* Mapping the Experience */}
       <section id="mapping" className="py-32 border-b border-[#333] overflow-hidden relative">
-        <Collectible id={4} style={{ bottom: '15%', right: '15%' }} />
+        <CollectibleCard id={4} style={{ bottom: '15%', right: '15%' }} isCollected={collectedCards.includes(4)} showNudge={!!nudgeStates[4]} onCollect={handleCollect} />
 
         <motion.div className="max-w-[960px] mx-auto px-8" {...fadeUpConfig}>
           <div className="flex items-center gap-3 mb-6">
@@ -1204,7 +1212,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
 
       {/* Designing the Solution */}
       <section id="solution" className="py-32 border-b border-[#333] relative">
-        <Collectible id={5} style={{ top: '30%', left: '8%' }} />
+        <CollectibleCard id={5} style={{ top: '30%', left: '8%' }} isCollected={collectedCards.includes(5)} showNudge={!!nudgeStates[5]} onCollect={handleCollect} />
 
         <motion.div className="max-w-[960px] mx-auto px-8" {...fadeUpConfig}>
           <div className="flex items-center gap-3 mb-6">
