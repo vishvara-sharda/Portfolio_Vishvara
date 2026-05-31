@@ -698,14 +698,61 @@ const GlobalStyles = React.memo(() => (
       }
     }
 
-    /* Testimonials section responsive */
-    @media (max-width: 768px) {
-      .testimonials-grid {
-        grid-template-columns: 1fr !important;
-      }
-      .testimonial-card {
-        padding-bottom: 68px !important;
-      }
+    /* Testimonials infinite scroll */
+    .testimonial-scroll-outer {
+      position: relative;
+    }
+    .testimonial-scroll-outer::before,
+    .testimonial-scroll-outer::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 80px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .testimonial-scroll-outer::before {
+      left: 0;
+      background: linear-gradient(to right, var(--scroll-fade-bg, #0D0A0B), transparent);
+    }
+    .testimonial-scroll-outer::after {
+      right: 0;
+      background: linear-gradient(to left, var(--scroll-fade-bg, #0D0A0B), transparent);
+    }
+    .testimonial-track {
+      display: flex;
+      gap: 24px;
+      overflow-x: scroll;
+      scroll-behavior: auto;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      cursor: grab;
+    }
+    .testimonial-track::-webkit-scrollbar {
+      display: none;
+    }
+    .testimonial-track:active {
+      cursor: grabbing;
+    }
+    .testimonial-card {
+      flex-shrink: 0;
+      width: 380px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .testimonial-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(250,255,199,0.08);
+      border-color: #F2A7C4 !important;
+    }
+    .testimonial-card:hover .testimonial-sticky {
+      transform: translateY(0%);
+    }
+    .testimonial-sticky {
+      transform: translateY(100%);
+      transition: transform 0.35s cubic-bezier(0.34, 1.2, 0.64, 1);
+    }
+    @media (prefers-reduced-motion: reduce) {
       .testimonial-sticky {
         transform: translateY(0%) !important;
         transition: none !important;
@@ -891,6 +938,9 @@ export default function App() {
   const [passionTab, setPassionTab] = useState(0);
   const [orbitHover, setOrbitHover] = useState<{ label: string, content: string } | null>(null);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const testimonialScrollRef = useRef<HTMLDivElement>(null);
+  const testimonialPausedRef = useRef(false);
+  const testimonialRafRef = useRef<number>(0);
   const formRef = useRef<HTMLFormElement>(null);
   const [formStatus, setFormStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [contactFocused, setContactFocused] = useState(false);
@@ -1083,7 +1133,21 @@ export default function App() {
     return () => clearInterval(id);
   }, []);
 
-
+  useEffect(() => {
+    const el = testimonialScrollRef.current;
+    if (!el) return;
+    const speed = 0.6;
+    const step = () => {
+      if (!testimonialPausedRef.current) {
+        el.scrollLeft += speed;
+        const half = el.scrollWidth / 2;
+        if (el.scrollLeft >= half) el.scrollLeft -= half;
+      }
+      testimonialRafRef.current = requestAnimationFrame(step);
+    };
+    testimonialRafRef.current = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(testimonialRafRef.current);
+  }, []);
 
   return (
     <>
@@ -2195,43 +2259,76 @@ export default function App() {
               },
               {
                 obs: "OBS — 003",
-                source: "COLLABORATOR",
+                source: "DFC HACKATHON",
                 quote: "Vishvara has a rare quality — she doesn't just research users, she genuinely cares about them. Every insight she brings is grounded in real empathy, not just method. Working with her made our whole team think differently about who we were designing for.",
                 name: "Komal Loat",
                 role: "Senior UX/UI Designer",
                 sticky: "It's her birthday so I wrote it, otherwise she would have cried.",
               },
+              {
+                obs: "OBS — 004",
+                source: "DFC HACKATHON",
+                quote: "Working with Vishvara was a great experience. She has exceptional research skills and is genuinely empathetic toward users. Her ability to generate insightful ideas helps create meaningful and effective solutions. I wish her all the best for a successful and bright future in UX Design.",
+                name: "Siddhesh Shimpi",
+                role: "UX Designer · Angular Minds",
+                sticky: "Her ideas were so good, I started questioning if I was even the designer.",
+              },
+              {
+                obs: "OBS — 005",
+                source: "COLLABORATOR",
+                quote: "Having studied together throughout college, I've seen how Vishvara perfectly bridges the gap between design and development. Her UI/UX insights consistently elevate every technical project we touch.",
+                name: "Shyam Singh Negi",
+                role: "DevOps/Cloud Engineer · Freelancer",
+                sticky: "She threatened me with a knife to write this.",
+              },
             ];
+            const allCards = [...cards, ...cards];
+            let dragStart = 0;
+            let dragScrollLeft = 0;
             return (
-              <div className="testimonials-grid" style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(3, 1fr)",
-                gap: "28px",
-                alignItems: "stretch",
-              }}>
-                {cards.map((card, idx) => {
-                  const isHovered = hoveredCard === idx;
-                  const stickyStyle = prefersReduced
-                    ? { opacity: isHovered ? 1 : 0, transition: "opacity 0.3s ease", transform: "translateY(0%)" }
-                    : { transform: isHovered ? "translateY(0%)" : "translateY(100%)", transition: "transform 0.35s cubic-bezier(0.34, 1.2, 0.64, 1)" };
+              <div className="testimonial-scroll-outer">
+                <div
+                  className="testimonial-track"
+                  ref={testimonialScrollRef}
+                  onMouseEnter={() => { testimonialPausedRef.current = true; }}
+                  onMouseLeave={() => {
+                    testimonialPausedRef.current = false;
+                    const el = testimonialScrollRef.current;
+                    if (el) {
+                      const half = el.scrollWidth / 2;
+                      if (el.scrollLeft >= half) el.scrollLeft -= half;
+                    }
+                  }}
+                  onMouseDown={(e) => {
+                    const el = testimonialScrollRef.current;
+                    if (!el) return;
+                    dragStart = e.clientX;
+                    dragScrollLeft = el.scrollLeft;
+                    const onMove = (ev: MouseEvent) => {
+                      el.scrollLeft = dragScrollLeft - (ev.clientX - dragStart);
+                    };
+                    const onUp = () => {
+                      window.removeEventListener("mousemove", onMove);
+                      window.removeEventListener("mouseup", onUp);
+                    };
+                    window.addEventListener("mousemove", onMove);
+                    window.addEventListener("mouseup", onUp);
+                  }}
+                >
+                {allCards.map((card, idx) => {
                   return (
                     <div
                       key={idx}
                       className="testimonial-card"
-                      onMouseEnter={() => setHoveredCard(idx)}
-                      onMouseLeave={() => setHoveredCard(null)}
                       style={{
                         background: "#1A1215",
-                        borderLeft: `2px solid ${isHovered ? "#F2A7C4" : "rgba(250,255,199,0.25)"}`,
+                        borderLeft: "2px solid rgba(250,255,199,0.25)",
                         borderRadius: "14px",
                         padding: "32px",
                         position: "relative" as const,
                         overflow: "hidden" as const,
                         display: "flex",
                         flexDirection: "column" as const,
-                        transform: isHovered ? "translateY(-4px)" : "translateY(0)",
-                        boxShadow: isHovered ? "0 12px 40px rgba(250,255,199,0.08)" : "none",
-                        transition: "transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease",
                       }}
                     >
                       {/* Faint ruled-line texture */}
@@ -2326,7 +2423,6 @@ export default function App() {
                           padding: "12px 20px",
                           borderRadius: "0 0 14px 14px",
                           zIndex: 2,
-                          ...stickyStyle,
                         }}
                       >
                         <p style={{
@@ -2343,6 +2439,7 @@ export default function App() {
                     </div>
                   );
                 })}
+                </div>
               </div>
             );
           })()}
