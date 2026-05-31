@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Premium Hover Text Swap Effect</title>
+  <!-- Google Fonts for premium typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Reset & CSS variables */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-dark: #0a060e;
+      --pink: #f2a7c4;
+      --yellow: #fafcc7;
+      --purple: #8e51b3;
+      --glass-bg: rgba(15, 8, 20, 0.4);
+      --glass-border: rgba(242, 167, 196, 0.15);
+      --easing: cubic-bezier(0.76, 0, 0.24, 1);
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: #ffffff;
+      font-family: 'Outfit', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Ambient Background Glows */
+    .glow-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(140px);
+      z-index: 1;
+      opacity: 0.25;
+      pointer-events: none;
+    }
+
+    .glow-pink {
+      width: 450px;
+      height: 450px;
+      background: var(--pink);
+      top: -10%;
+      left: 10%;
+      animation: drift 15s ease-in-out infinite alternate;
+    }
+
+    .glow-yellow {
+      width: 400px;
+      height: 400px;
+      background: var(--yellow);
+      bottom: -10%;
+      right: 15%;
+      animation: drift 18s ease-in-out infinite alternate-reverse;
+    }
+
+    @keyframes drift {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(40px, -40px) scale(1.15); }
+    }
+
+    /* Content Showcase Wrapper */
+    .showcase-container {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 40px;
+      max-width: 600px;
+      width: 90%;
+    }
+
+    .header-tag {
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--pink);
+      font-weight: 600;
+      margin-bottom: 12px;
+      text-shadow: 0 0 10px rgba(242, 167, 196, 0.3);
+    }
+
+    .title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 600;
+      margin-bottom: 40px;
+      color: #fffde0;
+      background: linear-gradient(135deg, #fffde0 30%, var(--pink) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Navigation Menu Card */
+    .nav-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 24px 32px;
+      box-shadow: 
+        0 30px 60px rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(242, 167, 196, 0.05) inset;
+      display: inline-flex;
+      align-items: center;
+      gap: 36px;
+    }
+
+    /* HOVER TEXT SWAP EFFECT CORE CLASSES */
+    .swap-link {
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      height: 1.8rem;
+      line-height: 1.8rem;
+      overflow: hidden; /* Hide the overflowed alternate text */
+      font-size: 1.15rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    .default-text {
+      color: rgba(255, 255, 255, 0.85);
+      display: block;
+      transition: transform 0.5s var(--easing), color 0.3s ease;
+    }
+
+    .alternate-text {
+      color: var(--pink);
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 400;
+      display: block;
+      position: absolute;
+      top: 100%; /* Placed exactly below the default text */
+      left: 0;
+      width: 100%;
+      transition: transform 0.5s var(--easing);
+    }
+
+    /* Trigger the translation on hover */
+    .swap-link:hover .default-text {
+      transform: translateY(-100%); /* Slide default text out upward */
+      color: var(--yellow);
+    }
+
+    .swap-link:hover .alternate-text {
+      transform: translateY(-100%); /* Slide alternate text in from below */
+    }
+
+    /* Decorative visual indicator below links */
+    .swap-link::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--pink), transparent);
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform 0.4s var(--easing);
+    }
+
+    .swap-link:hover::after {
+      transform: scaleX(1);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 640px) {
+      .nav-card {
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+        padding: 32px;
+      }
+      
+      .title {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Glow Blocks -->
+  <div class="glow-blob glow-pink"></div>
+  <div class="glow-blob glow-yellow"></div>
+
+  <div class="showcase-container">
+    <div class="header-tag">Pure HTML & CSS</div>
+    <h1 class="title">Text-Swap Navigation</h1>
+
+    <!-- Navigation Menu Card -->
+    <nav class="nav-card">
+      
+      <!-- Link 1: Home -->
+      <a href="#" class="swap-link">
+        <span class="default-text">Home</span>
+        <span class="alternate-text">Let's Begin</span>
+      </a>
+
+      <!-- Link 2: Projects -->
+      <a href="#" class="swap-link">
+        <span class="default-text">Projects</span>
+        <span class="alternate-text">My Creations</span>
+      </a>
+
+      <!-- Link 3: About -->
+      <a href="#" class="swap-link">
+        <span class="default-text">About</span>
+        <span class="alternate-text">Who am I?</span>
+      </a>
+
+      <!-- Link 4: Contact -->
+      <a href="#" class="swap-link">
+        <span class="default-text">Contact</span>
+        <span class="alternate-text">Say Hello!</span>
+      </a>
+
+    </nav>
+  </div>
+
+</body>
+</html>
