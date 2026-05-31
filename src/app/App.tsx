@@ -1493,7 +1493,7 @@ export default function App() {
               willChange: "opacity, top",
             }}
           >
-            V<span style={{ position: "relative", display: "inline-block" }}>I<svg viewBox="0 0 24 24" style={{ position: "absolute", top: "-0.3em", left: "50%", transform: "translateX(-30%)", width: "0.28em", height: "0.28em", overflow: "visible" }} xmlns="http://www.w3.org/2000/svg"><polygon points="12,4 13.9,9.4 19.6,9.5 15,13 16.7,18.5 12,15.2 7.3,18.5 9,13 4.4,9.5 10.1,9.4" fill="#F2A7C4" stroke="#F2A7C4" strokeWidth="3" strokeLinejoin="round" strokeLinecap="round" /></svg></span>SHVARA GANDHARV
+            UX Researcher &amp; Strategist
           </div>
 
         </div>
