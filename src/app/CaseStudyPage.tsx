@@ -654,21 +654,50 @@ interface CollectibleCardProps {
   isCollected: boolean;
   showNudge: boolean;
   onCollect: (id: number) => void;
+  counterRef: React.RefObject<HTMLDivElement>;
 }
 
-function CollectibleCard({ id, style, isCollected, showNudge, onCollect }: CollectibleCardProps) {
+const cardVariants = {
+  hidden: { opacity: 0, scale: 0 },
+  visible: { opacity: 1, scale: 1, transition: { duration: 0.5 } },
+  exit: (target: { x: number; y: number }) => ({
+    opacity: 0,
+    scale: 0.25,
+    x: target.x,
+    y: target.y,
+    transition: { duration: 0.55, ease: [0.4, 0, 1, 1] },
+  }),
+};
+
+function CollectibleCard({ id, style, isCollected, showNudge, onCollect, counterRef }: CollectibleCardProps) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [exitTarget, setExitTarget] = useState({ x: 0, y: -300 });
+
   return (
     <div className="absolute z-[80] flex justify-center items-center" style={style}>
       <AnimatePresence mode="wait">
         {!isCollected ? (
           <motion.div
             key="card"
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.5, y: -300, x: 200 }}
-            transition={{ duration: 0.5 }}
+            ref={cardRef}
+            variants={cardVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            custom={exitTarget}
             className="cursor-pointer group"
-            onClick={(e) => { e.stopPropagation(); onCollect(id); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              if (cardRef.current && counterRef.current) {
+                const cardRect = cardRef.current.getBoundingClientRect();
+                const counterRect = counterRef.current.getBoundingClientRect();
+                setExitTarget({
+                  x: counterRect.left + counterRect.width / 2 - cardRect.left - cardRect.width / 2,
+                  y: counterRect.top + counterRect.height / 2 - cardRect.top - cardRect.height / 2,
+                });
+              }
+              onCollect(id);
+            }}
             title="Collect me!"
           >
             <motion.div
@@ -709,6 +738,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
   const [hasReachedEnd, setHasReachedEnd] = useState(false);
 
   // Refs for scroll performance (prevents glitchy re-renders on every scroll tick)
+  const counterRef = useRef<HTMLDivElement>(null);
   const progressBarRef = useRef<HTMLDivElement>(null);
   const mobileProgressBarRef = useRef<HTMLDivElement>(null);
   const xpTextRef = useRef<HTMLSpanElement>(null);
@@ -905,7 +935,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
 
         {/* HUD Cards Tracker */}
         <div className="flex items-center gap-2">
-          <div className="w-5 h-6 bg-[#FAFFC7] border border-[#FAFFC7] rounded shadow-[0_0_10px_rgba(250,255,199,0.4)] flex items-center justify-center">
+          <div ref={counterRef} className="w-5 h-6 bg-[#FAFFC7] border border-[#FAFFC7] rounded shadow-[0_0_10px_rgba(250,255,199,0.4)] flex items-center justify-center">
             <Star className="w-3 h-3 text-[#F2A7C4] drop-shadow-[0_1px_1px_rgba(0,0,0,0.3)]" fill="currentColor" />
           </div>
           <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-gray-400">
@@ -941,7 +971,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
 
       {/* Hero Section */}
       <section className="pt-[160px] pb-24 border-b border-[#333] relative">
-        <CollectibleCard id={1} style={{ top: '20%', right: '15%' }} isCollected={collectedCards.includes(1)} showNudge={!!nudgeStates[1]} onCollect={handleCollect} />
+        <CollectibleCard id={1} style={{ top: '20%', right: '15%' }} isCollected={collectedCards.includes(1)} showNudge={!!nudgeStates[1]} onCollect={handleCollect} counterRef={counterRef} />
         
         <motion.div className="max-w-[960px] mx-auto px-8" {...fadeUpConfig}>
           <div className="flex items-center gap-3 mb-6">
@@ -1025,7 +1055,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
 
       {/* The Problem */}
       <section id="problem" className="py-32 border-b border-[#333] relative">
-        <CollectibleCard id={2} style={{ bottom: '20%', left: '10%' }} isCollected={collectedCards.includes(2)} showNudge={!!nudgeStates[2]} onCollect={handleCollect} />
+        <CollectibleCard id={2} style={{ bottom: '20%', left: '10%' }} isCollected={collectedCards.includes(2)} showNudge={!!nudgeStates[2]} onCollect={handleCollect} counterRef={counterRef} />
 
         <motion.div className="max-w-[960px] mx-auto px-8" {...fadeUpConfig}>
           <div className="flex items-center gap-3 mb-6">
@@ -1075,7 +1105,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
 
       {/* Understanding the Users */}
       <section id="users" className="py-32 border-b border-[#333] relative">
-        <CollectibleCard id={3} style={{ top: '40%', right: '10%' }} isCollected={collectedCards.includes(3)} showNudge={!!nudgeStates[3]} onCollect={handleCollect} />
+        <CollectibleCard id={3} style={{ top: '40%', right: '10%' }} isCollected={collectedCards.includes(3)} showNudge={!!nudgeStates[3]} onCollect={handleCollect} counterRef={counterRef} />
 
         <motion.div className="max-w-[960px] mx-auto px-8" {...fadeUpConfig}>
           <div className="flex items-center gap-3 mb-6">
@@ -1141,7 +1171,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
 
       {/* Mapping the Experience */}
       <section id="mapping" className="py-32 border-b border-[#333] overflow-hidden relative">
-        <CollectibleCard id={4} style={{ bottom: '15%', right: '15%' }} isCollected={collectedCards.includes(4)} showNudge={!!nudgeStates[4]} onCollect={handleCollect} />
+        <CollectibleCard id={4} style={{ bottom: '15%', right: '15%' }} isCollected={collectedCards.includes(4)} showNudge={!!nudgeStates[4]} onCollect={handleCollect} counterRef={counterRef} />
 
         <motion.div className="max-w-[960px] mx-auto px-8" {...fadeUpConfig}>
           <div className="flex items-center gap-3 mb-6">
@@ -1212,7 +1242,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
 
       {/* Designing the Solution */}
       <section id="solution" className="py-32 border-b border-[#333] relative">
-        <CollectibleCard id={5} style={{ top: '30%', left: '8%' }} isCollected={collectedCards.includes(5)} showNudge={!!nudgeStates[5]} onCollect={handleCollect} />
+        <CollectibleCard id={5} style={{ top: '30%', left: '8%' }} isCollected={collectedCards.includes(5)} showNudge={!!nudgeStates[5]} onCollect={handleCollect} counterRef={counterRef} />
 
         <motion.div className="max-w-[960px] mx-auto px-8" {...fadeUpConfig}>
           <div className="flex items-center gap-3 mb-6">
