@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowLeft, ArrowRight, ExternalLink, Lightbulb, Search, Zap, User, TrendingUp, AlertCircle, RotateCw, CheckCircle, XCircle, Star, Unlock, Sparkles, MoveRight, Smartphone, HandHelping, Building2 } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ExternalLink, Lightbulb, Search, Zap, User, TrendingUp, AlertCircle, RotateCw, CheckCircle, XCircle, Star, Unlock, Sparkles, MoveRight, Smartphone, HandHelping, Building2, Shield, Heart } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 import FavoriteLogo from '../imports/Margdarshak/Margdarshak Logo.svg';
@@ -19,6 +19,7 @@ import secretAskingHelp2 from '../imports/Margdarshak/Secret folder/asking help 
 import guide1 from '../imports/Margdarshak/Guide/1.jpg';
 import guide2 from '../imports/Margdarshak/Guide/2.jpg';
 import guide3 from '../imports/Margdarshak/Guide/3.jpg';
+import noPhoneGuide from '../imports/Margdarshak/guide_1.png';
 
 interface CaseStudyPageProps {
   project: {
@@ -1313,14 +1314,19 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
-                className="w-full flex justify-center py-12"
+                className="w-full flex justify-center py-8"
               >
-                <div
-                  className="max-w-[400px] w-full bg-[#121212] border border-[#333] rounded-2xl flex items-center justify-center"
-                  style={{ aspectRatio: '4/3' }}
-                >
-                  <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-gray-600">Image coming soon</span>
-                </div>
+                <img
+                  src={noPhoneGuide}
+                  alt="No phone needs access"
+                  style={{
+                    display: 'block',
+                    maxWidth: '100%',
+                    border: '2px solid #FAFFC7',
+                    borderRadius: '16px',
+                    filter: 'saturate(1.05) contrast(1.05)',
+                  }}
+                />
               </motion.div>
             )}
           </AnimatePresence>
@@ -1472,6 +1478,30 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
               </p>
             </div>
           </div>
+
+          <motion.div className="mt-8" {...fadeUpConfig}>
+            <div className="bg-[#121212] border border-[#333] rounded-3xl p-10 grid md:grid-cols-[200px_1fr] gap-12 items-center">
+              <div className="w-full aspect-square bg-[#1E1E1E] rounded-2xl overflow-hidden border border-[#444] flex flex-col items-center justify-center gap-3 px-4">
+                <User className="w-16 h-16 text-gray-600" />
+                <p className="text-[10px] text-gray-600 italic text-center leading-relaxed">Participant chose not to be photographed.</p>
+              </div>
+              <div>
+                <div className="font-serif text-4xl text-white mb-2">Ramesh, 52</div>
+                <div className="text-[10px] text-[#FAFFC7] font-bold tracking-[0.2em] uppercase mb-6">
+                  Daily Wage Worker — Rural (Pune)
+                </div>
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {['No Smartphone', 'Low Literacy'].map((tag) => (
+                    <span key={tag} className="text-[10px] font-bold tracking-wider bg-[#333] text-gray-300 px-3 py-1.5 rounded-full uppercase">{tag}</span>
+                  ))}
+                </div>
+                <p className="text-base text-gray-300 italic mb-8 border-l-2 border-[#F2A7C4] pl-4 py-1">
+                  "I heard there is money from the government for people like me. But I don't know where to go or who to ask."
+                </p>
+              </div>
+            </div>
+            <p className="text-[11px] text-gray-600 italic mt-4 text-center">Ramesh represents the tier three user — the person the app alone could never reach.</p>
+          </motion.div>
         </motion.div>
       </section>
 
@@ -1804,6 +1834,81 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
               </motion.div>
             ))}
           </div>
+
+          {/* ── Usability Testing Moment ── */}
+          <motion.div className="mt-24" {...fadeUpConfig}>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-8 h-px bg-[#F2A7C4]"></div>
+              <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#F2A7C4]">
+                Usability Testing
+              </span>
+            </div>
+            <h3 className="font-serif text-3xl md:text-4xl text-white mb-16">What broke. What we fixed.</h3>
+
+            <div className="text-center mb-12">
+              <div className="font-serif text-8xl md:text-9xl text-[#FAFFC7] leading-none mb-3">90%</div>
+              <p className="text-sm text-gray-500 tracking-[0.06em]">Task completion — Round 2 usability testing</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              <div className="bg-[#121212] border border-[#333] rounded-2xl p-8 flex flex-col gap-4">
+                <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-[#FCA5A5]">What broke in Round 1</span>
+                <p className="text-sm text-gray-400 leading-relaxed">6 out of 7 participants dropped off at the document upload step. The label read "Upload required documents" — participants didn't know which documents qualified or what would happen if they uploaded the wrong one.</p>
+              </div>
+              <div className="bg-[#121212] border border-[#333] rounded-2xl p-8 flex flex-col gap-4">
+                <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-[#4ADE80]">What we changed</span>
+                <p className="text-sm text-gray-400 leading-relaxed">We replaced the label with a plain language checklist showing specific document names with simple explanations. In Round 2, all 7 participants completed the step without assistance.</p>
+              </div>
+            </div>
+
+            <p className="text-center text-[11px] text-gray-600 italic">Research doesn't end at insights. It ends when the design works.</p>
+          </motion.div>
+
+          {/* ── Design Principles ── */}
+          <motion.div className="mt-24" {...fadeUpConfig}>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-8 h-px bg-[#F2A7C4]"></div>
+              <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#F2A7C4]">
+                Design Principles
+              </span>
+            </div>
+            <h3 className="font-serif text-3xl md:text-4xl text-white mb-12">What guided every decision</h3>
+
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                {
+                  icon: Shield,
+                  title: 'Trust over speed',
+                  description: 'Fear of irreversible mistakes was the core barrier. Every screen was designed to feel reversible. Preview before submit. Confirm before proceed. No dead ends.',
+                },
+                {
+                  icon: Heart,
+                  title: 'Dignity by default',
+                  description: 'Users avoided government portals because they felt humiliating and opaque. Every interaction was designed to feel like guidance, not interrogation. Plain language. No shame in not knowing.',
+                },
+                {
+                  icon: Smartphone,
+                  title: 'Built on what they know',
+                  description: 'Users were daily WhatsApp and UPI users. The interface borrowed familiar patterns — chat-like flows, simple tap interactions — instead of introducing new mental models.',
+                },
+              ].map((principle, idx) => {
+                const IconComponent = principle.icon;
+                return (
+                  <motion.div
+                    key={idx}
+                    whileHover={{ y: -5 }}
+                    className="bg-[#121212] border border-[#333] rounded-2xl p-8 hover:border-[#F2A7C4]/50 transition-colors duration-300"
+                  >
+                    <div className="w-12 h-12 bg-[#F2A7C4]/10 rounded-xl flex items-center justify-center mb-6">
+                      <IconComponent className="w-6 h-6 text-[#F2A7C4]" />
+                    </div>
+                    <h4 className="text-lg font-bold text-white mb-3">{principle.title}</h4>
+                    <p className="text-sm text-gray-400 leading-relaxed">{principle.description}</p>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </motion.div>
         </motion.div>
       </section>
 
