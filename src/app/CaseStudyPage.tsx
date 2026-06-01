@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowLeft, ArrowRight, ExternalLink, Lightbulb, Search, Zap, User, TrendingUp, AlertCircle, RotateCw, CheckCircle, XCircle, Star, Unlock, Sparkles, MoveRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ExternalLink, Lightbulb, Search, Zap, User, TrendingUp, AlertCircle, RotateCw, CheckCircle, XCircle, Star, Unlock, Sparkles, MoveRight, Smartphone, HandHelping, Building2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 import FavoriteLogo from '../imports/Margdarshak/Margdarshak Logo.svg';
@@ -16,6 +16,9 @@ import secretPeople from '../imports/Margdarshak/Secret folder/people.jpeg';
 import secretIA from '../imports/Margdarshak/Secret folder/IA.jpeg';
 import secretAskingHelp1 from '../imports/Margdarshak/Secret folder/asking help1.jpeg';
 import secretAskingHelp2 from '../imports/Margdarshak/Secret folder/asking help 2.jpeg';
+import guide1 from '../imports/Margdarshak/Guide/1.jpg';
+import guide2 from '../imports/Margdarshak/Guide/2.jpg';
+import guide3 from '../imports/Margdarshak/Guide/3.jpg';
 
 interface CaseStudyPageProps {
   project: {
@@ -843,8 +846,28 @@ function CollectibleCard({ id, style, isCollected, showNudge, onCollect, counter
 
 // ─────────────────────────────────────────────────────────────────────────────
 
+function getFixedPhoneStyle(slot: 'left' | 'center' | 'right'): React.CSSProperties {
+  const base: React.CSSProperties = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    aspectRatio: '9 / 19',
+    borderRadius: '1.75rem',
+    overflow: 'hidden',
+    backgroundColor: '#121212',
+    display: 'flex',
+    flexDirection: 'column',
+    transition: 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), height 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease',
+  };
+  if (slot === 'center') return { ...base, height: '88%', transform: 'translate(-50%, -50%) scale(1)', zIndex: 20, opacity: 1, cursor: 'default', boxShadow: '0 0 40px rgba(242,167,196,0.15), 0 8px 32px rgba(0,0,0,0.8)', border: '4px solid #444' };
+  if (slot === 'left')   return { ...base, height: '74%', transform: 'translate(calc(-50% - 195px), -50%) scale(0.95)', zIndex: 10, opacity: 0.6, cursor: 'pointer', boxShadow: '0 8px 24px rgba(0,0,0,0.5)', border: '4px solid #333' };
+  return { ...base, height: '74%', transform: 'translate(calc(-50% + 195px), -50%) scale(0.95)', zIndex: 10, opacity: 0.6, cursor: 'pointer', boxShadow: '0 8px 24px rgba(0,0,0,0.5)', border: '4px solid #333' };
+}
+
 export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) {
   const [phonePositions, setPhonePositions] = useState<('left' | 'center' | 'right')[]>(['left', 'center', 'right']);
+  const [phonePositionsTier2, setPhonePositionsTier2] = useState<('left' | 'center' | 'right')[]>(['left', 'center', 'right']);
+  const [activeTier, setActiveTier] = useState(1);
   const [poppedScreen, setPoppedScreen] = useState<number | null>(null);
   const [nudgeStates, setNudgeStates] = useState<Record<number, boolean>>({});
   
@@ -947,6 +970,16 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
     newPositions[idx] = 'center';
     newPositions[centerIdx] = mySlot;
     setPhonePositions(newPositions);
+  };
+
+  const handlePhoneClickTier2 = (idx: number) => {
+    const mySlot = phonePositionsTier2[idx];
+    if (mySlot === 'center') return;
+    const centerIdx = phonePositionsTier2.indexOf('center');
+    const newPositions = [...phonePositionsTier2] as ('left' | 'center' | 'right')[];
+    newPositions[idx] = 'center';
+    newPositions[centerIdx] = mySlot;
+    setPhonePositionsTier2(newPositions);
   };
 
   const handleCollect = (id: number) => {
@@ -1175,29 +1208,153 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
             MARGDARSHAN is a welfare guidance platform designed to help low-income families easily find and apply for government schemes through simplified steps and guided support.
           </p>
 
-          <div className="w-full h-[520px] rounded-3xl relative overflow-hidden bg-[#121212] border border-[#333] group">
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(242,167,196,0.1)_0%,transparent_60%)] opacity-50 group-hover:opacity-100 transition-opacity duration-700"></div>
-            {heroPhones.map((phone, idx) => (
-              <div
-                key={idx}
-                onClick={() => handlePhoneClick(idx)}
-                style={getPhoneStyle(idx)}
-                title={phonePositions[idx] !== 'center' ? `View ${phone.alt}` : undefined}
+          <p className="text-center font-serif text-xl text-white/50 italic mb-8">
+            One problem. Three realities. One system.
+          </p>
+
+          <div className="flex gap-3 justify-center mb-8">
+            {([1, 2, 3] as const).map((tier) => (
+              <motion.button
+                key={tier}
+                onClick={() => setActiveTier(tier)}
+                className="flex flex-col items-center gap-3 px-5 py-5 rounded-2xl bg-[#121212] cursor-pointer"
+                style={{ minWidth: 120, borderWidth: 1, borderStyle: 'solid' }}
+                animate={{
+                  borderColor: activeTier === tier ? '#F2A7C4' : '#333333',
+                  opacity: activeTier === tier ? 1 : 0.4,
+                }}
+                whileHover={{ opacity: activeTier !== tier ? 0.7 : 1 }}
+                transition={{ duration: 0.25 }}
               >
-                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, display: 'flex', justifyContent: 'center', zIndex: 10 }}>
-                  <div style={{ width: '33%', height: '16px', background: '#000', borderRadius: '0 0 12px 12px' }} />
-                </div>
-                <img src={phone.src} alt={phone.alt} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                {phonePositions[idx] !== 'center' && (
-                  <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.4)', borderRadius: 'inherit', pointerEvents: 'none' }} />
-                )}
-              </div>
+                {tier === 1 && <Smartphone className="w-5 h-5" style={{ color: activeTier === tier ? '#F2A7C4' : '#6B7280', transition: 'color 0.25s ease' }} />}
+                {tier === 2 && <HandHelping className="w-5 h-5" style={{ color: activeTier === tier ? '#F2A7C4' : '#6B7280', transition: 'color 0.25s ease' }} />}
+                {tier === 3 && <Building2 className="w-5 h-5" style={{ color: activeTier === tier ? '#F2A7C4' : '#6B7280', transition: 'color 0.25s ease' }} />}
+                <span
+                  className="text-[12px] font-bold tracking-[0.06em] text-center leading-relaxed"
+                  style={{ color: activeTier === tier ? '#F2A7C4' : '#6B7280', transition: 'color 0.25s ease' }}
+                >
+                  {tier === 1 ? 'Has a phone. Can use it.' : tier === 2 ? 'Has a phone. Needs support.' : 'No phone. Needs access.'}
+                </span>
+              </motion.button>
             ))}
-            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-[#000]/60 backdrop-blur-md border border-[#333] px-4 py-2 rounded-full">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#FAFFC7] animate-pulse"></span>
-              <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-[#FAFFC7]">Interactive Prototype</span>
-            </div>
           </div>
+
+          <AnimatePresence mode="wait">
+            {activeTier === 1 && (
+              <motion.div
+                key="tier1"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="w-full h-[520px] rounded-3xl relative overflow-hidden bg-[#121212] border border-[#333] group"
+              >
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(242,167,196,0.1)_0%,transparent_60%)] opacity-50 group-hover:opacity-100 transition-opacity duration-700"></div>
+                {heroPhones.map((phone, idx) => (
+                  <div
+                    key={idx}
+                    onClick={() => handlePhoneClick(idx)}
+                    style={getPhoneStyle(idx)}
+                    title={phonePositions[idx] !== 'center' ? `View ${phone.alt}` : undefined}
+                  >
+                    <div style={{ position: 'absolute', top: 0, left: 0, right: 0, display: 'flex', justifyContent: 'center', zIndex: 10 }}>
+                      <div style={{ width: '33%', height: '16px', background: '#000', borderRadius: '0 0 12px 12px' }} />
+                    </div>
+                    <img src={phone.src} alt={phone.alt} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    {phonePositions[idx] !== 'center' && (
+                      <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.4)', borderRadius: 'inherit', pointerEvents: 'none' }} />
+                    )}
+                  </div>
+                ))}
+                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-[#000]/60 backdrop-blur-md border border-[#333] px-4 py-2 rounded-full">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FAFFC7] animate-pulse"></span>
+                  <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-[#FAFFC7]">Interactive Prototype</span>
+                </div>
+              </motion.div>
+            )}
+
+            {activeTier === 2 && (
+              <motion.div
+                key="tier2"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="w-full h-[520px] rounded-3xl relative overflow-hidden bg-[#121212] border border-[#333] group"
+              >
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(242,167,196,0.1)_0%,transparent_60%)] opacity-50 group-hover:opacity-100 transition-opacity duration-700"></div>
+                {([guide3, guide2, guide1] as string[]).map((src, idx) => (
+                  <div
+                    key={idx}
+                    onClick={() => handlePhoneClickTier2(idx)}
+                    style={getFixedPhoneStyle(phonePositionsTier2[idx])}
+                    title={phonePositionsTier2[idx] !== 'center' ? 'Click to view' : undefined}
+                  >
+                    <div style={{ position: 'absolute', top: 0, left: 0, right: 0, display: 'flex', justifyContent: 'center', zIndex: 10 }}>
+                      <div style={{ width: '33%', height: '16px', background: '#000', borderRadius: '0 0 12px 12px' }} />
+                    </div>
+                    <img src={src} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    {phonePositionsTier2[idx] !== 'center' && (
+                      <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.4)', borderRadius: 'inherit', pointerEvents: 'none' }} />
+                    )}
+                  </div>
+                ))}
+                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-[#000]/60 backdrop-blur-md border border-[#333] px-4 py-2 rounded-full">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#F2A7C4] animate-pulse"></span>
+                  <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-[#F2A7C4]">Guide Flow</span>
+                </div>
+              </motion.div>
+            )}
+
+            {activeTier === 3 && (
+              <motion.div
+                key="tier3"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="w-full flex justify-center py-12"
+              >
+                <div
+                  className="max-w-[400px] w-full bg-[#121212] border border-[#333] rounded-2xl flex items-center justify-center"
+                  style={{ aspectRatio: '4/3' }}
+                >
+                  <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-gray-600">Image coming soon</span>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <AnimatePresence mode="wait">
+            {activeTier !== 1 && (
+              <motion.ul
+                key={activeTier}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.3, ease: [0.25, 1, 0.5, 1] }}
+                className="mt-8 flex flex-col gap-5 list-none p-0"
+              >
+                {(activeTier === 2
+                  ? [
+                      'Users within 2-3km can book a guide directly from the app in one tap.',
+                      'To protect user safety, users request help but guides always initiate contact.',
+                      'The guide calls, visits, and helps the user apply — no digital confidence required.',
+                    ]
+                  : [
+                      'Counselors are stationed at local schools and community health centres.',
+                      'They help families identify eligible schemes and walk them through the application.',
+                      'No smartphone or internet connection needed — just walk in.',
+                    ]
+                ).map((bullet, idx) => (
+                  <li key={idx} className="flex items-start gap-3 text-[15px] text-gray-500 leading-loose font-light">
+                    <span className="mt-[9px] w-1.5 h-1.5 rounded-full bg-[#444] flex-shrink-0" />
+                    {bullet}
+                  </li>
+                ))}
+              </motion.ul>
+            )}
+          </AnimatePresence>
         </motion.div>
       </section>
 
