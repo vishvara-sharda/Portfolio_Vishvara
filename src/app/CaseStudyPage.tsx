@@ -1400,6 +1400,15 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
             ))}
           </div>
 
+          <motion.div
+            className="bg-[#121212] border border-[#333] rounded-2xl p-8 mb-16 text-center relative overflow-hidden group"
+            whileHover={{ y: -5, scale: 1.01 }}
+          >
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(250,255,199,0.05)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <strong className="font-serif text-3xl md:text-4xl text-[#FAFFC7] block mb-4">740+ schemes. Dozens of separate portals.</strong>
+            <span className="text-sm text-gray-400 leading-relaxed block max-w-[640px] mx-auto">A low-income family must navigate a fragmented system scattered across government websites they've never heard of — each with different logins, different forms, and different rules.</span>
+          </motion.div>
+
           <div className="bg-[#121212] border border-[#F2A7C4]/30 rounded-3xl p-12 relative overflow-hidden group hover:border-[#F2A7C4]/60 transition-colors duration-500">
             <div className="absolute top-[-60px] left-8 font-serif text-[240px] leading-none text-[#F2A7C4]/5 select-none transition-transform duration-700 group-hover:translate-x-4">
               "
@@ -1862,6 +1871,23 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
             </div>
 
             <p className="text-center text-[11px] text-gray-600 italic">The 90% validated the design. The 10% transformed it.</p>
+          </motion.div>
+
+          {/* ── Core Innovation ── */}
+          <motion.div className="mt-24" {...fadeUpConfig}>
+            <div className="bg-[#121212] border border-[#333] rounded-2xl p-10 md:p-12 relative overflow-hidden group hover:border-[#F2A7C4]/30 transition-colors duration-500">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(242,167,196,0.05)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#F2A7C4] mb-6 relative">Core Innovation</div>
+              <h3 className="font-serif text-3xl md:text-4xl text-white mb-6 relative">One app. Every scheme.</h3>
+              <p className="text-sm text-gray-400 leading-relaxed mb-8 max-w-[720px] relative">
+                Government welfare in India is fragmented across dozens of separate portals. A family applying for housing support, education aid, and food security assistance must navigate three different government websites with three different logins and three completely different processes. Margdarshak unifies them — one login, one interface, multiple applications submitted from one place. The prototype demonstrates this end to end for PM Awas Yojana as a proof of concept for the full unified system.
+              </p>
+              <div className="flex flex-wrap gap-2 relative">
+                {['Single login', 'Multiple schemes', 'One unified flow'].map((tag) => (
+                  <span key={tag} className="text-[10px] font-bold tracking-wider bg-[#333] text-gray-300 px-3 py-1.5 rounded-full uppercase">{tag}</span>
+                ))}
+              </div>
+            </div>
           </motion.div>
 
           {/* ── Design Principles ── */}
