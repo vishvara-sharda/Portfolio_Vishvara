@@ -1852,16 +1852,16 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
               <div className="bg-[#121212] border border-[#333] rounded-2xl p-8 flex flex-col gap-4">
-                <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-[#FCA5A5]">What broke in Round 1</span>
-                <p className="text-sm text-gray-400 leading-relaxed">6 out of 7 participants dropped off at the document upload step. The label read "Upload required documents" — participants didn't know which documents qualified or what would happen if they uploaded the wrong one.</p>
+                <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-[#FCA5A5]">What 90% told us</span>
+                <p className="text-sm text-gray-400 leading-relaxed">90% of literate users navigated the core scheme discovery flow successfully. The interface was working. The design was clear. For users with basic digital confidence, the app delivered.</p>
               </div>
               <div className="bg-[#121212] border border-[#333] rounded-2xl p-8 flex flex-col gap-4">
-                <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-[#4ADE80]">What we changed</span>
-                <p className="text-sm text-gray-400 leading-relaxed">We replaced the label with a plain language checklist showing specific document names with simple explanations. In Round 2, all 7 participants completed the step without assistance.</p>
+                <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-[#4ADE80]">What the other 10% taught us</span>
+                <p className="text-sm text-gray-400 leading-relaxed">But when we tested with older users and those with low digital confidence, a different reality emerged. They understood what the app offered. They wanted the help. They just couldn't get there alone. That observation led directly to the guide system — and later the counselor network for users without smartphones at all.</p>
               </div>
             </div>
 
-            <p className="text-center text-[11px] text-gray-600 italic">Research doesn't end at insights. It ends when the design works.</p>
+            <p className="text-center text-[11px] text-gray-600 italic">The 90% validated the design. The 10% transformed it.</p>
           </motion.div>
 
           {/* ── Design Principles ── */}
