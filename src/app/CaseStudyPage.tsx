@@ -453,6 +453,121 @@ const SECRET_CARDS: SecretCardProps[] = [
   },
 ];
 
+const galleryVariants = {
+  enter: (dir: number) => ({ opacity: 0, x: dir * 60 }),
+  center: { opacity: 1, x: 0 },
+  exit:  (dir: number) => ({ opacity: 0, x: dir * -60 }),
+};
+
+function FullSizeFileCard({ card }: { card: SecretCardProps }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const [typedLines, setTypedLines] = useState<string[]>([]);
+  const scanRef = useRef<HTMLDivElement>(null);
+  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
+  const twTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const rafRef = useRef<number | null>(null);
+
+  const clearAll = () => {
+    timers.current.forEach(clearTimeout);
+    timers.current = [];
+    if (twTimer.current) { clearTimeout(twTimer.current); twTimer.current = null; }
+    if (rafRef.current) { cancelAnimationFrame(rafRef.current); rafRef.current = null; }
+  };
+
+  const typeLines = (lines: string[]) => {
+    let li = 0, ci = 0;
+    const built: string[] = [];
+    const tick = () => {
+      if (li >= lines.length) return;
+      const line = lines[li];
+      if (ci === 0) built.push('');
+      if (ci < line.length) {
+        built[li] = line.slice(0, ci + 1);
+        ci++;
+        setTypedLines([...built]);
+        twTimer.current = setTimeout(tick, 15);
+      } else { li++; ci = 0; twTimer.current = setTimeout(tick, 0); }
+    };
+    twTimer.current = setTimeout(tick, 0);
+  };
+
+  const enter = () => {
+    clearAll();
+    setIsHovered(true);
+    if (scanRef.current) {
+      const el = scanRef.current;
+      el.style.transition = 'none';
+      el.style.top = '0px';
+      el.style.opacity = '1';
+      rafRef.current = requestAnimationFrame(() => {
+        rafRef.current = requestAnimationFrame(() => {
+          el.style.transition = 'top 700ms ease-in';
+          el.style.top = '102%';
+          timers.current.push(setTimeout(() => { el.style.opacity = '0'; }, 560));
+        });
+      });
+    }
+    timers.current.push(setTimeout(() => typeLines(card.dataReadout), 250));
+  };
+
+  const leave = () => {
+    clearAll();
+    setIsHovered(false);
+    setTypedLines([]);
+    if (scanRef.current) {
+      const el = scanRef.current;
+      el.style.transition = 'none';
+      el.style.top = '0px';
+      el.style.opacity = '0';
+    }
+  };
+
+  const imgBase: React.CSSProperties = { display: 'block', maxHeight: '62vh', objectFit: 'contain', background: '#0a0a0a' };
+
+  return (
+    <div onMouseEnter={enter} onMouseLeave={leave} style={{ borderRadius: 16, overflow: 'hidden', border: '1px solid #242424', background: '#0D0A0B' }}>
+      <div style={{ position: 'relative', background: '#0a0a0a' }}>
+        {card.images ? (
+          <div style={{ display: 'flex', width: '100%' }}>
+            <img src={card.images[0]} alt="" style={{ ...imgBase, flex: 1, minWidth: 0, width: '50%' }} />
+            <div style={{ width: 1, background: 'rgba(242,167,196,0.15)', flexShrink: 0 }} />
+            <img src={card.images[1]} alt="" style={{ ...imgBase, flex: 1, minWidth: 0, width: '50%' }} />
+          </div>
+        ) : card.image ? (
+          <img src={card.image} alt="" style={{ ...imgBase, width: '100%' }} />
+        ) : null}
+
+        <div style={{ position: 'absolute', top: 14, left: 14, zIndex: 10, fontFamily: "'Space Mono', monospace", fontSize: 9, color: 'rgba(255,255,255,0.65)', letterSpacing: '0.16em', background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', padding: '5px 10px', borderRadius: 6, border: '1px solid rgba(255,255,255,0.08)' }}>
+          {card.fileLabel}
+        </div>
+
+        <div style={{ position: 'absolute', top: 14, right: 14, zIndex: 10, fontFamily: "'Space Mono', monospace", fontSize: 8, color: 'rgba(255,255,255,0.28)', letterSpacing: '0.16em', background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', padding: '5px 10px', borderRadius: 6, border: '1px solid rgba(255,255,255,0.06)' }}>
+          RAW / UNPROCESSED
+        </div>
+
+        <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 5, background: 'rgba(0,0,0,0.45)', opacity: isHovered ? 1 : 0, transition: 'opacity 0.3s ease' }} />
+
+        <div ref={scanRef} style={{ position: 'absolute', left: 0, right: 0, height: 2, top: 0, zIndex: 20, background: 'linear-gradient(to right, transparent, #F2A7C4, #FAFFC7, #F2A7C4, transparent)', boxShadow: '0 0 14px #F2A7C4', opacity: 0, pointerEvents: 'none' }} />
+
+        {typedLines.length > 0 && (
+          <div style={{ position: 'absolute', bottom: 16, right: 16, zIndex: 15, background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', border: '1px solid rgba(242,167,196,0.18)', borderRadius: 8, padding: '12px 16px', fontFamily: "'Space Mono', monospace", fontSize: 10, color: '#FAFFC7', lineHeight: 1.9 }}>
+            {typedLines.map((line, i) => <div key={i}>{line}</div>)}
+          </div>
+        )}
+      </div>
+
+      <div style={{ padding: '20px 24px 24px', borderTop: '1px solid #1e1e1e' }}>
+        <div style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontSize: 20, color: 'white', marginBottom: 6 }}>
+          {card.title}
+        </div>
+        <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.08em' }}>
+          {card.subtitle}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ── IA Constellation ─────────────────────────────────────────────────────────
 
 const IA_NODES: Array<{
@@ -736,6 +851,8 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
   // Gamification State
   const [collectedCards, setCollectedCards] = useState<number[]>([]);
   const [hasReachedEnd, setHasReachedEnd] = useState(false);
+  const [secretFileIndex, setSecretFileIndex] = useState(0);
+  const [secretSlideDir, setSecretSlideDir] = useState<1 | -1>(1);
 
   // Refs for scroll performance (prevents glitchy re-renders on every scroll tick)
   const counterRef = useRef<HTMLDivElement>(null);
@@ -746,6 +863,9 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
   const scrollTrackerRef = useRef(0);
   const [isNavScrolled, setIsNavScrolled] = useState(false);
   const isNavScrolledRef = useRef(false);
+  const secretGalleryRef = useRef<HTMLDivElement>(null);
+  const hasScrolledToSecret = useRef(false);
+  const secretTouchStartX = useRef<number | null>(null);
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -759,6 +879,25 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
   useEffect(() => {
     collectedCardsRef.current = collectedCards;
   }, [collectedCards]);
+
+  useEffect(() => {
+    if (collectedCards.length === 5 && hasReachedEnd && !hasScrolledToSecret.current) {
+      hasScrolledToSecret.current = true;
+      setTimeout(() => {
+        secretGalleryRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 600);
+    }
+  }, [collectedCards, hasReachedEnd]);
+
+  useEffect(() => {
+    if (!(collectedCards.length === 5 && hasReachedEnd)) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') { setSecretSlideDir(-1); setSecretFileIndex(i => Math.max(0, i - 1)); }
+      else if (e.key === 'ArrowRight') { setSecretSlideDir(1); setSecretFileIndex(i => Math.min(SECRET_CARDS.length - 1, i + 1)); }
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [collectedCards, hasReachedEnd]);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const target = e.currentTarget;
@@ -826,6 +965,15 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
     setTimeout(() => scrollToSection('messy-middle'), 100);
   };
 
+  const goToPrevFile = () => { setSecretSlideDir(-1); setSecretFileIndex(i => Math.max(0, i - 1)); };
+  const goToNextFile = () => { setSecretSlideDir(1); setSecretFileIndex(i => Math.min(SECRET_CARDS.length - 1, i + 1)); };
+  const handleSecretTouchStart = (e: React.TouchEvent) => { secretTouchStartX.current = e.touches[0].clientX; };
+  const handleSecretTouchEnd = (e: React.TouchEvent) => {
+    if (secretTouchStartX.current === null) return;
+    const diff = secretTouchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) { if (diff > 0) goToNextFile(); else goToPrevFile(); }
+    secretTouchStartX.current = null;
+  };
 
   const getPhoneStyle = (idx: number) => {
     const slot = phonePositions[idx];
@@ -1146,6 +1294,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
             })}
           </div>
 
+          <p className="text-[11px] text-gray-500 mb-2 tracking-[0.06em]">Primary persona — synthesized from 15 field interviews across 3 cities.</p>
           <h3 className="text-xl font-serif text-white mb-8">Persona</h3>
           <div className="bg-[#121212] border border-[#333] rounded-3xl p-10 grid md:grid-cols-[200px_1fr] gap-12 items-center">
             <div className="w-full aspect-square bg-[#1E1E1E] rounded-2xl overflow-hidden border border-[#444]">
@@ -1169,6 +1318,160 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
         </motion.div>
       </section>
 
+      {/* What the Field Taught Us — BEEC Framework */}
+      <section className="py-32 border-b border-[#333] relative">
+        <motion.div className="max-w-[960px] mx-auto px-8" {...fadeUpConfig}>
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-8 h-px bg-[#F2A7C4]"></div>
+            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#F2A7C4]">
+              Field Research · BEEC Framework
+            </span>
+          </div>
+
+          <h2 className="font-serif text-4xl md:text-5xl leading-tight text-white mb-16">
+            What the field<br />taught us
+          </h2>
+
+          {/* Research context strip */}
+          <div className="bg-[#121212] border border-[#222] rounded-2xl p-8 mb-16">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+              {[
+                { value: '15', label: 'Total interviews' },
+                { value: '9', label: 'Team members' },
+                { value: '3', label: 'Cities' },
+                { value: '7', label: 'My sessions' },
+              ].map((stat, idx) => (
+                <div key={idx} className="text-center p-5 bg-[#0D0A0B] rounded-xl border border-[#2a2a2a]">
+                  <div className="font-serif text-4xl text-[#FAFFC7] mb-1">{stat.value}</div>
+                  <div className="text-[10px] font-bold tracking-[0.15em] uppercase text-gray-500">{stat.label}</div>
+                </div>
+              ))}
+            </div>
+            <p className="text-gray-400 text-sm leading-relaxed font-light">
+              Our 9-member team conducted 15 interviews across Delhi, Coimbatore, and Pune. I personally led 7 sessions and analyzed the findings using BEEC — a framework I designed to examine Behavior, Environment, Emotion, and Cognition simultaneously. My method: I don't just observe. I put myself inside each participant's context and run all four dimensions on myself. If I feel the fear or confusion they feel, I know the design hasn't resolved it yet.
+            </p>
+          </div>
+
+          {/* BEEC framework grid */}
+          <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-gray-500 mb-6">BEEC Framework</div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-16">
+            {[
+              {
+                letter: 'B',
+                dimension: 'Behavior',
+                finding: 'Used WhatsApp and UPI daily without hesitation. Completely avoided government portals — even when they knew schemes existed that could help them.',
+                badge: 'Avoidance, not ignorance',
+                letterColor: '#A78BFA',
+                borderColor: 'rgba(167,139,250,0.2)',
+                badgeBg: 'rgba(167,139,250,0.1)',
+                gradientStart: 'rgba(167,139,250,0.07)',
+              },
+              {
+                letter: 'E',
+                dimension: 'Environment',
+                finding: 'Homes with no financial margin for error. Things kept functional but not replaced. Every rupee accounted for. The environment said: one wrong move could break everything.',
+                badge: 'Zero tolerance for mistakes',
+                letterColor: '#6EE7B7',
+                borderColor: 'rgba(110,231,183,0.2)',
+                badgeBg: 'rgba(110,231,183,0.1)',
+                gradientStart: 'rgba(110,231,183,0.07)',
+              },
+              {
+                letter: 'E',
+                dimension: 'Emotion',
+                finding: "The real stress wasn't today's expenses. It was future uncertainty — “will we have enough next week?” Welfare wasn't a financial need. It was an emotional one.",
+                badge: 'Fear, not confusion',
+                letterColor: '#FCA5A5',
+                borderColor: 'rgba(252,165,165,0.2)',
+                badgeBg: 'rgba(252,165,165,0.1)',
+                gradientStart: 'rgba(252,165,165,0.07)',
+              },
+              {
+                letter: 'C',
+                dimension: 'Cognition',
+                finding: "The moment someone had to weigh effort vs risk on a government form, they froze. Not because they couldn't read — because a wrong move felt irreversible.",
+                badge: 'Decision paralysis',
+                letterColor: '#93C5FD',
+                borderColor: 'rgba(147,197,253,0.2)',
+                badgeBg: 'rgba(147,197,253,0.1)',
+                gradientStart: 'rgba(147,197,253,0.07)',
+              },
+            ].map((card, idx) => (
+              <motion.div
+                key={idx}
+                whileHover={{ y: -4 }}
+                className="rounded-2xl p-8 flex flex-col gap-5"
+                style={{
+                  background: `linear-gradient(135deg, ${card.gradientStart} 0%, #121212 55%)`,
+                  border: `1px solid ${card.borderColor}`,
+                }}
+              >
+                <div>
+                  <div className="font-serif text-5xl font-bold leading-none mb-1" style={{ color: card.letterColor }}>
+                    {card.letter}
+                  </div>
+                  <div className="text-[10px] font-bold tracking-[0.2em] uppercase" style={{ color: card.letterColor, opacity: 0.65 }}>
+                    {card.dimension}
+                  </div>
+                </div>
+                <p className="text-sm text-gray-400 leading-relaxed font-light flex-1">{card.finding}</p>
+                <div
+                  className="self-start text-[10px] font-bold tracking-[0.12em] uppercase px-3 py-1.5 rounded-full"
+                  style={{ background: card.badgeBg, color: card.letterColor, border: `1px solid ${card.borderColor}` }}
+                >
+                  {card.badge}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Three broken assumptions */}
+          <div className="mb-16">
+            <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-gray-500 mb-6">Three broken assumptions</div>
+            <div className="flex flex-col gap-3">
+              {[
+                {
+                  assumption: 'Low-income families are stressed about daily survival.',
+                  reality: 'They are more stressed about future stability — the what-if scenarios they cannot control.',
+                },
+                {
+                  assumption: "They don't know about government schemes.",
+                  reality: 'They know. But the process feels complicated, risky, and potentially humiliating.',
+                },
+                {
+                  assumption: 'Digital illiteracy is the main barrier.',
+                  reality: 'Trust and clarity are bigger barriers than digital skill. UPI yes. Government portal no.',
+                },
+              ].map((row, idx) => (
+                <div key={idx} className="grid md:grid-cols-2 gap-px rounded-2xl overflow-hidden bg-[#222]">
+                  <div className="px-6 py-5 flex flex-col gap-2" style={{ background: 'rgba(109,31,42,0.25)' }}>
+                    <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-[#F2A7C4]/50">Assumption</span>
+                    <p className="text-sm text-gray-400 leading-relaxed">{row.assumption}</p>
+                  </div>
+                  <div className="px-6 py-5 flex flex-col gap-2" style={{ background: 'rgba(22,101,52,0.22)' }}>
+                    <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-[#4ADE80]/50">Reality</span>
+                    <p className="text-sm text-gray-300 leading-relaxed">{row.reality}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Closing insight quote */}
+          <div className="bg-[#121212] border border-[#F2A7C4]/20 rounded-3xl p-10 md:p-12 relative overflow-hidden group hover:border-[#F2A7C4]/40 transition-colors duration-500">
+            <div className="absolute top-[-60px] left-8 font-serif text-[200px] leading-none text-[#F2A7C4]/5 select-none pointer-events-none">
+              "
+            </div>
+            <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#F2A7C4] mb-6 relative">
+              Closing Signal
+            </div>
+            <p className="font-serif text-xl md:text-2xl leading-relaxed text-gray-200 relative max-w-3xl">
+              Across all four dimensions — one signal was consistent in every interview, every city, every profile: fear. Not illiteracy. Not unawareness. Fear of making a mistake that couldn't be undone, in a life that had no buffer for mistakes.
+            </p>
+          </div>
+        </motion.div>
+      </section>
+
       {/* Mapping the Experience */}
       <section id="mapping" className="py-32 border-b border-[#333] overflow-hidden relative">
         <CollectibleCard id={4} style={{ bottom: '15%', right: '15%' }} isCollected={collectedCards.includes(4)} showNudge={!!nudgeStates[4]} onCollect={handleCollect} counterRef={counterRef} />
@@ -1182,6 +1485,9 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
           </div>
 
           <div className="mb-12">
+            <p className="text-gray-400 text-sm leading-relaxed mb-6 font-light max-w-[620px]">
+              Once the BEEC analysis surfaced fear as the core signal, I mapped where that fear appeared across the user's actual journey. It wasn't one moment. It was five.
+            </p>
             <h2 className="font-serif text-4xl md:text-5xl leading-tight text-white">
               Where the pain<br />really lived
             </h2>
@@ -1347,70 +1653,99 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
       {/* Secret Level — The Unprocessed Files */}
       <section style={{ background: '#0D0A0B', position: 'relative', overflow: 'hidden' }}>
         {collectedCards.length === 5 && hasReachedEnd ? (
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '100px 32px' }}>
+          <div ref={secretGalleryRef}>
+            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+              <div style={{ maxWidth: '940px', margin: '0 auto', padding: '100px 32px' }}>
 
-              <div style={{
-                fontFamily: "'Space Mono', monospace",
-                fontSize: 10, letterSpacing: '0.28em',
-                textTransform: 'uppercase' as const, color: '#F2A7C4', opacity: 0.6,
-                textAlign: 'center', marginBottom: 16,
-              }}>
-                ✦ CLASSIFIED
-              </div>
+                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, letterSpacing: '0.28em', textTransform: 'uppercase' as const, color: '#F2A7C4', opacity: 0.6, textAlign: 'center', marginBottom: 16 }}>
+                  ✦ CLASSIFIED
+                </div>
 
-              <h2 style={{
-                fontFamily: "'Cormorant Garamond', serif", fontWeight: 700,
-                fontSize: 'clamp(2rem, 3.5vw, 3.2rem)',
-                color: 'white', textAlign: 'center', lineHeight: 1.1, margin: '0 0 12px',
-              }}>
-                The Unprocessed Files
-              </h2>
+                <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: 'clamp(2rem, 3.5vw, 3.2rem)', color: 'white', textAlign: 'center', lineHeight: 1.1, margin: '0 0 12px' }}>
+                  The Unprocessed Files
+                </h2>
 
-              <p style={{
-                fontFamily: "'Cormorant Garamond', serif", fontWeight: 400,
-                fontStyle: 'italic', fontSize: 18,
-                color: 'rgba(255,255,255,0.28)', textAlign: 'center', margin: '0 0 64px',
-              }}>
-                Raw data from the field. Hover to develop.
-              </p>
+                <p style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 400, fontStyle: 'italic', fontSize: 18, color: 'rgba(255,255,255,0.28)', textAlign: 'center', margin: '0 0 56px' }}>
+                  Raw data from the field. Hover to develop.
+                </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                {SECRET_CARDS.slice(0, 3).map((card, i) => (
-                  <SecretLevelCard key={i} {...card} />
-                ))}
-                <div className="col-span-1 md:col-span-3 flex flex-col md:flex-row md:justify-center gap-5">
-                  {SECRET_CARDS.slice(3).map((card, i) => (
-                    <div key={i} className="w-full md:w-[320px]">
-                      <SecretLevelCard {...card} />
+                {/* Gallery */}
+                <div onTouchStart={handleSecretTouchStart} onTouchEnd={handleSecretTouchEnd}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+
+                    {/* Left arrow */}
+                    <button
+                      onClick={goToPrevFile}
+                      disabled={secretFileIndex === 0}
+                      aria-label="Previous file"
+                      style={{ flexShrink: 0, width: 44, height: 44, borderRadius: '50%', border: '1px solid #333', background: '#1E1E1E', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: secretFileIndex === 0 ? 'not-allowed' : 'pointer', opacity: secretFileIndex === 0 ? 0.25 : 1, transition: 'opacity 0.2s ease, background 0.2s ease' }}
+                    >
+                      <ArrowLeft style={{ width: 16, height: 16 }} />
+                    </button>
+
+                    {/* Slide area */}
+                    <div style={{ flex: 1, overflow: 'hidden' }}>
+                      <AnimatePresence mode="wait" custom={secretSlideDir}>
+                        <motion.div
+                          key={secretFileIndex}
+                          custom={secretSlideDir}
+                          variants={galleryVariants}
+                          initial="enter"
+                          animate="center"
+                          exit="exit"
+                          transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
+                        >
+                          <FullSizeFileCard card={SECRET_CARDS[secretFileIndex]} />
+                        </motion.div>
+                      </AnimatePresence>
                     </div>
-                  ))}
+
+                    {/* Right arrow */}
+                    <button
+                      onClick={goToNextFile}
+                      disabled={secretFileIndex === SECRET_CARDS.length - 1}
+                      aria-label="Next file"
+                      style={{ flexShrink: 0, width: 44, height: 44, borderRadius: '50%', border: '1px solid #333', background: '#1E1E1E', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: secretFileIndex === SECRET_CARDS.length - 1 ? 'not-allowed' : 'pointer', opacity: secretFileIndex === SECRET_CARDS.length - 1 ? 0.25 : 1, transition: 'opacity 0.2s ease, background 0.2s ease' }}
+                    >
+                      <ArrowRight style={{ width: 16, height: 16 }} />
+                    </button>
+                  </div>
+
+                  {/* Progress indicator */}
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 14, marginTop: 20 }}>
+                    <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+                      {SECRET_CARDS.map((_, i) => (
+                        <button
+                          key={i}
+                          onClick={() => { setSecretSlideDir(i > secretFileIndex ? 1 : -1); setSecretFileIndex(i); }}
+                          aria-label={`Go to file ${i + 1}`}
+                          style={{ width: i === secretFileIndex ? 20 : 6, height: 6, borderRadius: 3, background: i === secretFileIndex ? '#F2A7C4' : '#333', border: 'none', cursor: 'pointer', padding: 0, transition: 'width 0.3s ease, background 0.3s ease' }}
+                        />
+                      ))}
+                    </div>
+                    <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.12em' }}>
+                      {String(secretFileIndex + 1).padStart(2, '0')} / {String(SECRET_CARDS.length).padStart(2, '0')}
+                    </span>
+                  </div>
+                </div>
+
+                <p style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontSize: 16, color: 'rgba(255,255,255,0.2)', textAlign: 'center', marginTop: 56 }}>
+                  Some files are never fully processed. That's research.
+                </p>
+
+                <div style={{ display: 'flex', justifyContent: 'center', marginTop: 48 }}>
+                  <motion.button
+                    whileHover={{ scale: 1.05, boxShadow: '0 0 40px rgba(242,167,196,0.5)' }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => onClose('contact')}
+                    className="inline-flex items-center gap-3 bg-[#F2A7C4] text-[#000] text-sm font-bold tracking-[0.2em] uppercase px-12 py-5 rounded-full shadow-[0_0_20px_rgba(242,167,196,0.25)] transition-all cursor-pointer"
+                  >
+                    Hire Me <MoveRight className="w-5 h-5" />
+                  </motion.button>
                 </div>
               </div>
-
-              <p style={{
-                fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontSize: 16,
-                color: 'rgba(255,255,255,0.2)', textAlign: 'center', marginTop: 48,
-              }}>
-                Some files are never fully processed. That's research.
-              </p>
-
-              <div style={{ display: 'flex', justifyContent: 'center', marginTop: 48 }}>
-                <motion.button
-                  whileHover={{ scale: 1.05, boxShadow: '0 0 40px rgba(242,167,196,0.5)' }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => onClose('contact')}
-                  className="inline-flex items-center gap-3 bg-[#F2A7C4] text-[#000] text-sm font-bold tracking-[0.2em] uppercase px-12 py-5 rounded-full shadow-[0_0_20px_rgba(242,167,196,0.25)] transition-all cursor-pointer"
-                >
-                  Hire Me <MoveRight className="w-5 h-5" />
-                </motion.button>
-              </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         ) : (
           <div className="max-w-[960px] mx-auto px-8">
             <div className="text-center py-20 opacity-40">
