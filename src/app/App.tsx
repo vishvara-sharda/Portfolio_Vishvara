@@ -270,7 +270,7 @@ const caseStudiesData = [
     ],
     situation: "India has 740+ central and 65+ centrally sponsored welfare schemes, yet ~58% of the salaried workforce lacks social security access. Low-income families remain excluded due to procedural, linguistic, and emotional barriers.",
     task: "Bridge the last-mile gap between scheme entitlement and actual access. Design an intervention that reduces cognitive load, builds trust, and preserves user dignity — built on existing digital fluency.",
-    actionTitle: "Execution Process",
+    actionTitle: "Designed a three-tier inclusive system — app for independent users, guide network for low digital confidence, counselor support for users without smartphones — to reach every Indian, not just the digitally confident.",
     actions: [
       "Surfaced 3 core patterns: Awareness Gap, Fear, Digital Confidence",
       "Ran 20 primary interviews across 5 cities",
@@ -2117,7 +2117,7 @@ export default function App() {
                   flex: "1 1 200px", background: "#F2A7C4", color: "#000", fontFamily: "'DM Sans', sans-serif", fontSize: "16px", fontWeight: 400, padding: "20px 32px", borderRadius: "12px", border: "1px solid #F2A7C4", cursor: "pointer", transition: "all 300ms ease", display: "flex", alignItems: "center", justifyContent: "center", gap: "12px"
                 }} onMouseOver={e => {e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#F2A7C4"; e.currentTarget.style.boxShadow = "0 0 20px rgba(242,167,196,0.4)"}} onMouseOut={e => {e.currentTarget.style.background = "#F2A7C4"; e.currentTarget.style.color = "#000"; e.currentTarget.style.boxShadow = "none"}}
                 onClick={() => setShowFullCaseStudy(true)}>
-                  View Full Case Study ↗
+                  See how I did it →
                 </button>
                 <a
                   href="https://www.figma.com/proto/oKryn0vKJGZ8oZw63x1drX/Margdarshak?node-id=2285-32311&p=f&t=08OH4pGyXfe9PhPq-1&scaling=scale-down&content-scaling=fixed&page-id=1972%3A1741&starting-point-node-id=2285%3A32298&show-proto-sidebar=1"
