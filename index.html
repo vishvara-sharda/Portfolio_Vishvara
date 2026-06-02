@@ -6,6 +6,18 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>vishvara.design</title>
       <style>body { margin: 0; } #root { min-height: 100vh; }</style>
+      <link rel="icon" id="favicon" href="/heart.svg" type="image/svg+xml" />
+      <script>
+        (function () {
+          var icons = ['/heart.svg', '/star.svg'];
+          var current = 0;
+          var link = document.getElementById('favicon');
+          setInterval(function () {
+            current ^= 1;
+            link.href = icons[current];
+          }, 200);
+        })();
+      </script>
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&family=Space+Mono:wght@400&display=swap" />
