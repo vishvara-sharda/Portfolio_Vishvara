@@ -2066,7 +2066,7 @@ export default function App() {
 
                       {/* Task */}
                       <li style={{ display: "flex", gap: "16px", alignItems: "flex-start" }}>
-                        <svg viewBox="0 0 24 24" style={{ width: "16px", height: "16px", flexShrink: 0, marginTop: "2px", overflow: "visible" }}><polygon points="12,4 13.9,9.4 19.6,9.5 15,13 16.7,18.5 12,15.2 7.3,18.5 9,13 4.4,9.5 10.1,9.4" fill="#FAFFC7" stroke="#FAFFC7" strokeWidth="2" strokeLinejoin="round" /></svg>
+                        <svg viewBox="0 0 24 24" style={{ width: "16px", height: "16px", flexShrink: 0, marginTop: "2px", overflow: "visible" }}><polygon points="12,4 13.9,9.4 19.6,9.5 15,13 16.7,18.5 12,15.2 7.3,18.5 9,13 4.4,9.5 10.1,9.4" fill="#93C5FD" stroke="#93C5FD" strokeWidth="2" strokeLinejoin="round" /></svg>
                         <div>
                           <strong style={{ color: "#93C5FD", display: "block", marginBottom: "4px", textTransform: "uppercase", fontSize: "10px", letterSpacing: "1px" }}>Task</strong>
                           <span>{currentCase.task.split('.')[0]}.</span>
@@ -2084,7 +2084,7 @@ export default function App() {
 
                       {/* Result */}
                       <li style={{ display: "flex", gap: "16px", alignItems: "flex-start", gridColumn: "1 / -1" }}>
-                        <svg viewBox="0 0 24 24" style={{ width: "16px", height: "16px", flexShrink: 0, marginTop: "2px", overflow: "visible" }}><polygon points="12,4 13.9,9.4 19.6,9.5 15,13 16.7,18.5 12,15.2 7.3,18.5 9,13 4.4,9.5 10.1,9.4" fill="#FAFFC7" stroke="#FAFFC7" strokeWidth="2" strokeLinejoin="round" /></svg>
+                        <svg viewBox="0 0 24 24" style={{ width: "16px", height: "16px", flexShrink: 0, marginTop: "2px", overflow: "visible" }}><polygon points="12,4 13.9,9.4 19.6,9.5 15,13 16.7,18.5 12,15.2 7.3,18.5 9,13 4.4,9.5 10.1,9.4" fill="#93C5FD" stroke="#93C5FD" strokeWidth="2" strokeLinejoin="round" /></svg>
                         <div style={{ width: "100%" }}>
                           <strong style={{ color: "#93C5FD", display: "block", marginBottom: "8px", textTransform: "uppercase", fontSize: "10px", letterSpacing: "1px" }}>Result</strong>
                           <div style={{ display: "flex", gap: "12px" }}>
