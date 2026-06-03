@@ -761,6 +761,23 @@ const GlobalStyles = React.memo(() => (
       }
     }
 
+    @keyframes scroll-bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.5; }
+      50% { transform: translateX(-50%) translateY(10px); opacity: 1; }
+    }
+    .scroll-indicator {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      animation: scroll-bounce 1.6s ease-in-out infinite;
+    }
+
     /* Coming Soon section animations */
     @keyframes signal-blink {
       0%, 100% { opacity: 1; }
@@ -971,6 +988,7 @@ export default function App() {
       .catch(() => setFormStatus("error"));
   };
   const orbitTooltipRef = useRef<HTMLDivElement>(null);
+
 
   useEffect(() => {
     const nameEl = nameRef.current;
@@ -1392,6 +1410,19 @@ export default function App() {
           />
 
           </div>{/* end background */}
+
+          {/* Scroll indicator */}
+          <button
+            aria-label="Scroll to about section"
+            className="scroll-indicator"
+            onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+            style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}
+          >
+            <svg viewBox="0 0 24 24" width="28" height="28" overflow="visible" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="12,4 13.9,9.4 19.6,9.5 15,13 16.7,18.5 12,15.2 7.3,18.5 9,13 4.4,9.5 10.1,9.4" fill="#FAFFC7" stroke="#FAFFC7" strokeWidth="1.5" strokeLinejoin="round" style={{ filter: "drop-shadow(0 0 6px rgba(250,255,199,0.7))" }} />
+            </svg>
+            <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "9px", letterSpacing: "0.22em", textTransform: "uppercase" as const, color: "rgba(250,255,199,0.45)" }}>Scroll Down</span>
+          </button>
 
           {/* Name only — scrolls down while background stays fixed */}
           <div
