@@ -337,7 +337,7 @@ function SecretLevelCard({ fileLabel, title, subtitle, dataReadout, image, image
       {/* Hover — Pink scan line sweep */}
       <div ref={scanRef} style={{
         position: 'absolute', left: 0, right: 0, height: 2, top: 0, zIndex: 20, pointerEvents: 'none',
-        background: 'linear-gradient(to right, transparent, #F2A7C4, #FAFFC7, #F2A7C4, transparent)',
+        background: 'linear-gradient(to right, transparent, #F2A7C4, #93C5FD, #F2A7C4, transparent)',
         boxShadow: '0 0 12px #F2A7C4',
         opacity: 0,
       }} />
@@ -368,7 +368,7 @@ function SecretLevelCard({ fileLabel, title, subtitle, dataReadout, image, image
           border: '1px solid rgba(242,167,196,0.15)', borderRadius: 8,
           padding: '10px 14px',
           fontFamily: "'Space Mono', monospace", fontSize: 9,
-          color: '#FAFFC7', lineHeight: 1.8,
+          color: '#93C5FD', lineHeight: 1.8,
         }}>
           {typedLines.map((line, i) => <div key={i}>{line}</div>)}
         </div>
@@ -554,7 +554,7 @@ function FullSizeFileCard({ card }: { card: SecretCardProps }) {
         <div ref={scanRef} style={{ position: 'absolute', left: 0, right: 0, height: 2, top: 0, zIndex: 20, background: 'linear-gradient(to right, transparent, #F2A7C4, #FAFFC7, #F2A7C4, transparent)', boxShadow: '0 0 14px #F2A7C4', opacity: 0, pointerEvents: 'none' }} />
 
         {typedLines.length > 0 && (
-          <div style={{ position: 'absolute', bottom: 16, right: 16, zIndex: 15, background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', border: '1px solid rgba(242,167,196,0.18)', borderRadius: 8, padding: '12px 16px', fontFamily: "'Space Mono', monospace", fontSize: 10, color: '#FAFFC7', lineHeight: 1.9 }}>
+          <div style={{ position: 'absolute', bottom: 16, right: 16, zIndex: 15, background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', border: '1px solid rgba(242,167,196,0.18)', borderRadius: 8, padding: '12px 16px', fontFamily: "'Space Mono', monospace", fontSize: 10, color: '#93C5FD', lineHeight: 1.9 }}>
             {typedLines.map((line, i) => <div key={i}>{line}</div>)}
           </div>
         )}
@@ -580,11 +580,11 @@ const IA_NODES: Array<{
 }> = [
   { id: 'welcome',       label: 'Welcome',         cx: 100, cy: 80,  color: '#F2A7C4', tooltip: 'Entry point · Onboarding gateway' },
   { id: 'onboarding',   label: 'Onboarding',       cx: 100, cy: 180, color: '#F2A7C4', tooltip: 'Profile setup · Eligibility inputs' },
-  { id: 'home',         label: 'Home',             cx: 270, cy: 130, color: '#FAFFC7', tooltip: 'Core hub · Scheme discovery', isHub: true },
+  { id: 'home',         label: 'Home',             cx: 270, cy: 130, color: '#93C5FD', tooltip: 'Core hub · Scheme discovery', isHub: true },
   { id: 'schemes',      label: 'Schemes',          cx: 420, cy: 80,  color: '#FAFFC7', tooltip: 'Filtered matches · Apply flow' },
   { id: 'guide',        label: 'Guide',            cx: 420, cy: 200, color: '#F2A7C4', tooltip: 'Step-by-step help · FAQs' },
-  { id: 'profile',      label: 'Profile',          cx: 580, cy: 130, color: '#FAFFC7', tooltip: 'User data · Document vault' },
-  { id: 'guideDashboard', label: 'Guide Dashboard', cx: 700, cy: 150, color: '#FAFFC7', tooltip: 'Application tracking · Status', labelLines: ['Guide', 'Dashboard'] },
+  { id: 'profile',      label: 'Profile',          cx: 580, cy: 130, color: '#93C5FD', tooltip: 'User data · Document vault' },
+  { id: 'guideDashboard', label: 'Guide Dashboard', cx: 700, cy: 150, color: '#93C5FD', tooltip: 'Application tracking · Status', labelLines: ['Guide', 'Dashboard'] },
 ];
 
 const IA_CONNECTIONS: [string, string][] = [
@@ -695,7 +695,7 @@ function IAConstellation() {
                 fill={node.color} opacity="0.9"
                 style={{
                   filter: node.isHub
-                    ? `drop-shadow(0 0 ${!prefersReduced.current && hov ? 14 : 10}px #FAFFC7)`
+                    ? `drop-shadow(0 0 ${!prefersReduced.current && hov ? 14 : 10}px #93C5FD)`
                     : `drop-shadow(0 0 6px ${node.color})`,
                   transition: 'filter 0.25s ease',
                 }}
@@ -835,7 +835,7 @@ function CollectibleCard({ id, style, isCollected, showNudge, onCollect, counter
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.9 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="text-[#FAFFC7] font-serif italic text-sm pointer-events-none whitespace-nowrap drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] bg-[#121212]/80 px-4 py-2 rounded-full border border-[#333] shadow-[0_4px_24px_rgba(0,0,0,0.5)]"
+            className="text-[#F2A7C4] font-serif italic text-sm pointer-events-none whitespace-nowrap drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] bg-[#121212]/80 px-4 py-2 rounded-full border border-[#333] shadow-[0_4px_24px_rgba(0,0,0,0.5)]"
           >
             "{NUDGE_MESSAGES[id - 1]}"
           </motion.div>
@@ -1322,7 +1322,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
                   style={{
                     display: 'block',
                     maxWidth: '100%',
-                    border: '2px solid #FAFFC7',
+                    border: '2px solid #F2A7C4',
                     borderRadius: '16px',
                     filter: 'saturate(1.05) contrast(1.05)',
                   }}
@@ -1370,7 +1370,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
 
         <motion.div className="max-w-[960px] mx-auto px-8" {...fadeUpConfig}>
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-8 h-px bg-[#FAFFC7]"></div>
+            <div className="w-8 h-px bg-[#93C5FD]"></div>
             <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#93C5FD]">
               01 — The Problem
             </span>
@@ -1405,7 +1405,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
             whileHover={{ y: -5, scale: 1.01 }}
           >
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(250,255,199,0.05)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            <strong className="font-serif text-3xl md:text-4xl text-[#FAFFC7] block mb-4">740+ schemes. Dozens of separate portals.</strong>
+            <strong className="font-serif text-3xl md:text-4xl text-[#F2A7C4] block mb-4">740+ schemes. Dozens of separate portals.</strong>
             <span className="text-sm text-gray-400 leading-relaxed block max-w-[640px] mx-auto">A low-income family must navigate a fragmented system scattered across government websites they've never heard of — each with different logins, different forms, and different rules.</span>
           </motion.div>
 
@@ -1474,7 +1474,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
             </div>
             <div>
               <div className="font-serif text-4xl text-white mb-2">Salmo, 36</div>
-              <div className="text-[10px] text-[#FAFFC7] font-bold tracking-[0.2em] uppercase mb-6">
+              <div className="text-[10px] text-[#F2A7C4] font-bold tracking-[0.2em] uppercase mb-6">
                 Homemaker · Urban (Delhi)
               </div>
               <div className="flex flex-wrap gap-2 mb-6">
@@ -1496,7 +1496,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
               </div>
               <div>
                 <div className="font-serif text-4xl text-white mb-2">Ramesh, 52</div>
-                <div className="text-[10px] text-[#FAFFC7] font-bold tracking-[0.2em] uppercase mb-6">
+                <div className="text-[10px] text-[#F2A7C4] font-bold tracking-[0.2em] uppercase mb-6">
                   Daily Wage Worker — Rural (Pune)
                 </div>
                 <div className="flex flex-wrap gap-2 mb-6">
@@ -1678,7 +1678,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
 
         <motion.div className="max-w-[960px] mx-auto px-8" {...fadeUpConfig}>
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-8 h-px bg-[#FAFFC7]"></div>
+            <div className="w-8 h-px bg-[#93C5FD]"></div>
             <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#93C5FD]">
               03 — Mapping the Experience
             </span>
@@ -1774,7 +1774,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
           </p>
 
           {/* ── Information Architecture ── */}
-          <h3 className="text-lg font-semibold text-[#FAFFC7] mb-2">Information Architecture</h3>
+          <h3 className="text-lg font-semibold text-[#F2A7C4] mb-2">Information Architecture</h3>
           <p className="text-sm text-gray-400 leading-relaxed max-w-[620px] mb-10">
             Structured around clarity and trust. Seven screen categories mapped before the first wireframe was drawn — reducing decision fatigue at every stage of the user journey.
           </p>
