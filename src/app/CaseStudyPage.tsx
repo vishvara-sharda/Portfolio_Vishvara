@@ -1702,27 +1702,34 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
           >
             <div className="flex gap-4 min-w-max">
               {[
-                { stage: 'Awareness', item: 'Hears about schemes', pain: "Doesn't know what applies.", icon: AlertCircle },
-                { stage: 'Exploration', item: 'Tries to understand rules.', pain: 'Overwhelmed by forms.', icon: Search },
-                { stage: 'Decision', item: 'Weighs effort vs risk.', pain: 'Fear of mistakes.', icon: XCircle },
-                { stage: 'Usage', item: 'Attempts application.', pain: 'Gets stuck in docs.', icon: RotateCw },
-                { stage: 'Outcome', item: 'Receives support / Abandons.', pain: 'Drops off entirely.', icon: TrendingUp },
+                { stage: 'Awareness', item: 'Hears about schemes', pain: "Doesn't know what applies.", icon: AlertCircle, response: 'Personalised scheme matching based on profile — no browsing required.' },
+                { stage: 'Exploration', item: 'Tries to understand rules.', pain: 'Overwhelmed by forms.', icon: Search, response: 'Progressive disclosure — one question at a time, never the full form at once.' },
+                { stage: 'Decision', item: 'Weighs effort vs risk.', pain: 'Fear of mistakes.', icon: XCircle, response: 'Preview before submit. Every action reversible. No dead ends.' },
+                { stage: 'Usage', item: 'Attempts application.', pain: 'Gets stuck in docs.', icon: RotateCw, response: 'Plain language explanations and DigiLocker autofill for saved documents.' },
+                { stage: 'Outcome', item: 'Receives support / Abandons.', pain: 'Drops off entirely.', icon: TrendingUp, response: "Guide system for users who can't proceed alone. Counselor network for users without smartphones." },
               ].map((stage, idx) => {
                 const IconComponent = stage.icon;
                 return (
-                  <motion.div 
-                    key={idx} 
+                  <motion.div
+                    key={idx}
                     whileHover={{ y: -5 }}
                     className="w-[240px] bg-[#121212] border border-[#333] rounded-2xl flex flex-col overflow-hidden group"
                   >
                     <div className="bg-[#1E1E1E] border-b border-[#333] px-5 py-4 text-[10px] font-bold tracking-[0.2em] uppercase text-white group-hover:text-[#FAFFC7] transition-colors">
                       0{idx + 1} — {stage.stage}
                     </div>
-                    <div className="p-5 flex flex-col justify-between flex-1 gap-6">
+                    <div className="p-5 flex flex-col justify-between flex-1 gap-4">
                       <div className="text-sm text-gray-400 font-light leading-relaxed">{stage.item}</div>
                       <div className="bg-[#1E1E1E] rounded-xl px-4 py-3 text-xs text-[#F2A7C4] flex items-center gap-3">
                         <IconComponent className="w-4 h-4 flex-shrink-0" />
                         <span className="leading-tight">{stage.pain}</span>
+                      </div>
+                      <div className="pt-3 border-t border-[#2a2a2a] flex flex-col gap-1.5">
+                        <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-gray-600">Design Response</span>
+                        <div className="flex items-start gap-1.5">
+                          <ArrowRight className="w-3 h-3 text-[#F2A7C4]/50 flex-shrink-0 mt-0.5" />
+                          <span className="text-[11px] text-gray-500 leading-relaxed">{stage.response}</span>
+                        </div>
                       </div>
                     </div>
                   </motion.div>
@@ -2009,6 +2016,25 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
               ))}
             </div>
           </motion.div>
+        </motion.div>
+      </section>
+
+      {/* Closing Statement */}
+      <section className="py-24 border-b border-[#333]">
+        <motion.div
+          className="max-w-[960px] mx-auto px-8 text-center"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
+        >
+          <h2 className="font-serif text-4xl md:text-5xl leading-tight text-white mb-6">
+            Margdarshak isn't my best project.
+          </h2>
+          <p className="font-serif text-2xl md:text-3xl leading-relaxed mb-8 max-w-[680px] mx-auto" style={{ color: 'rgba(250,255,199,0.55)' }}>
+            It's my honest one. And I can be more honest in every project that follows — because honest research is sometimes more valuable than perfect research.
+          </p>
+          <p className="text-[11px] text-gray-600 italic">That's what the field taught me.</p>
         </motion.div>
       </section>
 
