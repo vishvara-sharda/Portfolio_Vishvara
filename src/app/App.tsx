@@ -2029,11 +2029,11 @@ export default function App() {
                 {currentCase.subtitle}
               </p>
               <div style={{ display: "flex", gap: "8px", fontSize: "14px", color: "#888", flexWrap: "wrap", alignItems: "center" }}>
-                <span>{currentCase.meta[0].label}: <strong style={{color:"#FAFFC7"}}>{currentCase.meta[0].value}</strong></span>
+                <span>{currentCase.meta[0].label}: <strong style={{color:"#93C5FD"}}>{currentCase.meta[0].value}</strong></span>
                 <span style={{color:"#F2A7C4"}}>•</span>
-                <span>{currentCase.meta[1].label}: <strong style={{color:"#FAFFC7"}}>{currentCase.meta[1].value}</strong></span>
+                <span>{currentCase.meta[1].label}: <strong style={{color:"#93C5FD"}}>{currentCase.meta[1].value}</strong></span>
                 <span style={{color:"#F2A7C4"}}>•</span>
-                <span>{currentCase.meta[2].label}: <strong style={{color:"#FAFFC7"}}>{currentCase.meta[2].value}</strong></span>
+                <span>{currentCase.meta[2].label}: <strong style={{color:"#93C5FD"}}>{currentCase.meta[2].value}</strong></span>
               </div>
             </div>
 
@@ -3088,7 +3088,7 @@ export default function App() {
               width: "76px",
               height: "76px",
               borderRadius: "50%",
-              background: navOpen || navBtnHovered ? "#FAFFC7" : "#F2A7C4",
+              background: navOpen || navBtnHovered ? "#93C5FD" : "#F2A7C4",
               border: "none",
               cursor: "pointer",
               display: "flex",

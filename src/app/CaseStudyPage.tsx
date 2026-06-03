@@ -1107,7 +1107,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
             <li key={item.id}>
               <button
                 onClick={() => scrollToSection(item.id)}
-                className="text-[10px] font-semibold text-gray-400 hover:text-[#FAFFC7] transition-colors tracking-[0.15em] uppercase"
+                className="text-[10px] font-semibold text-gray-400 hover:text-[#93C5FD] transition-colors tracking-[0.15em] uppercase"
               >
                 {item.label}
               </button>
@@ -1117,15 +1117,15 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
 
         {/* HUD Cards Tracker */}
         <div className="flex items-center gap-2">
-          <div ref={counterRef} className="w-5 h-6 bg-[#FAFFC7] border border-[#FAFFC7] rounded shadow-[0_0_10px_rgba(250,255,199,0.4)] flex items-center justify-center">
+          <div ref={counterRef} className="w-5 h-6 bg-[#93C5FD] border border-[#93C5FD] rounded shadow-[0_0_10px_rgba(147,197,253,0.4)] flex items-center justify-center">
             <Star className="w-3 h-3 text-[#F2A7C4] drop-shadow-[0_1px_1px_rgba(0,0,0,0.3)]" fill="currentColor" />
           </div>
           <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-gray-400">
-            <span className={collectedCards.length === 5 ? "text-[#FAFFC7]" : "text-[#F2A7C4]"}>{collectedCards.length}</span>/5
+            <span className={collectedCards.length === 5 ? "text-[#93C5FD]" : "text-[#F2A7C4]"}>{collectedCards.length}</span>/5
           </span>
         </div>
 
-        <button onClick={onClose} className="w-8 h-8 rounded-full bg-[#1E1E1E] flex items-center justify-center hover:bg-[#FAFFC7] transition-colors group">
+        <button onClick={onClose} className="w-8 h-8 rounded-full bg-[#1E1E1E] flex items-center justify-center hover:bg-[#93C5FD] transition-colors group">
           <img src={FavoriteLogo} alt="Logo" className="w-5 h-5 group-hover:invert" />
         </button>
       </motion.nav>
@@ -1134,7 +1134,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
       <div className="fixed top-[4.5rem] left-0 right-0 z-[120] h-0.5 bg-[#1E1E1E] md:hidden pointer-events-none">
         <div
           ref={mobileProgressBarRef}
-          className="h-full bg-gradient-to-r from-[#FAFFC7] to-[#F2A7C4]"
+          className="h-full bg-gradient-to-r from-[#93C5FD] to-[#F2A7C4]"
           style={{ width: '0%', transition: 'width 0.3s ease' }}
         />
       </div>
@@ -1145,7 +1145,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
         <div className="w-1.5 flex-1 bg-[#1E1E1E] border border-[#333] rounded-full overflow-hidden relative flex flex-col justify-start">
           <div 
             ref={progressBarRef}
-            className="w-full bg-gradient-to-b from-[#FAFFC7] to-[#F2A7C4] transition-all duration-300"
+            className="w-full bg-gradient-to-b from-[#93C5FD] to-[#F2A7C4] transition-all duration-300"
             style={{ height: `0%` }}
           />
         </div>
@@ -1268,8 +1268,8 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
                   </div>
                 ))}
                 <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-[#000]/60 backdrop-blur-md border border-[#333] px-4 py-2 rounded-full">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#FAFFC7] animate-pulse"></span>
-                  <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-[#FAFFC7]">Interactive Prototype</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#93C5FD] animate-pulse"></span>
+                  <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-[#93C5FD]">Interactive Prototype</span>
                 </div>
               </motion.div>
             )}
@@ -1371,7 +1371,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
         <motion.div className="max-w-[960px] mx-auto px-8" {...fadeUpConfig}>
           <div className="flex items-center gap-3 mb-6">
             <div className="w-8 h-px bg-[#FAFFC7]"></div>
-            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#FAFFC7]">
+            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#93C5FD]">
               01 — The Problem
             </span>
           </div>
@@ -1394,7 +1394,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
                 className="bg-[#121212] border border-[#333] rounded-2xl p-8 relative overflow-hidden group"
               >
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(250,255,199,0.05)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <strong className="font-serif text-4xl text-[#FAFFC7] block mb-3">{item.stat}</strong>
+                <strong className="font-serif text-4xl text-[#93C5FD] block mb-3">{item.stat}</strong>
                 <span className="text-sm text-gray-400 leading-relaxed block">{item.desc}</span>
               </motion.div>
             ))}
@@ -1538,7 +1538,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
                 { value: '7', label: 'My sessions' },
               ].map((stat, idx) => (
                 <div key={idx} className="text-center p-5 bg-[#0D0A0B] rounded-xl border border-[#2a2a2a]">
-                  <div className="font-serif text-4xl text-[#FAFFC7] mb-1">{stat.value}</div>
+                  <div className="font-serif text-4xl text-[#93C5FD] mb-1">{stat.value}</div>
                   <div className="text-[10px] font-bold tracking-[0.15em] uppercase text-gray-500">{stat.label}</div>
                 </div>
               ))}
@@ -1679,7 +1679,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
         <motion.div className="max-w-[960px] mx-auto px-8" {...fadeUpConfig}>
           <div className="flex items-center gap-3 mb-6">
             <div className="w-8 h-px bg-[#FAFFC7]"></div>
-            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#FAFFC7]">
+            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#93C5FD]">
               03 — Mapping the Experience
             </span>
           </div>
@@ -1715,7 +1715,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
                     whileHover={{ y: -5 }}
                     className="w-[240px] bg-[#121212] border border-[#333] rounded-2xl flex flex-col overflow-hidden group"
                   >
-                    <div className="bg-[#1E1E1E] border-b border-[#333] px-5 py-4 text-[10px] font-bold tracking-[0.2em] uppercase text-white group-hover:text-[#FAFFC7] transition-colors">
+                    <div className="bg-[#1E1E1E] border-b border-[#333] px-5 py-4 text-[10px] font-bold tracking-[0.2em] uppercase text-white group-hover:text-[#93C5FD] transition-colors">
                       0{idx + 1} — {stage.stage}
                     </div>
                     <div className="p-5 flex flex-col justify-between flex-1 gap-4">
@@ -1866,7 +1866,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
             <h3 className="font-serif text-3xl md:text-4xl text-white mb-16">What broke. What we fixed.</h3>
 
             <div className="text-center mb-12">
-              <div className="font-serif text-8xl md:text-9xl text-[#FAFFC7] leading-none mb-3">90%</div>
+              <div className="font-serif text-8xl md:text-9xl text-[#93C5FD] leading-none mb-3">90%</div>
               <p className="text-sm text-gray-500 tracking-[0.06em]">Task completion — Round 2 usability testing</p>
             </div>
 
