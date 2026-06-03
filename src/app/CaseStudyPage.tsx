@@ -1206,7 +1206,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
           </div>
 
           <p className="text-gray-400 text-lg leading-relaxed max-w-[620px] mb-16 font-light">
-            MARGDARSHAN is a welfare guidance platform designed to help low-income families easily find and apply for government schemes through simplified steps and guided support.
+            740 government schemes exist for India's poorest families. Almost none of them use it. This is what we found when we asked why.
           </p>
 
           <p className="text-center font-serif text-xl text-white/50 italic mb-8">
@@ -1546,9 +1546,13 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
             <p className="text-gray-400 text-sm leading-relaxed font-light">
               Our 9-member team conducted 15 interviews across Delhi, Coimbatore, and Pune. I personally led 7 sessions and analyzed the findings using BEEC — a framework I designed to examine Behavior, Environment, Emotion, and Cognition simultaneously. My method: I don't just observe. I put myself inside each participant's context and run all four dimensions on myself. If I feel the fear or confusion they feel, I know the design hasn't resolved it yet.
             </p>
+            <p className="text-gray-400 text-sm leading-relaxed font-light mt-4">
+              After completing interviews, I spent several days sitting with the responses. People gave different surface reasons for not using government schemes — distrust, complexity, documents, time. But across all of them the same underlying emotion kept appearing. Fear of corruption. Fear of failure. Fear of wasted time. Fear of getting it wrong. The specific reasons varied. The root emotion didn't.
+            </p>
           </div>
 
           {/* BEEC framework grid */}
+          <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-gray-500 mb-2">ORIGINAL FRAMEWORK — DEVELOPED AND PRESENTED TO 9 DESIGN TEAMS</div>
           <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-gray-500 mb-6">BEEC Framework</div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-16">
             {[
@@ -1933,6 +1937,76 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
                   </motion.div>
                 );
               })}
+            </div>
+          </motion.div>
+
+          {/* ── Honest Limitations ── */}
+          <motion.div className="mt-24" {...fadeUpConfig}>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-8 h-px bg-[#F2A7C4]"></div>
+              <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#F2A7C4]">
+                Honest Limitations
+              </span>
+            </div>
+            <h3 className="font-serif text-3xl md:text-4xl text-white mb-12">What the design couldn't fully solve</h3>
+
+            <div className="grid md:grid-cols-2 gap-6 mb-8">
+              <div className="bg-[#121212] border border-[#333] rounded-2xl p-8 flex flex-col gap-4">
+                <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-[#F2A7C4]">TIME AND PROCESS COMPLEXITY</span>
+                <p className="text-sm text-gray-400 leading-relaxed">Government processes require time. That's a policy constraint, not a design problem. Margdarshak reduces confusion and fear around the process — but it cannot make the process itself faster. That requires systemic change beyond design.</p>
+              </div>
+              <div className="bg-[#121212] border border-[#333] rounded-2xl p-8 flex flex-col gap-4">
+                <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-[#F2A7C4]">DOCUMENT BURDEN</span>
+                <p className="text-sm text-gray-400 leading-relaxed">We partially addressed this through profile autofill and a DigiLocker integration concept — reducing manual entry for saved documents. But documents the government mandates cannot be removed. A future version would require direct government partnership to pre-fill known citizen data.</p>
+              </div>
+            </div>
+
+            <p className="text-center text-[11px] text-gray-600 italic">Knowing what design can and cannot solve is as important as the design itself.</p>
+          </motion.div>
+
+          {/* ── What I'd Do Differently ── */}
+          <motion.div className="mt-24" {...fadeUpConfig}>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-8 h-px bg-[#F2A7C4]"></div>
+              <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#F2A7C4]">
+                Hindsight
+              </span>
+            </div>
+            <h3 className="font-serif text-3xl md:text-4xl text-white mb-12">What I'd do differently</h3>
+
+            <div className="flex flex-col gap-8">
+              {[
+                {
+                  num: '01',
+                  title: 'Test across all three tiers separately',
+                  desc: "Our usability testing focused on tier one users. I'd run dedicated sessions with low-digital-confidence users for tier two and users without smartphones for tier three. Each tier has completely different failure points.",
+                },
+                {
+                  num: '02',
+                  title: 'Formalise the DigiLocker integration earlier',
+                  desc: "It remained a concept because we didn't scope it in time. In a real product this would be the highest-impact feature for reducing document drop-off and application abandonment.",
+                },
+                {
+                  num: '03',
+                  title: 'Document the research process more explicitly',
+                  desc: "My method of sitting with data for days until the core emotion emerged worked — but I couldn't fully teach it to my team. Making that synthesis process explicit would have strengthened the whole team's analysis, not just mine.",
+                },
+              ].map((item, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-100px' }}
+                  transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1], delay: idx * 0.1 }}
+                  className="flex gap-8 items-start"
+                >
+                  <div className="font-serif text-5xl text-[#F2A7C4] leading-none flex-shrink-0" style={{ opacity: 0.6 }}>{item.num}</div>
+                  <div>
+                    <h4 className="text-lg font-bold text-white mb-3">{item.title}</h4>
+                    <p className="text-sm text-gray-400 leading-relaxed">{item.desc}</p>
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </motion.div>
         </motion.div>
