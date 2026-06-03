@@ -1117,7 +1117,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
 
         {/* HUD Cards Tracker */}
         <div className="flex items-center gap-2">
-          <div ref={counterRef} className="w-5 h-6 bg-[#93C5FD] border border-[#93C5FD] rounded shadow-[0_0_10px_rgba(147,197,253,0.4)] flex items-center justify-center">
+          <div ref={counterRef} className="w-5 h-6 bg-[#FAFFC7] border border-[#FAFFC7] rounded shadow-[0_0_10px_rgba(250,255,199,0.4)] flex items-center justify-center">
             <Star className="w-3 h-3 text-[#F2A7C4] drop-shadow-[0_1px_1px_rgba(0,0,0,0.3)]" fill="currentColor" />
           </div>
           <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-gray-400">
