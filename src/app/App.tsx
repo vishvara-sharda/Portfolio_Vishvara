@@ -471,8 +471,8 @@ const GlobalStyles = React.memo(() => (
       transform: translateY(-2px);
     }
     .featured-btn-secondary:hover {
-      border-color: rgba(250, 255, 199, 0.8) !important;
-      box-shadow: 0 0 15px rgba(250, 255, 199, 0.15) inset, 0 0 15px rgba(250, 255, 199, 0.15) !important;
+      border-color: rgba(147, 197, 253, 0.8) !important;
+      box-shadow: 0 0 15px rgba(147, 197, 253, 0.15) inset, 0 0 15px rgba(147, 197, 253, 0.15) !important;
     }
     .btn-shine {
       background: linear-gradient(90deg, #F2A7C4 0%, #FAFFC7 50%, #F2A7C4 100%);
@@ -2111,10 +2111,10 @@ export default function App() {
                 background: "transparent"
               }}>
                 <button style={{
-                  flex: "1 1 200px", background: "#F2A7C4", color: "#000", fontFamily: "'DM Sans', sans-serif", fontSize: "16px", fontWeight: 400, padding: "20px 32px", borderRadius: "12px", border: "1px solid #F2A7C4", cursor: "pointer", transition: "all 300ms ease", display: "flex", alignItems: "center", justifyContent: "center", gap: "12px"
-                }} onMouseOver={e => {e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#F2A7C4"; e.currentTarget.style.boxShadow = "0 0 20px rgba(242,167,196,0.4)"}} onMouseOut={e => {e.currentTarget.style.background = "#F2A7C4"; e.currentTarget.style.color = "#000"; e.currentTarget.style.boxShadow = "none"}}
+                  flex: "1 1 200px", background: "#FAFFC7", color: "#000", fontFamily: "'DM Sans', sans-serif", fontSize: "16px", fontWeight: 400, padding: "20px 32px", borderRadius: "12px", border: "1px solid #FAFFC7", cursor: "pointer", transition: "all 300ms ease", display: "flex", alignItems: "center", justifyContent: "center", gap: "12px"
+                }} onMouseOver={e => {e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#FAFFC7"; e.currentTarget.style.boxShadow = "0 0 20px rgba(250,255,199,0.4)"; const arrow = e.currentTarget.querySelector('.btn-arrow') as HTMLElement; if (arrow) arrow.style.color = "#F2A7C4";}} onMouseOut={e => {e.currentTarget.style.background = "#FAFFC7"; e.currentTarget.style.color = "#000"; e.currentTarget.style.boxShadow = "none"; const arrow = e.currentTarget.querySelector('.btn-arrow') as HTMLElement; if (arrow) arrow.style.color = "#000";}}
                 onClick={() => setShowFullCaseStudy(true)}>
-                  See how I did it →
+                  See how I did it <span className="btn-arrow" style={{ color: "#000", transition: "color 300ms ease" }}>→</span>
                 </button>
                 <a
                   href="https://www.figma.com/proto/oKryn0vKJGZ8oZw63x1drX/Margdarshak?node-id=2285-32311&p=f&t=08OH4pGyXfe9PhPq-1&scaling=scale-down&content-scaling=fixed&page-id=1972%3A1741&starting-point-node-id=2285%3A32298&show-proto-sidebar=1"
