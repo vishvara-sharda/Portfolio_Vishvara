@@ -433,8 +433,8 @@ const GlobalStyles = React.memo(() => (
       cursor: crosshair;
     }
     .ribbon-word:hover {
-      color: #F2A7C4;
-      text-shadow: 0 0 30px rgba(242, 167, 196, 0.6);
+      color: #93C5FD;
+      text-shadow: 0 0 30px rgba(147, 197, 253, 0.6);
     }
 
     /* Premium Scrollbar */
@@ -495,7 +495,7 @@ const GlobalStyles = React.memo(() => (
       font-size: clamp(3rem, 10vw, 7rem);
       font-weight: 700;
       text-transform: uppercase;
-      color: rgba(242, 167, 196, 0.15);
+      color: rgba(147, 197, 253, 0.15);
       letter-spacing: 0.05em;
       padding-right: 2rem;
       white-space: nowrap;
@@ -536,13 +536,13 @@ const GlobalStyles = React.memo(() => (
     }
     .photo-card-outer {
       flex-shrink: 0;
-      transform: rotate(3.5deg);
+      transform: translateX(-10%) rotate(3.5deg);
       transform-origin: center center;
       transition: transform 0.5s ease-out;
       cursor: pointer;
     }
     .photo-card-outer:hover {
-      transform: rotate(0deg);
+      transform: translateX(-10%) rotate(0deg);
       transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     .testimonial-slider-container {
@@ -669,16 +669,16 @@ const GlobalStyles = React.memo(() => (
     @media (hover: none) { .constellation-svg { pointer-events: none; } }
     .c-line {
       stroke-width: 0.6;
-      opacity: 0.22;
+      opacity: 0.07;
       filter: none;
-      transition: stroke-width 0.1s ease-out, opacity 0.1s ease-out, filter 0.1s ease-out;
+      transition: none;
     }
     .c-node {
-      opacity: 0.7;
+      opacity: 0.3;
       filter: none;
       stroke: var(--node-color, white);
       stroke-width: 0;
-      transition: stroke-width 0.1s ease-out, opacity 0.1s ease-out, filter 0.1s ease-out;
+      transition: none;
     }
 
     .live-grain {
@@ -1068,7 +1068,7 @@ export default function App() {
       const w = rect.width;
       const h = rect.height;
 
-      const GLOW_DIST = 120;
+      const GLOW_DIST = 200;
       const GLOW_DIST_SQ = GLOW_DIST * GLOW_DIST;
 
       for (const n of nodeElems) {
@@ -1526,11 +1526,11 @@ export default function App() {
         </div>
 
         {/* Name — dominant anchor */}
-        <div className="about-name-block" style={{ margin: "0 0 36px -36px", display: "flex", flexDirection: "column", gap: "16px", pointerEvents: "auto" }}>
+        <div className="about-name-block" style={{ margin: "0 0 36px -36px", display: "flex", flexDirection: "column", gap: "16px", pointerEvents: "auto", alignItems: "flex-start" }}>
           <h1 style={{
             fontFamily: "'Cormorant Garamond', serif",
             fontWeight: 700,
-            fontSize: "clamp(3.4rem, 8.5vw, 10rem)",
+            fontSize: "clamp(3.06rem, 7.65vw, 9rem)",
             color: "#F2A7C4",
             lineHeight: 0.88,
             letterSpacing: "-0.03em",
@@ -1549,7 +1549,7 @@ export default function App() {
           <h1 style={{
             fontFamily: "'Cormorant Garamond', serif",
             fontWeight: 700,
-            fontSize: "clamp(3.4rem, 8.5vw, 10rem)",
+            fontSize: "clamp(3.06rem, 7.65vw, 9rem)",
             color: "#F2A7C4",
             lineHeight: 0.88,
             letterSpacing: "-0.03em",
@@ -1580,7 +1580,7 @@ export default function App() {
           opacity: 0.88,
           pointerEvents: "auto",
         }}>
-          Turning messy human behavior into<br />clear, purposeful design.
+          Designing for the humans behind the metrics.
         </p>
 
         {/* Stats (Individual Glassmorphism Cards) */}
@@ -1836,8 +1836,8 @@ export default function App() {
                 style={{
                   display: "inline-block",
                   background: "transparent",
-                  border: "1px solid rgba(250, 255, 199, 0.4)",
-                  color: "#FAFFC7",
+                  border: "1px solid rgba(147, 197, 253, 0.4)",
+                  color: "#93C5FD",
                   padding: "10px 24px",
                   borderRadius: "11px",
                   fontFamily: "'DM Sans', sans-serif",
@@ -1946,7 +1946,7 @@ export default function App() {
                   <div className="case-tab-sub" style={{
                     fontFamily: "'DM Sans', sans-serif",
                     fontSize: "13px",
-                    color: isActive ? "#FAFFC7" : "#A0A0A0",
+                    color: isActive ? "#93C5FD" : "#A0A0A0",
                     textTransform: "uppercase",
                     letterSpacing: "2px",
                     marginTop: "6px"
@@ -2067,7 +2067,7 @@ export default function App() {
                       <li style={{ display: "flex", gap: "16px", alignItems: "flex-start" }}>
                         <svg viewBox="0 0 24 24" style={{ width: "16px", height: "16px", flexShrink: 0, marginTop: "2px", overflow: "visible" }}><polygon points="12,4 13.9,9.4 19.6,9.5 15,13 16.7,18.5 12,15.2 7.3,18.5 9,13 4.4,9.5 10.1,9.4" fill="#FAFFC7" stroke="#FAFFC7" strokeWidth="2" strokeLinejoin="round" /></svg>
                         <div>
-                          <strong style={{ color: "#FAFFC7", display: "block", marginBottom: "4px", textTransform: "uppercase", fontSize: "10px", letterSpacing: "1px" }}>Task</strong>
+                          <strong style={{ color: "#93C5FD", display: "block", marginBottom: "4px", textTransform: "uppercase", fontSize: "10px", letterSpacing: "1px" }}>Task</strong>
                           <span>{currentCase.task.split('.')[0]}.</span>
                         </div>
                       </li>
@@ -2085,7 +2085,7 @@ export default function App() {
                       <li style={{ display: "flex", gap: "16px", alignItems: "flex-start", gridColumn: "1 / -1" }}>
                         <svg viewBox="0 0 24 24" style={{ width: "16px", height: "16px", flexShrink: 0, marginTop: "2px", overflow: "visible" }}><polygon points="12,4 13.9,9.4 19.6,9.5 15,13 16.7,18.5 12,15.2 7.3,18.5 9,13 4.4,9.5 10.1,9.4" fill="#FAFFC7" stroke="#FAFFC7" strokeWidth="2" strokeLinejoin="round" /></svg>
                         <div style={{ width: "100%" }}>
-                          <strong style={{ color: "#FAFFC7", display: "block", marginBottom: "8px", textTransform: "uppercase", fontSize: "10px", letterSpacing: "1px" }}>Result</strong>
+                          <strong style={{ color: "#93C5FD", display: "block", marginBottom: "8px", textTransform: "uppercase", fontSize: "10px", letterSpacing: "1px" }}>Result</strong>
                           <div style={{ display: "flex", gap: "12px" }}>
                             {currentCase.metrics.slice(0,2).map((metric, idx) => (
                               <div key={idx} style={{ background: "rgba(255,255,255,0.03)", padding: "10px 14px", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.05)" }}>
@@ -2120,7 +2120,7 @@ export default function App() {
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
-                    flex: "0 1 auto", background: "transparent", color: "#FAFFC7", fontSize: "14px", fontWeight: 600, padding: "20px 32px", borderRadius: "12px", border: "1px solid rgba(250,255,199,0.3)", cursor: "pointer", transition: "all 300ms ease", textDecoration: "none", display: "inline-block"
+                    flex: "0 1 auto", background: "transparent", color: "#93C5FD", fontSize: "14px", fontWeight: 600, padding: "20px 32px", borderRadius: "12px", border: "1px solid rgba(147, 197, 253, 0.3)", cursor: "pointer", transition: "all 300ms ease", textDecoration: "none", display: "inline-block"
                   }}
                   onMouseOver={e => {(e.currentTarget as HTMLAnchorElement).style.background = "rgba(250,255,199,0.1)"; (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 0 15px rgba(250,255,199,0.2)"}}
                   onMouseOut={e => {(e.currentTarget as HTMLAnchorElement).style.background = "transparent"; (e.currentTarget as HTMLAnchorElement).style.boxShadow = "none"}}
@@ -2172,7 +2172,7 @@ export default function App() {
                     letterSpacing: "0.1em",
                   }}
                 >
-                  <span className="ribbon-word">BEHAVIOURAL DESIGN</span> <span style={{ color: "#F2A7C4", margin: "0 20px", opacity: 0.5 }}>★</span> <span className="ribbon-word">INTERACTION DESIGN</span> <span style={{ color: "#FAFFC7", margin: "0 20px", opacity: 0.5 }}>★</span>
+                  <span className="ribbon-word">BEHAVIOURAL DESIGN</span> <span style={{ color: "#F2A7C4", margin: "0 20px", opacity: 0.5 }}>★</span> <span className="ribbon-word">INTERACTION DESIGN</span> <span style={{ color: "#93C5FD", margin: "0 20px", opacity: 0.5 }}>★</span>
                 </span>
               ))}
             </div>
@@ -2353,7 +2353,7 @@ export default function App() {
                           <span style={{
                             fontFamily: "'DM Sans', sans-serif",
                             fontSize: "10px",
-                            color: "#FAFFC7",
+                            color: "#93C5FD",
                             letterSpacing: "0.14em",
                             textTransform: "uppercase" as const,
                             border: "1px solid rgba(250,255,199,0.2)",
@@ -2503,7 +2503,7 @@ export default function App() {
                   width: "6px",
                   height: "6px",
                   borderRadius: "50%",
-                  background: "#F2A7C4",
+                  background: "#FAFFC7",
                   animation: "signal-blink 2s ease-in-out infinite",
                   flexShrink: 0,
                 }} />
@@ -2581,7 +2581,7 @@ export default function App() {
                       width: "3px",
                       height: `${height}px`,
                       borderRadius: "2px",
-                      background: "linear-gradient(to top, #FAFFC7, #F2A7C4)",
+                      background: "linear-gradient(to top, #FAFFC7 65%, #93C5FD 100%)",
                       opacity: 0.25,
                       flexShrink: 0,
                       transformOrigin: "center bottom",
@@ -3025,7 +3025,7 @@ export default function App() {
                 style={{
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: "12px",
-                  color: "#F2A7C4",
+                  color: "#93C5FD",
                   opacity: 0.7,
                   textDecoration: "none",
                   transition: "opacity 0.2s",
@@ -3043,7 +3043,7 @@ export default function App() {
                 style={{
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: "12px",
-                  color: "#F2A7C4",
+                  color: "#93C5FD",
                   opacity: 0.7,
                   textDecoration: "none",
                   transition: "opacity 0.2s",
