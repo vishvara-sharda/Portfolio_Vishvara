@@ -1610,7 +1610,7 @@ export default function App() {
             }}>
               <div style={{
                 fontFamily: "'Space Mono', monospace",
-                color: "#F2A7C4",
+                color: "#93C5FD",
                 fontSize: "clamp(2rem, 3.5vw, 3rem)",
                 fontWeight: 700,
                 lineHeight: 1,
