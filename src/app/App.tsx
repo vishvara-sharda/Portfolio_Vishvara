@@ -1518,12 +1518,13 @@ export default function App() {
           pointerEvents: "auto",
           width: "fit-content",
         }}>
-          <span className="role-shine" style={{
+          <span style={{
             fontFamily: "'DM Sans', sans-serif",
             fontSize: "11px",
             fontWeight: 500,
             textTransform: "uppercase" as const,
             letterSpacing: "0.22em",
+            color: "#FAFFC7",
           }}>
             UX Researcher &amp; Strategist
           </span>
