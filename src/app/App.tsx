@@ -1406,7 +1406,7 @@ export default function App() {
               fontFamily: "'Cormorant Garamond', serif",
               fontWeight: 700,
               fontSize: "7vw",
-              color: "#F2A7C4",
+              color: "#FAFFC7",
               letterSpacing: "-0.01em",
               lineHeight: 1,
               whiteSpace: "nowrap",
