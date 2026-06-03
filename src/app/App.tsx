@@ -499,6 +499,7 @@ const GlobalStyles = React.memo(() => (
       letter-spacing: 0.05em;
       padding-right: 2rem;
       white-space: nowrap;
+      text-shadow: 0 0 18px rgba(147, 197, 253, 0.35), 0 0 40px rgba(147, 197, 253, 0.15);
     }
     @media (max-width: 640px) {
       .featured-buttons-container {
