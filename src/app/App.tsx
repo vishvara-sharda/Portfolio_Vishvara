@@ -1661,8 +1661,8 @@ export default function App() {
             style={{
               display: "inline-block",
               background: "transparent",
-              border: "1px solid rgba(250,255,199,0.25)",
-              color: "#FAFFC7",
+              border: "1px solid rgba(147,197,253,0.35)",
+              color: "#93C5FD",
               padding: "12px 28px",
               borderRadius: "8px",
               fontFamily: "'DM Sans', sans-serif",
