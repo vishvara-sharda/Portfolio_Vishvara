@@ -891,16 +891,57 @@ const GlobalStyles = React.memo(() => (
       }
     }
 
-    /* Case studies bento grid */
+    /* Bento grid v2 — interactive left/right */
+    .bento-outer {
+      background: rgba(10,10,10,0.75);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 28px;
+      padding: 14px;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: 0 40px 100px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.03);
+    }
+    .bento-grid-v2 {
+      position: relative;
+      height: clamp(420px, 48vw, 520px);
+    }
+    .bento-card-item {
+      position: absolute;
+      overflow: hidden;
+      transition:
+        left 0.52s cubic-bezier(0.4,0,0.2,1),
+        top 0.52s cubic-bezier(0.4,0,0.2,1),
+        width 0.52s cubic-bezier(0.4,0,0.2,1),
+        height 0.52s cubic-bezier(0.4,0,0.2,1),
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+    }
+    .bento-card-item:not(.bento-active):hover {
+      border-color: rgba(255,255,255,0.2) !important;
+    }
     @media (max-width: 768px) {
-      .bento-main-grid {
-        grid-template-columns: 1fr !important;
+      .bento-grid-v2 {
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
       }
-      .case-study-header {
-        padding: 20px !important;
+      .bento-card-item {
+        position: relative !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        border-radius: 14px !important;
+        order: 0;
+        transition: none !important;
       }
-      .case-study-body {
-        padding: 20px !important;
+      .bento-card-item.bento-active {
+        height: 360px !important;
+        order: -1;
+      }
+      .bento-card-item:not(.bento-active) {
+        height: 120px !important;
       }
     }
 
@@ -1909,7 +1950,7 @@ export default function App() {
           }}
         />
 
-        <div style={{ maxWidth: "1024px", margin: "0 auto", position: "relative", zIndex: 1 }}>
+        <div style={{ maxWidth: "1160px", margin: "0 auto", position: "relative", zIndex: 1 }}>
           
           {/* Selected Work label */}
           <p style={{
@@ -1925,245 +1966,207 @@ export default function App() {
             SELECTED WORK
           </p>
 
-          {/* TABS UI (Glowing HUD Style) */}
-          <div style={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginBottom: "40px",
-            paddingBottom: "16px",
-            position: "relative"
-          }}>
-            {/* Background track for the line */}
-            <div style={{ position: "absolute", bottom: 0, left: 0, width: "100%", height: "2px", background: "rgba(255, 255, 255, 0.1)" }} />
-            
-            {/* Animated Glowing Active Line */}
-            <div style={{
-              position: "absolute",
-              bottom: -1,
-              left: `${(activeTab / caseTabs.length) * 100}%`,
-              width: `${100 / caseTabs.length}%`,
-              height: "4px",
-              background: "#F2A7C4",
-              boxShadow: "0 0 10px #F2A7C4, 0 0 20px #F2A7C4",
-              transition: "all 400ms cubic-bezier(0.4, 0, 0.2, 1)",
-              borderRadius: "4px",
-              zIndex: 2
-            }} />
-
-            {caseTabs.map((tab, i) => {
-              const isActive = activeTab === i;
-              return (
-                <div 
-                  key={i}
-                  onClick={() => { setActiveTab(i); setMargImage(0); }}
-                  style={{
-                    cursor: "pointer",
-                    textAlign: "center",
-                    flex: 1,
-                    opacity: isActive ? 1 : 0.4,
-                    transition: "all 400ms cubic-bezier(0.4, 0, 0.2, 1)",
-                    transform: isActive ? "translateY(-6px)" : "translateY(0)"
-                  }}
-                >
-                  <div className="case-tab-title" style={{
-                    fontFamily: "'Cormorant Garamond', serif",
-                    fontSize: "26px",
-                    color: isActive ? "#F2A7C4" : "#FFFFFF",
-                    fontWeight: isActive ? 700 : 400,
-                    textShadow: isActive ? "0 4px 15px rgba(242, 167, 196, 0.8)" : "none",
-                    transition: "all 400ms ease"
-                  }}>
-                    {tab.title}
-                  </div>
-                  <div className="case-tab-sub" style={{
-                    fontFamily: "'DM Sans', sans-serif",
-                    fontSize: "13px",
-                    color: isActive ? "#93C5FD" : "#A0A0A0",
-                    textTransform: "uppercase",
-                    letterSpacing: "2px",
-                    marginTop: "6px"
-                  }}>
-                    {tab.sub}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          
-          {/* GENERIC BENTO BOX RENDERER FOR ALL TABS */}
+          {/* APPLE BENTO — big display box + selector row */}
           {(() => {
-            const currentCase = caseStudiesData[activeTab] || caseStudiesData[0];
-            const currentImage = margImage < currentCase.images.length ? margImage : 0;
-            
-            if (activeTab !== 0) return (
-              <div style={{
-                background: "rgba(20, 20, 20, 0.4)",
-                border: "1px solid rgba(242, 167, 196, 0.4)",
-                borderRadius: "16px",
-                boxShadow: "0 0 30px rgba(242,167,196,0.1), 0 25px 50px -12px rgba(0,0,0,0.8)",
-                backdropFilter: "blur(8px)",
-                WebkitBackdropFilter: "blur(8px)",
-                padding: "64px 32px",
-                textAlign: "center" as const,
-              }}>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "10px", letterSpacing: "0.22em", textTransform: "uppercase" as const, color: "#F2A7C4", opacity: 0.5, margin: "0 0 10px" }}>Healthcare</p>
-                <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "28px", color: "white", margin: 0, opacity: 0.4 }}>Coming Soon</p>
-              </div>
-            );
+            const cards = [
+              {
+                idx: 0,
+                visual: (
+                  <>
+                    <img src="https://img.youtube.com/vi/oaA4V-_D63A/maxresdefault.jpg" alt="Margdarshak" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.65) 100%)" }} />
+                  </>
+                ),
+                contractedBg: "transparent",
+                tag: "Civic UX", tagColor: "#F2A7C4", tagBg: "rgba(242,167,196,0.1)", tagBorder: "rgba(242,167,196,0.25)",
+                name: "Margdarshak", subtitle: "Bridging welfare schemes and the families they're meant to serve",
+                star: [
+                  { color: "#F2A7C4", label: "Situation", text: caseStudiesData[0].situation.split('.')[0] + '.' },
+                  { color: "#93C5FD", label: "Task",      text: caseStudiesData[0].task.split('.')[0] + '.' },
+                  { color: "#F2A7C4", label: "Action",    text: caseStudiesData[0].actionTitle.split('.')[0] + '.' },
+                  { color: "#93C5FD", label: "Result",    text: null, metrics: caseStudiesData[0].metrics.slice(0,3) },
+                ],
+                cta: (
+                  <>
+                    <button style={{ flex: 1, background: "#FAFFC7", color: "#000", fontFamily: "'DM Sans', sans-serif", fontSize: "13px", fontWeight: 500, padding: "11px 16px", borderRadius: "9px", border: "none", cursor: "pointer", transition: "box-shadow 0.2s" }}
+                      onClick={e => { e.stopPropagation(); setActiveTab(0); setShowFullCaseStudy(true); }}
+                      onMouseOver={e => { e.currentTarget.style.boxShadow = "0 0 18px rgba(250,255,199,0.45)"; }}
+                      onMouseOut={e => { e.currentTarget.style.boxShadow = "none"; }}>
+                      See how I did it →
+                    </button>
+                    <a href="https://www.figma.com/proto/oKryn0vKJGZ8oZw63x1drX/Margdarshak?node-id=2285-32311&p=f&t=08OH4pGyXfe9PhPq-1&scaling=scale-down&content-scaling=fixed&page-id=1972%3A1741&starting-point-node-id=2285%3A32298&show-proto-sidebar=1"
+                      target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}
+                      style={{ flex: "0 0 auto", background: "transparent", color: "#93C5FD", fontSize: "13px", fontWeight: 600, padding: "11px 14px", borderRadius: "9px", border: "1px solid rgba(147,197,253,0.3)", textDecoration: "none", display: "inline-flex", alignItems: "center", whiteSpace: "nowrap" as const, transition: "background 0.2s" }}
+                      onMouseOver={e => { (e.currentTarget as HTMLAnchorElement).style.background = "rgba(147,197,253,0.08)"; }}
+                      onMouseOut={e => { (e.currentTarget as HTMLAnchorElement).style.background = "transparent"; }}>
+                      Prototype ↗
+                    </a>
+                  </>
+                ),
+              },
+              {
+                idx: 1,
+                visual: (
+                  <>
+                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(155deg, #0b1e36 0%, #0f2d4a 55%, #0a2238 100%)" }} />
+                    <svg style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} width="100" height="76" viewBox="0 0 90 70" fill="none" opacity="0.16"><rect x="5" y="10" width="80" height="50" rx="7" stroke="#93C5FD" strokeWidth="1.4"/><rect x="14" y="19" width="30" height="5" rx="2.5" fill="#93C5FD"/><rect x="14" y="28" width="20" height="3.5" rx="1.75" fill="#93C5FD" opacity="0.55"/><rect x="14" y="35" width="24" height="16" rx="3" stroke="#93C5FD" strokeWidth="1.2"/><rect x="54" y="19" width="22" height="32" rx="4" stroke="#93C5FD" strokeWidth="1.2"/><rect x="58" y="24" width="14" height="3" rx="1.5" fill="#93C5FD" opacity="0.5"/><rect x="58" y="30" width="10" height="3" rx="1.5" fill="#93C5FD" opacity="0.35"/></svg>
+                    <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "50%", background: "linear-gradient(to bottom, transparent, rgba(5,14,25,0.9))" }} />
+                  </>
+                ),
+                contractedBg: "linear-gradient(155deg, #0b1e36 0%, #0f2d4a 100%)",
+                tag: "Healthcare", tagColor: "#93C5FD", tagBg: "rgba(147,197,253,0.07)", tagBorder: "rgba(147,197,253,0.18)",
+                name: "Partner", subtitle: "Healthcare portal for 50+ clinics",
+                star: [
+                  { color: "#F2A7C4", label: "Situation", text: caseStudiesData[1].situation.split('.')[0] + '.' },
+                  { color: "#93C5FD", label: "Task",      text: caseStudiesData[1].task.split('.')[0] + '.' },
+                  { color: "#F2A7C4", label: "Action",    text: caseStudiesData[1].actionTitle.split('.')[0] + '.' },
+                  { color: "#93C5FD", label: "Result",    text: null, metrics: caseStudiesData[1].metrics.slice(0,3) },
+                ],
+                cta: (
+                  <span style={{ flex: 1, fontFamily: "'DM Sans', sans-serif", fontSize: "12px", padding: "10px 14px", borderRadius: "9px", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.25)", background: "rgba(255,255,255,0.02)", textAlign: "center" as const, letterSpacing: "0.06em" }}>
+                    Case Study Coming Soon
+                  </span>
+                ),
+              },
+              {
+                idx: 2,
+                visual: (
+                  <>
+                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(155deg, #160828 0%, #261045 55%, #190830 100%)" }} />
+                    <svg style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} width="100" height="76" viewBox="0 0 90 70" fill="none" opacity="0.16"><circle cx="45" cy="32" r="18" stroke="#F2A7C4" strokeWidth="1.4"/><circle cx="45" cy="32" r="4" fill="#F2A7C4"/><path d="M45 14 L47 21 L45 19 L43 21 Z" fill="#F2A7C4" opacity="0.7"/><circle cx="68" cy="20" r="5.5" stroke="#FAFFC7" strokeWidth="1.2"/><circle cx="20" cy="52" r="4.5" stroke="#FAFFC7" strokeWidth="1.2"/><circle cx="70" cy="54" r="3.5" stroke="#F2A7C4" strokeWidth="1.2"/><line x1="45" y1="32" x2="68" y2="20" stroke="#F2A7C4" strokeWidth="0.7" opacity="0.4"/><line x1="45" y1="32" x2="20" y2="52" stroke="#FAFFC7" strokeWidth="0.7" opacity="0.4"/></svg>
+                    <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "50%", background: "linear-gradient(to bottom, transparent, rgba(10,5,20,0.9))" }} />
+                  </>
+                ),
+                contractedBg: "linear-gradient(155deg, #160828 0%, #261045 100%)",
+                tag: "Gamify UX", tagColor: "#FAFFC7", tagBg: "rgba(250,255,199,0.06)", tagBorder: "rgba(250,255,199,0.14)",
+                name: "Openlee", subtitle: "Hyper-local discovery platform",
+                star: [
+                  { color: "#F2A7C4", label: "Situation", text: caseStudiesData[2].situation.split('.')[0] + '.' },
+                  { color: "#93C5FD", label: "Task",      text: caseStudiesData[2].task.split('.')[0] + '.' },
+                  { color: "#F2A7C4", label: "Action",    text: caseStudiesData[2].actionTitle.split('.')[0] + '.' },
+                  { color: "#93C5FD", label: "Result",    text: null, metrics: caseStudiesData[2].metrics.slice(0,3) },
+                ],
+                cta: (
+                  <span style={{ flex: 1, fontFamily: "'DM Sans', sans-serif", fontSize: "12px", padding: "10px 14px", borderRadius: "9px", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.25)", background: "rgba(255,255,255,0.02)", textAlign: "center" as const, letterSpacing: "0.06em" }}>
+                    Case Study Coming Soon
+                  </span>
+                ),
+              },
+            ];
+
+            const inactiveCards = cards
+              .filter(c => c.idx !== activeTab)
+              .sort((a, b) => a.idx - b.idx);
 
             return (
-          <div style={{
-            background: "rgba(20, 20, 20, 0.4)",
-            border: "1px solid rgba(242, 167, 196, 0.4)",
-            borderRadius: "16px",
-            overflow: "hidden",
-            boxShadow: "0 0 30px rgba(242,167,196,0.1), 0 25px 50px -12px rgba(0,0,0,0.8)",
-            backdropFilter: "blur(8px)",
-            WebkitBackdropFilter: "blur(8px)"
-          }}>
+              <div className="bento-outer">
+                <div className="bento-grid-v2">
+                  {cards.map(card => {
+                    const isActive = card.idx === activeTab;
+                    const inactivePos = isActive ? -1 : inactiveCards.findIndex(c => c.idx === card.idx);
 
-            {/* Header */}
-            <div className="case-study-header" style={{ padding: "32px", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
-              <div style={{
-                display: "inline-block",
-                background: "rgba(242, 167, 196, 0.1)",
-                color: "#F2A7C4",
-                border: "1px solid rgba(242, 167, 196, 0.3)",
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: "12px",
-                fontWeight: 500,
-                borderRadius: "9999px",
-                padding: "4px 12px",
-                marginBottom: "12px"
-              }}>
-                {currentCase.tag}
-              </div>
-              <h3 style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                fontSize: "30px",
-                color: "#FFFFFF",
-                margin: "0 0 4px 0",
-                fontWeight: 700
-              }}>
-                {currentCase.title}
-              </h3>
-              <p style={{
-                fontSize: "14px",
-                color: "#A0A0A0",
-                maxWidth: "672px",
-                margin: "0 0 16px 0"
-              }}>
-                {currentCase.subtitle}
-              </p>
-              <div style={{ display: "flex", gap: "8px", fontSize: "14px", color: "#888", flexWrap: "wrap", alignItems: "center" }}>
-                <span>{currentCase.meta[0].label}: <strong style={{color:"#93C5FD"}}>{currentCase.meta[0].value}</strong></span>
-                <span style={{color:"#F2A7C4"}}>•</span>
-                <span>{currentCase.meta[1].label}: <strong style={{color:"#93C5FD"}}>{currentCase.meta[1].value}</strong></span>
-                <span style={{color:"#F2A7C4"}}>•</span>
-                <span>{currentCase.meta[2].label}: <strong style={{color:"#93C5FD"}}>{currentCase.meta[2].value}</strong></span>
-              </div>
-            </div>
+                    const cardStyle: React.CSSProperties = isActive ? {
+                      left: 0,
+                      top: 0,
+                      width: "58%",
+                      height: "100%",
+                      zIndex: 2,
+                      borderRadius: "18px",
+                      border: "1px solid rgba(255,255,255,0.1)",
+                      boxShadow: "0 8px 48px rgba(0,0,0,0.5)",
+                      cursor: "default",
+                    } : {
+                      left: "60%",
+                      top: inactivePos === 0 ? 0 : "calc(50% + 6px)",
+                      width: "40%",
+                      height: "calc(50% - 6px)",
+                      zIndex: 1,
+                      borderRadius: "14px",
+                      border: "1.5px solid rgba(255,255,255,0.07)",
+                      cursor: "pointer",
+                    };
 
-            {/* BENTO GRID BODY - TRAILER LAYOUT */}
-            <div className="case-study-body" style={{ padding: "32px", display: "flex", flexDirection: "column", gap: "24px" }}>
-
-            
-              {/* Main Bento Split: Video (Top) & STAR Summary (Bottom) */}
-              <div className="bento-main-grid" style={{ display: "grid", gridTemplateColumns: "1fr", gap: "24px" }}>
-
-                 {/* Promo Video Cover Box */}
-                 <div style={{ background: "rgba(20,20,20,0.4)", borderRadius: "16px", border: "1px solid rgba(255,255,255,0.05)", padding: "8px", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" }}>
-                    <YouTubeFacade videoId="oaA4V-_D63A" title="Margdarshak Promo Video" borderRadius="12px" />
-                 </div>
-
-                 {/* STAR Framework Summary Box */}
-                 <div style={{ display: "flex", flexDirection: "column", background: "rgba(20,20,20,0.4)", borderRadius: "16px", border: "1px solid rgba(255,255,255,0.05)", padding: "32px", position: "relative", overflow: "hidden", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" }}>
-                    <div style={{ position: "absolute", top: 0, left: 0, width: "4px", height: "100%", background: "linear-gradient(to bottom, #F2A7C4, #FAFFC7)" }} />
-                    <div style={{ position: "absolute", right: "-10%", top: "-10%", width: "200px", height: "200px", background: "radial-gradient(circle, rgba(242,167,196,0.1) 0%, transparent 70%)", pointerEvents: "none" }} />
-                    
-                    <h4 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "28px", color: "#FFFFFF", margin: "0 0 24px 0", position: "relative", zIndex: 1 }}>Project Summary</h4>
-                    
-                    <ul style={{ color: "#CCCCCC", fontSize: "14px", lineHeight: 1.6, margin: 0, padding: 0, listStyle: "none", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "20px", position: "relative", zIndex: 1 }}>
-                      
-                      {/* Situation */}
-                      <li style={{ display: "flex", gap: "16px", alignItems: "flex-start" }}>
-                        <svg viewBox="0 0 24 24" style={{ width: "16px", height: "16px", flexShrink: 0, marginTop: "2px", overflow: "visible" }}><polygon points="12,4 13.9,9.4 19.6,9.5 15,13 16.7,18.5 12,15.2 7.3,18.5 9,13 4.4,9.5 10.1,9.4" fill="#F2A7C4" stroke="#F2A7C4" strokeWidth="2" strokeLinejoin="round" /></svg>
-                        <div>
-                          <strong style={{ color: "#F2A7C4", display: "block", marginBottom: "4px", textTransform: "uppercase", fontSize: "10px", letterSpacing: "1px" }}>Situation</strong>
-                          <span>{currentCase.situation.split('.')[0]}.</span>
-                        </div>
-                      </li>
-
-                      {/* Task */}
-                      <li style={{ display: "flex", gap: "16px", alignItems: "flex-start" }}>
-                        <svg viewBox="0 0 24 24" style={{ width: "16px", height: "16px", flexShrink: 0, marginTop: "2px", overflow: "visible" }}><polygon points="12,4 13.9,9.4 19.6,9.5 15,13 16.7,18.5 12,15.2 7.3,18.5 9,13 4.4,9.5 10.1,9.4" fill="#93C5FD" stroke="#93C5FD" strokeWidth="2" strokeLinejoin="round" /></svg>
-                        <div>
-                          <strong style={{ color: "#93C5FD", display: "block", marginBottom: "4px", textTransform: "uppercase", fontSize: "10px", letterSpacing: "1px" }}>Task</strong>
-                          <span>{currentCase.task.split('.')[0]}.</span>
-                        </div>
-                      </li>
-
-                      {/* Action */}
-                      <li style={{ display: "flex", gap: "16px", alignItems: "flex-start" }}>
-                        <svg viewBox="0 0 24 24" style={{ width: "16px", height: "16px", flexShrink: 0, marginTop: "2px", overflow: "visible" }}><polygon points="12,4 13.9,9.4 19.6,9.5 15,13 16.7,18.5 12,15.2 7.3,18.5 9,13 4.4,9.5 10.1,9.4" fill="#F2A7C4" stroke="#F2A7C4" strokeWidth="2" strokeLinejoin="round" /></svg>
-                        <div>
-                          <strong style={{ color: "#F2A7C4", display: "block", marginBottom: "4px", textTransform: "uppercase", fontSize: "10px", letterSpacing: "1px" }}>Action</strong>
-                          <span>{currentCase.actionTitle.split('.')[0] || "Designed a comprehensive end-to-end solution."}</span>
-                        </div>
-                      </li>
-
-                      {/* Result */}
-                      <li style={{ display: "flex", gap: "16px", alignItems: "flex-start", gridColumn: "1 / -1" }}>
-                        <svg viewBox="0 0 24 24" style={{ width: "16px", height: "16px", flexShrink: 0, marginTop: "2px", overflow: "visible" }}><polygon points="12,4 13.9,9.4 19.6,9.5 15,13 16.7,18.5 12,15.2 7.3,18.5 9,13 4.4,9.5 10.1,9.4" fill="#93C5FD" stroke="#93C5FD" strokeWidth="2" strokeLinejoin="round" /></svg>
-                        <div style={{ width: "100%" }}>
-                          <strong style={{ color: "#93C5FD", display: "block", marginBottom: "8px", textTransform: "uppercase", fontSize: "10px", letterSpacing: "1px" }}>Result</strong>
-                          <div style={{ display: "flex", gap: "12px" }}>
-                            {currentCase.metrics.slice(0,2).map((metric, idx) => (
-                              <div key={idx} style={{ background: "rgba(255,255,255,0.03)", padding: "10px 14px", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.05)" }}>
-                                <div style={{ fontSize: "18px", fontWeight: "bold", color: "#FFFFFF", marginBottom: "2px" }}>{metric.value}</div>
-                                <div style={{ fontSize: "9px", textTransform: "uppercase", letterSpacing: "0.5px", color: "#A0A0A0" }}>{metric.label}</div>
+                    return (
+                      <div
+                        key={card.idx}
+                        className={`bento-card-item${isActive ? " bento-active" : ""}`}
+                        style={cardStyle}
+                        onClick={() => !isActive && setActiveTab(card.idx)}
+                      >
+                        {isActive ? (
+                          /* ── BIG ACTIVE CARD — image top / info bottom ── */
+                          <div style={{ display: "flex", flexDirection: "column" as const, width: "100%", height: "100%" }}>
+                            {/* Top: visual */}
+                            <div style={{ flex: "0 0 46%", position: "relative", overflow: "hidden" }}>
+                              {card.visual}
+                            </div>
+                            {/* Bottom: info */}
+                            <div style={{ flex: 1, minHeight: 0, padding: "20px 24px 18px", background: "rgba(10,10,10,0.98)", display: "flex", flexDirection: "column" as const, overflow: "hidden" }}>
+                              <div style={{ marginBottom: "8px" }}>
+                                <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "10px", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: card.tagColor, background: card.tagBg, border: `1px solid ${card.tagBorder}`, padding: "3px 10px", borderRadius: "9999px" }}>
+                                  {card.tag}
+                                </span>
+                                <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(20px, 2vw, 28px)", fontWeight: 700, color: "#fff", margin: "7px 0 3px", lineHeight: 1.1 }}>
+                                  {card.name}
+                                </h3>
+                                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "11px", color: "rgba(255,255,255,0.42)", margin: 0, lineHeight: 1.4 }}>
+                                  {card.subtitle}
+                                </p>
                               </div>
-                            ))}
+                              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column" as const, gap: "6px", flex: 1, minHeight: 0, overflow: "hidden" }}>
+                                {card.star.map((item, si) => (
+                                  <li key={si} style={{ display: "flex", gap: "9px", alignItems: "flex-start", fontSize: "11px", color: "rgba(255,255,255,0.6)", lineHeight: 1.4 }}>
+                                    <svg viewBox="0 0 24 24" style={{ width: "11px", height: "11px", flexShrink: 0, marginTop: "2px", overflow: "visible" }}>
+                                      <polygon points="12,4 13.9,9.4 19.6,9.5 15,13 16.7,18.5 12,15.2 7.3,18.5 9,13 4.4,9.5 10.1,9.4" fill={item.color} stroke={item.color} strokeWidth="2" strokeLinejoin="round" />
+                                    </svg>
+                                    <div style={{ minWidth: 0 }}>
+                                      <strong style={{ color: item.color, fontSize: "8px", textTransform: "uppercase" as const, letterSpacing: "0.9px", display: "block", marginBottom: "1px" }}>{item.label}</strong>
+                                      {item.text ? (
+                                        <span style={{ display: "block", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" as const }}>{item.text}</span>
+                                      ) : (
+                                        <div style={{ display: "flex", gap: "5px", flexWrap: "wrap" as const }}>
+                                          {item.metrics!.map((m, mi) => (
+                                            <div key={mi} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "6px", padding: "3px 7px" }}>
+                                              <div style={{ fontSize: "12px", fontWeight: 700, color: "#fff", lineHeight: 1 }}>{m.value}</div>
+                                              <div style={{ fontSize: "7px", textTransform: "uppercase" as const, color: "rgba(255,255,255,0.35)", marginTop: "1px" }}>{m.label}</div>
+                                            </div>
+                                          ))}
+                                        </div>
+                                      )}
+                                    </div>
+                                  </li>
+                                ))}
+                              </ul>
+                              <div style={{ display: "flex", gap: "8px", marginTop: "12px", flexShrink: 0 }}>
+                                {card.cta}
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      </li>
-
-                    </ul>
-                 </div>
+                        ) : (
+                          /* ── SMALL INACTIVE CARD ── */
+                          <div style={{ position: "relative", width: "100%", height: "100%" }}>
+                            <div style={{ position: "absolute", inset: 0 }}>{card.visual}</div>
+                            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.25) 55%, transparent 100%)" }} />
+                            <div style={{ position: "absolute", top: "10px", left: "10px" }}>
+                              <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "8px", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: card.tagColor, background: card.tagBg, border: `1px solid ${card.tagBorder}`, padding: "2px 8px", borderRadius: "9999px" }}>
+                                {card.tag}
+                              </span>
+                            </div>
+                            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "8px 12px 12px" }}>
+                              <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "17px", fontWeight: 700, color: "#fff", lineHeight: 1.1, marginBottom: "3px" }}>
+                                {card.name}
+                              </div>
+                              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "10px", color: "rgba(255,255,255,0.45)", lineHeight: 1.3, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" as const }}>
+                                {card.subtitle}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-
-              {/* FOOTER CTA */}
-              <div style={{
-                marginTop: "8px",
-                display: "flex",
-                gap: "16px",
-                flexWrap: "wrap",
-                background: "transparent"
-              }}>
-                <button style={{
-                  flex: "1 1 200px", background: "#FAFFC7", color: "#000", fontFamily: "'DM Sans', sans-serif", fontSize: "16px", fontWeight: 400, padding: "20px 32px", borderRadius: "12px", border: "1px solid #FAFFC7", cursor: "pointer", transition: "all 300ms ease", display: "flex", alignItems: "center", justifyContent: "center", gap: "12px"
-                }} onMouseOver={e => {e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#FAFFC7"; e.currentTarget.style.boxShadow = "0 0 20px rgba(250,255,199,0.4)"; const arrow = e.currentTarget.querySelector('.btn-arrow') as HTMLElement; if (arrow) arrow.style.color = "#F2A7C4";}} onMouseOut={e => {e.currentTarget.style.background = "#FAFFC7"; e.currentTarget.style.color = "#000"; e.currentTarget.style.boxShadow = "none"; const arrow = e.currentTarget.querySelector('.btn-arrow') as HTMLElement; if (arrow) arrow.style.color = "#000";}}
-                onClick={() => setShowFullCaseStudy(true)}>
-                  See how I did it <span className="btn-arrow" style={{ color: "#000", transition: "color 300ms ease" }}>→</span>
-                </button>
-                <a
-                  href="https://www.figma.com/proto/oKryn0vKJGZ8oZw63x1drX/Margdarshak?node-id=2285-32311&p=f&t=08OH4pGyXfe9PhPq-1&scaling=scale-down&content-scaling=fixed&page-id=1972%3A1741&starting-point-node-id=2285%3A32298&show-proto-sidebar=1"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    flex: "0 1 auto", background: "transparent", color: "#93C5FD", fontSize: "14px", fontWeight: 600, padding: "20px 32px", borderRadius: "12px", border: "1px solid rgba(147, 197, 253, 0.3)", cursor: "pointer", transition: "all 300ms ease", textDecoration: "none", display: "inline-block"
-                  }}
-                  onMouseOver={e => {(e.currentTarget as HTMLAnchorElement).style.background = "rgba(250,255,199,0.1)"; (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 0 15px rgba(250,255,199,0.2)"}}
-                  onMouseOut={e => {(e.currentTarget as HTMLAnchorElement).style.background = "transparent"; (e.currentTarget as HTMLAnchorElement).style.boxShadow = "none"}}
-                >
-                  View Prototype ↗
-                </a>
-              </div>
-
-            </div>
-
-          </div>
             );
           })()}
 
