@@ -902,46 +902,25 @@ const GlobalStyles = React.memo(() => (
       box-shadow: 0 40px 100px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.03);
     }
     .bento-grid-v2 {
-      position: relative;
-      height: clamp(640px, 68vw, 780px);
+      display: grid;
+      grid-template-columns: 57% 1fr;
+      gap: 12px;
     }
-    .bento-card-item {
-      position: absolute;
-      overflow: hidden;
-      transition:
-        left 0.52s cubic-bezier(0.4,0,0.2,1),
-        top 0.52s cubic-bezier(0.4,0,0.2,1),
-        width 0.52s cubic-bezier(0.4,0,0.2,1),
-        height 0.52s cubic-bezier(0.4,0,0.2,1),
-        border-color 0.3s ease,
-        box-shadow 0.3s ease;
+    .bento-inactive-col {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
-    .bento-card-item:not(.bento-active):hover {
+    .bento-inactive-card:hover {
       border-color: rgba(255,255,255,0.2) !important;
     }
     @media (max-width: 768px) {
       .bento-grid-v2 {
-        height: auto;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
+        grid-template-columns: 1fr;
       }
-      .bento-card-item {
-        position: relative !important;
-        left: 0 !important;
-        top: 0 !important;
-        width: 100% !important;
-        height: auto !important;
-        border-radius: 14px !important;
-        order: 0;
-        transition: none !important;
-      }
-      .bento-card-item.bento-active {
-        height: 360px !important;
-        order: -1;
-      }
-      .bento-card-item:not(.bento-active) {
-        height: 120px !important;
+      .bento-inactive-col {
+        flex-direction: row;
+        height: 140px;
       }
     }
 
@@ -2103,106 +2082,59 @@ export default function App() {
               },
             ];
 
-            const inactiveCards = cards
-              .filter(c => c.idx !== activeTab)
-              .sort((a, b) => a.idx - b.idx);
+            const activeCard = cards.find(c => c.idx === activeTab)!;
+            const inactiveList = cards.filter(c => c.idx !== activeTab).sort((a, b) => a.idx - b.idx);
 
             return (
               <div className="bento-outer">
                 <div className="bento-grid-v2">
-                  {cards.map(card => {
-                    const isActive = card.idx === activeTab;
-                    const inactivePos = isActive ? -1 : inactiveCards.findIndex(c => c.idx === card.idx);
-
-                    const cardStyle: React.CSSProperties = isActive ? {
-                      left: 0,
-                      top: 0,
-                      width: "58%",
-                      height: "100%",
-                      zIndex: 2,
-                      borderRadius: "18px",
-                      border: "1px solid rgba(255,255,255,0.1)",
-                      boxShadow: "0 8px 48px rgba(0,0,0,0.5)",
-                      cursor: "default",
-                    } : {
-                      left: "60%",
-                      top: inactivePos === 0 ? 0 : "calc(50% + 6px)",
-                      width: "40%",
-                      height: "calc(50% - 6px)",
-                      zIndex: 1,
-                      borderRadius: "14px",
-                      border: "1.5px solid rgba(255,255,255,0.07)",
-                      cursor: "pointer",
-                    };
-
-                    return (
-                      <div
-                        key={card.idx}
-                        className={`bento-card-item${isActive ? " bento-active" : ""}`}
-                        style={cardStyle}
-                        onClick={() => !isActive && setActiveTab(card.idx)}
-                      >
-                        {isActive ? (
-                          /* ── BIG ACTIVE CARD — image top / info bottom ── */
-                          <div style={{ display: "flex", flexDirection: "column" as const, width: "100%", height: "100%" }}>
-                            {/* Top: visual */}
-                            <div style={{ flex: "0 0 30%", position: "relative", overflow: "hidden" }}>
-                              {card.visual}
-                            </div>
-                            {/* Bottom: info */}
-                            <div style={{ flex: 1, minHeight: 0, padding: "20px 24px 18px", background: "rgba(10,10,10,0.98)", display: "flex", flexDirection: "column" as const, overflowY: "auto" as const }}>
-                              <div style={{ marginBottom: "10px" }}>
-                                <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "10px", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: card.tagColor, background: card.tagBg, border: `1px solid ${card.tagBorder}`, padding: "3px 10px", borderRadius: "9999px" }}>
-                                  {card.tag}
-                                </span>
-                                <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(20px, 2vw, 28px)", fontWeight: 700, color: "#fff", margin: "7px 0 3px", lineHeight: 1.1 }}>
-                                  {card.name}
-                                </h3>
-                                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "11px", color: "rgba(255,255,255,0.42)", margin: 0, lineHeight: 1.4 }}>
-                                  {card.subtitle}
-                                </p>
-                              </div>
-                              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column" as const, gap: "10px" }}>
-                                {card.star.map((item, si) => (
-                                  <li key={si} style={{ display: "flex", gap: "9px", alignItems: "flex-start", fontSize: "11px", color: "rgba(255,255,255,0.6)", lineHeight: 1.5 }}>
-                                    <svg viewBox="0 0 24 24" style={{ width: "11px", height: "11px", flexShrink: 0, marginTop: "3px", overflow: "visible" }}>
-                                      <polygon points="12,4 13.9,9.4 19.6,9.5 15,13 16.7,18.5 12,15.2 7.3,18.5 9,13 4.4,9.5 10.1,9.4" fill={item.color} stroke={item.color} strokeWidth="2" strokeLinejoin="round" />
-                                    </svg>
-                                    <div style={{ minWidth: 0 }}>
-                                      <strong style={{ color: item.color, fontSize: "8px", textTransform: "uppercase" as const, letterSpacing: "0.9px", display: "block", marginBottom: "2px" }}>{item.label}</strong>
-                                      <span style={{ display: "block" }}>{item.text}</span>
-                                    </div>
-                                  </li>
-                                ))}
-                              </ul>
-                              <div style={{ display: "flex", gap: "8px", marginTop: "12px", flexShrink: 0 }}>
-                                {card.cta}
-                              </div>
-                            </div>
+                  {/* ── BIG ACTIVE CARD ── */}
+                  <div style={{ borderRadius: "18px", border: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 8px 48px rgba(0,0,0,0.5)", overflow: "hidden" }}>
+                    <AnimatePresence mode="wait">
+                      <motion.div key={activeTab} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }} style={{ display: "flex", flexDirection: "column" as const }}>
+                        <div style={{ height: "220px", position: "relative", overflow: "hidden" }}>
+                          {activeCard.visual}
+                        </div>
+                        <div style={{ padding: "20px 24px 20px", background: "rgba(10,10,10,0.98)", display: "flex", flexDirection: "column" as const }}>
+                          <div style={{ marginBottom: "10px" }}>
+                            <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "10px", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: activeCard.tagColor, background: activeCard.tagBg, border: `1px solid ${activeCard.tagBorder}`, padding: "3px 10px", borderRadius: "9999px" }}>{activeCard.tag}</span>
+                            <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(20px, 2vw, 28px)", fontWeight: 700, color: "#fff", margin: "7px 0 3px", lineHeight: 1.1 }}>{activeCard.name}</h3>
+                            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "11px", color: "rgba(255,255,255,0.42)", margin: 0, lineHeight: 1.4 }}>{activeCard.subtitle}</p>
                           </div>
-                        ) : (
-                          /* ── SMALL INACTIVE CARD ── */
-                          <div style={{ position: "relative", width: "100%", height: "100%" }}>
-                            <div style={{ position: "absolute", inset: 0 }}>{card.visual}</div>
-                            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.25) 55%, transparent 100%)" }} />
-                            <div style={{ position: "absolute", top: "10px", left: "10px" }}>
-                              <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "8px", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: card.tagColor, background: card.tagBg, border: `1px solid ${card.tagBorder}`, padding: "2px 8px", borderRadius: "9999px" }}>
-                                {card.tag}
-                              </span>
-                            </div>
-                            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "8px 12px 12px" }}>
-                              <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "17px", fontWeight: 700, color: "#fff", lineHeight: 1.1, marginBottom: "3px" }}>
-                                {card.name}
-                              </div>
-                              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "10px", color: "rgba(255,255,255,0.45)", lineHeight: 1.3, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" as const }}>
-                                {card.subtitle}
-                              </div>
-                            </div>
-                          </div>
-                        )}
+                          <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column" as const, gap: "10px" }}>
+                            {activeCard.star.map((item, si) => (
+                              <li key={si} style={{ display: "flex", gap: "9px", alignItems: "flex-start", fontSize: "11px", color: "rgba(255,255,255,0.6)", lineHeight: 1.5 }}>
+                                <svg viewBox="0 0 24 24" style={{ width: "11px", height: "11px", flexShrink: 0, marginTop: "3px", overflow: "visible" }}>
+                                  <polygon points="12,4 13.9,9.4 19.6,9.5 15,13 16.7,18.5 12,15.2 7.3,18.5 9,13 4.4,9.5 10.1,9.4" fill={item.color} stroke={item.color} strokeWidth="2" strokeLinejoin="round" />
+                                </svg>
+                                <div style={{ minWidth: 0 }}>
+                                  <strong style={{ color: item.color, fontSize: "8px", textTransform: "uppercase" as const, letterSpacing: "0.9px", display: "block", marginBottom: "2px" }}>{item.label}</strong>
+                                  <span style={{ display: "block" }}>{item.text}</span>
+                                </div>
+                              </li>
+                            ))}
+                          </ul>
+                          <div style={{ display: "flex", gap: "8px", marginTop: "14px" }}>{activeCard.cta}</div>
+                        </div>
+                      </motion.div>
+                    </AnimatePresence>
+                  </div>
+                  {/* ── INACTIVE CARDS COLUMN ── */}
+                  <div className="bento-inactive-col">
+                    {inactiveList.map(card => (
+                      <div key={card.idx} className="bento-inactive-card" style={{ flex: 1, borderRadius: "14px", border: "1.5px solid rgba(255,255,255,0.07)", cursor: "pointer", overflow: "hidden", position: "relative", transition: "border-color 0.3s ease" }} onClick={() => setActiveTab(card.idx)}>
+                        <div style={{ position: "absolute", inset: 0 }}>{card.visual}</div>
+                        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.25) 55%, transparent 100%)" }} />
+                        <div style={{ position: "absolute", top: "10px", left: "10px" }}>
+                          <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "8px", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: card.tagColor, background: card.tagBg, border: `1px solid ${card.tagBorder}`, padding: "2px 8px", borderRadius: "9999px" }}>{card.tag}</span>
+                        </div>
+                        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "8px 12px 12px" }}>
+                          <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "17px", fontWeight: 700, color: "#fff", lineHeight: 1.1, marginBottom: "3px" }}>{card.name}</div>
+                          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "10px", color: "rgba(255,255,255,0.45)", lineHeight: 1.3, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" as const }}>{card.subtitle}</div>
+                        </div>
                       </div>
-                    );
-                  })}
+                    ))}
+                  </div>
                 </div>
               </div>
             );
