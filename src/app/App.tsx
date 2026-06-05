@@ -903,7 +903,7 @@ const GlobalStyles = React.memo(() => (
     }
     .bento-grid-v2 {
       position: relative;
-      height: clamp(420px, 48vw, 520px);
+      height: clamp(640px, 68vw, 780px);
     }
     .bento-card-item {
       position: absolute;
@@ -2000,7 +2000,7 @@ export default function App() {
             margin: "0 0 6px 0",
             textAlign: "center" as const,
           }}>
-            CASE STUDY
+            METHOD STUDY
           </p>
           <p style={{
             fontFamily: "'DM Sans', sans-serif",
@@ -2030,10 +2030,10 @@ export default function App() {
                 tag: "Civic UX", tagColor: "#F2A7C4", tagBg: "rgba(242,167,196,0.1)", tagBorder: "rgba(242,167,196,0.25)",
                 name: "Margdarshak", subtitle: "Bridging welfare schemes and the families they're meant to serve",
                 star: [
-                  { color: "#F2A7C4", label: "Situation", text: caseStudiesData[0].situation.split('.')[0] + '.' },
-                  { color: "#93C5FD", label: "Task",      text: caseStudiesData[0].task.split('.')[0] + '.' },
-                  { color: "#F2A7C4", label: "Action",    text: caseStudiesData[0].actionTitle.split('.')[0] + '.' },
-                  { color: "#93C5FD", label: "Result",    text: caseStudiesData[0].result.split('.')[0] + '.' },
+                  { color: "#F2A7C4", label: "Situation", text: caseStudiesData[0].situation },
+                  { color: "#93C5FD", label: "Task",      text: caseStudiesData[0].task },
+                  { color: "#F2A7C4", label: "Action",    text: caseStudiesData[0].actionTitle },
+                  { color: "#93C5FD", label: "Result",    text: caseStudiesData[0].result.replace(/\n+/g, ' ') },
                 ],
                 cta: (
                   <>
@@ -2066,10 +2066,10 @@ export default function App() {
                 tag: "Healthcare", tagColor: "#93C5FD", tagBg: "rgba(147,197,253,0.07)", tagBorder: "rgba(147,197,253,0.18)",
                 name: "Partner", subtitle: "Healthcare portal for 50+ clinics",
                 star: [
-                  { color: "#F2A7C4", label: "Situation", text: caseStudiesData[1].situation.split('.')[0] + '.' },
-                  { color: "#93C5FD", label: "Task",      text: caseStudiesData[1].task.split('.')[0] + '.' },
-                  { color: "#F2A7C4", label: "Action",    text: caseStudiesData[1].actionTitle.split('.')[0] + '.' },
-                  { color: "#93C5FD", label: "Result",    text: caseStudiesData[1].result.split('.')[0] + '.' },
+                  { color: "#F2A7C4", label: "Situation", text: caseStudiesData[1].situation },
+                  { color: "#93C5FD", label: "Task",      text: caseStudiesData[1].task },
+                  { color: "#F2A7C4", label: "Action",    text: caseStudiesData[1].actionTitle },
+                  { color: "#93C5FD", label: "Result",    text: caseStudiesData[1].result.replace(/\n+/g, ' ') },
                 ],
                 cta: (
                   <span style={{ flex: 1, fontFamily: "'DM Sans', sans-serif", fontSize: "12px", padding: "10px 14px", borderRadius: "9px", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.25)", background: "rgba(255,255,255,0.02)", textAlign: "center" as const, letterSpacing: "0.06em" }}>
@@ -2090,10 +2090,10 @@ export default function App() {
                 tag: "Gamify UX", tagColor: "#FAFFC7", tagBg: "rgba(250,255,199,0.06)", tagBorder: "rgba(250,255,199,0.14)",
                 name: "Openlee", subtitle: "Hyper-local discovery platform",
                 star: [
-                  { color: "#F2A7C4", label: "Situation", text: caseStudiesData[2].situation.split('.')[0] + '.' },
-                  { color: "#93C5FD", label: "Task",      text: caseStudiesData[2].task.split('.')[0] + '.' },
-                  { color: "#F2A7C4", label: "Action",    text: caseStudiesData[2].actionTitle.split('.')[0] + '.' },
-                  { color: "#93C5FD", label: "Result",    text: caseStudiesData[2].result.split('.')[0] + '.' },
+                  { color: "#F2A7C4", label: "Situation", text: caseStudiesData[2].situation },
+                  { color: "#93C5FD", label: "Task",      text: caseStudiesData[2].task },
+                  { color: "#F2A7C4", label: "Action",    text: caseStudiesData[2].actionTitle },
+                  { color: "#93C5FD", label: "Result",    text: caseStudiesData[2].result.replace(/\n+/g, ' ') },
                 ],
                 cta: (
                   <span style={{ flex: 1, fontFamily: "'DM Sans', sans-serif", fontSize: "12px", padding: "10px 14px", borderRadius: "9px", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.25)", background: "rgba(255,255,255,0.02)", textAlign: "center" as const, letterSpacing: "0.06em" }}>
@@ -2146,12 +2146,12 @@ export default function App() {
                           /* ── BIG ACTIVE CARD — image top / info bottom ── */
                           <div style={{ display: "flex", flexDirection: "column" as const, width: "100%", height: "100%" }}>
                             {/* Top: visual */}
-                            <div style={{ flex: "0 0 46%", position: "relative", overflow: "hidden" }}>
+                            <div style={{ flex: "0 0 30%", position: "relative", overflow: "hidden" }}>
                               {card.visual}
                             </div>
                             {/* Bottom: info */}
-                            <div style={{ flex: 1, minHeight: 0, padding: "20px 24px 18px", background: "rgba(10,10,10,0.98)", display: "flex", flexDirection: "column" as const, overflow: "hidden" }}>
-                              <div style={{ marginBottom: "8px" }}>
+                            <div style={{ flex: 1, minHeight: 0, padding: "20px 24px 18px", background: "rgba(10,10,10,0.98)", display: "flex", flexDirection: "column" as const, overflowY: "auto" as const }}>
+                              <div style={{ marginBottom: "10px" }}>
                                 <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "10px", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: card.tagColor, background: card.tagBg, border: `1px solid ${card.tagBorder}`, padding: "3px 10px", borderRadius: "9999px" }}>
                                   {card.tag}
                                 </span>
@@ -2162,26 +2162,15 @@ export default function App() {
                                   {card.subtitle}
                                 </p>
                               </div>
-                              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column" as const, gap: "6px", flex: 1, minHeight: 0, overflow: "hidden" }}>
+                              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column" as const, gap: "10px" }}>
                                 {card.star.map((item, si) => (
-                                  <li key={si} style={{ display: "flex", gap: "9px", alignItems: "flex-start", fontSize: "11px", color: "rgba(255,255,255,0.6)", lineHeight: 1.4 }}>
-                                    <svg viewBox="0 0 24 24" style={{ width: "11px", height: "11px", flexShrink: 0, marginTop: "2px", overflow: "visible" }}>
+                                  <li key={si} style={{ display: "flex", gap: "9px", alignItems: "flex-start", fontSize: "11px", color: "rgba(255,255,255,0.6)", lineHeight: 1.5 }}>
+                                    <svg viewBox="0 0 24 24" style={{ width: "11px", height: "11px", flexShrink: 0, marginTop: "3px", overflow: "visible" }}>
                                       <polygon points="12,4 13.9,9.4 19.6,9.5 15,13 16.7,18.5 12,15.2 7.3,18.5 9,13 4.4,9.5 10.1,9.4" fill={item.color} stroke={item.color} strokeWidth="2" strokeLinejoin="round" />
                                     </svg>
                                     <div style={{ minWidth: 0 }}>
-                                      <strong style={{ color: item.color, fontSize: "8px", textTransform: "uppercase" as const, letterSpacing: "0.9px", display: "block", marginBottom: "1px" }}>{item.label}</strong>
-                                      {item.text ? (
-                                        <span style={{ display: "block", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" as const }}>{item.text}</span>
-                                      ) : (
-                                        <div style={{ display: "flex", gap: "5px", flexWrap: "wrap" as const }}>
-                                          {item.metrics!.map((m, mi) => (
-                                            <div key={mi} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "6px", padding: "3px 7px" }}>
-                                              <div style={{ fontSize: "12px", fontWeight: 700, color: "#fff", lineHeight: 1 }}>{m.value}</div>
-                                              <div style={{ fontSize: "7px", textTransform: "uppercase" as const, color: "rgba(255,255,255,0.35)", marginTop: "1px" }}>{m.label}</div>
-                                            </div>
-                                          ))}
-                                        </div>
-                                      )}
+                                      <strong style={{ color: item.color, fontSize: "8px", textTransform: "uppercase" as const, letterSpacing: "0.9px", display: "block", marginBottom: "2px" }}>{item.label}</strong>
+                                      <span style={{ display: "block" }}>{item.text}</span>
                                     </div>
                                   </li>
                                 ))}
