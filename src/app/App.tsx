@@ -1990,7 +1990,18 @@ export default function App() {
 
         <div style={{ maxWidth: "1160px", margin: "0 auto", position: "relative", zIndex: 1 }}>
           
-          {/* Selected Work label */}
+          {/* Section labels */}
+          <p style={{
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: "10px",
+            letterSpacing: "0.28em",
+            textTransform: "uppercase" as const,
+            color: "rgba(255,255,255,0.28)",
+            margin: "0 0 6px 0",
+            textAlign: "center" as const,
+          }}>
+            CASE STUDY
+          </p>
           <p style={{
             fontFamily: "'DM Sans', sans-serif",
             fontSize: "10px",
@@ -2022,7 +2033,7 @@ export default function App() {
                   { color: "#F2A7C4", label: "Situation", text: caseStudiesData[0].situation.split('.')[0] + '.' },
                   { color: "#93C5FD", label: "Task",      text: caseStudiesData[0].task.split('.')[0] + '.' },
                   { color: "#F2A7C4", label: "Action",    text: caseStudiesData[0].actionTitle.split('.')[0] + '.' },
-                  { color: "#93C5FD", label: "Result",    text: null, metrics: caseStudiesData[0].metrics.slice(0,3) },
+                  { color: "#93C5FD", label: "Result",    text: caseStudiesData[0].result.split('.')[0] + '.' },
                 ],
                 cta: (
                   <>
@@ -2058,7 +2069,7 @@ export default function App() {
                   { color: "#F2A7C4", label: "Situation", text: caseStudiesData[1].situation.split('.')[0] + '.' },
                   { color: "#93C5FD", label: "Task",      text: caseStudiesData[1].task.split('.')[0] + '.' },
                   { color: "#F2A7C4", label: "Action",    text: caseStudiesData[1].actionTitle.split('.')[0] + '.' },
-                  { color: "#93C5FD", label: "Result",    text: null, metrics: caseStudiesData[1].metrics.slice(0,3) },
+                  { color: "#93C5FD", label: "Result",    text: caseStudiesData[1].result.split('.')[0] + '.' },
                 ],
                 cta: (
                   <span style={{ flex: 1, fontFamily: "'DM Sans', sans-serif", fontSize: "12px", padding: "10px 14px", borderRadius: "9px", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.25)", background: "rgba(255,255,255,0.02)", textAlign: "center" as const, letterSpacing: "0.06em" }}>
@@ -2082,7 +2093,7 @@ export default function App() {
                   { color: "#F2A7C4", label: "Situation", text: caseStudiesData[2].situation.split('.')[0] + '.' },
                   { color: "#93C5FD", label: "Task",      text: caseStudiesData[2].task.split('.')[0] + '.' },
                   { color: "#F2A7C4", label: "Action",    text: caseStudiesData[2].actionTitle.split('.')[0] + '.' },
-                  { color: "#93C5FD", label: "Result",    text: null, metrics: caseStudiesData[2].metrics.slice(0,3) },
+                  { color: "#93C5FD", label: "Result",    text: caseStudiesData[2].result.split('.')[0] + '.' },
                 ],
                 cta: (
                   <span style={{ flex: 1, fontFamily: "'DM Sans', sans-serif", fontSize: "12px", padding: "10px 14px", borderRadius: "9px", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.25)", background: "rgba(255,255,255,0.02)", textAlign: "center" as const, letterSpacing: "0.06em" }}>
