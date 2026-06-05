@@ -1206,7 +1206,7 @@ export default function App() {
         if (progress < 1) requestAnimationFrame(step);
       };
       requestAnimationFrame(step);
-    }, 1500);
+    }, 800);
     return () => clearTimeout(timer);
   }, [siteReady]);
 
