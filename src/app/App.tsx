@@ -2,12 +2,14 @@ import React, { useEffect, useRef, useState, Fragment } from "react";
 import emailjs from "@emailjs/browser";
 import { motion, AnimatePresence } from 'motion/react';
 import CaseStudyPage from "./CaseStudyPage";
+import MurmurCaseStudyPage from "./MurmurCaseStudyPage";
 import DesignerMind from "./DesignerMind";
 import LoadingScreen from "./LoadingScreen";
 import girlImg from "../imports/ChatGPT_Image_May_26__2026__08_22_25_PM.png";
 import profileImg from "./components/Pictures/Group 17.jpg";
 import heartUrl from "../imports/logo/heart.svg";
 import starUrl from "../imports/logo/star.svg";
+import murmurBannerUrl from "../imports/Murmur/banner.png";
 
 function YouTubeFacade({ videoId, title, borderRadius = "14px" }: { videoId: string; title: string; borderRadius?: string }) {
   const [active, setActive] = React.useState(false);
@@ -207,7 +209,7 @@ const margImages = [
 
 const caseTabs = [
   { title: "Margdarshak", sub: "Civic UX" },
-  { title: "Partner", sub: "Healthcare" },
+  { title: "Murmur", sub: "Healthcare" },
   { title: "Openlee", sub: "Healthcare" },
 ];
 
@@ -289,14 +291,14 @@ const caseStudiesData = [
     links: { full: "#", live: "#", promo: "#", presentation: "https://1drv.ms/b/c/FE99C4DEA30CBBD9/AY2UKf80iaBGsfJcBTDchpM?e=wyQUxM" }
   },
   {
-    id: "partner",
+    id: "murmur",
     tag: "B2B SaaS",
-    title: "Partner — Healthcare Portal",
+    title: "Murmur — Healthcare Portal",
     subtitle: "A comprehensive dashboard for healthcare providers to manage patient data effectively.",
     meta: [
       { label: "Role", value: "Lead Product Designer" },
       { label: "Timeline", value: "6 months" },
-      { label: "Team", value: "Partner Dev Team" }
+      { label: "Team", value: "Murmur Dev Team" }
     ],
     images: [
       { type: 'cover', label: 'Hero Concept' },
@@ -304,9 +306,9 @@ const caseStudiesData = [
       { type: 'screen', label: 'Analytics' },
       { type: 'screen', label: 'Patients' }
     ],
-    situation: "Healthcare providers were struggling with outdated, fragmented systems that slowed down patient intake and increased data entry errors.",
-    task: "Design a unified, secure portal that streamlines patient data management and provides clear, actionable analytics for clinic administrators.",
-    actionTitle: "Design Process",
+    situation: "22% of Indian mothers get PPD, 55% feel unsupported, 80% of fathers feel useless — yet 0 of 587 apps address the couple's emotional gap.",
+    task: "Build an AI that reads her voice, wearables, and mood — then gives him one specific, non-blaming daily action, unlocked only when both partners join.",
+    actionTitle: "Researched 59 studies, mapped 587 apps with zero competitors, and designed a multi-modal AI pipeline with a four-part nudge formula, safety guardrails, and identity restoration — none of which exist in the market.",
     actions: [
       "Conducted extensive stakeholder workshops",
       "Created wireframes for the patient onboarding flow",
@@ -314,7 +316,7 @@ const caseStudiesData = [
       "Established a new clinical accessibility-focused design system",
       "Handed off production-ready assets to engineering"
     ],
-    result: "Successfully launched the v1 portal to 50+ clinics, reducing patient onboarding time drastically and improving data accuracy across the board.",
+    result: "Blue ocean with zero direct competitors in an unstudied category — targeting India's 19-23.5% PPD market with cultural moats no global app can replicate.",
     metrics: [
       { value: "+40%", label: "ONBOARDING SPEED" },
       { value: "2.5x", label: "DATA ACCURACY" },
@@ -971,6 +973,7 @@ export default function App() {
   const [margImage, setMargImage] = useState(0);
   const [activeTab, setActiveTab] = useState(0);
   const [showFullCaseStudy, setShowFullCaseStudy] = useState(false);
+  const [showMurmurCaseStudy, setShowMurmurCaseStudy] = useState(false);
   const [siteReady, setSiteReady] = useState(false);
   const [activeStarNode, setActiveStarNode] = useState(0);
   const [passionTab, setPassionTab] = useState(0);
@@ -983,6 +986,7 @@ export default function App() {
   const [formStatus, setFormStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [contactFocused, setContactFocused] = useState(false);
   const [emailError, setEmailError] = useState("");
+  const [messageError, setMessageError] = useState("");
 
   const validateEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 
@@ -996,6 +1000,26 @@ export default function App() {
       return;
     }
     setEmailError("");
+
+    const msgInput = formRef.current.querySelector<HTMLTextAreaElement>('textarea[name="message"]');
+    if (msgInput) {
+      const msg = msgInput.value.trim();
+      if (msg.length < 20) {
+        setMessageError("Please write at least a sentence — 20 characters minimum.");
+        return;
+      }
+      const words = msg.toLowerCase().split(/\s+/).filter(w => w.length > 1);
+      if (words.length >= 4) {
+        const counts: Record<string, number> = {};
+        for (const w of words) counts[w] = (counts[w] || 0) + 1;
+        const maxFreq = Math.max(...Object.values(counts));
+        if (maxFreq / words.length > 0.45) {
+          setMessageError("Message looks repetitive. Tell me what's on your mind.");
+          return;
+        }
+      }
+    }
+    setMessageError("");
     setFormStatus("sending");
 
     emailjs
@@ -2036,14 +2060,13 @@ export default function App() {
                 idx: 1,
                 visual: (
                   <>
-                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(155deg, #0b1e36 0%, #0f2d4a 55%, #0a2238 100%)" }} />
-                    <svg style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} width="100" height="76" viewBox="0 0 90 70" fill="none" opacity="0.16"><rect x="5" y="10" width="80" height="50" rx="7" stroke="#93C5FD" strokeWidth="1.4"/><rect x="14" y="19" width="30" height="5" rx="2.5" fill="#93C5FD"/><rect x="14" y="28" width="20" height="3.5" rx="1.75" fill="#93C5FD" opacity="0.55"/><rect x="14" y="35" width="24" height="16" rx="3" stroke="#93C5FD" strokeWidth="1.2"/><rect x="54" y="19" width="22" height="32" rx="4" stroke="#93C5FD" strokeWidth="1.2"/><rect x="58" y="24" width="14" height="3" rx="1.5" fill="#93C5FD" opacity="0.5"/><rect x="58" y="30" width="10" height="3" rx="1.5" fill="#93C5FD" opacity="0.35"/></svg>
+                    <img src={murmurBannerUrl} alt="Murmur" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", display: "block" }} />
                     <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "50%", background: "linear-gradient(to bottom, transparent, rgba(5,14,25,0.9))" }} />
                   </>
                 ),
                 contractedBg: "linear-gradient(155deg, #0b1e36 0%, #0f2d4a 100%)",
                 tag: "Healthcare", tagColor: "#93C5FD", tagBg: "rgba(147,197,253,0.07)", tagBorder: "rgba(147,197,253,0.18)",
-                name: "Partner", subtitle: "Healthcare portal for 50+ clinics",
+                name: "Murmur", subtitle: "Healthcare portal for 50+ clinics",
                 star: [
                   { color: "#F2A7C4", label: "Situation", text: caseStudiesData[1].situation },
                   { color: "#93C5FD", label: "Task",      text: caseStudiesData[1].task },
@@ -2051,9 +2074,14 @@ export default function App() {
                   { color: "#93C5FD", label: "Result",    text: caseStudiesData[1].result.replace(/\n+/g, ' ') },
                 ],
                 cta: (
-                  <span style={{ flex: 1, fontFamily: "'DM Sans', sans-serif", fontSize: "12px", padding: "10px 14px", borderRadius: "9px", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.25)", background: "rgba(255,255,255,0.02)", textAlign: "center" as const, letterSpacing: "0.06em" }}>
-                    Case Study Coming Soon
-                  </span>
+                  <>
+                    <button style={{ flex: 1, background: "#FAFFC7", color: "#000", fontFamily: "'DM Sans', sans-serif", fontSize: "13px", fontWeight: 500, padding: "11px 16px", borderRadius: "9px", border: "none", cursor: "pointer", transition: "box-shadow 0.2s" }}
+                      onClick={e => { e.stopPropagation(); setActiveTab(1); setShowMurmurCaseStudy(true); }}
+                      onMouseOver={e => { e.currentTarget.style.boxShadow = "0 0 18px rgba(250,255,199,0.45)"; }}
+                      onMouseOut={e => { e.currentTarget.style.boxShadow = "none"; }}>
+                      See how I did it →
+                    </button>
+                  </>
                 ),
               },
               {
@@ -2964,6 +2992,17 @@ export default function App() {
                 onMouseOut={e => (e.currentTarget.style.borderColor = "rgba(242,167,196,0.12)")}
               />
 
+              {messageError && (
+                <span style={{
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: "11px",
+                  color: "rgba(255,100,100,0.8)",
+                  marginTop: "-12px",
+                }}>
+                  {messageError}
+                </span>
+              )}
+
               {/* Privacy note */}
               <p style={{
                 fontFamily: "'DM Sans', sans-serif",
@@ -3224,6 +3263,15 @@ export default function App() {
           project={caseStudiesData[activeTab]}
           onClose={(scrollTo?: string) => {
             setShowFullCaseStudy(false);
+            if (scrollTo) setTimeout(() => document.getElementById(scrollTo)?.scrollIntoView({ behavior: 'smooth' }), 80);
+          }}
+        />
+      )}
+
+      {showMurmurCaseStudy && (
+        <MurmurCaseStudyPage
+          onClose={(scrollTo?: string) => {
+            setShowMurmurCaseStudy(false);
             if (scrollTo) setTimeout(() => document.getElementById(scrollTo)?.scrollIntoView({ behavior: 'smooth' }), 80);
           }}
         />
