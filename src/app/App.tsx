@@ -1190,7 +1190,17 @@ export default function App() {
 
   useEffect(() => {
     if (!siteReady) return;
+    let cancelled = false;
+    const cancel = () => { cancelled = true; };
+    window.addEventListener('wheel', cancel, { passive: true, once: true });
+    window.addEventListener('touchstart', cancel, { passive: true, once: true });
+    window.addEventListener('keydown', cancel, { once: true });
+
     const timer = setTimeout(() => {
+      window.removeEventListener('wheel', cancel);
+      window.removeEventListener('touchstart', cancel);
+      window.removeEventListener('keydown', cancel);
+      if (cancelled) return;
       const aboutEl = document.getElementById('about');
       if (!aboutEl) return;
       const start = window.scrollY;
@@ -1207,7 +1217,13 @@ export default function App() {
       };
       requestAnimationFrame(step);
     }, 500);
-    return () => clearTimeout(timer);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('wheel', cancel);
+      window.removeEventListener('touchstart', cancel);
+      window.removeEventListener('keydown', cancel);
+    };
   }, [siteReady]);
 
   useEffect(() => {
