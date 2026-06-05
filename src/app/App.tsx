@@ -278,7 +278,7 @@ const caseStudiesData = [
       "Designed AI eligibility matching reducing 740+ to 3–5",
       "Built a one-time document vault and plain-language translation layer"
     ],
-    result: "A tested high fidelity prototype where a 19-year-old semi-urban participant navigated the app end-to-end with no prior guidance.\n\nThe flow successfully collapsed a 15+ step unguided government process into just 3 core decisions, significantly reducing cognitive load and drop-off rates.",
+    result: "A tested high fidelity prototype where a 19-year-old semi-urban participant navigated the app end-to-end with no prior guidance.",
     metrics: [
       { value: "740→3–5", label: "SCHEMES FILTERED" },
       { value: "15→3", label: "FLOW REDUCTION" },
@@ -2012,7 +2012,7 @@ export default function App() {
                   { color: "#F2A7C4", label: "Situation", text: caseStudiesData[0].situation },
                   { color: "#93C5FD", label: "Task",      text: caseStudiesData[0].task },
                   { color: "#F2A7C4", label: "Action",    text: caseStudiesData[0].actionTitle },
-                  { color: "#93C5FD", label: "Result",    text: caseStudiesData[0].result.replace(/\n+/g, ' ') },
+                  { color: "#93C5FD", label: "Result",    text: null, metrics: caseStudiesData[0].metrics.slice(0,3) },
                 ],
                 cta: (
                   <>
@@ -2109,7 +2109,18 @@ export default function App() {
                                 </svg>
                                 <div style={{ minWidth: 0 }}>
                                   <strong style={{ color: item.color, fontSize: "8px", textTransform: "uppercase" as const, letterSpacing: "0.9px", display: "block", marginBottom: "2px" }}>{item.label}</strong>
-                                  <span style={{ display: "block" }}>{item.text}</span>
+                                  {item.text ? (
+                                    <span style={{ display: "block" }}>{item.text}</span>
+                                  ) : (
+                                    <div style={{ display: "flex", gap: "5px", flexWrap: "wrap" as const, marginTop: "2px" }}>
+                                      {item.metrics!.map((m, mi) => (
+                                        <div key={mi} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "6px", padding: "3px 7px" }}>
+                                          <div style={{ fontSize: "12px", fontWeight: 700, color: "#fff", lineHeight: 1 }}>{m.value}</div>
+                                          <div style={{ fontSize: "7px", textTransform: "uppercase" as const, color: "rgba(255,255,255,0.35)", marginTop: "1px" }}>{m.label}</div>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  )}
                                 </div>
                               </li>
                             ))}
