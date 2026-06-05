@@ -294,7 +294,7 @@ const caseStudiesData = [
     id: "murmur",
     tag: "B2B SaaS",
     title: "Murmur — Healthcare Portal",
-    subtitle: "A comprehensive dashboard for healthcare providers to manage patient data effectively.",
+    subtitle: "AI-powered postpartum couples platform that reads maternal distress signals and translates them into one actionable daily nudge for the partner.",
     meta: [
       { label: "Role", value: "Lead Product Designer" },
       { label: "Timeline", value: "6 months" },
@@ -2066,7 +2066,7 @@ export default function App() {
                 ),
                 contractedBg: "linear-gradient(155deg, #0b1e36 0%, #0f2d4a 100%)",
                 tag: "Healthcare", tagColor: "#93C5FD", tagBg: "rgba(147,197,253,0.07)", tagBorder: "rgba(147,197,253,0.18)",
-                name: "Murmur", subtitle: "Healthcare portal for 50+ clinics",
+                name: "Murmur", subtitle: "AI-powered postpartum couples platform that reads maternal distress signals and translates them into one actionable daily nudge for the partner.",
                 star: [
                   { color: "#F2A7C4", label: "Situation", text: caseStudiesData[1].situation },
                   { color: "#93C5FD", label: "Task",      text: caseStudiesData[1].task },
