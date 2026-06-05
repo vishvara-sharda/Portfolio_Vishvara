@@ -1189,6 +1189,14 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    if (!siteReady) return;
+    const timer = setTimeout(() => {
+      document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, [siteReady]);
+
+  useEffect(() => {
     const id = setInterval(() => setNavLogoHeart(v => !v), 400);
     return () => clearInterval(id);
   }, []);
@@ -2274,7 +2282,7 @@ export default function App() {
             const cards = [
               {
                 obs: "OBS — 001",
-                source: "PRAKRITI DESIGN",
+                source: "PRAKRTI DESIGN",
                 quote: "I particularly wish to acknowledge Vishvara for her exceptional dedication and contributions.",
                 name: "Bhushan Sharma",
                 role: "CEO & Designer · Prakriti Design",
