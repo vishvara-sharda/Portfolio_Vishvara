@@ -823,9 +823,19 @@ function CollectibleCard({ id, style, isCollected, showNudge, onCollect, counter
               animate={{ y: [0, -3, 0] }}
               transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
             >
-              <div className="w-16 h-20 bg-[#FAFFC7] border border-[#FAFFC7] rounded-xl shadow-[0_0_15px_rgba(250,255,199,0.35)] flex flex-col items-center justify-center text-center px-1">
-                <Star className="w-6 h-6 text-[#B78494] group-hover:scale-110 transition-transform duration-300" fill="currentColor" />
-              </div>
+              <motion.div
+                animate={{ x: [0, -3, 3, -3, 3, -2, 2, 0], rotate: [0, -1.5, 1.5, -1.5, 1.5, -1, 1, 0] }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 0.45,
+                  repeatDelay: 2.8 + (id % 3) * 0.9,
+                  ease: "easeInOut",
+                }}
+              >
+                <div className="w-16 h-20 bg-[#FAFFC7] border border-[#FAFFC7] rounded-xl shadow-[0_0_15px_rgba(250,255,199,0.35)] flex flex-col items-center justify-center text-center px-1">
+                  <Star className="w-6 h-6 text-[#B78494] group-hover:scale-110 transition-transform duration-300" fill="currentColor" />
+                </div>
+              </motion.div>
             </motion.div>
           </motion.div>
         ) : showNudge ? (
