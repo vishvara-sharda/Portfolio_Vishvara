@@ -2001,7 +2001,7 @@ export default function App() {
                 idx: 0,
                 visual: (
                   <>
-                    <img src="https://img.youtube.com/vi/oaA4V-_D63A/maxresdefault.jpg" alt="Margdarshak" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                    <img src="https://img.youtube.com/vi/oaA4V-_D63A/maxresdefault.jpg" alt="Margdarshak" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 70%", display: "block" }} />
                     <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.65) 100%)" }} />
                   </>
                 ),
