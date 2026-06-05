@@ -1191,7 +1191,21 @@ export default function App() {
   useEffect(() => {
     if (!siteReady) return;
     const timer = setTimeout(() => {
-      document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+      const aboutEl = document.getElementById('about');
+      if (!aboutEl) return;
+      const start = window.scrollY;
+      const target = aboutEl.getBoundingClientRect().top + window.scrollY;
+      const distance = target - start;
+      if (Math.abs(distance) < 1) return;
+      const duration = 900;
+      const startTime = performance.now();
+      const ease = (t: number) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      const step = (now: number) => {
+        const progress = Math.min((now - startTime) / duration, 1);
+        window.scrollTo(0, start + distance * ease(progress));
+        if (progress < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
     }, 1500);
     return () => clearTimeout(timer);
   }, [siteReady]);
