@@ -879,9 +879,14 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
           </motion.div>
 
           {/* HMW */}
-          <div className="bg-[#121212] border border-[#F2A7C4]/30 rounded-3xl p-10 md:p-12 relative overflow-hidden hover:border-[#F2A7C4]/60 transition-colors duration-500">
-            <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#F2A7C4] mb-6">Problem Statement</div>
-            <p className="font-serif text-2xl md:text-3xl leading-relaxed text-white max-w-4xl">
+          <div className="bg-[#121212] border border-[#F2A7C4]/30 rounded-3xl p-12 relative overflow-hidden group hover:border-[#F2A7C4]/60 transition-colors duration-500">
+            <div className="absolute top-[-60px] left-8 font-serif text-[240px] leading-none text-[#F2A7C4]/5 select-none transition-transform duration-700 group-hover:translate-x-4">
+              "
+            </div>
+            <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#F2A7C4] mb-6 relative">
+              Problem Statement
+            </div>
+            <p className="font-serif text-2xl md:text-4xl leading-relaxed text-white relative max-w-4xl">
               How might we use AI to translate a mother's emotional state into a specific, non-blaming daily action for her partner — so support becomes consistent, concrete, and real?
             </p>
           </div>
