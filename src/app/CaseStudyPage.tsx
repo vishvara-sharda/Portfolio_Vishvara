@@ -828,7 +828,7 @@ function CollectibleCard({ id, style, isCollected, showNudge, onCollect, counter
                 transition={{
                   repeat: Infinity,
                   duration: 0.45,
-                  repeatDelay: 2.8 + (id % 3) * 0.9,
+                  repeatDelay: 1 + (id - 1) * 0.5,
                   ease: "easeInOut",
                 }}
               >
