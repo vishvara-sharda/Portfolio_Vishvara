@@ -1215,6 +1215,16 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
             </div>
           </div>
 
+          <div className="mb-16">
+            <span className="text-[#FAFFC7] text-3xl font-bold block mb-2">IMPACT</span>
+            <p className="text-xl">
+              <span className="font-bold text-[#F2A7C4]">90%</span>
+              <span className="font-bold"> of real users</span>
+              <span className="font-normal"> navigated India's welfare system for the first time — </span>
+              <span className="font-normal italic">without fear, without help, and without giving up.</span>
+            </p>
+          </div>
+
           <p className="text-gray-400 text-lg leading-relaxed max-w-[620px] mb-16 font-light">
             740 government schemes exist for India's poorest families. Almost none of them use it. This is what we found when we asked why.
           </p>
