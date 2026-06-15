@@ -793,7 +793,7 @@ function CollectibleCard({ id, style, isCollected, showNudge, onCollect, counter
   const [exitTarget, setExitTarget] = useState({ x: 0, y: -300 });
 
   return (
-    <div className="absolute z-[80] flex justify-center items-center" style={style}>
+    <div className="absolute z-[80] flex flex-col justify-center items-center gap-1.5" style={style}>
       <AnimatePresence mode="wait">
         {!isCollected ? (
           <motion.div
@@ -851,6 +851,9 @@ function CollectibleCard({ id, style, isCollected, showNudge, onCollect, counter
           </motion.div>
         ) : null}
       </AnimatePresence>
+      {!isCollected && (
+        <span className="text-white/50 text-[10px] tracking-widest uppercase pointer-events-none">collect me</span>
+      )}
     </div>
   );
 }
