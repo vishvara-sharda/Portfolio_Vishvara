@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import CaseStudyPage from "./CaseStudyPage";
 import MurmurCaseStudyPage from "./MurmurCaseStudyPage";
 import DesignerMind from "./DesignerMind";
+import HobbiesSection from "./HobbiesSection";
 import LoadingScreen from "./LoadingScreen";
 import girlImg from "../imports/ChatGPT_Image_May_26__2026__08_22_25_PM.png";
 import profileImg from "./components/Pictures/Group 17.jpg";
@@ -1968,6 +1969,54 @@ export default function App() {
         </div>
       </section>
 
+      {/* THE DESIGNER'S MIND (Star Map) */}
+      <DesignerMind />
+
+      {/* HOBBIES — The Other Tabs Open */}
+      <HobbiesSection />
+
+      {/* DIVIDER RIBBON */}
+      <section
+        style={{
+          background: "transparent",
+          padding: "0",
+          marginTop: "40px",
+          marginBottom: "40px",
+          overflow: "hidden",
+          position: "relative",
+          cursor: "default",
+          zIndex: 20,
+          pointerEvents: "none"
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            whiteSpace: "nowrap",
+            width: "fit-content",
+            animation: "editorial-marquee 100s linear infinite",
+          }}
+        >
+          {Array.from({ length: 2 }).map((_, trackIdx) => (
+            <div key={trackIdx} style={{ display: "flex", gap: "60px", paddingRight: "60px" }}>
+              {Array.from({ length: 6 }).map((_, i) => (
+                <span
+                  key={i}
+                  style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontWeight: 700,
+                    fontSize: "clamp(3rem, 6vw, 5rem)",
+                    letterSpacing: "0.1em",
+                  }}
+                >
+                  <span className="ribbon-word">BEHAVIOURAL DESIGN</span> <span style={{ color: "#F2A7C4", margin: "0 20px", opacity: 0.5 }}>★</span> <span className="ribbon-word">INTERACTION DESIGN</span> <span style={{ color: "#93C5FD", margin: "0 20px", opacity: 0.5 }}>★</span>
+                </span>
+              ))}
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* CASE STUDIES SECTION */}
       <section id="work" className="case-studies-section" style={{
         position: "relative",
@@ -2181,51 +2230,6 @@ export default function App() {
 
         </div>
       </section>
-
-      {/* DIVIDER RIBBON */}
-      <section 
-        style={{
-          background: "transparent",
-          padding: "0",
-          marginTop: "40px",
-          marginBottom: "40px",
-          overflow: "hidden",
-          position: "relative",
-          cursor: "default",
-          zIndex: 20,
-          pointerEvents: "none"
-        }}
-      >
-        <div 
-          style={{
-            display: "flex",
-            whiteSpace: "nowrap",
-            width: "fit-content",
-            animation: "editorial-marquee 100s linear infinite",
-          }}
-        >
-          {Array.from({ length: 2 }).map((_, trackIdx) => (
-            <div key={trackIdx} style={{ display: "flex", gap: "60px", paddingRight: "60px" }}>
-              {Array.from({ length: 6 }).map((_, i) => (
-                <span 
-                  key={i}
-                  style={{
-                    fontFamily: "'DM Sans', sans-serif",
-                    fontWeight: 700,
-                    fontSize: "clamp(3rem, 6vw, 5rem)",
-                    letterSpacing: "0.1em",
-                  }}
-                >
-                  <span className="ribbon-word">BEHAVIOURAL DESIGN</span> <span style={{ color: "#F2A7C4", margin: "0 20px", opacity: 0.5 }}>★</span> <span className="ribbon-word">INTERACTION DESIGN</span> <span style={{ color: "#93C5FD", margin: "0 20px", opacity: 0.5 }}>★</span>
-                </span>
-              ))}
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* THE DESIGNER'S MIND (Star Map) */}
-      <DesignerMind />
 
       {/* TESTIMONIALS SECTION */}
       <section

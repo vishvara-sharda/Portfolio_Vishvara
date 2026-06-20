@@ -418,15 +418,15 @@ export default function DesignerMind() {
       {/* Header */}
       <div style={{ position:'relative', zIndex:1, padding:'0 20px' }}>
         <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'10px', letterSpacing:'0.28em', textTransform:'uppercase', color:'#F2A7C4', opacity:0.72, textAlign:'center', margin:'0 0 16px 0' }}>
-          The Designer's Mind
+          Preview My
         </p>
-        <h2 style={{ fontFamily:"'Cormorant Garamond',serif", fontWeight:700, fontSize:'clamp(2.2rem,4vw,3.8rem)', color:'#FFF', textAlign:'center', lineHeight:1.08, margin:'0 0 16px 0' }}>
-          Connecting worlds, not just dots.
+        <h2 style={{ fontFamily:"'Cormorant Garamond',serif", fontWeight:700, fontSize:'clamp(2.2rem,4vw,3.8rem)', color:'#FAFFC7', textAlign:'center', lineHeight:1.08, margin:'0 0 16px 0' }}>
+          BRAIN
         </h2>
-        <div className="dm-header-sub" style={{ textAlign:'center', maxWidth:'520px', margin:'0 auto 80px auto', fontFamily:"'DM Sans',sans-serif", fontSize:'15px', lineHeight:1.9, color:'rgba(255,255,255,0.42)' }}>
-          <p style={{ margin:0 }}>I don't think in isolated skills.</p>
-          <p style={{ margin:0 }}>I connect people, research, systems, creativity, technology, and impact into one cohesive understanding.</p>
-          <p style={{ margin:0 }}>Every project is a journey across these worlds.</p>
+        <div className="dm-header-sub" style={{ textAlign:'center', maxWidth:'820px', margin:'0 auto 80px auto', fontFamily:"'DM Sans',sans-serif", fontSize:'15px', lineHeight:1.9, color:'rgba(255,255,255,0.42)' }}>
+          <p style={{ margin:0 }}>This is how I see the world — <strong style={{ color:'#F2A7C4', letterSpacing:'0.08em' }}>history connects to psychology</strong>, psychology bleeds into behavior, behavior shapes business, and business, when done right, becomes design.</p>
+          <p style={{ margin:'12px 0 0 0' }}><strong style={{ color:'#93C5FD', letterSpacing:'0.08em' }}>Nothing</strong><strong style={{ color:'#F2A7C4', letterSpacing:'0.08em' }}> is independent.</strong> Every idea is a consequence of something before it. <strong style={{ color:'#93C5FD', letterSpacing:'0.08em' }}>Nothing</strong><strong style={{ color:'#F2A7C4', letterSpacing:'0.08em' }}> is spontaneous</strong> —</p>
+          <p style={{ margin:'12px 0 0 0' }}><em style={{ color:'#FAFFC7' }}>it's all connected, if you're willing to follow the thread.</em></p>
         </div>
       </div>
 
