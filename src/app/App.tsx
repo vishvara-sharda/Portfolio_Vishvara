@@ -2574,90 +2574,71 @@ export default function App() {
           ].map(folder => (
             <div key={folder.id} style={{ position: "relative" }}>
 
-              {/* ── BACK FLAP ── absolute, spans full card height, peeks above front */}
-              <div style={{
-                position: "absolute",
-                top: 0,
-                left: "5px",
-                right: "5px",
-                bottom: 0,
-                borderRadius: "10px",
-                background: `${folder.color}0C`,
-                border: `1px solid ${folder.border}`,
-                backdropFilter: "blur(6px)",
-                WebkitBackdropFilter: "blur(6px)",
-                zIndex: 0,
-              }} />
+              {/* ── BACK PANEL (absolute, full card height, has the tab at top-left) ── */}
+              <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
+                {/* Tab row */}
+                <div style={{ display: "flex", alignItems: "flex-end" }}>
+                  <div style={{
+                    width: "76px",
+                    height: "24px",
+                    background: `${folder.color}18`,
+                    border: `1px solid ${folder.border}`,
+                    borderBottom: "none",
+                    borderRadius: "7px 7px 0 0",
+                    flexShrink: 0,
+                  }} />
+                  <div style={{ flex: 1, height: "1px", background: folder.border }} />
+                </div>
+                {/* Back panel body */}
+                <div style={{
+                  background: `${folder.color}0A`,
+                  border: `1px solid ${folder.border}`,
+                  borderTop: "none",
+                  borderRadius: "0 10px 10px 10px",
+                  height: "calc(100% - 24px)",
+                }} />
+              </div>
 
-              {/* ── FRONT FACE: tab + body, pushed down 86px so back flap shows above ── */}
-              <div style={{ position: "relative", marginTop: "86px", zIndex: 2 }}>
+              {/* ── FRONT FLAP (normal flow — sets card height, sits over bottom of back panel) ── */}
+              <div style={{ position: "relative", zIndex: 2, marginTop: "96px" }}>
 
-                {/* Papers: bottom:"100%" anchors them flush to the front face top — zero gap */}
+                {/* Papers sitting in the open mouth (bottom:"100%" = flush to front flap top) */}
                 {[
-                  { left: 12, rotation: -5, width: "52%" },
-                  { left: 30, rotation:  0, width: "60%" },
-                  { left: 48, rotation:  4, width: "46%" },
+                  { left: "10px", rotation: -8, width: "38%", zIdx: 1 },
+                  { left: "22px", rotation: -1, width: "44%", zIdx: 2 },
+                  { left: "34px", rotation:  5, width: "38%", zIdx: 1 },
                 ].map((p, i) => (
                   <div key={i} style={{
                     position: "absolute",
                     bottom: "100%",
-                    left: `${p.left}px`,
+                    left: p.left,
                     width: p.width,
-                    height: "58px",
-                    background: "rgba(255,255,255,0.05)",
+                    height: "62px",
+                    background: "rgba(255,255,255,0.055)",
                     border: `1px solid ${folder.border}`,
                     borderBottom: "none",
                     borderRadius: "3px 3px 0 0",
                     transform: `rotate(${p.rotation}deg)`,
                     transformOrigin: "bottom left",
-                    backdropFilter: "blur(4px)",
-                    zIndex: 1,
+                    zIndex: p.zIdx,
                   }}>
-                    {[10, 20, 30, 40, 50].map(top => (
-                      <div key={top} style={{ position: "absolute", left: "8px", right: "8px", top: `${top}px`, height: "1px", background: `${folder.color}1E` }} />
+                    {[9, 19, 29, 39, 49].map(top => (
+                      <div key={top} style={{ position: "absolute", left: "7px", right: "7px", top: `${top}px`, height: "1px", background: `${folder.color}28` }} />
                     ))}
                   </div>
                 ))}
 
-                {/* Tab row */}
-                <div style={{ display: "flex", alignItems: "flex-end", position: "relative", zIndex: 2 }}>
-                  <div style={{
-                    padding: "5px 14px",
-                    background: folder.bg,
-                    border: `1px solid ${folder.border}`,
-                    borderBottom: "none",
-                    borderRadius: "7px 7px 0 0",
-                    flexShrink: 0,
-                    backdropFilter: "blur(12px)",
-                    WebkitBackdropFilter: "blur(12px)",
-                  }}>
-                    <span style={{
-                      fontFamily: "'DM Sans', sans-serif",
-                      fontSize: "9px",
-                      fontWeight: 600,
-                      letterSpacing: "0.14em",
-                      color: folder.color,
-                      textTransform: "uppercase" as const,
-                      whiteSpace: "nowrap" as const,
-                    }}>
-                      {folder.name}
-                    </span>
-                  </div>
-                  <div style={{ flex: 1, height: "1px", background: folder.border, marginBottom: "1px" }} />
-                </div>
-
-                {/* Folder body */}
+                {/* Front flap */}
                 <div style={{
-                  position: "relative",
-                  zIndex: 2,
-                  background: folder.bg,
+                  background: `${folder.color}10`,
                   border: `1px solid ${folder.border}`,
-                  borderTop: "none",
-                  borderRadius: "0 12px 12px 12px",
+                  borderRadius: "8px",
                   padding: "28px 24px 32px",
-                  backdropFilter: "blur(16px)",
-                  WebkitBackdropFilter: "blur(16px)",
-                  minHeight: "230px",
+                  backdropFilter: "blur(18px)",
+                  WebkitBackdropFilter: "blur(18px)",
+                  minHeight: "220px",
+                  position: "relative",
+                  zIndex: 3,
                 }}>
                   <p style={{
                     fontFamily: "'DM Sans', sans-serif",
@@ -2707,7 +2688,7 @@ export default function App() {
                   </p>
                 </div>
 
-              </div>{/* end front face */}
+              </div>
             </div>
           ))}
         </div>
