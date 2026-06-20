@@ -2595,7 +2595,7 @@ export default function App() {
                   folderTimerRef.current = setTimeout(() => setActiveFolder(null), 20000);
                 }
               }}
-              style={{ position: "relative", paddingTop: "44px", ...{ "--folder-border": folder.border, "--folder-shadow1": `${folder.color}2A`, "--folder-shadow2": `${folder.color}33` } } as React.CSSProperties}
+              style={{ position: "relative", paddingTop: "44px", ...{ "--folder-border": folder.border, "--folder-shadow1": `${folder.color}2A`, "--folder-shadow2": `${folder.color}33`, "--folder-page-bg": `${folder.color}40` } } as React.CSSProperties}
             >
 
               {/* TAB — sits above the back panel; zIndex 2 covers the back panel's top-left border */}
@@ -2745,7 +2745,7 @@ export default function App() {
                   <div
                     key={i}
                     className="folder-article-page"
-                    style={{ transitionDelay: `${i * 0.06}s` }}
+                    style={{ transitionDelay: `${i * 0.06}s`, background: `${folder.color}22` }}
                   >
                     {/* Number label */}
                     <span style={{
@@ -2839,7 +2839,7 @@ export default function App() {
             flex: 1;
             aspect-ratio: 210 / 297;
             padding: 20px 16px;
-            background: rgba(18, 18, 26, 0.96);
+            background: rgba(12, 12, 20, 0.96);
             border: 1px solid var(--folder-border);
             border-radius: 4px;
             opacity: 0;
