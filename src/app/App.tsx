@@ -980,6 +980,8 @@ export default function App() {
   const [passionTab, setPassionTab] = useState(0);
   const [orbitHover, setOrbitHover] = useState<{ label: string, content: string } | null>(null);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [activeFolder, setActiveFolder] = useState<string | null>(null);
+  const folderTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const testimonialScrollRef = useRef<HTMLDivElement>(null);
   const testimonialPausedRef = useRef(false);
   const testimonialRafRef = useRef<number>(0);
@@ -2495,8 +2497,7 @@ export default function App() {
         style={{
           position: "relative",
           background: "transparent",
-          padding: "100px clamp(24px, 5vw, 80px)",
-          overflow: "hidden",
+          padding: "100px clamp(24px, 5vw, 80px) 240px",
         }}
       >
         <p style={{
@@ -2535,11 +2536,9 @@ export default function App() {
         </p>
 
         <div style={{
-          maxWidth: "1100px",
-          margin: "0 auto",
           display: "grid",
           gridTemplateColumns: "repeat(3, 1fr)",
-          gap: "28px",
+          gap: "64px",
         }}
           className="folders-grid"
         >
@@ -2548,147 +2547,221 @@ export default function App() {
               id: "behavioural",
               name: "Behavioural Design",
               color: "#93C5FD",
-              bg: "rgba(147,197,253,0.07)",
-              border: "rgba(147,197,253,0.3)",
+              border: "rgba(147,197,253,0.5)",
               tag: "HOW PEOPLE DECIDE",
               desc: "Notes on cognitive bias, friction, habit loops, and the invisible architecture behind every tap.",
+              articles: ["The Psychology of Default Settings", "When Friction Becomes a Feature", "How Anchoring Shapes Every Choice"],
             },
             {
               id: "accessibility",
               name: "Accessibility Design",
               color: "#FAFFC7",
-              bg: "rgba(250,255,199,0.06)",
-              border: "rgba(250,255,199,0.28)",
+              border: "rgba(250,255,199,0.45)",
               tag: "DESIGN FOR EVERYONE",
               desc: "Thinking through contrast, semantics, motion sensitivity, and what inclusive actually means in practice.",
+              articles: ["Designing Beyond WCAG", "The Case for Plain Language", "Invisible Affordances"],
             },
             {
               id: "interactive",
               name: "Interactive Design",
               color: "#F2A7C4",
-              bg: "rgba(242,167,196,0.07)",
-              border: "rgba(242,167,196,0.3)",
+              border: "rgba(242,167,196,0.5)",
               tag: "MOTION & MICROMOMENTS",
               desc: "Transitions, gestures, states, and the tiny details that make an interface feel alive.",
+              articles: ["Microinteractions That Matter", "The 100ms Rule", "Gestures That Feel Native"],
             },
           ].map(folder => (
-            <div key={folder.id} style={{ position: "relative" }}>
+            /* paddingTop reserves space for the tab inside the card's own bounds */
+            <div
+              key={folder.id}
+              className={`folder-card${activeFolder === folder.id ? " folder-active" : ""}`}
+              onClick={() => {
+                if (folderTimerRef.current) clearTimeout(folderTimerRef.current);
+                if (activeFolder === folder.id) {
+                  setActiveFolder(null);
+                } else {
+                  setActiveFolder(folder.id);
+                  folderTimerRef.current = setTimeout(() => setActiveFolder(null), 20000);
+                }
+              }}
+              style={{ position: "relative", paddingTop: "28px", ...{ "--folder-border": folder.border, "--folder-shadow1": `${folder.color}2A`, "--folder-shadow2": `${folder.color}33` } } as React.CSSProperties}
+            >
 
-              {/* ── BACK PANEL (absolute, full card height, has the tab at top-left) ── */}
-              <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
-                {/* Tab row */}
-                <div style={{ display: "flex", alignItems: "flex-end" }}>
-                  <div style={{
-                    width: "76px",
-                    height: "24px",
-                    background: `${folder.color}18`,
-                    border: `1px solid ${folder.border}`,
-                    borderBottom: "none",
-                    borderRadius: "7px 7px 0 0",
-                    flexShrink: 0,
-                  }} />
-                  <div style={{ flex: 1, height: "1px", background: folder.border }} />
-                </div>
-                {/* Back panel body */}
+              {/* TAB — sits above the back panel; zIndex 2 covers the back panel's top-left border */}
+              <div style={{
+                position: "absolute",
+                top: 0, left: 0,
+                width: "84px", height: "28px",
+                background: `${folder.color}14`,
+                border: `1px solid ${folder.border}`,
+                borderBottom: "none",
+                borderRadius: "8px 8px 0 0",
+                zIndex: 2,
+              }} />
+
+              {/* BACK PANEL — top: 27px overlaps the tab bottom by 1px, sealing the junction.
+                  Its own top border then acts as the horizontal line to the right of the tab. */}
+              <div style={{
+                position: "absolute",
+                top: "27px",
+                left: 0,
+                right: 0,
+                bottom: 0,
+                background: `${folder.color}08`,
+                borderRadius: "0 12px 12px 12px",
+                zIndex: 0,
+              }} className="folder-back" />
+
+              {/* PAPERS — three straight pages in a perfectly aligned bundle */}
+              <div className="folder-papers" style={{ position: "relative", height: "82px", zIndex: 1 }}>
+                {/* Back page — tallest, peeks highest */}
                 <div style={{
-                  background: `${folder.color}0A`,
+                  position: "absolute",
+                  bottom: 0,
+                  left: "12%",
+                  right: "12%",
+                  height: "76px",
+                  background: "rgba(255,255,255,0.025)",
                   border: `1px solid ${folder.border}`,
-                  borderTop: "none",
-                  borderRadius: "0 10px 10px 10px",
-                  height: "calc(100% - 24px)",
+                  borderBottom: "none",
+                  borderRadius: "4px 4px 0 0",
                 }} />
+                {/* Middle page */}
+                <div style={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: "12%",
+                  right: "12%",
+                  height: "70px",
+                  background: "rgba(255,255,255,0.04)",
+                  border: `1px solid ${folder.border}`,
+                  borderBottom: "none",
+                  borderRadius: "4px 4px 0 0",
+                }} />
+                {/* Front page — shortest, sits on top */}
+                <div style={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: "12%",
+                  right: "12%",
+                  height: "64px",
+                  background: "rgba(255,255,255,0.055)",
+                  border: `1px solid ${folder.border}`,
+                  borderBottom: "none",
+                  borderRadius: "4px 4px 0 0",
+                }}>
+                  {[10, 22, 34, 46, 58].map(top => (
+                    <div key={top} style={{
+                      position: "absolute",
+                      left: "10px",
+                      right: "10px",
+                      top: `${top}px`,
+                      height: "1px",
+                      background: `${folder.color}28`,
+                    }} />
+                  ))}
+                </div>
               </div>
 
-              {/* ── FRONT FLAP (normal flow — sets card height, sits over bottom of back panel) ── */}
-              <div style={{ position: "relative", zIndex: 2, marginTop: "96px" }}>
+              {/* OPENING LINE — the folder's mouth edge */}
+              <div style={{
+                height: "1px",
+                background: folder.border,
+                position: "relative",
+                zIndex: 3,
+              }} />
 
-                {/* Papers sitting in the open mouth (bottom:"100%" = flush to front flap top) */}
-                {[
-                  { left: "10px", rotation: -8, width: "38%", zIdx: 1 },
-                  { left: "22px", rotation: -1, width: "44%", zIdx: 2 },
-                  { left: "34px", rotation:  5, width: "38%", zIdx: 1 },
-                ].map((p, i) => (
-                  <div key={i} style={{
-                    position: "absolute",
-                    bottom: "100%",
-                    left: p.left,
-                    width: p.width,
-                    height: "62px",
-                    background: "rgba(255,255,255,0.055)",
-                    border: `1px solid ${folder.border}`,
-                    borderBottom: "none",
-                    borderRadius: "3px 3px 0 0",
-                    transform: `rotate(${p.rotation}deg)`,
-                    transformOrigin: "bottom left",
-                    zIndex: p.zIdx,
-                  }}>
-                    {[9, 19, 29, 39, 49].map(top => (
-                      <div key={top} style={{ position: "absolute", left: "7px", right: "7px", top: `${top}px`, height: "1px", background: `${folder.color}28` }} />
-                    ))}
+              {/* CONTENT — front of the folder */}
+              <div style={{
+                position: "relative",
+                zIndex: 2,
+                padding: "28px 24px 32px",
+                backdropFilter: "blur(18px)",
+                WebkitBackdropFilter: "blur(18px)",
+                minHeight: "220px",
+              }}>
+                <p style={{
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: "9px",
+                  letterSpacing: "0.24em",
+                  color: folder.color,
+                  opacity: 0.55,
+                  textTransform: "uppercase" as const,
+                  margin: "0 0 14px 0",
+                }}>
+                  {folder.tag}
+                </p>
+                <h3 style={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontSize: "26px",
+                  fontWeight: 700,
+                  color: "#FFF",
+                  margin: "0 0 14px 0",
+                  lineHeight: 1.15,
+                }}>
+                  {folder.name}
+                </h3>
+                <p style={{
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: "13px",
+                  color: "rgba(255,255,255,0.38)",
+                  lineHeight: 1.75,
+                  margin: "0 0 24px 0",
+                }}>
+                  {folder.desc}
+                </p>
+                <div style={{ display: "flex", flexDirection: "column" as const, gap: "8px" }}>
+                  {[0, 1, 2].map((i) => (
+                    <div key={i} className={`freq-line freq-line-${i}`} style={{ height: "2px", borderRadius: "2px", background: `${folder.color}88` }} />
+                  ))}
+                </div>
+                <p style={{
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: "9px",
+                  letterSpacing: "0.2em",
+                  color: folder.color,
+                  opacity: 0.4,
+                  textTransform: "uppercase" as const,
+                  margin: "18px 0 0 0",
+                }}>
+                  Being written →
+                </p>
+              </div>
+
+              {/* ARTICLE PAGES — three transparent pages side by side below the folder */}
+              <div className="folder-articles">
+                {folder.articles.map((title, i) => (
+                  <div
+                    key={i}
+                    className="folder-article-page"
+                    style={{ transitionDelay: `${i * 0.06}s` }}
+                  >
+                    <span style={{
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: "8px",
+                      letterSpacing: "0.24em",
+                      textTransform: "uppercase" as const,
+                      color: folder.color,
+                      opacity: 0.5,
+                      display: "block",
+                      marginBottom: "10px",
+                    }}>
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <p style={{
+                      fontFamily: "'Cormorant Garamond', serif",
+                      fontSize: "15px",
+                      fontWeight: 600,
+                      color: "#FFFFFF",
+                      margin: 0,
+                      lineHeight: 1.3,
+                    }}>
+                      {title}
+                    </p>
                   </div>
                 ))}
-
-                {/* Front flap */}
-                <div style={{
-                  background: `${folder.color}10`,
-                  border: `1px solid ${folder.border}`,
-                  borderRadius: "8px",
-                  padding: "28px 24px 32px",
-                  backdropFilter: "blur(18px)",
-                  WebkitBackdropFilter: "blur(18px)",
-                  minHeight: "220px",
-                  position: "relative",
-                  zIndex: 3,
-                }}>
-                  <p style={{
-                    fontFamily: "'DM Sans', sans-serif",
-                    fontSize: "9px",
-                    letterSpacing: "0.24em",
-                    color: folder.color,
-                    opacity: 0.55,
-                    textTransform: "uppercase" as const,
-                    margin: "0 0 14px 0",
-                  }}>
-                    {folder.tag}
-                  </p>
-                  <h3 style={{
-                    fontFamily: "'Cormorant Garamond', serif",
-                    fontSize: "26px",
-                    fontWeight: 700,
-                    color: "#FFF",
-                    margin: "0 0 14px 0",
-                    lineHeight: 1.15,
-                  }}>
-                    {folder.name}
-                  </h3>
-                  <p style={{
-                    fontFamily: "'DM Sans', sans-serif",
-                    fontSize: "13px",
-                    color: "rgba(255,255,255,0.38)",
-                    lineHeight: 1.75,
-                    margin: "0 0 24px 0",
-                  }}>
-                    {folder.desc}
-                  </p>
-                  <div style={{ display: "flex", flexDirection: "column" as const, gap: "8px" }}>
-                    {[100, 72, 50].map((w, i) => (
-                      <div key={i} style={{ width: `${w}%`, height: "1px", background: `${folder.color}22` }} />
-                    ))}
-                  </div>
-                  <p style={{
-                    fontFamily: "'DM Sans', sans-serif",
-                    fontSize: "9px",
-                    letterSpacing: "0.2em",
-                    color: folder.color,
-                    opacity: 0.4,
-                    textTransform: "uppercase" as const,
-                    margin: "18px 0 0 0",
-                  }}>
-                    Being written →
-                  </p>
-                </div>
-
               </div>
+
             </div>
           ))}
         </div>
@@ -2696,6 +2769,65 @@ export default function App() {
         <style>{`
           @media (max-width: 768px) {
             .folders-grid { grid-template-columns: 1fr !important; }
+          }
+          @keyframes freq-buzz-1 {
+            0%   { width: 32%; }
+            50%  { width: 22%; }
+            100% { width: 32%; }
+          }
+          @keyframes freq-buzz-2 {
+            0%   { width: 24%; }
+            50%  { width: 36%; }
+            100% { width: 24%; }
+          }
+          @keyframes freq-buzz-3 {
+            0%   { width: 18%; }
+            50%  { width: 28%; }
+            100% { width: 18%; }
+          }
+          .freq-line-0 { animation: freq-buzz-1 7s ease-in-out infinite; }
+          .freq-line-1 { animation: freq-buzz-2 9s ease-in-out infinite 2s; }
+          .freq-line-2 { animation: freq-buzz-3 8s ease-in-out infinite 4s; }
+          .folder-card {
+            cursor: pointer;
+          }
+          .folder-back {
+            box-shadow: inset 0 0 0 1px var(--folder-border);
+            transition: box-shadow 0.35s ease;
+          }
+          .folder-card:hover .folder-back {
+            box-shadow: inset 0 0 0 1px var(--folder-border), 0 0 36px 12px var(--folder-shadow1), 0 0 12px 3px var(--folder-shadow2);
+          }
+          .folder-articles {
+            position: absolute;
+            top: calc(100% + 20px);
+            left: 0;
+            right: 0;
+            z-index: 30;
+            display: flex;
+            gap: 10px;
+            pointer-events: none;
+          }
+          .folder-card:hover .folder-articles {
+            pointer-events: auto;
+          }
+          .folder-article-page {
+            flex: 1;
+            padding: 18px 14px 20px;
+            background: rgba(18, 18, 26, 0.95);
+            border: 1px solid var(--folder-border);
+            border-radius: 6px;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.28s ease, transform 0.32s cubic-bezier(0.25, 1, 0.5, 1);
+          }
+          .folder-card:hover .folder-article-page,
+          .folder-card.folder-active .folder-article-page {
+            opacity: 1;
+            transform: translateY(0);
+          }
+          .folder-card.folder-active .folder-articles {
+            pointer-events: auto;
           }
         `}</style>
       </section>
