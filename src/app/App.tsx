@@ -2490,7 +2490,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* COMING SOON SECTION */}
+      {/* WORDS & FREQUENCIES — FOLDERS SECTION */}
       <section
         style={{
           position: "relative",
@@ -2509,139 +2509,214 @@ export default function App() {
           textAlign: "center" as const,
           margin: "0 0 16px 0",
         }}>
-          Coming Soon
+          Writing + Thinking
+        </p>
+        <h2 style={{
+          fontFamily: "'Cormorant Garamond', serif",
+          fontWeight: 700,
+          fontSize: "clamp(2.2rem, 4vw, 3.8rem)",
+          color: "#FAFFC7",
+          textAlign: "center" as const,
+          lineHeight: 1.08,
+          margin: "0 0 16px 0",
+        }}>
+          Words &amp; Frequencies
+        </h2>
+        <p style={{
+          fontFamily: "'DM Sans', sans-serif",
+          fontSize: "15px",
+          color: "rgba(255,255,255,0.38)",
+          maxWidth: "520px",
+          margin: "0 auto 80px auto",
+          lineHeight: 1.8,
+          textAlign: "center" as const,
+        }}>
+          Topics I think, write, and obsess about.
         </p>
 
-        <div className="coming-soon-card" style={{
-          maxWidth: "700px",
+        <div style={{
+          maxWidth: "1100px",
           margin: "0 auto",
-          background: "#1A1215",
-          border: "1px solid rgba(250,255,199,0.1)",
-          borderRadius: "16px",
-          padding: "48px",
-          position: "relative",
-          overflow: "hidden",
-        }}>
-          {/* Scan-line overlay */}
-          <div aria-hidden="true" style={{
-            position: "absolute",
-            inset: 0,
-            background: "repeating-linear-gradient(transparent, transparent 3px, rgba(255,255,255,0.012) 3px, rgba(255,255,255,0.012) 4px)",
-            pointerEvents: "none",
-            zIndex: 0,
-          }} />
+          display: "grid",
+          gridTemplateColumns: "repeat(3, 1fr)",
+          gap: "28px",
+        }}
+          className="folders-grid"
+        >
+          {[
+            {
+              id: "behavioural",
+              name: "Behavioural Design",
+              color: "#93C5FD",
+              bg: "rgba(147,197,253,0.07)",
+              border: "rgba(147,197,253,0.3)",
+              tag: "HOW PEOPLE DECIDE",
+              desc: "Notes on cognitive bias, friction, habit loops, and the invisible architecture behind every tap.",
+            },
+            {
+              id: "accessibility",
+              name: "Accessibility Design",
+              color: "#FAFFC7",
+              bg: "rgba(250,255,199,0.06)",
+              border: "rgba(250,255,199,0.28)",
+              tag: "DESIGN FOR EVERYONE",
+              desc: "Thinking through contrast, semantics, motion sensitivity, and what inclusive actually means in practice.",
+            },
+            {
+              id: "interactive",
+              name: "Interactive Design",
+              color: "#F2A7C4",
+              bg: "rgba(242,167,196,0.07)",
+              border: "rgba(242,167,196,0.3)",
+              tag: "MOTION & MICROMOMENTS",
+              desc: "Transitions, gestures, states, and the tiny details that make an interface feel alive.",
+            },
+          ].map(folder => (
+            <div key={folder.id} style={{ position: "relative" }}>
 
-          {/* Card content */}
-          <div style={{ position: "relative", zIndex: 1 }}>
+              {/* ── BACK FLAP ── absolute, spans full card height, peeks above front */}
+              <div style={{
+                position: "absolute",
+                top: 0,
+                left: "5px",
+                right: "5px",
+                bottom: 0,
+                borderRadius: "10px",
+                background: `${folder.color}0C`,
+                border: `1px solid ${folder.border}`,
+                backdropFilter: "blur(6px)",
+                WebkitBackdropFilter: "blur(6px)",
+                zIndex: 0,
+              }} />
 
-            {/* Top row: classification tag + blinking signal */}
-            <div className="coming-soon-top-row" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "32px" }}>
-              <span style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: "10px",
-                letterSpacing: "0.28em",
-                textTransform: "uppercase" as const,
-                color: "#F2A7C4",
-                opacity: 0.6,
-              }}>
-                ⬛ TRANSMISSION PENDING
-              </span>
-              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                <div className="signal-dot" style={{
-                  width: "6px",
-                  height: "6px",
-                  borderRadius: "50%",
-                  background: "#FAFFC7",
-                  animation: "signal-blink 2s ease-in-out infinite",
-                  flexShrink: 0,
-                }} />
-                <span style={{
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontSize: "9px",
-                  color: "rgba(255,255,255,0.25)",
-                  letterSpacing: "0.16em",
-                  textTransform: "uppercase" as const,
+              {/* ── FRONT FACE: tab + body, pushed down 86px so back flap shows above ── */}
+              <div style={{ position: "relative", marginTop: "86px", zIndex: 2 }}>
+
+                {/* Papers: bottom:"100%" anchors them flush to the front face top — zero gap */}
+                {[
+                  { left: 12, rotation: -5, width: "52%" },
+                  { left: 30, rotation:  0, width: "60%" },
+                  { left: 48, rotation:  4, width: "46%" },
+                ].map((p, i) => (
+                  <div key={i} style={{
+                    position: "absolute",
+                    bottom: "100%",
+                    left: `${p.left}px`,
+                    width: p.width,
+                    height: "58px",
+                    background: "rgba(255,255,255,0.05)",
+                    border: `1px solid ${folder.border}`,
+                    borderBottom: "none",
+                    borderRadius: "3px 3px 0 0",
+                    transform: `rotate(${p.rotation}deg)`,
+                    transformOrigin: "bottom left",
+                    backdropFilter: "blur(4px)",
+                    zIndex: 1,
+                  }}>
+                    {[10, 20, 30, 40, 50].map(top => (
+                      <div key={top} style={{ position: "absolute", left: "8px", right: "8px", top: `${top}px`, height: "1px", background: `${folder.color}1E` }} />
+                    ))}
+                  </div>
+                ))}
+
+                {/* Tab row */}
+                <div style={{ display: "flex", alignItems: "flex-end", position: "relative", zIndex: 2 }}>
+                  <div style={{
+                    padding: "5px 14px",
+                    background: folder.bg,
+                    border: `1px solid ${folder.border}`,
+                    borderBottom: "none",
+                    borderRadius: "7px 7px 0 0",
+                    flexShrink: 0,
+                    backdropFilter: "blur(12px)",
+                    WebkitBackdropFilter: "blur(12px)",
+                  }}>
+                    <span style={{
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: "9px",
+                      fontWeight: 600,
+                      letterSpacing: "0.14em",
+                      color: folder.color,
+                      textTransform: "uppercase" as const,
+                      whiteSpace: "nowrap" as const,
+                    }}>
+                      {folder.name}
+                    </span>
+                  </div>
+                  <div style={{ flex: 1, height: "1px", background: folder.border, marginBottom: "1px" }} />
+                </div>
+
+                {/* Folder body */}
+                <div style={{
+                  position: "relative",
+                  zIndex: 2,
+                  background: folder.bg,
+                  border: `1px solid ${folder.border}`,
+                  borderTop: "none",
+                  borderRadius: "0 12px 12px 12px",
+                  padding: "28px 24px 32px",
+                  backdropFilter: "blur(16px)",
+                  WebkitBackdropFilter: "blur(16px)",
+                  minHeight: "230px",
                 }}>
-                  SIGNAL LOCATING
-                </span>
-              </div>
+                  <p style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: "9px",
+                    letterSpacing: "0.24em",
+                    color: folder.color,
+                    opacity: 0.55,
+                    textTransform: "uppercase" as const,
+                    margin: "0 0 14px 0",
+                  }}>
+                    {folder.tag}
+                  </p>
+                  <h3 style={{
+                    fontFamily: "'Cormorant Garamond', serif",
+                    fontSize: "26px",
+                    fontWeight: 700,
+                    color: "#FFF",
+                    margin: "0 0 14px 0",
+                    lineHeight: 1.15,
+                  }}>
+                    {folder.name}
+                  </h3>
+                  <p style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: "13px",
+                    color: "rgba(255,255,255,0.38)",
+                    lineHeight: 1.75,
+                    margin: "0 0 24px 0",
+                  }}>
+                    {folder.desc}
+                  </p>
+                  <div style={{ display: "flex", flexDirection: "column" as const, gap: "8px" }}>
+                    {[100, 72, 50].map((w, i) => (
+                      <div key={i} style={{ width: `${w}%`, height: "1px", background: `${folder.color}22` }} />
+                    ))}
+                  </div>
+                  <p style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: "9px",
+                    letterSpacing: "0.2em",
+                    color: folder.color,
+                    opacity: 0.4,
+                    textTransform: "uppercase" as const,
+                    margin: "18px 0 0 0",
+                  }}>
+                    Being written →
+                  </p>
+                </div>
+
+              </div>{/* end front face */}
             </div>
-
-            {/* Divider */}
-            <div style={{ height: "1px", background: "rgba(250,255,199,0.1)", marginBottom: "32px" }} />
-
-            {/* Redacted lines */}
-            <div style={{ display: "flex", flexDirection: "column" as const, gap: "12px", marginBottom: "32px" }}>
-              {[85, 65, 45].map((w, i) => (
-                <div key={i} style={{
-                  width: `${w}%`,
-                  height: "10px",
-                  borderRadius: "4px",
-                  background: "rgba(255,255,255,0.06)",
-                }} />
-              ))}
-            </div>
-
-            {/* Main copy */}
-            <div style={{ textAlign: "center" as const }}>
-              <h2 style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                fontWeight: 700,
-                fontSize: "clamp(2rem, 3.5vw, 3rem)",
-                color: "white",
-                lineHeight: 1.1,
-                margin: "0 0 16px 0",
-              }}>
-                Words &amp; frequencies
-              </h2>
-              <p style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: "14px",
-                color: "rgba(255,255,255,0.35)",
-                lineHeight: 1.8,
-                margin: "0 0 8px 0",
-              }}>
-                Something is being written. Something is being recorded.
-              </p>
-              <p style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: "12px",
-                color: "rgba(255,255,255,0.2)",
-                letterSpacing: "0.08em",
-                margin: "0 0 36px 0",
-              }}>
-                Blogs. Videos. Transmissions from the field.
-              </p>
-            </div>
-
-            {/* Frequency / waveform bars */}
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "flex-end", gap: "4px" }}>
-              {Array.from({ length: 28 }, (_, i) => {
-                const height = 6 + ((i * 17 + 3) % 23);
-                const shouldAnimate = i % 2 === 1;
-                const dur = (1.2 + ((i * 11) % 80) / 100).toFixed(1);
-                const del = ((i * 7) % 100 / 100).toFixed(2);
-                return (
-                  <div
-                    key={i}
-                    className={shouldAnimate ? "freq-bar" : undefined}
-                    style={{
-                      width: "3px",
-                      height: `${height}px`,
-                      borderRadius: "2px",
-                      background: "linear-gradient(to top, #FAFFC7 65%, #93C5FD 100%)",
-                      opacity: 0.25,
-                      flexShrink: 0,
-                      transformOrigin: "center bottom",
-                      animation: shouldAnimate ? `freq-pulse ${dur}s ease-in-out ${del}s infinite` : "none",
-                    }}
-                  />
-                );
-              })}
-            </div>
-
-          </div>
+          ))}
         </div>
+
+        <style>{`
+          @media (max-width: 768px) {
+            .folders-grid { grid-template-columns: 1fr !important; }
+          }
+        `}</style>
       </section>
 
       {/* ── CONTACT SECTION ── */}
