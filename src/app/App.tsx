@@ -2050,23 +2050,34 @@ export default function App() {
             fontSize: "10px",
             letterSpacing: "0.28em",
             textTransform: "uppercase" as const,
-            color: "rgba(255,255,255,0.28)",
-            margin: "0 0 6px 0",
-            textAlign: "center" as const,
-          }}>
-            METHOD STUDY
-          </p>
-          <p style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: "10px",
-            letterSpacing: "0.28em",
-            textTransform: "uppercase" as const,
             color: "#F2A7C4",
             opacity: 0.72,
             margin: "0 0 16px 0",
             textAlign: "center" as const,
           }}>
-            SELECTED WORK
+            SELECTED
+          </p>
+          <h2 style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontWeight: 700,
+            fontSize: "clamp(2.2rem, 4vw, 3.8rem)",
+            color: "#FAFFC7",
+            textAlign: "center" as const,
+            lineHeight: 1.08,
+            margin: "0 0 12px 0",
+          }}>
+            Work
+          </h2>
+          <p style={{
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: "10px",
+            letterSpacing: "0.28em",
+            textTransform: "uppercase" as const,
+            color: "rgba(255,255,255,0.28)",
+            textAlign: "center" as const,
+            margin: "0 0 60px 0",
+          }}>
+            Method Study
           </p>
 
           {/* APPLE BENTO — big display box + selector row */}
@@ -2584,14 +2595,14 @@ export default function App() {
                   folderTimerRef.current = setTimeout(() => setActiveFolder(null), 20000);
                 }
               }}
-              style={{ position: "relative", paddingTop: "28px", ...{ "--folder-border": folder.border, "--folder-shadow1": `${folder.color}2A`, "--folder-shadow2": `${folder.color}33` } } as React.CSSProperties}
+              style={{ position: "relative", paddingTop: "44px", ...{ "--folder-border": folder.border, "--folder-shadow1": `${folder.color}2A`, "--folder-shadow2": `${folder.color}33` } } as React.CSSProperties}
             >
 
               {/* TAB — sits above the back panel; zIndex 2 covers the back panel's top-left border */}
               <div style={{
                 position: "absolute",
                 top: 0, left: 0,
-                width: "84px", height: "28px",
+                width: "120px", height: "44px",
                 background: `${folder.color}14`,
                 border: `1px solid ${folder.border}`,
                 borderBottom: "none",
@@ -2599,11 +2610,11 @@ export default function App() {
                 zIndex: 2,
               }} />
 
-              {/* BACK PANEL — top: 27px overlaps the tab bottom by 1px, sealing the junction.
+              {/* BACK PANEL — top: 43px overlaps the tab bottom by 1px, sealing the junction.
                   Its own top border then acts as the horizontal line to the right of the tab. */}
               <div style={{
                 position: "absolute",
-                top: "27px",
+                top: "43px",
                 left: 0,
                 right: 0,
                 bottom: 0,
@@ -2613,7 +2624,7 @@ export default function App() {
               }} className="folder-back" />
 
               {/* PAPERS — three straight pages in a perfectly aligned bundle */}
-              <div className="folder-papers" style={{ position: "relative", height: "82px", zIndex: 1 }}>
+              <div className="folder-papers" style={{ position: "relative", height: "120px", zIndex: 1 }}>
                 {/* Back page — tallest, peeks highest */}
                 <div style={{
                   position: "absolute",
@@ -2728,7 +2739,7 @@ export default function App() {
                 </p>
               </div>
 
-              {/* ARTICLE PAGES — three transparent pages side by side below the folder */}
+              {/* ARTICLE PAGES — A4 portrait pages side by side below the folder */}
               <div className="folder-articles">
                 {folder.articles.map((title, i) => (
                   <div
@@ -2736,28 +2747,41 @@ export default function App() {
                     className="folder-article-page"
                     style={{ transitionDelay: `${i * 0.06}s` }}
                   >
+                    {/* Number label */}
                     <span style={{
                       fontFamily: "'DM Sans', sans-serif",
                       fontSize: "8px",
                       letterSpacing: "0.24em",
                       textTransform: "uppercase" as const,
                       color: folder.color,
-                      opacity: 0.5,
+                      opacity: 0.45,
                       display: "block",
-                      marginBottom: "10px",
+                      marginBottom: "14px",
                     }}>
                       {String(i + 1).padStart(2, "0")}
                     </span>
+                    {/* Heading */}
                     <p style={{
                       fontFamily: "'Cormorant Garamond', serif",
-                      fontSize: "15px",
-                      fontWeight: 600,
+                      fontSize: "14px",
+                      fontWeight: 700,
                       color: "#FFFFFF",
-                      margin: 0,
+                      margin: "0 0 18px 0",
                       lineHeight: 1.3,
                     }}>
                       {title}
                     </p>
+                    {/* Subtext lines */}
+                    <div style={{ display: "flex", flexDirection: "column" as const, gap: "6px" }}>
+                      {[100, 86, 72, 94, 60, 80, 68, 90, 55, 75].map((w, j) => (
+                        <div key={j} style={{
+                          width: `${w}%`,
+                          height: "1px",
+                          background: "rgba(255,255,255,0.1)",
+                          borderRadius: "1px",
+                        }} />
+                      ))}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -2813,13 +2837,15 @@ export default function App() {
           }
           .folder-article-page {
             flex: 1;
-            padding: 18px 14px 20px;
-            background: rgba(18, 18, 26, 0.95);
+            aspect-ratio: 210 / 297;
+            padding: 20px 16px;
+            background: rgba(18, 18, 26, 0.96);
             border: 1px solid var(--folder-border);
-            border-radius: 6px;
+            border-radius: 4px;
             opacity: 0;
             transform: translateY(12px);
             transition: opacity 0.28s ease, transform 0.32s cubic-bezier(0.25, 1, 0.5, 1);
+            overflow: hidden;
           }
           .folder-card:hover .folder-article-page,
           .folder-card.folder-active .folder-article-page {
