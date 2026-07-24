@@ -46,7 +46,7 @@ function PotteryContent({ accent }: { accent: string }) {
       <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%)' }} />
       <h3 style={{
         position: 'absolute', bottom: '28px', left: '32px',
-        fontFamily: "'Cormorant Garamond', serif", fontSize: '42px', fontWeight: 700,
+        fontFamily: "'Space Grotesk', sans-serif", fontSize: '42px', fontWeight: 700,
         color: accent, margin: 0, lineHeight: 1,
         textShadow: `0 0 30px ${accent}60`,
       }}>
@@ -86,7 +86,7 @@ function IllustrationsContent({ accent }: { accent: string }) {
 
   return (
     <div>
-      <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '28px', color: accent, margin: '0 0 6px 0', fontWeight: 700 }}>
+      <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '28px', color: accent, margin: '0 0 6px 0', fontWeight: 700 }}>
         thinking out loud
       </h3>
       <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '15px', color: 'rgba(255,255,255,0.35)', margin: '0 0 20px 0' }}>
@@ -189,7 +189,7 @@ function TabContent({ id, accent, onSelect }: { id: string; accent: string; onSe
                 <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '11px', color: 'rgba(255,255,255,0.18)', letterSpacing: '0.1em', flexShrink: 0, transition: 'color 0.2s' }}>
                   {item.n}
                 </span>
-                <span className="hobby-list-label" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '32px', fontWeight: 600, color: 'rgba(255,255,255,0.82)', lineHeight: 1, flexShrink: 0, transition: 'color 0.2s' }}>
+                <span className="hobby-list-label" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '32px', fontWeight: 600, color: 'rgba(255,255,255,0.82)', lineHeight: 1, flexShrink: 0, transition: 'color 0.2s' }}>
                   {item.label}
                 </span>
                 {item.sub && (
@@ -225,7 +225,7 @@ function TabContent({ id, accent, onSelect }: { id: string; accent: string; onSe
           </div>
         </div>
         <div>
-          <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '34px', color: accent, margin: '0 0 6px 0', fontWeight: 700 }}>
+          <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '34px', color: accent, margin: '0 0 6px 0', fontWeight: 700 }}>
             日本語の勉強中
           </h3>
           <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '15px', color: 'rgba(255,255,255,0.35)', margin: '0 0 26px 0', lineHeight: 1.7 }}>
@@ -296,15 +296,9 @@ export default function HobbiesSection() {
 
       {/* Section header */}
       <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-        <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '10px', letterSpacing: '0.28em', textTransform: 'uppercase', color: '#F2A7C4', opacity: 0.72, margin: '0 0 16px 0' }}>
-          OUTSIDE THE BRIEF
-        </p>
-        <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: 'clamp(2.2rem, 4vw, 3.8rem)', color: '#FAFFC7', lineHeight: 1.08, margin: '0 0 16px 0' }}>
-          The Other Tabs Open
+<h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 'clamp(2.2rem, 4vw, 3.8rem)', color: '#FAFFC7', lineHeight: 1.08, margin: '0 0 16px 0' }}>
+          Outside Work
         </h2>
-        <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '15px', color: 'rgba(255,255,255,0.38)', maxWidth: '520px', margin: '0 auto', lineHeight: 1.8 }}>
-          Things I keep returning to when I'm not designing — the interests that quietly shape how I see everything else.
-        </p>
       </div>
 
       {/* Browser window */}

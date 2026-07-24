@@ -383,7 +383,7 @@ function SecretLevelCard({ fileLabel, title, subtitle, dataReadout, image, image
         transform: showTitle ? 'translateY(0)' : 'translateY(20px)',
         transition: showTitle ? 'opacity 0.4s ease, transform 0.4s ease' : noT,
       }}>
-        <div style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontSize: 16, color: 'white' }}>
+        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontStyle: 'italic', fontSize: 16, color: 'white' }}>
           {title}
         </div>
         <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 10, color: 'rgba(255,255,255,0.45)', marginTop: 4, letterSpacing: '0.08em' }}>
@@ -561,7 +561,7 @@ function FullSizeFileCard({ card }: { card: SecretCardProps }) {
       </div>
 
       <div style={{ padding: '20px 24px 24px', borderTop: '1px solid #1e1e1e' }}>
-        <div style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontSize: 20, color: 'white', marginBottom: 6 }}>
+        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontStyle: 'italic', fontSize: 20, color: 'white', marginBottom: 6 }}>
           {card.title}
         </div>
         <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.08em' }}>
@@ -2072,11 +2072,11 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
                   ✦ CLASSIFIED
                 </div>
 
-                <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: 'clamp(2rem, 3.5vw, 3.2rem)', color: 'white', textAlign: 'center', lineHeight: 1.1, margin: '0 0 12px' }}>
+                <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 'clamp(2rem, 3.5vw, 3.2rem)', color: 'white', textAlign: 'center', lineHeight: 1.1, margin: '0 0 12px' }}>
                   The Unprocessed Files
                 </h2>
 
-                <p style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 400, fontStyle: 'italic', fontSize: 18, color: 'rgba(255,255,255,0.28)', textAlign: 'center', margin: '0 0 56px' }}>
+                <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 400, fontStyle: 'italic', fontSize: 18, color: 'rgba(255,255,255,0.28)', textAlign: 'center', margin: '0 0 56px' }}>
                   Raw data from the field. Hover to develop.
                 </p>
 
@@ -2140,7 +2140,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
                   </div>
                 </div>
 
-                <p style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontSize: 16, color: 'rgba(255,255,255,0.2)', textAlign: 'center', marginTop: 56 }}>
+                <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontStyle: 'italic', fontSize: 16, color: 'rgba(255,255,255,0.2)', textAlign: 'center', marginTop: 56 }}>
                   Some files are never fully processed. That's research.
                 </p>
 

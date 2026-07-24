@@ -4,10 +4,12 @@ import { motion, AnimatePresence } from 'motion/react';
 import CaseStudyPage from "./CaseStudyPage";
 import MurmurCaseStudyPage from "./MurmurCaseStudyPage";
 import DesignerMind from "./DesignerMind";
+import DesignLensSection from "./DesignLensSection";
 import HobbiesSection from "./HobbiesSection";
+import TeachersSection from "./TeachersSection";
 import LoadingScreen from "./LoadingScreen";
 import girlImg from "../imports/ChatGPT_Image_May_26__2026__08_22_25_PM.png";
-import profileImg from "./components/Pictures/Group 17.jpg";
+import profileImg from "./components/Pictures/me5.png";
 import heartUrl from "../imports/logo/heart.svg";
 import starUrl from "../imports/logo/star.svg";
 import murmurBannerUrl from "../imports/Murmur/banner.png";
@@ -540,14 +542,6 @@ const GlobalStyles = React.memo(() => (
     }
     .photo-card-outer {
       flex-shrink: 0;
-      transform: translateX(-10%) rotate(3.5deg);
-      transform-origin: center center;
-      transition: transform 0.5s ease-out;
-      cursor: pointer;
-    }
-    .photo-card-outer:hover {
-      transform: translateX(-10%) rotate(0deg);
-      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     .testimonial-slider-container {
       position: relative;
@@ -624,7 +618,7 @@ const GlobalStyles = React.memo(() => (
       transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.5s ease;
       opacity: 0;
       color: #F2A7C4;
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Space Grotesk', sans-serif;
       font-style: italic;
       font-size: 20px;
       line-height: 1.5;
@@ -895,14 +889,33 @@ const GlobalStyles = React.memo(() => (
     }
 
     /* Bento grid v2 — interactive left/right */
+    @property --bento-angle {
+      syntax: '<angle>';
+      initial-value: 0deg;
+      inherits: false;
+    }
+    @keyframes bento-border-spin {
+      to { --bento-angle: 360deg; }
+    }
     .bento-outer {
-      background: rgba(10,10,10,0.75);
-      border: 1px solid rgba(255,255,255,0.07);
+      --bento-angle: 0deg;
+      background:
+        linear-gradient(rgba(8,8,8,0.90), rgba(8,8,8,0.90)) padding-box,
+        linear-gradient(var(--bento-angle), rgba(250,255,199,0.95) 0%, rgba(250,255,199,0.55) 26%, rgba(250,255,199,0.05) 58%, rgba(250,255,199,0.32) 100%) border-box;
+      border: 4px solid transparent;
       border-radius: 28px;
       padding: 14px;
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
-      box-shadow: 0 40px 100px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.03);
+      animation: bento-border-spin 14s linear infinite;
+      box-shadow:
+        0 4px 6px rgba(0,0,0,0.45),
+        8px 32px 70px rgba(0,0,0,0.98),
+        14px 52px 110px rgba(0,0,0,0.70),
+        inset 0 2px 0 rgba(250,255,199,0.42),
+        inset 2px 0 0 rgba(250,255,199,0.22),
+        inset 0 -14px 44px rgba(0,0,0,0.82),
+        inset -14px 0 44px rgba(0,0,0,0.52);
     }
     .bento-grid-v2 {
       display: grid;
@@ -948,6 +961,88 @@ const GlobalStyles = React.memo(() => (
         flex-wrap: wrap !important;
         gap: 8px !important;
       }
+    }
+
+    /* Nav hover text swap — mirrors hover-text-swap.html exactly */
+    .nav-swap {
+      display: inline-block;
+      position: relative;
+      height: 16px;
+      line-height: 16px;
+      overflow: hidden;
+      clip-path: inset(0);
+      background: none;
+      border: none;
+      padding: 0;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .nav-swap .ns-default {
+      display: block;
+      color: #93C5FD;
+      transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1), color 0.3s ease;
+    }
+    .nav-swap .ns-alt {
+      display: block;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      font-family: 'Space Grotesk', sans-serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      text-transform: none;
+      color: #F2A7C4;
+      transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+      white-space: nowrap;
+    }
+    .nav-swap:hover .ns-default {
+      transform: translateY(-100%);
+      color: #F2A7C4;
+    }
+    .nav-swap:hover .ns-alt {
+      transform: translateY(-100%);
+    }
+
+    /* Overlay nav swap — same mechanic, big text */
+    .overlay-swap {
+      position: relative;
+    }
+    .overlay-swap-clip {
+      display: block;
+      clip-path: inset(0 -100vw);
+      position: relative;
+      text-align: center;
+    }
+    .overlay-swap .os-default {
+      display: block;
+      transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1), color 0.3s ease;
+    }
+    .overlay-swap .os-alt {
+      display: block;
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Space Grotesk', sans-serif;
+      font-style: italic;
+      font-weight: 400;
+      color: #F2A7C4;
+      letter-spacing: 0.01em;
+      transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+      white-space: nowrap;
+    }
+    .overlay-swap:hover .os-default {
+      transform: translateY(-100%);
+      color: #F2A7C4;
+    }
+    .overlay-swap:hover .os-alt {
+      transform: translateX(-50%) translateY(-100%);
     }
   `}</style>
 ));
@@ -1310,22 +1405,18 @@ export default function App() {
         </button>
 
         <div style={{ display: "flex", gap: "clamp(16px, 3vw, 28px)", alignItems: "center" }}>
-          {(["About", "Work", "Contact"] as const).map((label) => (
+          {([
+            { label: "About",   alt: "my story"  },
+            { label: "Work",    alt: "the proof"  },
+            { label: "Contact", alt: "say hello"  },
+          ]).map(({ label, alt }) => (
             <button
               key={label}
+              className="nav-swap"
               onClick={() => document.getElementById(label.toLowerCase())?.scrollIntoView({ behavior: "smooth" })}
-              style={{
-                background: "none", border: "none",
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: "11px", fontWeight: 500,
-                letterSpacing: "0.14em", textTransform: "uppercase",
-                color: "rgba(255,255,255,0.48)", padding: 0,
-                transition: "color 0.2s ease",
-              }}
-              onMouseEnter={e => (e.currentTarget.style.color = "#F2A7C4")}
-              onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.48)")}
             >
-              {label}
+              <span className="ns-default">{label}</span>
+              <span className="ns-alt">{alt}</span>
             </button>
           ))}
           <a
@@ -1520,7 +1611,7 @@ export default function App() {
               top: "42vh",
               transform: "translateX(-50%)",
               opacity: 0,
-              fontFamily: "'Cormorant Garamond', serif",
+              fontFamily: "'Space Grotesk', sans-serif",
               fontWeight: 700,
               fontSize: "7vw",
               color: "#FAFFC7",
@@ -1548,11 +1639,13 @@ export default function App() {
         style={{
           background: "transparent",
           minHeight: "100vh",
-          padding: "96px clamp(28px, 7vw, 100px) 100px",
+          paddingTop: "96px",
+          paddingBottom: "100px",
+          paddingLeft: "clamp(28px, 7vw, 100px)",
+          paddingRight: "calc(40% + clamp(20px, 3vw, 40px))",
           display: "grid",
-          gridTemplateColumns: "1fr auto",
-          gridTemplateAreas: '"role photo" "name photo" "tagline photo" "stats photo" "ctas photo"',
-          columnGap: "clamp(40px, 6vw, 80px)",
+          gridTemplateColumns: "1fr",
+          gridTemplateAreas: '"role" "name" "tagline" "stats" "ctas"',
           rowGap: 0,
           alignItems: "start",
           position: "relative",
@@ -1645,7 +1738,7 @@ export default function App() {
         {/* Name — dominant anchor */}
         <div className="about-name-block" style={{ margin: "0 0 36px -36px", display: "flex", flexDirection: "column", gap: "16px", pointerEvents: "auto", alignItems: "flex-start" }}>
           <h1 style={{
-            fontFamily: "'Cormorant Garamond', serif",
+            fontFamily: "'Space Grotesk', sans-serif",
             fontWeight: 700,
             fontSize: "clamp(3.06rem, 7.65vw, 9rem)",
             color: "#F2A7C4",
@@ -1664,7 +1757,7 @@ export default function App() {
             V<span style={{ position: "relative", display: "inline-block" }}>I<svg viewBox="0 0 24 24" style={{ position: "absolute", top: "-0.25em", left: "50%", transform: "translateX(-30%)", width: "0.28em", height: "0.28em", overflow: "visible" }} xmlns="http://www.w3.org/2000/svg"><polygon points="12,4 13.9,9.4 19.6,9.5 15,13 16.7,18.5 12,15.2 7.3,18.5 9,13 4.4,9.5 10.1,9.4" fill="#F2A7C4" stroke="#F2A7C4" strokeWidth="3" strokeLinejoin="round" strokeLinecap="round" /></svg></span>SHVARA
           </h1>
           <h1 style={{
-            fontFamily: "'Cormorant Garamond', serif",
+            fontFamily: "'Space Grotesk', sans-serif",
             fontWeight: 700,
             fontSize: "clamp(3.06rem, 7.65vw, 9rem)",
             color: "#F2A7C4",
@@ -1686,7 +1779,7 @@ export default function App() {
 
         {/* Tagline — larger, italic, acts as voice */}
         <p className="about-tagline" style={{
-          fontFamily: "'Cormorant Garamond', serif",
+          fontFamily: "'Space Grotesk', sans-serif",
           fontStyle: "italic",
           fontWeight: 400,
           fontSize: "clamp(1.05rem, 1.9vw, 1.55rem)",
@@ -1789,48 +1882,31 @@ export default function App() {
 
         </div>
 
-        {/* Right: tilted photo card */}
-        <div className="photo-card-outer" style={{ position: "relative", zIndex: 1 }}>
-          <div style={{
-            border: "5px solid #FAFFC7",
-            borderRadius: "20px",
-            overflow: "hidden",
-            width: "clamp(200px, 22vw, 300px)",
-            aspectRatio: "3/4",
-            boxShadow: "0 8px 40px rgba(0,0,0,0.55), 0 0 0 1px rgba(242,167,196,0.08)",
-            background: "#111",
-          }}>
-            <img
-              src={profileImg}
-              alt="Vishvara Gandharv"
-              style={{
-                display: "block",
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                objectPosition: "center center",
-                filter: "contrast(1.1) saturate(1.1) brightness(0.9)",
-              }}
-            />
-          </div>
-          {/* Signature */}
-          <div style={{
-            textAlign: "center",
-            marginTop: "10px",
-            fontFamily: "'Cormorant Garamond', serif",
-            fontStyle: "italic",
-            fontWeight: 400,
-            fontSize: "clamp(1.4rem, 2.2vw, 2rem)",
-            color: "#F2A7C4",
-            opacity: 0.85,
-            pointerEvents: "none",
-            userSelect: "none",
-          }}>
-            Vishvara Gandharv
-          </div>
+        {/* Right: full-bleed photo */}
+        <div style={{
+          position: "absolute",
+          right: "60px",
+          top: 0,
+          bottom: 0,
+          width: "40%",
+          zIndex: 1,
+          overflow: "hidden",
+        }}>
+          <img
+            src={profileImg}
+            alt="Vishvara Gandharv"
+            style={{
+              display: "block",
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              objectPosition: "center top",
+            }}
+          />
         </div>
 
       </div>
+
 
       {/* FEATURED VIDEO SECTION */}
       <section style={{
@@ -1877,29 +1953,16 @@ export default function App() {
           margin: "0 auto",
           textAlign: "center"
         }}>
-          {/* Label */}
-          <p style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: "10px",
-            letterSpacing: "0.28em",
-            textTransform: "uppercase",
-            color: "#F2A7C4",
-            opacity: 0.72,
-            margin: "0 0 16px 0"
-          }}>
-            Featured
-          </p>
-
           {/* Headline */}
           <h2 style={{
-            fontFamily: "'Cormorant Garamond', serif",
+            fontFamily: "'Space Grotesk', sans-serif",
             fontWeight: 700,
-            fontSize: "clamp(2rem, 3.5vw, 3rem)",
-            color: "#FFFFFF",
+            fontSize: "clamp(2.2rem, 4vw, 3.8rem)",
+            color: "#FAFFC7",
             lineHeight: 1.1,
             margin: "0 0 16px 0"
           }}>
-            I research the space between people and products
+            Meet Me
           </h2>
 
           {/* Video Wrapper (Glassmorphism) */}
@@ -1971,11 +2034,11 @@ export default function App() {
         </div>
       </section>
 
+      {/* DESIGN LENS */}
+      <DesignLensSection />
+
       {/* THE DESIGNER'S MIND (Star Map) */}
       <DesignerMind />
-
-      {/* HOBBIES — The Other Tabs Open */}
-      <HobbiesSection />
 
       {/* DIVIDER RIBBON */}
       <section
@@ -2022,13 +2085,12 @@ export default function App() {
       {/* CASE STUDIES SECTION */}
       <section id="work" className="case-studies-section" style={{
         position: "relative",
-        padding: "100px clamp(24px, 5vw, 80px)",
+        padding: "140px clamp(24px, 5vw, 60px)",
         background: "transparent",
         zIndex: 10,
         fontFamily: "'DM Sans', sans-serif",
         overflow: "hidden"
       }}>
-
 
         {/* Vignette overlay */}
         <div
@@ -2042,43 +2104,19 @@ export default function App() {
           }}
         />
 
-        <div style={{ maxWidth: "1160px", margin: "0 auto", position: "relative", zIndex: 1 }}>
-          
-          {/* Section labels */}
-          <p style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: "10px",
-            letterSpacing: "0.28em",
-            textTransform: "uppercase" as const,
-            color: "#F2A7C4",
-            opacity: 0.72,
-            margin: "0 0 16px 0",
-            textAlign: "center" as const,
-          }}>
-            SELECTED
-          </p>
+        <div style={{ maxWidth: "1440px", margin: "0 auto", position: "relative", zIndex: 1 }}>
+
           <h2 style={{
-            fontFamily: "'Cormorant Garamond', serif",
+            fontFamily: "'Space Grotesk', sans-serif",
             fontWeight: 700,
             fontSize: "clamp(2.2rem, 4vw, 3.8rem)",
             color: "#FAFFC7",
             textAlign: "center" as const,
             lineHeight: 1.08,
-            margin: "0 0 12px 0",
-          }}>
-            Work
-          </h2>
-          <p style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: "10px",
-            letterSpacing: "0.28em",
-            textTransform: "uppercase" as const,
-            color: "rgba(255,255,255,0.28)",
-            textAlign: "center" as const,
             margin: "0 0 60px 0",
           }}>
             Method Study
-          </p>
+          </h2>
 
           {/* APPLE BENTO — big display box + selector row */}
           {(() => {
@@ -2182,13 +2220,13 @@ export default function App() {
                   <div style={{ borderRadius: "18px", border: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 8px 48px rgba(0,0,0,0.5)", overflow: "hidden" }}>
                     <AnimatePresence mode="wait">
                       <motion.div key={activeTab} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }} style={{ display: "flex", flexDirection: "column" as const }}>
-                        <div style={{ height: "220px", position: "relative", overflow: "hidden" }}>
+                        <div style={{ height: "340px", position: "relative", overflow: "hidden" }}>
                           {activeCard.visual}
                         </div>
                         <div style={{ padding: "20px 24px 20px", background: "rgba(10,10,10,0.98)", display: "flex", flexDirection: "column" as const }}>
                           <div style={{ marginBottom: "10px" }}>
                             <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "10px", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: activeCard.tagColor, background: activeCard.tagBg, border: `1px solid ${activeCard.tagBorder}`, padding: "3px 10px", borderRadius: "9999px" }}>{activeCard.tag}</span>
-                            <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(20px, 2vw, 28px)", fontWeight: 700, color: "#fff", margin: "7px 0 3px", lineHeight: 1.1 }}>{activeCard.name}</h3>
+                            <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(20px, 2vw, 28px)", fontWeight: 700, color: "#fff", margin: "7px 0 3px", lineHeight: 1.1 }}>{activeCard.name}</h3>
                             <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "11px", color: "rgba(255,255,255,0.42)", margin: 0, lineHeight: 1.4 }}>{activeCard.subtitle}</p>
                           </div>
                           <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column" as const, gap: "10px" }}>
@@ -2230,7 +2268,7 @@ export default function App() {
                           <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "8px", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: card.tagColor, background: card.tagBg, border: `1px solid ${card.tagBorder}`, padding: "2px 8px", borderRadius: "9999px" }}>{card.tag}</span>
                         </div>
                         <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "8px 12px 12px" }}>
-                          <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "17px", fontWeight: 700, color: "#fff", lineHeight: 1.1, marginBottom: "3px" }}>{card.name}</div>
+                          <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "17px", fontWeight: 700, color: "#fff", lineHeight: 1.1, marginBottom: "3px" }}>{card.name}</div>
                           <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "10px", color: "rgba(255,255,255,0.45)", lineHeight: 1.3, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" as const }}>{card.subtitle}</div>
                         </div>
                       </div>
@@ -2244,6 +2282,12 @@ export default function App() {
         </div>
       </section>
 
+      {/* TEACHERS I'VE NEVER MET */}
+      <TeachersSection />
+
+      {/* HOBBIES — The Other Tabs Open */}
+      <HobbiesSection />
+
       {/* TESTIMONIALS SECTION */}
       <section
         style={{
@@ -2255,43 +2299,29 @@ export default function App() {
       >
 <div style={{ position: "relative", zIndex: 1, maxWidth: "1000px", margin: "0 auto" }}>
 
-          {/* Section label */}
-          <p style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: "10px",
-            letterSpacing: "0.28em",
-            textTransform: "uppercase" as const,
-            color: "#F2A7C4",
-            opacity: 0.72,
-            textAlign: "center" as const,
-            margin: "0 0 16px 0",
-          }}>
-            Field Notes
-          </p>
-
           {/* Headline */}
           <h2 style={{
-            fontFamily: "'Cormorant Garamond', serif",
+            fontFamily: "'Space Grotesk', sans-serif",
             fontWeight: 700,
-            fontSize: "clamp(2rem, 3.5vw, 3rem)",
-            color: "white",
+            fontSize: "clamp(2.2rem, 4vw, 3.8rem)",
+            color: "#FAFFC7",
             textAlign: "center" as const,
             lineHeight: 1.1,
             margin: "0 0 16px 0",
           }}>
-            Logged by people I've worked with
+            Filed Notes
           </h2>
 
           {/* Subtext */}
           <p style={{
-            fontFamily: "'Cormorant Garamond', serif",
+            fontFamily: "'Space Grotesk', sans-serif",
             fontStyle: "italic",
             fontSize: "18px",
             color: "rgba(255,255,255,0.28)",
             textAlign: "center" as const,
             margin: "0 0 48px 0",
           }}>
-            Honest ones. Mostly.
+            honest ones. Mostly.
           </p>
 
           {/* Cards grid */}
@@ -2430,7 +2460,7 @@ export default function App() {
 
                         {/* Quote */}
                         <p style={{
-                          fontFamily: "'Cormorant Garamond', serif",
+                          fontFamily: "'Space Grotesk', sans-serif",
                           fontStyle: "italic",
                           fontSize: "18px",
                           color: "rgba(255,255,255,0.82)",
@@ -2511,20 +2541,8 @@ export default function App() {
           padding: "100px clamp(24px, 5vw, 80px) 240px",
         }}
       >
-        <p style={{
-          fontFamily: "'DM Sans', sans-serif",
-          fontSize: "10px",
-          letterSpacing: "0.28em",
-          textTransform: "uppercase" as const,
-          color: "#F2A7C4",
-          opacity: 0.72,
-          textAlign: "center" as const,
-          margin: "0 0 16px 0",
-        }}>
-          Writing + Thinking
-        </p>
         <h2 style={{
-          fontFamily: "'Cormorant Garamond', serif",
+          fontFamily: "'Space Grotesk', sans-serif",
           fontWeight: 700,
           fontSize: "clamp(2.2rem, 4vw, 3.8rem)",
           color: "#FAFFC7",
@@ -2535,15 +2553,16 @@ export default function App() {
           Words &amp; Frequencies
         </h2>
         <p style={{
-          fontFamily: "'DM Sans', sans-serif",
-          fontSize: "15px",
-          color: "rgba(255,255,255,0.38)",
+          fontFamily: "'Space Grotesk', sans-serif",
+          fontStyle: "italic",
+          fontSize: "18px",
+          color: "rgba(255,255,255,0.28)",
           maxWidth: "520px",
           margin: "0 auto 80px auto",
           lineHeight: 1.8,
           textAlign: "center" as const,
         }}>
-          Topics I think, write, and obsess about.
+          topics I think, write, and obsess about.
         </p>
 
         <div style={{
@@ -2703,7 +2722,7 @@ export default function App() {
                   {folder.tag}
                 </p>
                 <h3 style={{
-                  fontFamily: "'Cormorant Garamond', serif",
+                  fontFamily: "'Space Grotesk', sans-serif",
                   fontSize: "26px",
                   fontWeight: 700,
                   color: "#FFF",
@@ -2762,7 +2781,7 @@ export default function App() {
                     </span>
                     {/* Heading */}
                     <p style={{
-                      fontFamily: "'Cormorant Garamond', serif",
+                      fontFamily: "'Space Grotesk', sans-serif",
                       fontSize: "14px",
                       fontWeight: 700,
                       color: "#FFFFFF",
@@ -3090,9 +3109,9 @@ export default function App() {
 
             {/* Headline */}
             <h2 style={{
-              fontFamily: "'Cormorant Garamond', serif",
+              fontFamily: "'Space Grotesk', sans-serif",
               fontWeight: 700,
-              fontSize: "clamp(2rem, 3.5vw, 3rem)",
+              fontSize: "clamp(2.2rem, 4vw, 3.8rem)",
               color: "white",
               lineHeight: 1.1,
               margin: "0 0 16px 0",
@@ -3102,7 +3121,7 @@ export default function App() {
 
             {/* Subheadline */}
             <p style={{
-              fontFamily: "'Cormorant Garamond', serif",
+              fontFamily: "'Space Grotesk', sans-serif",
               fontStyle: "italic",
               fontSize: "1.4rem",
               color: "rgba(255,255,255,0.35)",
@@ -3357,7 +3376,7 @@ export default function App() {
               width: "76px",
               height: "76px",
               borderRadius: "50%",
-              background: navOpen || navBtnHovered ? "#93C5FD" : "#F2A7C4",
+              background: navOpen || navBtnHovered ? "#FAFFC7" : "#F2A7C4",
               border: "none",
               cursor: "pointer",
               display: "flex",
@@ -3416,9 +3435,14 @@ export default function App() {
               gap: "4px",
             }}
           >
-            {(["About", "Work", "Contact"] as const).map((label, i) => (
+            {([
+              { label: "About",   alt: "my story"  },
+              { label: "Work",    alt: "the proof"  },
+              { label: "Contact", alt: "say hello"  },
+            ] as const).map(({ label, alt }, i) => (
               <motion.button
                 key={label}
+                className="overlay-swap"
                 initial={{ opacity: 0, y: 28 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 16 }}
@@ -3431,20 +3455,20 @@ export default function App() {
                 style={{
                   background: "none",
                   border: "none",
-                  fontFamily: "'Cormorant Garamond', serif",
+                  fontFamily: "'Space Grotesk', sans-serif",
                   fontWeight: 700,
                   fontSize: "clamp(3.5rem, 9vw, 7rem)",
-                  color: "rgba(255,255,255,0.6)",
+                  color: "#93C5FD",
                   cursor: "pointer",
                   letterSpacing: "-0.02em",
                   lineHeight: 1.1,
-                  padding: "4px 0",
-                  transition: "color 0.2s ease",
+                  padding: 0,
                 }}
-                onMouseEnter={e => (e.currentTarget.style.color = "#F2A7C4")}
-                onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.6)")}
               >
-                {label}
+                <span className="overlay-swap-clip">
+                  <span className="os-default">{label}</span>
+                  <span className="os-alt">{alt}</span>
+                </span>
               </motion.button>
             ))}
             <motion.a

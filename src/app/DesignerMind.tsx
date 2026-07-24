@@ -193,6 +193,18 @@ const SvgDefs = memo(() => (
       <stop offset="0%"   stopColor="#F2A7C4" stopOpacity="0.28" />
       <stop offset="100%" stopColor="#F2A7C4" stopOpacity="0" />
     </radialGradient>
+    {CLUSTERS.map(c => (
+      <radialGradient key={c.id} id={`sphere-${c.id}`} cx="30%" cy="25%" r="85%">
+        <stop offset="0%"   stopColor="#ffffff" stopOpacity="0.90" />
+        <stop offset="58%"  stopColor={c.color}  stopOpacity="0"   />
+        <stop offset="100%" stopColor="#000000"  stopOpacity="0.48" />
+      </radialGradient>
+    ))}
+    <radialGradient id="sphere-impact" cx="30%" cy="25%" r="85%">
+      <stop offset="0%"   stopColor="#ffffff" stopOpacity="0.92" />
+      <stop offset="55%"  stopColor="#FAFFC7"  stopOpacity="0"   />
+      <stop offset="100%" stopColor="#000000"  stopOpacity="0.52" />
+    </radialGradient>
   </defs>
 ));
 SvgDefs.displayName = 'SvgDefs';
@@ -213,9 +225,9 @@ const DesignerMindStyles = memo(() => (
     .dm-float-7{animation:dm-float-D  8s ease-in-out infinite 7s; will-change: transform; transform: translate3d(0,0,0); backface-visibility: hidden;}
     @keyframes dm-spoke-pulse  { 0%,100%{opacity:.18} 50%{opacity:.40} }
     @keyframes dm-bridge-pulse { 0%,100%{opacity:.26} 50%{opacity:.50} }
-    .dm-svg{width:100%;height:700px;overflow:visible}
+    .dm-svg{width:100%;height:1000px;overflow:visible}
     @media(max-width:768px){
-      .dm-svg{height:500px;pointer-events:none}
+      .dm-svg{height:640px;pointer-events:none}
       .dm-section{padding:60px 0 60px 0 !important}
       .dm-header-sub{margin-bottom:32px !important}
     }
@@ -227,8 +239,10 @@ const DesignerMindStyles = memo(() => (
       0%, 100% { r: 6px; opacity: 1; }
       50% { r: 8px; opacity: 0.55; }
     }
-    .dm-pulse-core {
-      animation: dm-pulse-core 3s ease-in-out infinite;
+    .dm-pulse-core { animation: dm-pulse-core 3s ease-in-out infinite; }
+    @keyframes dm-pulse-sphere {
+      0%, 100% { r: 14px; }
+      50% { r: 16px; }
     }
   `}</style>
 ));
@@ -417,16 +431,11 @@ export default function DesignerMind() {
 
       {/* Header */}
       <div style={{ position:'relative', zIndex:1, padding:'0 20px' }}>
-        <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'10px', letterSpacing:'0.28em', textTransform:'uppercase', color:'#F2A7C4', opacity:0.72, textAlign:'center', margin:'0 0 16px 0' }}>
-          Preview My
-        </p>
-        <h2 style={{ fontFamily:"'Cormorant Garamond',serif", fontWeight:700, fontSize:'clamp(2.2rem,4vw,3.8rem)', color:'#FAFFC7', textAlign:'center', lineHeight:1.08, margin:'0 0 16px 0' }}>
+        <h2 style={{ fontFamily:"'Space Grotesk',sans-serif", fontWeight:700, fontSize:'clamp(2.2rem,4vw,3.8rem)', color:'#FAFFC7', textAlign:'center', lineHeight:1.08, margin:'0 0 16px 0' }}>
           BRAIN
         </h2>
         <div className="dm-header-sub" style={{ textAlign:'center', maxWidth:'820px', margin:'0 auto 80px auto', fontFamily:"'DM Sans',sans-serif", fontSize:'15px', lineHeight:1.9, color:'rgba(255,255,255,0.42)' }}>
-          <p style={{ margin:0 }}>This is how I see the world — <strong style={{ color:'#F2A7C4', letterSpacing:'0.08em' }}>history connects to psychology</strong>, psychology bleeds into behavior, behavior shapes business, and business, when done right, becomes design.</p>
-          <p style={{ margin:'12px 0 0 0' }}><strong style={{ color:'#93C5FD', letterSpacing:'0.08em' }}>Nothing</strong><strong style={{ color:'#F2A7C4', letterSpacing:'0.08em' }}> is independent.</strong> Every idea is a consequence of something before it. <strong style={{ color:'#93C5FD', letterSpacing:'0.08em' }}>Nothing</strong><strong style={{ color:'#F2A7C4', letterSpacing:'0.08em' }}> is spontaneous</strong> —</p>
-          <p style={{ margin:'12px 0 0 0' }}><em style={{ color:'#FAFFC7' }}>it's all connected, if you're willing to follow the thread.</em></p>
+          <p style={{ margin:0 }}><em style={{ color:'rgba(255,255,255,0.38)' }}>it's all connected, if you're willing to follow the thread.</em></p>
         </div>
       </div>
 
@@ -555,7 +564,13 @@ export default function DesignerMind() {
                   fill={cluster.color} fontSize="9" letterSpacing="2.6"
                   fontFamily="DM Sans,sans-serif" fontWeight="600"
                   opacity={isActive ? 1 : 0.6}
-                  style={{ transition:'opacity .3s ease', pointerEvents:'none' }}>
+                  style={{
+                    transition: 'opacity .3s ease, filter .3s ease',
+                    pointerEvents: 'none',
+                    filter: isActive
+                      ? `drop-shadow(0 0 8px ${cluster.color}) drop-shadow(0 1px 4px rgba(0,0,0,0.95))`
+                      : `drop-shadow(0 1px 4px rgba(0,0,0,0.95))`,
+                  }}>
                   {cluster.label.toUpperCase()}
                 </text>
 
@@ -601,14 +616,22 @@ export default function DesignerMind() {
                         cx={nx} cy={ny} r={dotR} fill={cluster.color}
                         style={{
                           transition: 'r .3s ease, filter .3s ease',
-                          filter: glow ? `drop-shadow(0 0 5px ${cluster.color})` : undefined,
+                          filter: glow
+                            ? `drop-shadow(0 0 6px ${cluster.color}) drop-shadow(1px 2px 3px rgba(0,0,0,0.7))`
+                            : 'drop-shadow(1px 2px 3px rgba(0,0,0,0.7))',
                         }} />
+                      {/* sphere highlight overlay — white→transparent→dark gives the 3D pop */}
+                      <circle cx={nx} cy={ny} r={dotR} fill={`url(#sphere-${cluster.id})`}
+                        style={{ pointerEvents: 'none', transition: 'r .3s ease' }} />
 
                       {/* Label */}
                       <text x={nx} y={ny + node.r + 11} textAnchor="middle"
                         fill={cluster.color} fontSize="7.5"
-                        fontFamily="DM Sans,sans-serif" opacity="0.55"
-                        style={{ pointerEvents:'none' }}>
+                        fontFamily="DM Sans,sans-serif" opacity="0.72"
+                        style={{
+                          pointerEvents: 'none',
+                          filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.95))',
+                        }}>
                         {node.label}
                       </text>
                     </g>
@@ -637,26 +660,34 @@ export default function DesignerMind() {
                 }} />
             )}
 
-            {/* Middle ring */}
-            <circle cx={IMPACT.cx} cy={IMPACT.cy} r={11}
-              fill="none" stroke="#FAFFC7" strokeWidth="1"
-              opacity={impactActive ? 0.6 : 0.32} style={{ transition:'opacity .3s ease' }} />
-
-            {/* Pulsing core */}
-            <circle cx={IMPACT.cx} cy={IMPACT.cy} fill="#FAFFC7"
-              className="dm-pulse-core"
+            {/* 3D sphere base */}
+            <circle cx={IMPACT.cx} cy={IMPACT.cy} r={14} fill="#FAFFC7"
               style={{
-                filter: impactActive ? 'drop-shadow(0 0 8px #FAFFC7)' : undefined,
+                animation: 'dm-pulse-sphere 3s ease-in-out infinite',
+                filter: impactActive
+                  ? 'drop-shadow(0 0 12px #FAFFC7) drop-shadow(1px 2px 4px rgba(0,0,0,0.85))'
+                  : 'drop-shadow(1px 2px 4px rgba(0,0,0,0.85))',
                 transition: 'filter 0.3s ease',
-              }}
-            />
+              }} />
+            {/* sphere highlight overlay */}
+            <circle cx={IMPACT.cx} cy={IMPACT.cy} r={14} fill="url(#sphere-impact)"
+              style={{ pointerEvents: 'none', animation: 'dm-pulse-sphere 3s ease-in-out infinite' }} />
+            {/* specular dot — offset toward light source */}
+            <circle cx={IMPACT.cx - 4} cy={IMPACT.cy - 4} r={2.5}
+              fill="rgba(255,255,255,0.88)" style={{ pointerEvents: 'none' }} />
 
             {/* Label */}
             <text x={IMPACT.cx} y={IMPACT.cy + 30} textAnchor="middle"
               fill="#FAFFC7" fontSize="13"
-              fontFamily="Cormorant Garamond,serif" letterSpacing="1.3"
+              fontFamily="Space Grotesk,sans-serif" letterSpacing="1.3"
               opacity={impactActive ? 1 : 0.85}
-              style={{ pointerEvents:'none', transition:'opacity .3s ease' }}>
+              style={{
+                pointerEvents: 'none',
+                transition: 'opacity .3s ease, filter .3s ease',
+                filter: impactActive
+                  ? 'drop-shadow(0 0 9px #FAFFC7) drop-shadow(0 1px 4px rgba(0,0,0,0.95))'
+                  : 'drop-shadow(0 1px 4px rgba(0,0,0,0.95))',
+              }}>
               Meaningful Impact
             </text>
           </g>
@@ -712,7 +743,7 @@ export default function DesignerMind() {
                   borderRadius:'6px', width:'32px', height:'32px', fontSize:'18px', lineHeight:1,
                   cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center',
                 }}>&times;</button>
-                <h3 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'28px', color:activePhilosophy.color, margin:'0 0 16px 0', fontWeight:700 }}>
+                <h3 style={{ fontFamily:"'Space Grotesk',sans-serif", fontSize:'28px', color:activePhilosophy.color, margin:'0 0 16px 0', fontWeight:700 }}>
                   {activePhilosophy.label}
                 </h3>
                 <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'15px', color:'rgba(255,255,255,0.7)', lineHeight:1.8, margin:0 }}>
