@@ -29,3 +29,10 @@
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+.section {
+  padding-inline: clamp(24px, 5vw, 80px);
+  padding-block: 120px 80px;
+  max-width: 1400px;
+  margin-inline: auto;
+}

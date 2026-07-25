@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+﻿import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import whaleGif from '../imports/whale.gif';
 
@@ -18,10 +18,10 @@ const COMIC_IMAGES = Object.entries(rawComicImages)
   }));
 
 const TABS = [
-  { id: 'hint',          label: 'click the tabs', url: 'vishvara://new-tab',       accent: '#FAFFC7' },
-  { id: 'pottery',       label: 'pottery',         url: 'vishvara://pottery',       accent: '#FAFFC7' },
-  { id: 'japanese',      label: '日本語',           url: 'vishvara://nihongo',       accent: '#93C5FD' },
-  { id: 'illustrations', label: 'illustrations',   url: 'vishvara://illustrations', accent: '#F2A7C4' },
+  { id: 'hint',          label: 'click the tabs', url: 'vishvara://new-tab',       accent: 'var(--color-lemon)' },
+  { id: 'pottery',       label: 'pottery',         url: 'vishvara://pottery',       accent: 'var(--color-lemon)' },
+  { id: 'japanese',      label: '日本語',           url: 'vishvara://nihongo',       accent: 'var(--color-sky)' },
+  { id: 'illustrations', label: 'illustrations',   url: 'vishvara://illustrations', accent: 'var(--color-pink)' },
 ];
 
 function WaveSkeleton({ width = '100%', height = '380px', radius = '6px' }: { width?: string; height?: string; radius?: string }) {
@@ -46,7 +46,7 @@ function PotteryContent({ accent }: { accent: string }) {
       <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%)' }} />
       <h3 style={{
         position: 'absolute', bottom: '28px', left: '32px',
-        fontFamily: "'Space Grotesk', sans-serif", fontSize: '42px', fontWeight: 700,
+        fontFamily: "'Sora', sans-serif", fontSize: '42px', fontWeight: 500,
         color: accent, margin: 0, lineHeight: 1,
         textShadow: `0 0 30px ${accent}60`,
       }}>
@@ -86,7 +86,7 @@ function IllustrationsContent({ accent }: { accent: string }) {
 
   return (
     <div>
-      <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '28px', color: accent, margin: '0 0 6px 0', fontWeight: 700 }}>
+      <h3 style={{ fontFamily: "'Sora', sans-serif", fontSize: '28px', color: accent, margin: '0 0 6px 0', fontWeight: 500 }}>
         thinking out loud
       </h3>
       <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '15px', color: 'rgba(255,255,255,0.35)', margin: '0 0 20px 0' }}>
@@ -162,13 +162,13 @@ function IllustrationsContent({ accent }: { accent: string }) {
 function TabContent({ id, accent, onSelect }: { id: string; accent: string; onSelect: (idx: number) => void }) {
   if (id === 'hint') {
     const items = [
-      { n: '01', label: 'Pottery',       sub: 'even though i make messes more',                                     tabIdx: 1, accent: '#FAFFC7' },
-      { n: '02', label: 'Language',      sub: 'takes me 10 days to learn a japanese word and 10 seconds to forget', tabIdx: 2, accent: '#93C5FD' },
-      { n: '03', label: 'Illustrations', sub: 'even though i copy',                                                 tabIdx: 3, accent: '#F2A7C4' },
+      { n: '01', label: 'Pottery',       sub: 'even though i make messes more',                                     tabIdx: 1, accent: 'var(--color-lemon)' },
+      { n: '02', label: 'Language',      sub: 'takes me 10 days to learn a japanese word and 10 seconds to forget', tabIdx: 2, accent: 'var(--color-sky)' },
+      { n: '03', label: 'Illustrations', sub: 'even though i copy',                                                 tabIdx: 3, accent: 'var(--color-pink)' },
     ];
     return (
       <div style={{ minHeight: '460px', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '8px 0' }}>
-        <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '10px', letterSpacing: '0.28em', textTransform: 'uppercase', color: '#F2A7C4', opacity: 0.7, margin: '0 0 18px 0' }}>
+        <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '10px', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--color-pink)', opacity: 0.7, margin: '0 0 18px 0' }}>
           MY HOBBIES
         </p>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -189,7 +189,7 @@ function TabContent({ id, accent, onSelect }: { id: string; accent: string; onSe
                 <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '11px', color: 'rgba(255,255,255,0.18)', letterSpacing: '0.1em', flexShrink: 0, transition: 'color 0.2s' }}>
                   {item.n}
                 </span>
-                <span className="hobby-list-label" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '32px', fontWeight: 600, color: 'rgba(255,255,255,0.82)', lineHeight: 1, flexShrink: 0, transition: 'color 0.2s' }}>
+                <span className="hobby-list-label" style={{ fontFamily: "'Sora', sans-serif", fontSize: '32px', fontWeight: 500, color: 'rgba(255,255,255,0.82)', lineHeight: 1, flexShrink: 0, transition: 'color 0.2s' }}>
                   {item.label}
                 </span>
                 {item.sub && (
@@ -217,15 +217,15 @@ function TabContent({ id, accent, onSelect }: { id: string; accent: string; onSe
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
         <div>
-          <div style={{ fontFamily: 'serif', fontSize: 'clamp(36px, 6vw, 72px)', color: accent, lineHeight: 1.3, marginBottom: '16px', filter: `drop-shadow(0 0 24px ${accent}55)` }}>
+          <div style={{ fontFamily: "'Noto Serif JP', serif", fontSize: 'clamp(36px, 6vw, 72px)', color: accent, lineHeight: 1.3, marginBottom: '16px', filter: `drop-shadow(0 0 24px ${accent}55)` }}>
             こんにちは、<br />はじめまして。<br />私はヴィシュヴァラです。
           </div>
-          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '13px', color: '#F2A7C4', fontStyle: 'italic', lineHeight: 1.6 }}>
+          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '13px', color: 'var(--color-pink)', fontStyle: 'italic', lineHeight: 1.6 }}>
             Hi, nice to meet you. I am Vishvara.
           </div>
         </div>
         <div>
-          <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '34px', color: accent, margin: '0 0 6px 0', fontWeight: 700 }}>
+          <h3 style={{ fontFamily: "'Sora', sans-serif", fontSize: '34px', color: accent, margin: '0 0 6px 0', fontWeight: 500 }}>
             日本語の勉強中
           </h3>
           <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '15px', color: 'rgba(255,255,255,0.35)', margin: '0 0 26px 0', lineHeight: 1.7 }}>
@@ -257,7 +257,7 @@ export default function HobbiesSection() {
   const activeTab = TABS[activeIdx];
 
   return (
-    <section style={{ padding: '100px clamp(24px, 5vw, 80px)', position: 'relative', zIndex: 10 }}>
+    <section className="section" style={{ position: 'relative', zIndex: 10 }}>
       <style>{`
         @keyframes wave-shimmer {
           0%   { background-position: -200% 0; }
@@ -286,17 +286,17 @@ export default function HobbiesSection() {
         }
         .hobby-list-item:hover { background: rgba(255,255,255,0.03) !important; }
         .hobby-list-item:hover .hobby-list-arrow { color: rgba(255,255,255,0.55) !important; transform: translateX(4px); }
-        .hobby-glow-yellow:hover { border-color: #FAFFC7 !important; box-shadow: 0 0 16px rgba(250,255,199,0.25), inset 0 0 10px rgba(250,255,199,0.05) !important; }
-        .hobby-glow-blue:hover   { border-color: #93C5FD !important; box-shadow: 0 0 16px rgba(147,197,253,0.25), inset 0 0 10px rgba(147,197,253,0.05) !important; }
-        .hobby-glow-pink:hover   { border-color: #F2A7C4 !important; box-shadow: 0 0 16px rgba(242,167,196,0.25), inset 0 0 10px rgba(242,167,196,0.05) !important; }
-        .hobby-glow-yellow:hover .hobby-list-label { color: #FAFFC7 !important; }
-        .hobby-glow-blue:hover   .hobby-list-label { color: #93C5FD !important; }
-        .hobby-glow-pink:hover   .hobby-list-label { color: #F2A7C4 !important; }
+        .hobby-glow-yellow:hover { border-color: var(--color-lemon) !important; box-shadow: 0 0 16px rgba(250,255,199,0.25), inset 0 0 10px rgba(250,255,199,0.05) !important; }
+        .hobby-glow-blue:hover   { border-color: var(--color-sky) !important; box-shadow: 0 0 16px rgba(147,197,253,0.25), inset 0 0 10px rgba(147,197,253,0.05) !important; }
+        .hobby-glow-pink:hover   { border-color: var(--color-pink) !important; box-shadow: 0 0 16px rgba(242,167,196,0.25), inset 0 0 10px rgba(242,167,196,0.05) !important; }
+        .hobby-glow-yellow:hover .hobby-list-label { color: var(--color-lemon) !important; }
+        .hobby-glow-blue:hover   .hobby-list-label { color: var(--color-sky) !important; }
+        .hobby-glow-pink:hover   .hobby-list-label { color: var(--color-pink) !important; }
       `}</style>
 
       {/* Section header */}
       <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-<h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 'clamp(2.2rem, 4vw, 3.8rem)', color: '#FAFFC7', lineHeight: 1.08, margin: '0 0 16px 0' }}>
+<h2 style={{ fontFamily: "'Sora', sans-serif", fontWeight: 700, fontSize: 'clamp(2.2rem, 4vw, 3.8rem)', color: 'var(--color-lemon)', lineHeight: 1.08, margin: '0 0 16px 0' }}>
           Outside Work
         </h2>
       </div>
@@ -324,7 +324,7 @@ export default function HobbiesSection() {
           </div>
           <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
             <div style={{
-              background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.07)',
+              background: 'rgba(255,255,255,0.05)', border: '1px solid var(--color-border-glass)',
               borderRadius: '7px', padding: '7px 18px', width: '100%', maxWidth: '440px', overflow: 'hidden',
             }}>
               <AnimatePresence mode="wait">
@@ -394,3 +394,4 @@ export default function HobbiesSection() {
     </section>
   );
 }
+

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 
 const CX = 310;
 const CY = 310;
@@ -39,7 +39,7 @@ export default function DesignLensSection() {
   }
 
   return (
-    <section style={{ padding: "100px clamp(24px, 5vw, 80px)", background: "transparent", overflow: "hidden" }} onClick={() => { setLocked(null); setActive(null); }}>
+    <section className="section" style={{ background: "transparent", overflow: "hidden" }} onClick={() => { setLocked(null); setActive(null); }}>
       <style>{`
         .dl-ring { transition: opacity 0.3s ease; }
         .dl-desc-enter { animation: dl-fade-in 0.3s ease forwards; }
@@ -48,10 +48,10 @@ export default function DesignLensSection() {
       `}</style>
 
       <div style={{ textAlign: "center", marginBottom: "56px" }}>
-        <p style={{ fontFamily: "'DM Mono', monospace", fontSize: "0.75rem", letterSpacing: "0.25em", color: "#888", textTransform: "uppercase", margin: "0 0 12px" }}>
+        <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.75rem", letterSpacing: "0.25em", color: "#888", textTransform: "uppercase", margin: "0 0 12px" }}>
           how i see design
         </p>
-        <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: "clamp(2.4rem, 5vw, 4rem)", color: "#FAFFC7", margin: 0, lineHeight: 1.1 }}>
+        <h2 style={{ fontFamily: "'Sora', sans-serif", fontWeight: 700, fontSize: "clamp(2.2rem, 4vw, 3.8rem)", color: "var(--color-lemon)", margin: 0, lineHeight: 1.1 }}>
           Design Lens
         </h2>
       </div>
@@ -147,7 +147,7 @@ export default function DesignLensSection() {
                   <textPath href={`#ring-path-${i}`} startOffset="25%">{ring.label}</textPath>
                 </text>
                 {ring.r > 60 && (
-                  <text textAnchor="middle" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: subSize, fontWeight: 400, fontStyle: "italic", letterSpacing: "0.06em", fill: isActive ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.3)" }}>
+                  <text textAnchor="middle" style={{ fontFamily: "'Sora', sans-serif", fontSize: subSize, fontWeight: 400, fontStyle: "italic", letterSpacing: "0.06em", fill: isActive ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.3)" }}>
                     <textPath href={`#ring-path-${i}`} startOffset="75%">{ring.sub}</textPath>
                   </text>
                 )}
@@ -155,7 +155,7 @@ export default function DesignLensSection() {
             );
           })}
 
-          <circle cx={CX} cy={CY} r={14} fill="#0a0409" stroke="rgba(255,255,255,0.15)" strokeWidth={1} />
+          <circle cx={CX} cy={CY} r={14} fill="var(--color-bg)" stroke="rgba(255,255,255,0.15)" strokeWidth={1} />
           <circle cx={CX} cy={CY} r={4}  fill="rgba(255,255,255,0.3)" />
 
           {/* donut hit areas */}
@@ -176,7 +176,7 @@ export default function DesignLensSection() {
           <div style={{
             position: "absolute", inset: "4%",
             borderRadius: "50%",
-            background: "radial-gradient(ellipse at 26% 16%, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.07) 32%, transparent 58%)",
+            background: "radial-gradient(ellipse at 26% 16%, rgba(255,255,255,0.22) 0%, var(--color-border-glass) 32%, transparent 58%)",
             zIndex: 4,
             pointerEvents: "none",
           }} />
@@ -186,3 +186,4 @@ export default function DesignLensSection() {
     </section>
   );
 }
+

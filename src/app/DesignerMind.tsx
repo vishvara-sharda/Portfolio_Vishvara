@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef, useCallback, useEffect, memo } from 'react';
+﻿import React, { useState, useMemo, useRef, useCallback, useEffect, memo } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -9,7 +9,7 @@ const IMPACT = { cx: 500, cy: 340 };
 const CLUSTERS = [
   {
     id: 'human_understanding', idx: 0,
-    label: 'Human Understanding', cx: 135, cy: 130, color: '#F2A7C4',
+    label: 'Human Understanding', cx: 135, cy: 130, color: 'var(--color-pink)',
     nodes: [
       { id: 'hu_main',      label: 'Human Understanding', dx: 0,   dy: 0,   r: 5,   primary: true,  desc: '' },
       { id: 'hu_curiosity', label: 'Curiosity',           dx: -35, dy: -45, r: 3.5, primary: false, desc: 'The starting point of every good question' },
@@ -24,7 +24,7 @@ const CLUSTERS = [
   },
   {
     id: 'research', idx: 1,
-    label: 'Research', cx: 400, cy: 100, color: '#FAFFC7',
+    label: 'Research', cx: 400, cy: 100, color: 'var(--color-lemon)',
     nodes: [
       { id: 'r_main',      label: 'Research',            dx: 0,   dy: 0,   r: 5,   primary: true,  desc: '' },
       { id: 'r_uxr',       label: 'UX Research',         dx: -40, dy: 30,  r: 3.5, primary: false, desc: 'Finding the truth behind what users say' },
@@ -190,8 +190,8 @@ BackgroundStars.displayName = 'BackgroundStars';
 const SvgDefs = memo(() => (
   <defs>
     <radialGradient id="dm-impact-grad" cx="50%" cy="50%" r="50%">
-      <stop offset="0%"   stopColor="#F2A7C4" stopOpacity="0.28" />
-      <stop offset="100%" stopColor="#F2A7C4" stopOpacity="0" />
+      <stop offset="0%"   stopColor="var(--color-pink)" stopOpacity="0.28" />
+      <stop offset="100%" stopColor="var(--color-pink)" stopOpacity="0" />
     </radialGradient>
     {CLUSTERS.map(c => (
       <radialGradient key={c.id} id={`sphere-${c.id}`} cx="30%" cy="25%" r="85%">
@@ -202,7 +202,7 @@ const SvgDefs = memo(() => (
     ))}
     <radialGradient id="sphere-impact" cx="30%" cy="25%" r="85%">
       <stop offset="0%"   stopColor="#ffffff" stopOpacity="0.92" />
-      <stop offset="55%"  stopColor="#FAFFC7"  stopOpacity="0"   />
+      <stop offset="55%"  stopColor="var(--color-lemon)"  stopOpacity="0"   />
       <stop offset="100%" stopColor="#000000"  stopOpacity="0.52" />
     </radialGradient>
   </defs>
@@ -421,6 +421,7 @@ export default function DesignerMind() {
     setHoveredNode(null);
   }, []);
 
+  // no .section — zero side padding keeps the star field and SVG full-bleed
   return (
     <section className="dm-section" style={{ position: 'relative', backgroundColor: 'transparent', overflow: 'hidden', padding: '120px 0 100px 0' }}>
 
@@ -431,10 +432,10 @@ export default function DesignerMind() {
 
       {/* Header */}
       <div style={{ position:'relative', zIndex:1, padding:'0 20px' }}>
-        <h2 style={{ fontFamily:"'Space Grotesk',sans-serif", fontWeight:700, fontSize:'clamp(2.2rem,4vw,3.8rem)', color:'#FAFFC7', textAlign:'center', lineHeight:1.08, margin:'0 0 16px 0' }}>
+        <h2 style={{ fontFamily:"'Sora',sans-serif", fontWeight:700, fontSize:'clamp(2.2rem,4vw,3.8rem)', color:'var(--color-lemon)', textAlign:'center', lineHeight:1.08, margin:'0 0 16px 0' }}>
           BRAIN
         </h2>
-        <div className="dm-header-sub" style={{ textAlign:'center', maxWidth:'820px', margin:'0 auto 80px auto', fontFamily:"'DM Sans',sans-serif", fontSize:'15px', lineHeight:1.9, color:'rgba(255,255,255,0.42)' }}>
+        <div className="dm-header-sub" style={{ textAlign:'center', maxWidth:'820px', margin:'0 auto 80px auto', fontFamily:"'DM Sans',sans-serif", fontSize:'15px', lineHeight:1.9, color:'rgba(255,255,255,0.6)' }}>
           <p style={{ margin:0 }}><em style={{ color:'rgba(255,255,255,0.38)' }}>it's all connected, if you're willing to follow the thread.</em></p>
         </div>
       </div>
@@ -654,18 +655,18 @@ export default function DesignerMind() {
             {/* Active ring */}
             {impactActive && (
               <circle cx={IMPACT.cx} cy={IMPACT.cy} r={22}
-                fill="none" stroke="#FAFFC7" strokeWidth="1.5" opacity="0.4"
+                fill="none" stroke="var(--color-lemon)" strokeWidth="1.5" opacity="0.4"
                 style={{
-                  filter: 'drop-shadow(0 0 8px #FAFFC7)',
+                  filter: 'drop-shadow(0 0 8px var(--color-lemon))',
                 }} />
             )}
 
             {/* 3D sphere base */}
-            <circle cx={IMPACT.cx} cy={IMPACT.cy} r={14} fill="#FAFFC7"
+            <circle cx={IMPACT.cx} cy={IMPACT.cy} r={14} fill="var(--color-lemon)"
               style={{
                 animation: 'dm-pulse-sphere 3s ease-in-out infinite',
                 filter: impactActive
-                  ? 'drop-shadow(0 0 12px #FAFFC7) drop-shadow(1px 2px 4px rgba(0,0,0,0.85))'
+                  ? 'drop-shadow(0 0 12px var(--color-lemon)) drop-shadow(1px 2px 4px rgba(0,0,0,0.85))'
                   : 'drop-shadow(1px 2px 4px rgba(0,0,0,0.85))',
                 transition: 'filter 0.3s ease',
               }} />
@@ -678,14 +679,14 @@ export default function DesignerMind() {
 
             {/* Label */}
             <text x={IMPACT.cx} y={IMPACT.cy + 30} textAnchor="middle"
-              fill="#FAFFC7" fontSize="13"
-              fontFamily="Space Grotesk,sans-serif" letterSpacing="1.3"
+              fill="var(--color-lemon)" fontSize="13"
+              fontFamily="Sora,sans-serif" letterSpacing="1.3"
               opacity={impactActive ? 1 : 0.85}
               style={{
                 pointerEvents: 'none',
                 transition: 'opacity .3s ease, filter .3s ease',
                 filter: impactActive
-                  ? 'drop-shadow(0 0 9px #FAFFC7) drop-shadow(0 1px 4px rgba(0,0,0,0.95))'
+                  ? 'drop-shadow(0 0 9px var(--color-lemon)) drop-shadow(0 1px 4px rgba(0,0,0,0.95))'
                   : 'drop-shadow(0 1px 4px rgba(0,0,0,0.95))',
               }}>
               Meaningful Impact
@@ -697,7 +698,7 @@ export default function DesignerMind() {
         {hoveredNode && (
           <div style={{
             position:'fixed', left: cardPos.x + 20, top: Math.max(cardPos.y - 52, 8),
-            background:'rgba(20,12,16,0.92)', backdropFilter:'blur(12px)',
+            background:'var(--color-surface-flat)', backdropFilter:'blur(12px)',
             WebkitBackdropFilter:'blur(12px)',
             border:'1px solid rgba(242,167,196,0.18)', borderRadius:'12px',
             padding:'12px 16px', maxWidth:'185px', pointerEvents:'none',
@@ -734,7 +735,7 @@ export default function DesignerMind() {
                 style={{
                   position:'fixed', bottom:0, left:'50%', transform:'translateX(-50%)',
                   width:'100%', maxWidth:'600px', background:'rgba(20,12,16,0.97)',
-                  borderTop:'1px solid rgba(242,167,196,0.15)', borderRadius:'20px 20px 0 0',
+                  borderTop:'1px solid var(--color-border-flat)', borderRadius:'20px 20px 0 0',
                   padding:'32px', zIndex:60, boxShadow:'0 -20px 40px rgba(0,0,0,0.5)',
                 }}>
                 <button onClick={() => setActivePhilosophy(null)} style={{
@@ -743,7 +744,7 @@ export default function DesignerMind() {
                   borderRadius:'6px', width:'32px', height:'32px', fontSize:'18px', lineHeight:1,
                   cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center',
                 }}>&times;</button>
-                <h3 style={{ fontFamily:"'Space Grotesk',sans-serif", fontSize:'28px', color:activePhilosophy.color, margin:'0 0 16px 0', fontWeight:700 }}>
+                <h3 style={{ fontFamily:"'Sora',sans-serif", fontSize:'28px', color:activePhilosophy.color, margin:'0 0 16px 0', fontWeight:500 }}>
                   {activePhilosophy.label}
                 </h3>
                 <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'15px', color:'rgba(255,255,255,0.7)', lineHeight:1.8, margin:0 }}>
@@ -758,3 +759,4 @@ export default function DesignerMind() {
     </section>
   );
 }
+

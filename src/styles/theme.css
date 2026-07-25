@@ -1,8 +1,18 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  /* semantic design tokens */
+  --color-pink: #F2A7C4;
+  --color-lemon: #FAFFC7;
+  --color-sky: #93C5FD;
+  --color-bg: #0A0409;
+  --color-surface-glass: rgba(20, 20, 20, 0.4);
+  --color-surface-flat: rgba(20, 12, 16, 0.92);
+  --color-border-glass: rgba(255, 255, 255, 0.07);
+  --color-border-flat: rgba(242, 167, 196, 0.15);
+
   --font-size: 16px;
-  --background: #0A0409;
+  --background: var(--color-bg);
   --foreground: #F5F3F4;
   --card: #1A1318;
   --card-foreground: #F5F3F4;
@@ -14,17 +24,17 @@
   --secondary-foreground: #F5F3F4;
   --muted: #2A1E22;
   --muted-foreground: #B3A8AB;
-  --accent: #F2A7C4;
-  --accent-foreground: #0A0409;
+  --accent: var(--color-pink);
+  --accent-foreground: var(--color-bg);
   --destructive: #d4183d;
   --destructive-foreground: #ffffff;
-  --border: rgba(242, 167, 196, 0.15);
+  --border: var(--color-border-flat);
   --input: transparent;
   --input-background: #1A1318;
   --switch-background: #2A1E22;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
-  --ring: #F2A7C4;
+  --ring: var(--color-pink);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -42,7 +52,7 @@
 }
 
 .dark {
-  --background: #0A0409;
+  --background: var(--color-bg);
   --foreground: #F5F3F4;
   --card: #1A1318;
   --card-foreground: #F5F3F4;
@@ -54,13 +64,13 @@
   --secondary-foreground: #F5F3F4;
   --muted: #2A1E22;
   --muted-foreground: #B3A8AB;
-  --accent: #F2A7C4;
-  --accent-foreground: #0A0409;
+  --accent: var(--color-pink);
+  --accent-foreground: var(--color-bg);
   --destructive: oklch(0.396 0.141 25.723);
   --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: rgba(242, 167, 196, 0.15);
+  --border: var(--color-border-flat);
   --input: #1A1318;
-  --ring: #F2A7C4;
+  --ring: var(--color-pink);
   --font-weight-medium: 500;
   --font-weight-normal: 400;
   --chart-1: oklch(0.488 0.243 264.376);

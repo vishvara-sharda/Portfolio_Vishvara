@@ -39,7 +39,7 @@ export default function LoadingScreen({ onStart }: { onStart: () => void }) {
   const radius = 74;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference * (1 - progress);
-  const ringColor = showHeart ? '#F2A7C4' : '#FAFFC7';
+  const ringColor = showHeart ? 'var(--color-pink)' : 'var(--color-lemon)';
 
   return createPortal(
     <motion.div
@@ -49,7 +49,7 @@ export default function LoadingScreen({ onStart }: { onStart: () => void }) {
       style={{
         position: 'fixed',
         inset: 0,
-        background: '#0A0409',
+        background: 'var(--color-bg)',
         zIndex: 9999,
         display: 'flex',
         flexDirection: 'column',
@@ -80,7 +80,7 @@ export default function LoadingScreen({ onStart }: { onStart: () => void }) {
           <circle
             cx="86" cy="86" r={radius}
             fill="none"
-            stroke="rgba(255,255,255,0.07)"
+            stroke="var(--color-border-glass)"
             strokeWidth="2.5"
           />
           {/* Progress arc */}
@@ -122,17 +122,17 @@ export default function LoadingScreen({ onStart }: { onStart: () => void }) {
             transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
             onClick={handleStart}
             onMouseOver={e => {
-              (e.currentTarget as HTMLButtonElement).style.borderColor = '#FAFFC7';
+              (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--color-lemon)';
               (e.currentTarget as HTMLButtonElement).style.color = '#fff';
             }}
             onMouseOut={e => {
               (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(250,255,199,0.25)';
-              (e.currentTarget as HTMLButtonElement).style.color = '#FAFFC7';
+              (e.currentTarget as HTMLButtonElement).style.color = 'var(--color-lemon)';
             }}
             style={{
               background: 'transparent',
               border: '1px solid rgba(250,255,199,0.25)',
-              color: '#FAFFC7',
+              color: 'var(--color-lemon)',
               padding: '13px 52px',
               borderRadius: '8px',
               fontFamily: "'DM Sans', sans-serif",
@@ -151,3 +151,4 @@ export default function LoadingScreen({ onStart }: { onStart: () => void }) {
     document.body
   );
 }
+

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { ArrowLeft, ArrowRight, ExternalLink, Lightbulb, Search, Zap, User, TrendingUp, AlertCircle, RotateCw, CheckCircle, XCircle, Star, Unlock, Sparkles, MoveRight, Smartphone, HandHelping, Building2, Shield, Heart } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -131,7 +131,7 @@ const FlipCard = ({ card }: { card: {title: string, text: string, image?: string
           background: 'rgba(0,0,0,0.55)',
         }}
       >
-        <span className="text-[9px] uppercase tracking-[0.22em] text-[#F2A7C4]/65 font-mono block mb-1.5">{card.title}</span>
+        <span className="text-[9px] uppercase tracking-[0.22em] text-[var(--color-pink)]/65 font-mono block mb-1.5">{card.title}</span>
         <p className="text-[11px] text-white/80 leading-relaxed">{card.text}</p>
       </div>
     </div>
@@ -313,7 +313,7 @@ function SecretLevelCard({ fileLabel, title, subtitle, dataReadout, image, image
       {/* Layer 5 — RAW label */}
       <div style={{
         position: 'absolute', top: 14, left: 14, zIndex: 10, pointerEvents: 'none',
-        fontFamily: "'Space Mono', monospace", fontSize: 8,
+        fontFamily: "'DM Sans', sans-serif", fontSize: 8,
         color: 'rgba(255,255,255,0.3)', letterSpacing: '0.16em',
       }}>
         RAW / UNPROCESSED
@@ -327,8 +327,8 @@ function SecretLevelCard({ fileLabel, title, subtitle, dataReadout, image, image
         transition: developed ? 'opacity 0.5s ease' : noT,
       }}>
         <span style={{
-          fontFamily: "'Space Mono', monospace", fontSize: 8,
-          color: '#F2A7C4', opacity: 0.5, letterSpacing: '0.12em',
+          fontFamily: "'DM Sans', sans-serif", fontSize: 8,
+          color: 'var(--color-pink)', opacity: 0.5, letterSpacing: '0.12em',
         }}>
           {fileLabel}
         </span>
@@ -337,8 +337,8 @@ function SecretLevelCard({ fileLabel, title, subtitle, dataReadout, image, image
       {/* Hover — Pink scan line sweep */}
       <div ref={scanRef} style={{
         position: 'absolute', left: 0, right: 0, height: 2, top: 0, zIndex: 20, pointerEvents: 'none',
-        background: 'linear-gradient(to right, transparent, #F2A7C4, #93C5FD, #F2A7C4, transparent)',
-        boxShadow: '0 0 12px #F2A7C4',
+        background: 'linear-gradient(to right, transparent, var(--color-pink), var(--color-sky), var(--color-pink), transparent)',
+        boxShadow: '0 0 12px var(--color-pink)',
         opacity: 0,
       }} />
 
@@ -365,10 +365,10 @@ function SecretLevelCard({ fileLabel, title, subtitle, dataReadout, image, image
           position: 'absolute', top: 14, right: 14, zIndex: 15, pointerEvents: 'none',
           background: 'rgba(0,0,0,0.75)',
           backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)',
-          border: '1px solid rgba(242,167,196,0.15)', borderRadius: 8,
+          border: '1px solid var(--color-border-flat)', borderRadius: 8,
           padding: '10px 14px',
-          fontFamily: "'Space Mono', monospace", fontSize: 9,
-          color: '#93C5FD', lineHeight: 1.8,
+          fontFamily: "'DM Sans', sans-serif", fontSize: 9,
+          color: 'var(--color-sky)', lineHeight: 1.8,
         }}>
           {typedLines.map((line, i) => <div key={i}>{line}</div>)}
         </div>
@@ -383,7 +383,7 @@ function SecretLevelCard({ fileLabel, title, subtitle, dataReadout, image, image
         transform: showTitle ? 'translateY(0)' : 'translateY(20px)',
         transition: showTitle ? 'opacity 0.4s ease, transform 0.4s ease' : noT,
       }}>
-        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontStyle: 'italic', fontSize: 16, color: 'white' }}>
+        <div style={{ fontFamily: "'Sora', sans-serif", fontStyle: 'italic', fontSize: 16, color: 'white' }}>
           {title}
         </div>
         <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 10, color: 'rgba(255,255,255,0.45)', marginTop: 4, letterSpacing: '0.08em' }}>
@@ -534,34 +534,34 @@ function FullSizeFileCard({ card }: { card: SecretCardProps }) {
         {card.images ? (
           <div style={{ display: 'flex', width: '100%' }}>
             <img src={card.images[0]} alt="" style={{ ...imgBase, flex: 1, minWidth: 0, width: '50%' }} />
-            <div style={{ width: 1, background: 'rgba(242,167,196,0.15)', flexShrink: 0 }} />
+            <div style={{ width: 1, background: 'var(--color-border-flat)', flexShrink: 0 }} />
             <img src={card.images[1]} alt="" style={{ ...imgBase, flex: 1, minWidth: 0, width: '50%' }} />
           </div>
         ) : card.image ? (
           <img src={card.image} alt="" style={{ ...imgBase, width: '100%' }} />
         ) : null}
 
-        <div style={{ position: 'absolute', top: 14, left: 14, zIndex: 10, fontFamily: "'Space Mono', monospace", fontSize: 9, color: 'rgba(255,255,255,0.65)', letterSpacing: '0.16em', background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', padding: '5px 10px', borderRadius: 6, border: '1px solid rgba(255,255,255,0.08)' }}>
+        <div style={{ position: 'absolute', top: 14, left: 14, zIndex: 10, fontFamily: "'DM Sans', sans-serif", fontSize: 9, color: 'rgba(255,255,255,0.65)', letterSpacing: '0.16em', background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', padding: '5px 10px', borderRadius: 6, border: '1px solid rgba(255,255,255,0.08)' }}>
           {card.fileLabel}
         </div>
 
-        <div style={{ position: 'absolute', top: 14, right: 14, zIndex: 10, fontFamily: "'Space Mono', monospace", fontSize: 8, color: 'rgba(255,255,255,0.28)', letterSpacing: '0.16em', background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', padding: '5px 10px', borderRadius: 6, border: '1px solid rgba(255,255,255,0.06)' }}>
+        <div style={{ position: 'absolute', top: 14, right: 14, zIndex: 10, fontFamily: "'DM Sans', sans-serif", fontSize: 8, color: 'rgba(255,255,255,0.28)', letterSpacing: '0.16em', background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', padding: '5px 10px', borderRadius: 6, border: '1px solid rgba(255,255,255,0.06)' }}>
           RAW / UNPROCESSED
         </div>
 
         <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 5, background: 'rgba(0,0,0,0.45)', opacity: isHovered ? 1 : 0, transition: 'opacity 0.3s ease' }} />
 
-        <div ref={scanRef} style={{ position: 'absolute', left: 0, right: 0, height: 2, top: 0, zIndex: 20, background: 'linear-gradient(to right, transparent, #F2A7C4, #FAFFC7, #F2A7C4, transparent)', boxShadow: '0 0 14px #F2A7C4', opacity: 0, pointerEvents: 'none' }} />
+        <div ref={scanRef} style={{ position: 'absolute', left: 0, right: 0, height: 2, top: 0, zIndex: 20, background: 'linear-gradient(to right, transparent, var(--color-pink), var(--color-lemon), var(--color-pink), transparent)', boxShadow: '0 0 14px var(--color-pink)', opacity: 0, pointerEvents: 'none' }} />
 
         {typedLines.length > 0 && (
-          <div style={{ position: 'absolute', bottom: 16, right: 16, zIndex: 15, background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', border: '1px solid rgba(242,167,196,0.18)', borderRadius: 8, padding: '12px 16px', fontFamily: "'Space Mono', monospace", fontSize: 10, color: '#93C5FD', lineHeight: 1.9 }}>
+          <div style={{ position: 'absolute', bottom: 16, right: 16, zIndex: 15, background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', border: '1px solid rgba(242,167,196,0.18)', borderRadius: 8, padding: '12px 16px', fontFamily: "'DM Sans', sans-serif", fontSize: 10, color: 'var(--color-sky)', lineHeight: 1.9 }}>
             {typedLines.map((line, i) => <div key={i}>{line}</div>)}
           </div>
         )}
       </div>
 
       <div style={{ padding: '20px 24px 24px', borderTop: '1px solid #1e1e1e' }}>
-        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontStyle: 'italic', fontSize: 20, color: 'white', marginBottom: 6 }}>
+        <div style={{ fontFamily: "'Sora', sans-serif", fontStyle: 'italic', fontSize: 20, color: 'white', marginBottom: 6 }}>
           {card.title}
         </div>
         <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.08em' }}>
@@ -578,13 +578,13 @@ const IA_NODES: Array<{
   id: string; label: string; cx: number; cy: number;
   color: string; tooltip: string; isHub?: boolean; labelLines?: string[];
 }> = [
-  { id: 'welcome',       label: 'Welcome',         cx: 100, cy: 80,  color: '#F2A7C4', tooltip: 'Entry point · Onboarding gateway' },
-  { id: 'onboarding',   label: 'Onboarding',       cx: 100, cy: 180, color: '#F2A7C4', tooltip: 'Profile setup · Eligibility inputs' },
-  { id: 'home',         label: 'Home',             cx: 270, cy: 130, color: '#93C5FD', tooltip: 'Core hub · Scheme discovery', isHub: true },
-  { id: 'schemes',      label: 'Schemes',          cx: 420, cy: 80,  color: '#FAFFC7', tooltip: 'Filtered matches · Apply flow' },
-  { id: 'guide',        label: 'Guide',            cx: 420, cy: 200, color: '#F2A7C4', tooltip: 'Step-by-step help · FAQs' },
-  { id: 'profile',      label: 'Profile',          cx: 580, cy: 130, color: '#93C5FD', tooltip: 'User data · Document vault' },
-  { id: 'guideDashboard', label: 'Guide Dashboard', cx: 700, cy: 150, color: '#93C5FD', tooltip: 'Application tracking · Status', labelLines: ['Guide', 'Dashboard'] },
+  { id: 'welcome',       label: 'Welcome',         cx: 100, cy: 80,  color: 'var(--color-pink)', tooltip: 'Entry point · Onboarding gateway' },
+  { id: 'onboarding',   label: 'Onboarding',       cx: 100, cy: 180, color: 'var(--color-pink)', tooltip: 'Profile setup · Eligibility inputs' },
+  { id: 'home',         label: 'Home',             cx: 270, cy: 130, color: 'var(--color-sky)', tooltip: 'Core hub · Scheme discovery', isHub: true },
+  { id: 'schemes',      label: 'Schemes',          cx: 420, cy: 80,  color: 'var(--color-lemon)', tooltip: 'Filtered matches · Apply flow' },
+  { id: 'guide',        label: 'Guide',            cx: 420, cy: 200, color: 'var(--color-pink)', tooltip: 'Step-by-step help · FAQs' },
+  { id: 'profile',      label: 'Profile',          cx: 580, cy: 130, color: 'var(--color-sky)', tooltip: 'User data · Document vault' },
+  { id: 'guideDashboard', label: 'Guide Dashboard', cx: 700, cy: 150, color: 'var(--color-sky)', tooltip: 'Application tracking · Status', labelLines: ['Guide', 'Dashboard'] },
 ];
 
 const IA_CONNECTIONS: [string, string][] = [
@@ -695,7 +695,7 @@ function IAConstellation() {
                 fill={node.color} opacity="0.9"
                 style={{
                   filter: node.isHub
-                    ? `drop-shadow(0 0 ${!prefersReduced.current && hov ? 14 : 10}px #93C5FD)`
+                    ? `drop-shadow(0 0 ${!prefersReduced.current && hov ? 14 : 10}px var(--color-sky))`
                     : `drop-shadow(0 0 6px ${node.color})`,
                   transition: 'filter 0.25s ease',
                 }}
@@ -738,7 +738,7 @@ function IAConstellation() {
                     background: 'rgba(13,10,11,0.92)',
                     backdropFilter: 'blur(8px)',
                     WebkitBackdropFilter: 'blur(8px)',
-                    border: '1px solid rgba(242,167,196,0.15)',
+                    border: '1px solid var(--color-border-flat)',
                     borderRadius: '8px',
                     padding: '7px 12px',
                     fontFamily: "'DM Sans', sans-serif",
@@ -832,7 +832,7 @@ function CollectibleCard({ id, style, isCollected, showNudge, onCollect, counter
                   ease: "easeInOut",
                 }}
               >
-                <div className="w-16 h-20 bg-[#FAFFC7] border border-[#FAFFC7] rounded-xl shadow-[0_0_15px_rgba(250,255,199,0.35)] flex flex-col items-center justify-center text-center px-1">
+                <div className="w-16 h-20 bg-[var(--color-lemon)] border border-[var(--color-lemon)] rounded-xl shadow-[0_0_15px_rgba(250,255,199,0.35)] flex flex-col items-center justify-center text-center px-1">
                   <Star className="w-6 h-6 text-[#B78494] group-hover:scale-110 transition-transform duration-300" fill="currentColor" />
                 </div>
               </motion.div>
@@ -845,7 +845,7 @@ function CollectibleCard({ id, style, isCollected, showNudge, onCollect, counter
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.9 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="text-[#F2A7C4] font-serif italic text-sm pointer-events-none whitespace-nowrap drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] bg-[#121212]/80 px-4 py-2 rounded-full border border-[#333] shadow-[0_4px_24px_rgba(0,0,0,0.5)]"
+            className="text-[var(--color-pink)] font-serif italic text-sm pointer-events-none whitespace-nowrap drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] bg-[#121212]/80 px-4 py-2 rounded-full border border-[#333] shadow-[0_4px_24px_rgba(0,0,0,0.5)]"
           >
             "{NUDGE_MESSAGES[id - 1]}"
           </motion.div>
@@ -873,7 +873,7 @@ function getFixedPhoneStyle(slot: 'left' | 'center' | 'right'): React.CSSPropert
     flexDirection: 'column',
     transition: 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), height 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease',
   };
-  if (slot === 'center') return { ...base, height: '88%', transform: 'translate(-50%, -50%) scale(1)', zIndex: 20, opacity: 1, cursor: 'default', boxShadow: '0 0 40px rgba(242,167,196,0.15), 0 8px 32px rgba(0,0,0,0.8)', border: '4px solid #444' };
+  if (slot === 'center') return { ...base, height: '88%', transform: 'translate(-50%, -50%) scale(1)', zIndex: 20, opacity: 1, cursor: 'default', boxShadow: '0 0 40px var(--color-border-flat), 0 8px 32px rgba(0,0,0,0.8)', border: '4px solid #444' };
   if (slot === 'left')   return { ...base, height: '74%', transform: 'translate(calc(-50% - 195px), -50%) scale(0.95)', zIndex: 10, opacity: 0.6, cursor: 'pointer', boxShadow: '0 8px 24px rgba(0,0,0,0.5)', border: '4px solid #333' };
   return { ...base, height: '74%', transform: 'translate(calc(-50% + 195px), -50%) scale(0.95)', zIndex: 10, opacity: 0.6, cursor: 'pointer', boxShadow: '0 8px 24px rgba(0,0,0,0.5)', border: '4px solid #333' };
 }
@@ -1045,7 +1045,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
         zIndex: 20,
         opacity: 1,
         cursor: 'default' as const,
-        boxShadow: '0 0 40px rgba(242,167,196,0.15), 0 8px 32px rgba(0,0,0,0.8)',
+        boxShadow: '0 0 40px var(--color-border-flat), 0 8px 32px rgba(0,0,0,0.8)',
         border: '4px solid #444',
       };
     }
@@ -1106,7 +1106,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
       >
         <button
           onClick={onClose}
-          className="flex items-center justify-center w-8 h-8 rounded-full bg-[#1E1E1E] text-white hover:bg-[#F2A7C4] hover:text-[#000] transition-colors"
+          className="flex items-center justify-center w-8 h-8 rounded-full bg-[#1E1E1E] text-white hover:bg-[var(--color-pink)] hover:text-[#000] transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
         </button>
@@ -1120,7 +1120,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
             <li key={item.id}>
               <button
                 onClick={() => scrollToSection(item.id)}
-                className="text-[10px] font-semibold text-gray-400 hover:text-[#93C5FD] transition-colors tracking-[0.15em] uppercase"
+                className="text-[10px] font-semibold text-gray-400 hover:text-[var(--color-sky)] transition-colors tracking-[0.15em] uppercase"
               >
                 {item.label}
               </button>
@@ -1130,15 +1130,15 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
 
         {/* HUD Cards Tracker */}
         <div className="flex items-center gap-2">
-          <div ref={counterRef} className="w-5 h-6 bg-[#FAFFC7] border border-[#FAFFC7] rounded shadow-[0_0_10px_rgba(250,255,199,0.4)] flex items-center justify-center">
-            <Star className="w-3 h-3 text-[#F2A7C4] drop-shadow-[0_1px_1px_rgba(0,0,0,0.3)]" fill="currentColor" />
+          <div ref={counterRef} className="w-5 h-6 bg-[var(--color-lemon)] border border-[var(--color-lemon)] rounded shadow-[0_0_10px_rgba(250,255,199,0.4)] flex items-center justify-center">
+            <Star className="w-3 h-3 text-[var(--color-pink)] drop-shadow-[0_1px_1px_rgba(0,0,0,0.3)]" fill="currentColor" />
           </div>
           <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-gray-400">
-            <span className={collectedCards.length === 5 ? "text-[#93C5FD]" : "text-[#F2A7C4]"}>{collectedCards.length}</span>/5
+            <span className={collectedCards.length === 5 ? "text-[var(--color-sky)]" : "text-[var(--color-pink)]"}>{collectedCards.length}</span>/5
           </span>
         </div>
 
-        <button onClick={onClose} className="w-8 h-8 rounded-full bg-[#1E1E1E] flex items-center justify-center hover:bg-[#93C5FD] transition-colors group">
+        <button onClick={onClose} className="w-8 h-8 rounded-full bg-[#1E1E1E] flex items-center justify-center hover:bg-[var(--color-sky)] transition-colors group">
           <img src={FavoriteLogo} alt="Logo" className="w-5 h-5 group-hover:invert" />
         </button>
       </motion.nav>
@@ -1147,7 +1147,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
       <div className="fixed top-[4.5rem] left-0 right-0 z-[120] h-0.5 bg-[#1E1E1E] md:hidden pointer-events-none">
         <div
           ref={mobileProgressBarRef}
-          className="h-full bg-gradient-to-r from-[#93C5FD] to-[#F2A7C4]"
+          className="h-full bg-gradient-to-r from-[var(--color-sky)] to-[var(--color-pink)]"
           style={{ width: '0%', transition: 'width 0.3s ease' }}
         />
       </div>
@@ -1158,7 +1158,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
         <div className="w-1.5 flex-1 bg-[#1E1E1E] border border-[#333] rounded-full overflow-hidden relative flex flex-col justify-start">
           <div 
             ref={progressBarRef}
-            className="w-full bg-gradient-to-b from-[#93C5FD] to-[#F2A7C4] transition-all duration-300"
+            className="w-full bg-gradient-to-b from-[var(--color-sky)] to-[var(--color-pink)] transition-all duration-300"
             style={{ height: `0%` }}
           />
         </div>
@@ -1170,20 +1170,20 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
         
         <motion.div className="max-w-[960px] mx-auto px-8" {...fadeUpConfig}>
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-8 h-px bg-[#F2A7C4]"></div>
-            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#F2A7C4]">
+            <div className="w-8 h-px bg-[var(--color-pink)]"></div>
+            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[var(--color-pink)]">
               Case Study
             </span>
           </div>
 
-          <h1 className="font-serif text-5xl md:text-7xl leading-[1.1] tracking-tight text-[#FAFFC7] mb-10">
+          <h1 className="font-serif text-5xl md:text-7xl leading-[1.1] tracking-tight text-[var(--color-lemon)] mb-10">
             {project.title}
           </h1>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-8 mb-8 p-6 rounded-2xl bg-[#121212]/50 border border-[#222]">
             <div className="flex flex-col gap-2">
               <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-gray-500">Role</span>
-              <span className="text-sm font-medium text-gray-200">Product Designer / UX Researcher</span>
+              <span className="text-sm font-medium text-gray-200">Product Designer</span>
             </div>
             <div className="flex flex-col gap-2">
               <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-gray-500">Timeline</span>
@@ -1210,7 +1210,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
               <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-gray-500">Deliverables</span>
               <div className="flex gap-2 flex-wrap">
                 {project.deliverables?.map((t, idx) => (
-                  <span key={idx} className="bg-[#F2A7C4]/10 text-[#F2A7C4] border border-[#F2A7C4]/30 font-semibold text-xs rounded-full px-3 py-1">
+                  <span key={idx} className="bg-[var(--color-pink)]/10 text-[var(--color-pink)] border border-[var(--color-pink)]/30 font-semibold text-xs rounded-full px-3 py-1">
                     {t}
                   </span>
                 ))}
@@ -1219,9 +1219,9 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
           </div>
 
           <div className="mb-16">
-            <span className="text-[#FAFFC7] text-3xl font-bold block mb-2">IMPACT</span>
+            <span className="text-[var(--color-lemon)] text-3xl font-bold block mb-2">IMPACT</span>
             <p className="text-xl">
-              <span className="font-bold text-[#F2A7C4]">90%</span>
+              <span className="font-bold text-[var(--color-pink)]">90%</span>
               <span className="font-bold"> of real users</span>
               <span className="font-normal"> navigated India's welfare system for the first time — </span>
               <span className="font-normal italic">without fear, without help, and without giving up.</span>
@@ -1244,18 +1244,18 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
                 className="flex flex-col items-center gap-3 px-5 py-5 rounded-2xl bg-[#121212] cursor-pointer"
                 style={{ minWidth: 120, borderWidth: 1, borderStyle: 'solid' }}
                 animate={{
-                  borderColor: activeTier === tier ? '#F2A7C4' : '#333333',
+                  borderColor: activeTier === tier ? 'var(--color-pink)' : '#333333',
                   opacity: activeTier === tier ? 1 : 0.4,
                 }}
                 whileHover={{ opacity: activeTier !== tier ? 0.7 : 1 }}
                 transition={{ duration: 0.25 }}
               >
-                {tier === 1 && <Smartphone className="w-5 h-5" style={{ color: activeTier === tier ? '#F2A7C4' : '#6B7280', transition: 'color 0.25s ease' }} />}
-                {tier === 2 && <HandHelping className="w-5 h-5" style={{ color: activeTier === tier ? '#F2A7C4' : '#6B7280', transition: 'color 0.25s ease' }} />}
-                {tier === 3 && <Building2 className="w-5 h-5" style={{ color: activeTier === tier ? '#F2A7C4' : '#6B7280', transition: 'color 0.25s ease' }} />}
+                {tier === 1 && <Smartphone className="w-5 h-5" style={{ color: activeTier === tier ? 'var(--color-pink)' : '#6B7280', transition: 'color 0.25s ease' }} />}
+                {tier === 2 && <HandHelping className="w-5 h-5" style={{ color: activeTier === tier ? 'var(--color-pink)' : '#6B7280', transition: 'color 0.25s ease' }} />}
+                {tier === 3 && <Building2 className="w-5 h-5" style={{ color: activeTier === tier ? 'var(--color-pink)' : '#6B7280', transition: 'color 0.25s ease' }} />}
                 <span
                   className="text-[12px] font-bold tracking-[0.06em] text-center leading-relaxed"
-                  style={{ color: activeTier === tier ? '#F2A7C4' : '#6B7280', transition: 'color 0.25s ease' }}
+                  style={{ color: activeTier === tier ? 'var(--color-pink)' : '#6B7280', transition: 'color 0.25s ease' }}
                 >
                   {tier === 1 ? 'Has a phone. Can use it.' : tier === 2 ? 'Has a phone. Needs support.' : 'No phone. Needs access.'}
                 </span>
@@ -1291,8 +1291,8 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
                   </div>
                 ))}
                 <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-[#000]/60 backdrop-blur-md border border-[#333] px-4 py-2 rounded-full">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#93C5FD] animate-pulse"></span>
-                  <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-[#93C5FD]">Interactive Prototype</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-sky)] animate-pulse"></span>
+                  <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-[var(--color-sky)]">Interactive Prototype</span>
                 </div>
               </motion.div>
             )}
@@ -1324,8 +1324,8 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
                   </div>
                 ))}
                 <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-[#000]/60 backdrop-blur-md border border-[#333] px-4 py-2 rounded-full">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#F2A7C4] animate-pulse"></span>
-                  <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-[#F2A7C4]">Guide Flow</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-pink)] animate-pulse"></span>
+                  <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-[var(--color-pink)]">Guide Flow</span>
                 </div>
               </motion.div>
             )}
@@ -1345,7 +1345,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
                   style={{
                     display: 'block',
                     maxWidth: '100%',
-                    border: '2px solid #F2A7C4',
+                    border: '2px solid var(--color-pink)',
                     borderRadius: '16px',
                     filter: 'saturate(1.05) contrast(1.05)',
                   }}
@@ -1393,8 +1393,8 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
 
         <motion.div className="max-w-[960px] mx-auto px-8" {...fadeUpConfig}>
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-8 h-px bg-[#93C5FD]"></div>
-            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#93C5FD]">
+            <div className="w-8 h-px bg-[var(--color-sky)]"></div>
+            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[var(--color-sky)]">
               01 — The Problem
             </span>
           </div>
@@ -1417,7 +1417,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
                 className="bg-[#121212] border border-[#333] rounded-2xl p-8 relative overflow-hidden group"
               >
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(250,255,199,0.05)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <strong className="font-serif text-4xl text-[#93C5FD] block mb-3">{item.stat}</strong>
+                <strong className="font-serif text-4xl text-[var(--color-sky)] block mb-3">{item.stat}</strong>
                 <span className="text-sm text-gray-400 leading-relaxed block">{item.desc}</span>
               </motion.div>
             ))}
@@ -1428,15 +1428,15 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
             whileHover={{ y: -5, scale: 1.01 }}
           >
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(250,255,199,0.05)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            <strong className="font-serif text-3xl md:text-4xl text-[#F2A7C4] block mb-4">740+ schemes. Dozens of separate portals.</strong>
+            <strong className="font-serif text-3xl md:text-4xl text-[var(--color-pink)] block mb-4">740+ schemes. Dozens of separate portals.</strong>
             <span className="text-sm text-gray-400 leading-relaxed block max-w-[640px] mx-auto">A low-income family must navigate a fragmented system scattered across government websites they've never heard of — each with different logins, different forms, and different rules.</span>
           </motion.div>
 
-          <div className="bg-[#121212] border border-[#F2A7C4]/30 rounded-3xl p-12 relative overflow-hidden group hover:border-[#F2A7C4]/60 transition-colors duration-500">
-            <div className="absolute top-[-60px] left-8 font-serif text-[240px] leading-none text-[#F2A7C4]/5 select-none transition-transform duration-700 group-hover:translate-x-4">
+          <div className="bg-[#121212] border border-[var(--color-pink)]/30 rounded-3xl p-12 relative overflow-hidden group hover:border-[var(--color-pink)]/60 transition-colors duration-500">
+            <div className="absolute top-[-60px] left-8 font-serif text-[240px] leading-none text-[var(--color-pink)]/5 select-none transition-transform duration-700 group-hover:translate-x-4">
               "
             </div>
-            <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#F2A7C4] mb-6 relative">
+            <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-[var(--color-pink)] mb-6 relative">
               Problem Statement
             </div>
             <p className="font-serif text-2xl md:text-4xl leading-relaxed text-white relative max-w-4xl">
@@ -1452,8 +1452,8 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
 
         <motion.div className="max-w-[960px] mx-auto px-8" {...fadeUpConfig}>
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-8 h-px bg-[#F2A7C4]"></div>
-            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#F2A7C4]">
+            <div className="w-8 h-px bg-[var(--color-pink)]"></div>
+            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[var(--color-pink)]">
               02 — Understanding Users
             </span>
           </div>
@@ -1473,10 +1473,10 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
                 <motion.div
                   key={idx}
                   whileHover={{ y: -5 }}
-                  className="bg-[#121212] border border-[#333] rounded-2xl p-8 hover:border-[#F2A7C4]/50 transition-colors duration-300"
+                  className="bg-[#121212] border border-[#333] rounded-2xl p-8 hover:border-[var(--color-pink)]/50 transition-colors duration-300"
                 >
-                  <div className="w-12 h-12 bg-[#F2A7C4]/10 rounded-xl flex items-center justify-center mb-6">
-                    <IconComponent className="w-6 h-6 text-[#F2A7C4]" />
+                  <div className="w-12 h-12 bg-[var(--color-pink)]/10 rounded-xl flex items-center justify-center mb-6">
+                    <IconComponent className="w-6 h-6 text-[var(--color-pink)]" />
                   </div>
                   <h3 className="text-lg font-bold text-white mb-3">
                     {insight.title}
@@ -1497,7 +1497,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
             </div>
             <div>
               <div className="font-serif text-4xl text-white mb-2">Salmo, 36</div>
-              <div className="text-[10px] text-[#F2A7C4] font-bold tracking-[0.2em] uppercase mb-6">
+              <div className="text-[10px] text-[var(--color-pink)] font-bold tracking-[0.2em] uppercase mb-6">
                 Homemaker · Urban (Delhi)
               </div>
               <div className="flex flex-wrap gap-2 mb-6">
@@ -1505,7 +1505,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
                   <span key={tag} className="text-[10px] font-bold tracking-wider bg-[#333] text-gray-300 px-3 py-1.5 rounded-full uppercase">{tag}</span>
                 ))}
               </div>
-              <p className="text-base text-gray-300 italic mb-8 border-l-2 border-[#F2A7C4] pl-4 py-1">
+              <p className="text-base text-gray-300 italic mb-8 border-l-2 border-[var(--color-pink)] pl-4 py-1">
                 "Every week I just think… will we have enough for food, rent, and medicines?"
               </p>
             </div>
@@ -1519,7 +1519,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
               </div>
               <div>
                 <div className="font-serif text-4xl text-white mb-2">Ramesh, 52</div>
-                <div className="text-[10px] text-[#F2A7C4] font-bold tracking-[0.2em] uppercase mb-6">
+                <div className="text-[10px] text-[var(--color-pink)] font-bold tracking-[0.2em] uppercase mb-6">
                   Daily Wage Worker — Rural (Pune)
                 </div>
                 <div className="flex flex-wrap gap-2 mb-6">
@@ -1527,7 +1527,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
                     <span key={tag} className="text-[10px] font-bold tracking-wider bg-[#333] text-gray-300 px-3 py-1.5 rounded-full uppercase">{tag}</span>
                   ))}
                 </div>
-                <p className="text-base text-gray-300 italic mb-8 border-l-2 border-[#F2A7C4] pl-4 py-1">
+                <p className="text-base text-gray-300 italic mb-8 border-l-2 border-[var(--color-pink)] pl-4 py-1">
                   "I heard there is money from the government for people like me. But I don't know where to go or who to ask."
                 </p>
               </div>
@@ -1541,8 +1541,8 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
       <section className="py-32 border-b border-[#333] relative">
         <motion.div className="max-w-[960px] mx-auto px-8" {...fadeUpConfig}>
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-8 h-px bg-[#F2A7C4]"></div>
-            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#F2A7C4]">
+            <div className="w-8 h-px bg-[var(--color-pink)]"></div>
+            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[var(--color-pink)]">
               Field Research · BEEC Framework
             </span>
           </div>
@@ -1561,7 +1561,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
                 { value: '7', label: 'My sessions' },
               ].map((stat, idx) => (
                 <div key={idx} className="text-center p-5 bg-[#0D0A0B] rounded-xl border border-[#2a2a2a]">
-                  <div className="font-serif text-4xl text-[#93C5FD] mb-1">{stat.value}</div>
+                  <div className="font-serif text-4xl text-[var(--color-sky)] mb-1">{stat.value}</div>
                   <div className="text-[10px] font-bold tracking-[0.15em] uppercase text-gray-500">{stat.label}</div>
                 </div>
               ))}
@@ -1614,7 +1614,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
                 dimension: 'Cognition',
                 finding: "The moment someone had to weigh effort vs risk on a government form, they froze. Not because they couldn't read — because a wrong move felt irreversible.",
                 badge: 'Decision paralysis',
-                letterColor: '#93C5FD',
+                letterColor: 'var(--color-sky)',
                 borderColor: 'rgba(147,197,253,0.2)',
                 badgeBg: 'rgba(147,197,253,0.1)',
                 gradientStart: 'rgba(147,197,253,0.07)',
@@ -1668,7 +1668,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
               ].map((row, idx) => (
                 <div key={idx} className="grid md:grid-cols-2 gap-px rounded-2xl overflow-hidden bg-[#222]">
                   <div className="px-6 py-5 flex flex-col gap-2" style={{ background: 'rgba(109,31,42,0.25)' }}>
-                    <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-[#F2A7C4]/50">Assumption</span>
+                    <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-[var(--color-pink)]/50">Assumption</span>
                     <p className="text-sm text-gray-400 leading-relaxed">{row.assumption}</p>
                   </div>
                   <div className="px-6 py-5 flex flex-col gap-2" style={{ background: 'rgba(22,101,52,0.22)' }}>
@@ -1681,11 +1681,11 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
           </div>
 
           {/* Closing insight quote */}
-          <div className="bg-[#121212] border border-[#F2A7C4]/20 rounded-3xl p-10 md:p-12 relative overflow-hidden group hover:border-[#F2A7C4]/40 transition-colors duration-500">
-            <div className="absolute top-[-60px] left-8 font-serif text-[200px] leading-none text-[#F2A7C4]/5 select-none pointer-events-none">
+          <div className="bg-[#121212] border border-[var(--color-pink)]/20 rounded-3xl p-10 md:p-12 relative overflow-hidden group hover:border-[var(--color-pink)]/40 transition-colors duration-500">
+            <div className="absolute top-[-60px] left-8 font-serif text-[200px] leading-none text-[var(--color-pink)]/5 select-none pointer-events-none">
               "
             </div>
-            <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#F2A7C4] mb-6 relative">
+            <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-[var(--color-pink)] mb-6 relative">
               Closing Signal
             </div>
             <p className="font-serif text-xl md:text-2xl leading-relaxed text-gray-200 relative max-w-3xl">
@@ -1701,8 +1701,8 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
 
         <motion.div className="max-w-[960px] mx-auto px-8" {...fadeUpConfig}>
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-8 h-px bg-[#93C5FD]"></div>
-            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#93C5FD]">
+            <div className="w-8 h-px bg-[var(--color-sky)]"></div>
+            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[var(--color-sky)]">
               03 — Mapping the Experience
             </span>
           </div>
@@ -1738,19 +1738,19 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
                     whileHover={{ y: -5 }}
                     className="w-[240px] bg-[#121212] border border-[#333] rounded-2xl flex flex-col overflow-hidden group"
                   >
-                    <div className="bg-[#1E1E1E] border-b border-[#333] px-5 py-4 text-[10px] font-bold tracking-[0.2em] uppercase text-white group-hover:text-[#93C5FD] transition-colors">
+                    <div className="bg-[#1E1E1E] border-b border-[#333] px-5 py-4 text-[10px] font-bold tracking-[0.2em] uppercase text-white group-hover:text-[var(--color-sky)] transition-colors">
                       0{idx + 1} — {stage.stage}
                     </div>
                     <div className="p-5 flex flex-col justify-between flex-1 gap-4">
                       <div className="text-sm text-gray-400 font-light leading-relaxed">{stage.item}</div>
-                      <div className="bg-[#1E1E1E] rounded-xl px-4 py-3 text-xs text-[#F2A7C4] flex items-center gap-3">
+                      <div className="bg-[#1E1E1E] rounded-xl px-4 py-3 text-xs text-[var(--color-pink)] flex items-center gap-3">
                         <IconComponent className="w-4 h-4 flex-shrink-0" />
                         <span className="leading-tight">{stage.pain}</span>
                       </div>
                       <div className="pt-3 border-t border-[#2a2a2a] flex flex-col gap-1.5">
                         <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-gray-600">Design Response</span>
                         <div className="flex items-start gap-1.5">
-                          <ArrowRight className="w-3 h-3 text-[#F2A7C4]/50 flex-shrink-0 mt-0.5" />
+                          <ArrowRight className="w-3 h-3 text-[var(--color-pink)]/50 flex-shrink-0 mt-0.5" />
                           <span className="text-[11px] text-gray-500 leading-relaxed">{stage.response}</span>
                         </div>
                       </div>
@@ -1769,7 +1769,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
                 transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
                 className="w-8 h-8 rounded-full border border-[#333] flex items-center justify-center bg-[#1E1E1E]"
               >
-                <ArrowRight className="w-3 h-3 text-[#F2A7C4]" />
+                <ArrowRight className="w-3 h-3 text-[var(--color-pink)]" />
               </motion.div>
             </div>
           </div>
@@ -1782,8 +1782,8 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
 
         <motion.div className="max-w-[960px] mx-auto px-8" {...fadeUpConfig}>
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-8 h-px bg-[#F2A7C4]"></div>
-            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#F2A7C4]">
+            <div className="w-8 h-px bg-[var(--color-pink)]"></div>
+            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[var(--color-pink)]">
               04 — Designing the Solution
             </span>
           </div>
@@ -1797,7 +1797,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
           </p>
 
           {/* ── Information Architecture ── */}
-          <h3 className="text-lg font-semibold text-[#F2A7C4] mb-2">Information Architecture</h3>
+          <h3 className="text-lg font-semibold text-[var(--color-pink)] mb-2">Information Architecture</h3>
           <p className="text-sm text-gray-400 leading-relaxed max-w-[620px] mb-10">
             Structured around clarity and trust. Seven screen categories mapped before the first wireframe was drawn — reducing decision fatigue at every stage of the user journey.
           </p>
@@ -1812,7 +1812,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
 
           {/* Prototype CTA */}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, marginBottom: 48 }}>
-            <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#F2A7C4', opacity: 0.7, marginBottom: 8 }}>
+            <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-pink)', opacity: 0.7, marginBottom: 8 }}>
               See it in action
             </span>
             <a
@@ -1869,7 +1869,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
                 className="bg-[#121212] rounded-3xl aspect-[9/16] flex items-center justify-center relative overflow-hidden border border-[#333] group cursor-pointer"
                 onClick={() => setPoppedScreen(i)}
               >
-                <div className="absolute inset-0 bg-[#F2A7C4]/5 opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none"></div>
+                <div className="absolute inset-0 bg-[var(--color-pink)]/5 opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none"></div>
                 <img src={screen.src} alt={screen.alt} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
                 <span className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-[#000]/80 backdrop-blur-md border border-[#333] text-white text-[10px] font-bold tracking-[0.2em] uppercase px-4 py-2 rounded-full z-20 whitespace-nowrap">
                   {screen.label}
@@ -1881,15 +1881,15 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
           {/* ── Usability Testing Moment ── */}
           <motion.div className="mt-24" {...fadeUpConfig}>
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-8 h-px bg-[#F2A7C4]"></div>
-              <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#F2A7C4]">
+              <div className="w-8 h-px bg-[var(--color-pink)]"></div>
+              <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[var(--color-pink)]">
                 Usability Testing
               </span>
             </div>
             <h3 className="font-serif text-3xl md:text-4xl text-white mb-16">What broke. What we fixed.</h3>
 
             <div className="text-center mb-12">
-              <div className="font-serif text-8xl md:text-9xl text-[#93C5FD] leading-none mb-3">90%</div>
+              <div className="font-serif text-8xl md:text-9xl text-[var(--color-sky)] leading-none mb-3">90%</div>
               <p className="text-sm text-gray-500 tracking-[0.06em]">Task completion — Round 2 usability testing</p>
             </div>
 
@@ -1909,9 +1909,9 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
 
           {/* ── Core Innovation ── */}
           <motion.div className="mt-24" {...fadeUpConfig}>
-            <div className="bg-[#121212] border border-[#333] rounded-2xl p-10 md:p-12 relative overflow-hidden group hover:border-[#F2A7C4]/30 transition-colors duration-500">
+            <div className="bg-[#121212] border border-[#333] rounded-2xl p-10 md:p-12 relative overflow-hidden group hover:border-[var(--color-pink)]/30 transition-colors duration-500">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(242,167,196,0.05)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#F2A7C4] mb-6 relative">Core Innovation</div>
+              <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-[var(--color-pink)] mb-6 relative">Core Innovation</div>
               <h3 className="font-serif text-3xl md:text-4xl text-white mb-6 relative">One app. Every scheme.</h3>
               <p className="text-sm text-gray-400 leading-relaxed mb-8 max-w-[720px] relative">
                 Government welfare in India is fragmented across dozens of separate portals. A family applying for housing support, education aid, and food security assistance must navigate three different government websites with three different logins and three completely different processes. Margdarshak unifies them — one login, one interface, multiple applications submitted from one place. The prototype demonstrates this end to end for PM Awas Yojana as a proof of concept for the full unified system.
@@ -1927,8 +1927,8 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
           {/* ── Design Principles ── */}
           <motion.div className="mt-24" {...fadeUpConfig}>
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-8 h-px bg-[#F2A7C4]"></div>
-              <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#F2A7C4]">
+              <div className="w-8 h-px bg-[var(--color-pink)]"></div>
+              <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[var(--color-pink)]">
                 Design Principles
               </span>
             </div>
@@ -1957,10 +1957,10 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
                   <motion.div
                     key={idx}
                     whileHover={{ y: -5 }}
-                    className="bg-[#121212] border border-[#333] rounded-2xl p-8 hover:border-[#F2A7C4]/50 transition-colors duration-300"
+                    className="bg-[#121212] border border-[#333] rounded-2xl p-8 hover:border-[var(--color-pink)]/50 transition-colors duration-300"
                   >
-                    <div className="w-12 h-12 bg-[#F2A7C4]/10 rounded-xl flex items-center justify-center mb-6">
-                      <IconComponent className="w-6 h-6 text-[#F2A7C4]" />
+                    <div className="w-12 h-12 bg-[var(--color-pink)]/10 rounded-xl flex items-center justify-center mb-6">
+                      <IconComponent className="w-6 h-6 text-[var(--color-pink)]" />
                     </div>
                     <h4 className="text-lg font-bold text-white mb-3">{principle.title}</h4>
                     <p className="text-sm text-gray-400 leading-relaxed">{principle.description}</p>
@@ -1973,8 +1973,8 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
           {/* ── Honest Limitations ── */}
           <motion.div className="mt-24" {...fadeUpConfig}>
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-8 h-px bg-[#F2A7C4]"></div>
-              <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#F2A7C4]">
+              <div className="w-8 h-px bg-[var(--color-pink)]"></div>
+              <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[var(--color-pink)]">
                 Honest Limitations
               </span>
             </div>
@@ -1982,11 +1982,11 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
 
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               <div className="bg-[#121212] border border-[#333] rounded-2xl p-8 flex flex-col gap-4">
-                <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-[#F2A7C4]">TIME AND PROCESS COMPLEXITY</span>
+                <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-[var(--color-pink)]">TIME AND PROCESS COMPLEXITY</span>
                 <p className="text-sm text-gray-400 leading-relaxed">Government processes require time. That's a policy constraint, not a design problem. Margdarshak reduces confusion and fear around the process — but it cannot make the process itself faster. That requires systemic change beyond design.</p>
               </div>
               <div className="bg-[#121212] border border-[#333] rounded-2xl p-8 flex flex-col gap-4">
-                <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-[#F2A7C4]">DOCUMENT BURDEN</span>
+                <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-[var(--color-pink)]">DOCUMENT BURDEN</span>
                 <p className="text-sm text-gray-400 leading-relaxed">We partially addressed this through profile autofill and a DigiLocker integration concept — reducing manual entry for saved documents. But documents the government mandates cannot be removed. A future version would require direct government partnership to pre-fill known citizen data.</p>
               </div>
             </div>
@@ -1997,8 +1997,8 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
           {/* ── What I'd Do Differently ── */}
           <motion.div className="mt-24" {...fadeUpConfig}>
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-8 h-px bg-[#F2A7C4]"></div>
-              <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#F2A7C4]">
+              <div className="w-8 h-px bg-[var(--color-pink)]"></div>
+              <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[var(--color-pink)]">
                 Hindsight
               </span>
             </div>
@@ -2030,7 +2030,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
                   transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1], delay: idx * 0.1 }}
                   className="flex gap-8 items-start"
                 >
-                  <div className="font-serif text-5xl text-[#F2A7C4] leading-none flex-shrink-0" style={{ opacity: 0.6 }}>{item.num}</div>
+                  <div className="font-serif text-5xl text-[var(--color-pink)] leading-none flex-shrink-0" style={{ opacity: 0.6 }}>{item.num}</div>
                   <div>
                     <h4 className="text-lg font-bold text-white mb-3">{item.title}</h4>
                     <p className="text-sm text-gray-400 leading-relaxed">{item.desc}</p>
@@ -2068,15 +2068,15 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
               <div style={{ maxWidth: '940px', margin: '0 auto', padding: '100px 32px' }}>
 
-                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, letterSpacing: '0.28em', textTransform: 'uppercase' as const, color: '#F2A7C4', opacity: 0.6, textAlign: 'center', marginBottom: 16 }}>
+                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 10, letterSpacing: '0.28em', textTransform: 'uppercase' as const, color: 'var(--color-pink)', opacity: 0.6, textAlign: 'center', marginBottom: 16 }}>
                   ✦ CLASSIFIED
                 </div>
 
-                <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 'clamp(2rem, 3.5vw, 3.2rem)', color: 'white', textAlign: 'center', lineHeight: 1.1, margin: '0 0 12px' }}>
+                <h2 style={{ fontFamily: "'Sora', sans-serif", fontWeight: 700, fontSize: 'clamp(2rem, 3.5vw, 3.2rem)', color: 'white', textAlign: 'center', lineHeight: 1.1, margin: '0 0 12px' }}>
                   The Unprocessed Files
                 </h2>
 
-                <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 400, fontStyle: 'italic', fontSize: 18, color: 'rgba(255,255,255,0.28)', textAlign: 'center', margin: '0 0 56px' }}>
+                <p style={{ fontFamily: "'Sora', sans-serif", fontWeight: 400, fontStyle: 'italic', fontSize: 18, color: 'rgba(255,255,255,0.28)', textAlign: 'center', margin: '0 0 56px' }}>
                   Raw data from the field. Hover to develop.
                 </p>
 
@@ -2130,17 +2130,17 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
                           key={i}
                           onClick={() => { setSecretSlideDir(i > secretFileIndex ? 1 : -1); setSecretFileIndex(i); }}
                           aria-label={`Go to file ${i + 1}`}
-                          style={{ width: i === secretFileIndex ? 20 : 6, height: 6, borderRadius: 3, background: i === secretFileIndex ? '#F2A7C4' : '#333', border: 'none', cursor: 'pointer', padding: 0, transition: 'width 0.3s ease, background 0.3s ease' }}
+                          style={{ width: i === secretFileIndex ? 20 : 6, height: 6, borderRadius: 3, background: i === secretFileIndex ? 'var(--color-pink)' : '#333', border: 'none', cursor: 'pointer', padding: 0, transition: 'width 0.3s ease, background 0.3s ease' }}
                         />
                       ))}
                     </div>
-                    <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.12em' }}>
+                    <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 10, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.12em' }}>
                       {String(secretFileIndex + 1).padStart(2, '0')} / {String(SECRET_CARDS.length).padStart(2, '0')}
                     </span>
                   </div>
                 </div>
 
-                <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontStyle: 'italic', fontSize: 16, color: 'rgba(255,255,255,0.2)', textAlign: 'center', marginTop: 56 }}>
+                <p style={{ fontFamily: "'Sora', sans-serif", fontStyle: 'italic', fontSize: 16, color: 'rgba(255,255,255,0.2)', textAlign: 'center', marginTop: 56 }}>
                   Some files are never fully processed. That's research.
                 </p>
 
@@ -2149,7 +2149,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
                     whileHover={{ scale: 1.05, boxShadow: '0 0 40px rgba(242,167,196,0.5)' }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => onClose('contact')}
-                    className="inline-flex items-center gap-3 bg-[#F2A7C4] text-[#000] text-sm font-bold tracking-[0.2em] uppercase px-12 py-5 rounded-full shadow-[0_0_20px_rgba(242,167,196,0.25)] transition-all cursor-pointer"
+                    className="inline-flex items-center gap-3 bg-[var(--color-pink)] text-[#000] text-sm font-bold tracking-[0.2em] uppercase px-12 py-5 rounded-full shadow-[0_0_20px_rgba(242,167,196,0.25)] transition-all cursor-pointer"
                   >
                     Hire Me <MoveRight className="w-5 h-5" />
                   </motion.button>
@@ -2182,7 +2182,7 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => onClose('about')}
-            className="inline-flex items-center gap-2 bg-transparent text-[#F2A7C4] border border-[#F2A7C4] text-xs font-bold tracking-[0.2em] uppercase px-8 py-4 rounded-full hover:bg-[#F2A7C4] hover:text-[#000] transition-colors duration-300"
+            className="inline-flex items-center gap-2 bg-transparent text-[var(--color-pink)] border border-[var(--color-pink)] text-xs font-bold tracking-[0.2em] uppercase px-8 py-4 rounded-full hover:bg-[var(--color-pink)] hover:text-[#000] transition-colors duration-300"
           >
             Back to Portfolio
           </motion.button>
@@ -2191,3 +2191,4 @@ export default function CaseStudyPage({ project, onClose }: CaseStudyPageProps) 
     </div>
   );
 }
+
