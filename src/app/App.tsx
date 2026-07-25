@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, Fragment } from "react";
+﻿import React, { useEffect, useRef, useState, Fragment } from "react";
 import emailjs from "@emailjs/browser";
 import { motion, AnimatePresence } from 'motion/react';
 import CaseStudyPage from "./CaseStudyPage";
@@ -9,7 +9,7 @@ import HobbiesSection from "./HobbiesSection";
 import TeachersSection from "./TeachersSection";
 import LoadingScreen from "./LoadingScreen";
 import girlImg from "../imports/ChatGPT_Image_May_26__2026__08_22_25_PM.png";
-import profileImg from "./components/Pictures/me5.png";
+import profileImg from "./components/Pictures/me1.png";
 import heartUrl from "../imports/logo/heart.svg";
 import starUrl from "../imports/logo/star.svg";
 import murmurBannerUrl from "../imports/Murmur/banner.png";
@@ -62,76 +62,76 @@ interface NodeDef { id: number; cx: string; cy: string; r: number; color: string
 interface EdgeDef { id: number; a: number; b: number; }
 
 const ABOUT_NODES: NodeDef[] = [
-  { id: 0, cx: "95.74%", cy: "53.84%", r: 3.0, color: "#F2A7C4", ring: false },
-  { id: 1, cx: "48.17%", cy: "81.67%", r: 2.3, color: "#93C5FD", ring: false },
-  { id: 2, cx: "79.52%", cy: "64.58%", r: 4.4, color: "#93C5FD", ring: false },
-  { id: 3, cx: "41.80%", cy: "21.41%", r: 4.2, color: "#93C5FD", ring: false },
-  { id: 4, cx: "34.53%", cy: "32.24%", r: 2.5, color: "#93C5FD", ring: false },
-  { id: 5, cx: "71.78%", cy: "29.72%", r: 2.7, color: "#F2A7C4", ring: false },
-  { id: 6, cx: "5.98%", cy: "66.91%", r: 3.7, color: "#93C5FD", ring: false },
-  { id: 7, cx: "36.82%", cy: "43.22%", r: 4.2, color: "#F2A7C4", ring: false },
-  { id: 8, cx: "90.01%", cy: "20.28%", r: 4.0, color: "#93C5FD", ring: false },
-  { id: 9, cx: "70.06%", cy: "64.64%", r: 2.4, color: "#93C5FD", ring: false },
-  { id: 10, cx: "28.66%", cy: "37.75%", r: 4.1, color: "#F2A7C4", ring: false },
-  { id: 11, cx: "24.52%", cy: "90.41%", r: 3.9, color: "#93C5FD", ring: true },
-  { id: 12, cx: "88.79%", cy: "81.82%", r: 3.1, color: "#F2A7C4", ring: false },
-  { id: 13, cx: "60.86%", cy: "28.10%", r: 4.4, color: "#F2A7C4", ring: false },
-  { id: 14, cx: "86.01%", cy: "5.46%", r: 2.6, color: "#F2A7C4", ring: false },
-  { id: 15, cx: "16.89%", cy: "78.11%", r: 4.4, color: "#93C5FD", ring: false },
-  { id: 16, cx: "57.79%", cy: "39.71%", r: 2.4, color: "#F2A7C4", ring: false },
-  { id: 17, cx: "25.25%", cy: "79.80%", r: 4.4, color: "#93C5FD", ring: true },
-  { id: 18, cx: "3.24%", cy: "38.40%", r: 3.5, color: "#93C5FD", ring: false },
-  { id: 19, cx: "47.59%", cy: "34.69%", r: 4.3, color: "#F2A7C4", ring: false },
-  { id: 20, cx: "66.21%", cy: "88.55%", r: 4.2, color: "#93C5FD", ring: false },
-  { id: 21, cx: "9.23%", cy: "91.88%", r: 2.2, color: "#F2A7C4", ring: false },
-  { id: 22, cx: "16.77%", cy: "15.41%", r: 2.9, color: "#93C5FD", ring: false },
-  { id: 23, cx: "93.09%", cy: "90.14%", r: 3.5, color: "#93C5FD", ring: false },
-  { id: 24, cx: "50.29%", cy: "94.03%", r: 3.4, color: "#93C5FD", ring: false },
-  { id: 25, cx: "89.25%", cy: "73.26%", r: 4.0, color: "#93C5FD", ring: false },
-  { id: 26, cx: "47.52%", cy: "51.87%", r: 3.1, color: "#93C5FD", ring: false },
-  { id: 27, cx: "44.82%", cy: "68.12%", r: 3.6, color: "#93C5FD", ring: false },
-  { id: 28, cx: "58.17%", cy: "69.11%", r: 2.2, color: "#F2A7C4", ring: false },
-  { id: 29, cx: "79.10%", cy: "7.84%", r: 2.6, color: "#93C5FD", ring: false },
-  { id: 30, cx: "15.65%", cy: "22.14%", r: 4.3, color: "#F2A7C4", ring: true },
-  { id: 31, cx: "71.52%", cy: "17.44%", r: 4.3, color: "#93C5FD", ring: false },
-  { id: 32, cx: "74.88%", cy: "88.93%", r: 4.4, color: "#F2A7C4", ring: false },
-  { id: 33, cx: "11.57%", cy: "36.21%", r: 3.1, color: "#93C5FD", ring: true },
-  { id: 34, cx: "16.48%", cy: "8.47%", r: 3.0, color: "#F2A7C4", ring: false },
-  { id: 35, cx: "43.38%", cy: "47.52%", r: 3.6, color: "#93C5FD", ring: false },
-  { id: 36, cx: "54.13%", cy: "18.38%", r: 3.1, color: "#F2A7C4", ring: false },
-  { id: 37, cx: "15.50%", cy: "71.39%", r: 3.5, color: "#F2A7C4", ring: false },
-  { id: 38, cx: "42.27%", cy: "61.79%", r: 2.1, color: "#F2A7C4", ring: false },
-  { id: 39, cx: "69.16%", cy: "35.20%", r: 2.6, color: "#93C5FD", ring: false },
-  { id: 40, cx: "9.67%", cy: "15.95%", r: 3.8, color: "#93C5FD", ring: false },
-  { id: 41, cx: "59.32%", cy: "89.83%", r: 3.1, color: "#F2A7C4", ring: false },
-  { id: 42, cx: "21.45%", cy: "35.74%", r: 2.2, color: "#93C5FD", ring: false },
-  { id: 43, cx: "20.15%", cy: "48.42%", r: 3.9, color: "#93C5FD", ring: false },
-  { id: 44, cx: "28.46%", cy: "21.00%", r: 2.4, color: "#93C5FD", ring: false },
-  { id: 45, cx: "50.74%", cy: "9.41%", r: 4.1, color: "#93C5FD", ring: true },
-  { id: 46, cx: "34.55%", cy: "9.71%", r: 3.6, color: "#93C5FD", ring: false },
-  { id: 47, cx: "27.76%", cy: "46.11%", r: 3.4, color: "#93C5FD", ring: false },
-  { id: 48, cx: "97.81%", cy: "27.54%", r: 4.0, color: "#93C5FD", ring: true },
-  { id: 49, cx: "3.65%", cy: "57.61%", r: 2.1, color: "#F2A7C4", ring: true },
-  { id: 50, cx: "24.95%", cy: "66.83%", r: 2.5, color: "#93C5FD", ring: false },
-  { id: 51, cx: "52.25%", cy: "74.27%", r: 3.7, color: "#93C5FD", ring: false },
-  { id: 52, cx: "44.75%", cy: "11.11%", r: 4.0, color: "#93C5FD", ring: false },
-  { id: 53, cx: "68.64%", cy: "49.65%", r: 4.2, color: "#F2A7C4", ring: false },
-  { id: 54, cx: "24.78%", cy: "58.66%", r: 3.4, color: "#F2A7C4", ring: false },
-  { id: 55, cx: "85.02%", cy: "56.96%", r: 4.3, color: "#93C5FD", ring: false },
-  { id: 56, cx: "79.34%", cy: "37.22%", r: 2.0, color: "#F2A7C4", ring: false },
-  { id: 57, cx: "22.86%", cy: "10.00%", r: 2.4, color: "#93C5FD", ring: false },
-  { id: 58, cx: "67.23%", cy: "11.68%", r: 3.8, color: "#93C5FD", ring: false },
-  { id: 59, cx: "38.27%", cy: "84.75%", r: 3.2, color: "#F2A7C4", ring: false },
-  { id: 60, cx: "59.82%", cy: "50.59%", r: 3.2, color: "#F2A7C4", ring: false },
-  { id: 61, cx: "90.76%", cy: "29.98%", r: 3.2, color: "#F2A7C4", ring: true },
-  { id: 62, cx: "64.01%", cy: "40.18%", r: 3.2, color: "#93C5FD", ring: false },
-  { id: 63, cx: "72.43%", cy: "74.77%", r: 3.0, color: "#F2A7C4", ring: false },
-  { id: 64, cx: "92.56%", cy: "67.35%", r: 2.6, color: "#93C5FD", ring: false },
-  { id: 65, cx: "50.15%", cy: "23.16%", r: 2.6, color: "#93C5FD", ring: true },
-  { id: 66, cx: "45.18%", cy: "89.41%", r: 2.3, color: "#F2A7C4", ring: false },
-  { id: 67, cx: "4.27%", cy: "10.07%", r: 4.1, color: "#F2A7C4", ring: true },
-  { id: 68, cx: "32.47%", cy: "55.74%", r: 4.5, color: "#F2A7C4", ring: false },
-  { id: 69, cx: "35.16%", cy: "23.28%", r: 3.3, color: "#F2A7C4", ring: false },
+  { id: 0, cx: "95.74%", cy: "53.84%", r: 3.0, color: "var(--color-pink)", ring: false },
+  { id: 1, cx: "48.17%", cy: "81.67%", r: 2.3, color: "var(--color-sky)", ring: false },
+  { id: 2, cx: "79.52%", cy: "64.58%", r: 4.4, color: "var(--color-sky)", ring: false },
+  { id: 3, cx: "41.80%", cy: "21.41%", r: 4.2, color: "var(--color-sky)", ring: false },
+  { id: 4, cx: "34.53%", cy: "32.24%", r: 2.5, color: "var(--color-sky)", ring: false },
+  { id: 5, cx: "71.78%", cy: "29.72%", r: 2.7, color: "var(--color-pink)", ring: false },
+  { id: 6, cx: "5.98%", cy: "66.91%", r: 3.7, color: "var(--color-sky)", ring: false },
+  { id: 7, cx: "36.82%", cy: "43.22%", r: 4.2, color: "var(--color-pink)", ring: false },
+  { id: 8, cx: "90.01%", cy: "20.28%", r: 4.0, color: "var(--color-sky)", ring: false },
+  { id: 9, cx: "70.06%", cy: "64.64%", r: 2.4, color: "var(--color-sky)", ring: false },
+  { id: 10, cx: "28.66%", cy: "37.75%", r: 4.1, color: "var(--color-pink)", ring: false },
+  { id: 11, cx: "24.52%", cy: "90.41%", r: 3.9, color: "var(--color-sky)", ring: true },
+  { id: 12, cx: "88.79%", cy: "81.82%", r: 3.1, color: "var(--color-pink)", ring: false },
+  { id: 13, cx: "60.86%", cy: "28.10%", r: 4.4, color: "var(--color-pink)", ring: false },
+  { id: 14, cx: "86.01%", cy: "5.46%", r: 2.6, color: "var(--color-pink)", ring: false },
+  { id: 15, cx: "16.89%", cy: "78.11%", r: 4.4, color: "var(--color-sky)", ring: false },
+  { id: 16, cx: "57.79%", cy: "39.71%", r: 2.4, color: "var(--color-pink)", ring: false },
+  { id: 17, cx: "25.25%", cy: "79.80%", r: 4.4, color: "var(--color-sky)", ring: true },
+  { id: 18, cx: "3.24%", cy: "38.40%", r: 3.5, color: "var(--color-sky)", ring: false },
+  { id: 19, cx: "47.59%", cy: "34.69%", r: 4.3, color: "var(--color-pink)", ring: false },
+  { id: 20, cx: "66.21%", cy: "88.55%", r: 4.2, color: "var(--color-sky)", ring: false },
+  { id: 21, cx: "9.23%", cy: "91.88%", r: 2.2, color: "var(--color-pink)", ring: false },
+  { id: 22, cx: "16.77%", cy: "15.41%", r: 2.9, color: "var(--color-sky)", ring: false },
+  { id: 23, cx: "93.09%", cy: "90.14%", r: 3.5, color: "var(--color-sky)", ring: false },
+  { id: 24, cx: "50.29%", cy: "94.03%", r: 3.4, color: "var(--color-sky)", ring: false },
+  { id: 25, cx: "89.25%", cy: "73.26%", r: 4.0, color: "var(--color-sky)", ring: false },
+  { id: 26, cx: "47.52%", cy: "51.87%", r: 3.1, color: "var(--color-sky)", ring: false },
+  { id: 27, cx: "44.82%", cy: "68.12%", r: 3.6, color: "var(--color-sky)", ring: false },
+  { id: 28, cx: "58.17%", cy: "69.11%", r: 2.2, color: "var(--color-pink)", ring: false },
+  { id: 29, cx: "79.10%", cy: "7.84%", r: 2.6, color: "var(--color-sky)", ring: false },
+  { id: 30, cx: "15.65%", cy: "22.14%", r: 4.3, color: "var(--color-pink)", ring: true },
+  { id: 31, cx: "71.52%", cy: "17.44%", r: 4.3, color: "var(--color-sky)", ring: false },
+  { id: 32, cx: "74.88%", cy: "88.93%", r: 4.4, color: "var(--color-pink)", ring: false },
+  { id: 33, cx: "11.57%", cy: "36.21%", r: 3.1, color: "var(--color-sky)", ring: true },
+  { id: 34, cx: "16.48%", cy: "8.47%", r: 3.0, color: "var(--color-pink)", ring: false },
+  { id: 35, cx: "43.38%", cy: "47.52%", r: 3.6, color: "var(--color-sky)", ring: false },
+  { id: 36, cx: "54.13%", cy: "18.38%", r: 3.1, color: "var(--color-pink)", ring: false },
+  { id: 37, cx: "15.50%", cy: "71.39%", r: 3.5, color: "var(--color-pink)", ring: false },
+  { id: 38, cx: "42.27%", cy: "61.79%", r: 2.1, color: "var(--color-pink)", ring: false },
+  { id: 39, cx: "69.16%", cy: "35.20%", r: 2.6, color: "var(--color-sky)", ring: false },
+  { id: 40, cx: "9.67%", cy: "15.95%", r: 3.8, color: "var(--color-sky)", ring: false },
+  { id: 41, cx: "59.32%", cy: "89.83%", r: 3.1, color: "var(--color-pink)", ring: false },
+  { id: 42, cx: "21.45%", cy: "35.74%", r: 2.2, color: "var(--color-sky)", ring: false },
+  { id: 43, cx: "20.15%", cy: "48.42%", r: 3.9, color: "var(--color-sky)", ring: false },
+  { id: 44, cx: "28.46%", cy: "21.00%", r: 2.4, color: "var(--color-sky)", ring: false },
+  { id: 45, cx: "50.74%", cy: "9.41%", r: 4.1, color: "var(--color-sky)", ring: true },
+  { id: 46, cx: "34.55%", cy: "9.71%", r: 3.6, color: "var(--color-sky)", ring: false },
+  { id: 47, cx: "27.76%", cy: "46.11%", r: 3.4, color: "var(--color-sky)", ring: false },
+  { id: 48, cx: "97.81%", cy: "27.54%", r: 4.0, color: "var(--color-sky)", ring: true },
+  { id: 49, cx: "3.65%", cy: "57.61%", r: 2.1, color: "var(--color-pink)", ring: true },
+  { id: 50, cx: "24.95%", cy: "66.83%", r: 2.5, color: "var(--color-sky)", ring: false },
+  { id: 51, cx: "52.25%", cy: "74.27%", r: 3.7, color: "var(--color-sky)", ring: false },
+  { id: 52, cx: "44.75%", cy: "11.11%", r: 4.0, color: "var(--color-sky)", ring: false },
+  { id: 53, cx: "68.64%", cy: "49.65%", r: 4.2, color: "var(--color-pink)", ring: false },
+  { id: 54, cx: "24.78%", cy: "58.66%", r: 3.4, color: "var(--color-pink)", ring: false },
+  { id: 55, cx: "85.02%", cy: "56.96%", r: 4.3, color: "var(--color-sky)", ring: false },
+  { id: 56, cx: "79.34%", cy: "37.22%", r: 2.0, color: "var(--color-pink)", ring: false },
+  { id: 57, cx: "22.86%", cy: "10.00%", r: 2.4, color: "var(--color-sky)", ring: false },
+  { id: 58, cx: "67.23%", cy: "11.68%", r: 3.8, color: "var(--color-sky)", ring: false },
+  { id: 59, cx: "38.27%", cy: "84.75%", r: 3.2, color: "var(--color-pink)", ring: false },
+  { id: 60, cx: "59.82%", cy: "50.59%", r: 3.2, color: "var(--color-pink)", ring: false },
+  { id: 61, cx: "90.76%", cy: "29.98%", r: 3.2, color: "var(--color-pink)", ring: true },
+  { id: 62, cx: "64.01%", cy: "40.18%", r: 3.2, color: "var(--color-sky)", ring: false },
+  { id: 63, cx: "72.43%", cy: "74.77%", r: 3.0, color: "var(--color-pink)", ring: false },
+  { id: 64, cx: "92.56%", cy: "67.35%", r: 2.6, color: "var(--color-sky)", ring: false },
+  { id: 65, cx: "50.15%", cy: "23.16%", r: 2.6, color: "var(--color-sky)", ring: true },
+  { id: 66, cx: "45.18%", cy: "89.41%", r: 2.3, color: "var(--color-pink)", ring: false },
+  { id: 67, cx: "4.27%", cy: "10.07%", r: 4.1, color: "var(--color-pink)", ring: true },
+  { id: 68, cx: "32.47%", cy: "55.74%", r: 4.5, color: "var(--color-pink)", ring: false },
+  { id: 69, cx: "35.16%", cy: "23.28%", r: 3.3, color: "var(--color-pink)", ring: false },
 ];
 
 const ABOUT_EDGES: EdgeDef[] = [
@@ -261,7 +261,7 @@ const caseStudiesData = [
     title: "Margdarshak — Empowering the Common Man",
     subtitle: "Bridging the last-mile gap between welfare schemes and the low-income families they're meant to serve",
     meta: [
-      { label: "Role", value: "UX Strategist and Researcher" },
+      { label: "Role", value: "Product Designer" },
       { label: "Timeline", value: "3 months" },
       { label: "Team", value: "GURUX" }
     ],
@@ -385,7 +385,7 @@ const TESTIMONIALS = [
     quote: "Sometimes I have to ask her to shut up, god she talks a lot!",
     author: "Bhushan",
     photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80",
-    color: "#F2A7C4"
+    color: "var(--color-pink)"
   },
   {
     id: 1,
@@ -395,7 +395,7 @@ const TESTIMONIALS = [
     quote: "Conceptualized a budget tracking experience that treats financial discipline as a rewarding game, turning chores into positive habits.",
     author: "Lead Designer, Creditt",
     photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80",
-    color: "#FAFFC7"
+    color: "var(--color-lemon)"
   },
   {
     id: 2,
@@ -412,7 +412,7 @@ const TESTIMONIALS = [
 const GlobalStyles = React.memo(() => (
   <style>{`
     body {
-      background-color: #111;
+      background-color: var(--color-bg);
       margin: 0;
       padding: 0;
     }
@@ -438,7 +438,7 @@ const GlobalStyles = React.memo(() => (
       cursor: crosshair;
     }
     .ribbon-word:hover {
-      color: #93C5FD;
+      color: var(--color-sky);
       text-shadow: 0 0 30px rgba(147, 197, 253, 0.6);
     }
 
@@ -448,7 +448,7 @@ const GlobalStyles = React.memo(() => (
       height: 8px;
     }
     ::-webkit-scrollbar-track {
-      background: #0A0409; 
+      background: var(--color-bg); 
       border-left: 1px solid rgba(255, 255, 255, 0.05);
     }
     ::-webkit-scrollbar-thumb {
@@ -456,7 +456,7 @@ const GlobalStyles = React.memo(() => (
       border-radius: 8px;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: #F2A7C4; 
+      background: var(--color-pink); 
     }
 
     @keyframes star-drift {
@@ -469,7 +469,7 @@ const GlobalStyles = React.memo(() => (
       cursor: url('data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cG9seWdvbiBwb2ludHM9IjEyLDQgMTMuOSw5LjQgMTkuNiw5LjUgMTUsMTMgMTYuNywxOC41IDEyLDE1LjIgNy4zLDE4LjUgOSwxMyA0LjQsOS41IDEwLjEsOS40IiBmaWxsPSIjRkFGRkM3IiBzdHJva2U9IiNGQUZGQzciIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjwvc3ZnPg==') 12 12, pointer !important;
     }
     .video-card-hover:hover {
-      box-shadow: 0 0 80px rgba(242, 167, 196, 0.15) !important;
+      box-shadow: 0 0 80px var(--color-border-flat) !important;
     }
     .featured-btn-primary:hover {
       box-shadow: 0 0 24px rgba(242, 167, 196, 0.6) !important;
@@ -480,7 +480,7 @@ const GlobalStyles = React.memo(() => (
       box-shadow: 0 0 15px rgba(147, 197, 253, 0.15) inset, 0 0 15px rgba(147, 197, 253, 0.15) !important;
     }
     .btn-shine {
-      background: linear-gradient(90deg, #F2A7C4 0%, #FAFFC7 50%, #F2A7C4 100%);
+      background: linear-gradient(90deg, var(--color-pink) 0%, var(--color-lemon) 50%, var(--color-pink) 100%);
       background-size: 200% auto;
       animation: shine 4s linear infinite;
       color: #111111;
@@ -512,7 +512,6 @@ const GlobalStyles = React.memo(() => (
       }
     }
     .liquid-target {
-      filter: url(#liquid-warp);
       will-change: filter;
     }
     @media (max-width: 640px) {
@@ -526,11 +525,11 @@ const GlobalStyles = React.memo(() => (
       background: linear-gradient(
         105deg,
         #c97fa0 0%,
-        #F2A7C4 30%,
+        var(--color-pink) 30%,
         #fff8e7 48%,
         #fffde0 52%,
-        #F2A7C4 70%,
-        #FAFFC7 100%
+        var(--color-pink) 70%,
+        var(--color-lemon) 100%
       );
       background-size: 200% auto;
       -webkit-background-clip: text;
@@ -568,7 +567,7 @@ const GlobalStyles = React.memo(() => (
     }
     .testimonial-nav-btn:hover {
       background: rgba(242, 167, 196, 0.1);
-      border-color: #F2A7C4;
+      border-color: var(--color-pink);
     }
     .testimonial-nav-btn-left {
       left: 0;
@@ -582,7 +581,7 @@ const GlobalStyles = React.memo(() => (
     .testimonial-card-main {
       width: 100%;
       max-width: 600px;
-      background: rgba(20, 20, 20, 0.4);
+      background: var(--color-surface-glass);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid rgba(255, 255, 255, 0.05);
@@ -617,8 +616,8 @@ const GlobalStyles = React.memo(() => (
       max-width: 460px;
       transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.5s ease;
       opacity: 0;
-      color: #F2A7C4;
-      font-family: 'Space Grotesk', sans-serif;
+      color: var(--color-pink);
+      font-family: 'Sora', sans-serif;
       font-style: italic;
       font-size: 20px;
       line-height: 1.5;
@@ -712,11 +711,11 @@ const GlobalStyles = React.memo(() => (
     }
     .testimonial-scroll-outer::before {
       left: 0;
-      background: linear-gradient(to right, var(--scroll-fade-bg, #0D0A0B), transparent);
+      background: linear-gradient(to right, var(--color-bg), transparent);
     }
     .testimonial-scroll-outer::after {
       right: 0;
-      background: linear-gradient(to left, var(--scroll-fade-bg, #0D0A0B), transparent);
+      background: linear-gradient(to left, var(--color-bg), transparent);
     }
     .testimonial-track {
       display: flex;
@@ -741,7 +740,7 @@ const GlobalStyles = React.memo(() => (
     .testimonial-card:hover {
       transform: translateY(-4px);
       box-shadow: 0 12px 40px rgba(250,255,199,0.08);
-      border-color: #F2A7C4 !important;
+      border-color: var(--color-pink) !important;
     }
     .testimonial-card:hover .testimonial-sticky {
       transform: translateY(0%);
@@ -967,10 +966,9 @@ const GlobalStyles = React.memo(() => (
     .nav-swap {
       display: inline-block;
       position: relative;
-      height: 16px;
-      line-height: 16px;
+      height: 22px;
+      line-height: 22px;
       overflow: hidden;
-      clip-path: inset(0);
       background: none;
       border: none;
       padding: 0;
@@ -982,7 +980,7 @@ const GlobalStyles = React.memo(() => (
     }
     .nav-swap .ns-default {
       display: block;
-      color: #93C5FD;
+      color: var(--color-sky);
       transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1), color 0.3s ease;
     }
     .nav-swap .ns-alt {
@@ -991,19 +989,19 @@ const GlobalStyles = React.memo(() => (
       top: 100%;
       left: 0;
       width: 100%;
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Sora', sans-serif;
       font-style: italic;
       font-weight: 400;
       font-size: 13px;
       letter-spacing: 0.04em;
       text-transform: none;
-      color: #F2A7C4;
+      color: var(--color-pink);
       transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
       white-space: nowrap;
     }
     .nav-swap:hover .ns-default {
       transform: translateY(-100%);
-      color: #F2A7C4;
+      color: var(--color-pink);
     }
     .nav-swap:hover .ns-alt {
       transform: translateY(-100%);
@@ -1012,12 +1010,8 @@ const GlobalStyles = React.memo(() => (
     /* Overlay nav swap — same mechanic, big text */
     .overlay-swap {
       position: relative;
-    }
-    .overlay-swap-clip {
-      display: block;
-      clip-path: inset(0 -100vw);
-      position: relative;
-      text-align: center;
+      overflow: hidden;
+      height: 1.1em;
     }
     .overlay-swap .os-default {
       display: block;
@@ -1029,17 +1023,17 @@ const GlobalStyles = React.memo(() => (
       top: 100%;
       left: 50%;
       transform: translateX(-50%);
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Sora', sans-serif;
       font-style: italic;
       font-weight: 400;
-      color: #F2A7C4;
+      color: var(--color-pink);
       letter-spacing: 0.01em;
       transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
       white-space: nowrap;
     }
     .overlay-swap:hover .os-default {
       transform: translateY(-100%);
-      color: #F2A7C4;
+      color: var(--color-pink);
     }
     .overlay-swap:hover .os-alt {
       transform: translateX(-50%) translateY(-100%);
@@ -1055,7 +1049,6 @@ export default function App() {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [navOpen, setNavOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [navLogoHeart, setNavLogoHeart] = useState(true);
   const [navBtnHovered, setNavBtnHovered] = useState(false);
 
   const nextTestimonial = () => {
@@ -1132,56 +1125,6 @@ export default function App() {
   const orbitTooltipRef = useRef<HTMLDivElement>(null);
 
 
-  useEffect(() => {
-    const nameEl = nameRef.current;
-    if (!nameEl) return;
-
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      nameEl.style.opacity = "1";
-      nameEl.style.top = "42vh";
-      return;
-    }
-
-    let lastMouseX = 0;
-    let lastMouseY = 0;
-    let liquidScale = 0;
-
-    const onGlobalMouse = (e: MouseEvent) => {
-      const dx = e.clientX - lastMouseX;
-      const dy = e.clientY - lastMouseY;
-      const speed = Math.sqrt(dx * dx + dy * dy);
-      lastMouseX = e.clientX;
-      lastMouseY = e.clientY;
-      liquidScale = Math.min(25, liquidScale + speed * 0.12);
-    };
-    window.addEventListener('mousemove', onGlobalMouse, { passive: true });
-
-    const waterMap = document.getElementById("liquid-map");
-    const vh = window.innerHeight || 800;
-
-    const tick = () => {
-      const nameEl = nameRef.current;
-
-      if (nameEl) {
-        const scrollY = window.scrollY;
-        const opacity = 1 - Math.max(0, Math.min(1, (scrollY - vh * 0.1) / (vh * 0.5)));
-        nameEl.style.opacity = opacity.toString();
-      }
-
-      liquidScale = lerp(liquidScale, 0, 0.08);
-      if (waterMap) {
-        waterMap.setAttribute("scale", String(liquidScale));
-      }
-
-      rafRef.current = requestAnimationFrame(tick);
-    };
-
-    rafRef.current = requestAnimationFrame(tick);
-    return () => {
-      window.removeEventListener('mousemove', onGlobalMouse);
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, []);
 
   useEffect(() => {
     const svg = aboutSvgRef.current;
@@ -1350,91 +1293,9 @@ export default function App() {
 
   return (
     <>
-      {/* Liquid Warp Definition */}
-      <svg style={{ position: 'absolute', width: 0, height: 0 }} aria-hidden="true">
-        <filter id="liquid-warp">
-          <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="3" result="noise" />
-          <feDisplacementMap id="liquid-map" in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R" yChannelSelector="G" />
-        </filter>
-      </svg>
-      
       <div id="skew-container" style={{ transformOrigin: "center center", willChange: "transform" }}>
 
       <GlobalStyles />
-
-      {/* ── Top Navbar ── */}
-      <motion.nav
-        animate={{ opacity: scrolled ? 0 : 1, y: scrolled ? -12 : 0 }}
-        transition={{ duration: 0.35, ease: "easeInOut" }}
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 1000,
-          height: "60px",
-          padding: "0 clamp(24px, 5vw, 80px)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          background: "rgba(10, 4, 9, 0.65)",
-          backdropFilter: "blur(18px)",
-          WebkitBackdropFilter: "blur(18px)",
-          borderBottom: "1px solid rgba(255, 255, 255, 0.05)",
-          pointerEvents: scrolled ? "none" : "auto",
-        }}
-      >
-        <button
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          style={{ background: "none", border: "none", padding: 0, position: "relative", width: 40, height: 40 }}
-        >
-          {/* Ring — color matches active icon, like loading screen */}
-          <svg width="40" height="40" style={{ position: "absolute", inset: 0, transform: "rotate(-90deg)" }}>
-            <circle cx="20" cy="20" r="17" fill="none"
-              stroke={navLogoHeart ? "rgba(242,167,196,0.5)" : "rgba(250,255,199,0.5)"}
-              strokeWidth="1.5"
-              style={{ transition: "stroke 0.12s ease" }}
-            />
-          </svg>
-          {/* Icon snaps like loading screen */}
-          <img
-            src={navLogoHeart ? heartUrl : starUrl}
-            alt=""
-            style={{ width: 24, height: 24, objectFit: "contain", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
-          />
-        </button>
-
-        <div style={{ display: "flex", gap: "clamp(16px, 3vw, 28px)", alignItems: "center" }}>
-          {([
-            { label: "About",   alt: "my story"  },
-            { label: "Work",    alt: "the proof"  },
-            { label: "Contact", alt: "say hello"  },
-          ]).map(({ label, alt }) => (
-            <button
-              key={label}
-              className="nav-swap"
-              onClick={() => document.getElementById(label.toLowerCase())?.scrollIntoView({ behavior: "smooth" })}
-            >
-              <span className="ns-default">{label}</span>
-              <span className="ns-alt">{alt}</span>
-            </button>
-          ))}
-          <a
-            href="/Vishvara_Gandharv_Resume.pdf"
-            download="Vishvara_Gandharv_Resume.pdf"
-            style={{
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: "11px", fontWeight: 600,
-              letterSpacing: "0.14em", textTransform: "uppercase",
-              color: "#111", background: "#FAFFC7",
-              borderRadius: "9999px", padding: "8px 20px",
-              textDecoration: "none",
-            }}
-          >
-            Resume
-          </a>
-        </div>
-      </motion.nav>
 
       {/* Global Live Animated Grain Overlay */}
       <div className="live-grain" aria-hidden="true" />
@@ -1456,7 +1317,7 @@ export default function App() {
           const cy = (Math.abs(Math.sin(i * 78.233 + 2.1) * 43758.5453) % 100) + "%";
           // 3 strict sizes — more small, fewer large for a natural sky
           const r = i < 375 ? 0.5 : i < 625 ? 1.0 : 2.0;
-          const fill = i % 3 === 0 ? "#FAFFC7" : i % 5 === 0 ? "#FFF" : "#F2A7C4";
+          const fill = i % 3 === 0 ? "var(--color-lemon)" : i % 5 === 0 ? "#FFF" : "var(--color-pink)";
           // Even index = static, odd index = blinking (~375 each)
           const isBlinking = i % 2 === 1;
           const delay = ((i * 11) % 50) / 10 + "s";
@@ -1510,7 +1371,7 @@ export default function App() {
                 </filter>
               </defs>
               <rect width="800" height="500" fill="url(#skyGrad)" />
-              <circle cx="150" cy="180" r="160" fill="#F2A7C4" opacity="0.02" filter="url(#blur80)" />
+              <circle cx="150" cy="180" r="160" fill="var(--color-pink)" opacity="0.02" filter="url(#blur80)" />
               <circle cx="650" cy="160" r="180" fill="#6D1F2A" opacity="0.034" filter="url(#blur80)" />
               
               {/* BACKGROUND STARS (Small, unconnected, blinking) */}
@@ -1587,6 +1448,28 @@ export default function App() {
 
           </div>{/* end background */}
 
+          {/* Product Designer label */}
+          <div style={{
+            position: "absolute",
+            top: "38%",
+            left: "50%",
+            transform: "translateX(-50%)",
+            zIndex: 10,
+            textAlign: "center",
+            pointerEvents: "none",
+          }}>
+            <span style={{
+              fontFamily: "'M PLUS Rounded 1c', sans-serif",
+              fontSize: "clamp(13px, 1.4vw, 18px)",
+              fontWeight: 700,
+              textTransform: "uppercase" as const,
+              letterSpacing: "0.3em",
+              color: "var(--color-lemon)",
+            }}>
+              Product Designer
+            </span>
+          </div>
+
           {/* Scroll indicator */}
           <button
             aria-label="Scroll to about section"
@@ -1595,37 +1478,12 @@ export default function App() {
             style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}
           >
             <svg viewBox="0 0 24 24" width="28" height="28" overflow="visible" xmlns="http://www.w3.org/2000/svg">
-              <polygon points="12,4 13.9,9.4 19.6,9.5 15,13 16.7,18.5 12,15.2 7.3,18.5 9,13 4.4,9.5 10.1,9.4" fill="#FAFFC7" stroke="#FAFFC7" strokeWidth="1.5" strokeLinejoin="round" style={{ filter: "drop-shadow(0 0 6px rgba(250,255,199,0.7))" }} />
+              <polygon points="12,4 13.9,9.4 19.6,9.5 15,13 16.7,18.5 12,15.2 7.3,18.5 9,13 4.4,9.5 10.1,9.4" fill="var(--color-lemon)" stroke="var(--color-lemon)" strokeWidth="1.5" strokeLinejoin="round" style={{ filter: "drop-shadow(0 0 6px rgba(250,255,199,0.7))" }} />
             </svg>
             <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "9px", letterSpacing: "0.22em", textTransform: "uppercase" as const, color: "rgba(250,255,199,0.45)" }}>Scroll Down</span>
           </button>
 
           {/* Name only — scrolls down while background stays fixed */}
-          <div
-            ref={nameRef}
-            aria-hidden="true"
-            className="liquid-target"
-            style={{
-              position: "absolute",
-              left: "50%",
-              top: "42vh",
-              transform: "translateX(-50%)",
-              opacity: 0,
-              fontFamily: "'Space Grotesk', sans-serif",
-              fontWeight: 700,
-              fontSize: "7vw",
-              color: "#FAFFC7",
-              letterSpacing: "-0.01em",
-              lineHeight: 1,
-              whiteSpace: "nowrap",
-              zIndex: 3,
-              pointerEvents: "none",
-              userSelect: "none",
-              willChange: "opacity, top",
-            }}
-          >
-            UX Researcher &amp; Strategist
-          </div>
 
         </div>
       </div>
@@ -1633,6 +1491,7 @@ export default function App() {
 
 
       {/* ── About Me section ── */}
+      {/* no .section — paddingRight: calc(40%) reserves the right half for the full-bleed profile photo panel */}
       <div
         id="about"
         className="about-section"
@@ -1717,31 +1576,31 @@ export default function App() {
         <div className="about-role-badge" style={{
           display: "inline-flex",
           alignItems: "center",
-          margin: "0 0 36px 0",
+          margin: "0 0 36px 6px",
           position: "relative" as const,
-          top: "-12px",
+          top: "28px",
           pointerEvents: "auto",
           width: "fit-content",
         }}>
           <span style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: "11px",
-            fontWeight: 500,
+            fontFamily: "'M PLUS Rounded 1c', sans-serif",
+            fontSize: "15px",
+            fontWeight: 700,
             textTransform: "uppercase" as const,
-            letterSpacing: "0.22em",
-            color: "#FAFFC7",
+            letterSpacing: "0.18em",
+            color: "var(--color-lemon)",
           }}>
-            UX Researcher &amp; Strategist
+            Product Designer
           </span>
         </div>
 
         {/* Name — dominant anchor */}
-        <div className="about-name-block" style={{ margin: "0 0 36px -36px", display: "flex", flexDirection: "column", gap: "16px", pointerEvents: "auto", alignItems: "flex-start" }}>
+        <div className="about-name-block" style={{ margin: "0 0 36px -36px", display: "flex", flexDirection: "column", gap: "8px", pointerEvents: "auto", alignItems: "flex-start" }}>
           <h1 style={{
-            fontFamily: "'Space Grotesk', sans-serif",
-            fontWeight: 700,
+            fontFamily: "'M PLUS Rounded 1c', sans-serif",
+            fontWeight: 800,
             fontSize: "clamp(3.06rem, 7.65vw, 9rem)",
-            color: "#F2A7C4",
+            color: "var(--color-pink)",
             lineHeight: 0.88,
             letterSpacing: "-0.03em",
             margin: 0,
@@ -1754,44 +1613,24 @@ export default function App() {
             width: "fit-content",
             boxShadow: "0 8px 32px rgba(0, 0, 0, 0.15)",
           }}>
-            V<span style={{ position: "relative", display: "inline-block" }}>I<svg viewBox="0 0 24 24" style={{ position: "absolute", top: "-0.25em", left: "50%", transform: "translateX(-30%)", width: "0.28em", height: "0.28em", overflow: "visible" }} xmlns="http://www.w3.org/2000/svg"><polygon points="12,4 13.9,9.4 19.6,9.5 15,13 16.7,18.5 12,15.2 7.3,18.5 9,13 4.4,9.5 10.1,9.4" fill="#F2A7C4" stroke="#F2A7C4" strokeWidth="3" strokeLinejoin="round" strokeLinecap="round" /></svg></span>SHVARA
+            Vishvara.G
           </h1>
-          <h1 style={{
-            fontFamily: "'Space Grotesk', sans-serif",
-            fontWeight: 700,
-            fontSize: "clamp(3.06rem, 7.65vw, 9rem)",
-            color: "#F2A7C4",
-            lineHeight: 0.88,
-            letterSpacing: "-0.03em",
+          {/* Tagline — sits directly under name */}
+          <p className="about-tagline" style={{
+            fontFamily: "'DM Sans', sans-serif",
+            fontStyle: "italic",
+            fontWeight: 400,
+            fontSize: "14px",
+            color: "rgba(255,255,255,0.6)",
+            lineHeight: 1.5,
             margin: 0,
-            background: "rgba(0, 0, 0, 0.08)",
-            backdropFilter: "blur(6px)",
-            WebkitBackdropFilter: "blur(6px)",
-            border: "1px solid rgba(255, 255, 255, 0.02)",
-            borderRadius: "24px",
-            padding: "12px 36px",
-            width: "fit-content",
-            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.15)",
+            paddingLeft: "62px",
+            textAlign: "left",
+            pointerEvents: "auto",
           }}>
-            GANDHARV
-          </h1>
+            Designing for the humans behind the metrics.
+          </p>
         </div>
-
-        {/* Tagline — larger, italic, acts as voice */}
-        <p className="about-tagline" style={{
-          fontFamily: "'Space Grotesk', sans-serif",
-          fontStyle: "italic",
-          fontWeight: 400,
-          fontSize: "clamp(1.05rem, 1.9vw, 1.55rem)",
-          color: "#FAFFC7",
-          lineHeight: 1.5,
-          maxWidth: "400px",
-          margin: "0 0 52px 0",
-          opacity: 0.88,
-          pointerEvents: "auto",
-        }}>
-          Designing for the humans behind the metrics.
-        </p>
 
         {/* Stats (Individual Glassmorphism Cards) */}
         <div className="about-stats" style={{
@@ -1815,8 +1654,8 @@ export default function App() {
               flexDirection: "column",
             }}>
               <div style={{
-                fontFamily: "'Space Mono', monospace",
-                color: "#93C5FD",
+                fontFamily: "'DM Sans', sans-serif",
+                color: "var(--color-sky)",
                 fontSize: "clamp(2rem, 3.5vw, 3rem)",
                 fontWeight: 700,
                 lineHeight: 1,
@@ -1867,7 +1706,7 @@ export default function App() {
               display: "inline-block",
               background: "transparent",
               border: "1px solid rgba(147,197,253,0.35)",
-              color: "#93C5FD",
+              color: "var(--color-sky)",
               padding: "12px 28px",
               borderRadius: "8px",
               fontFamily: "'DM Sans', sans-serif",
@@ -1909,10 +1748,9 @@ export default function App() {
 
 
       {/* FEATURED VIDEO SECTION */}
-      <section style={{
+      <section className="section" style={{
         position: "relative",
         background: "transparent",
-        padding: "100px clamp(24px, 5vw, 80px)",
         overflow: "hidden"
       }}>
         {/* Liquid background container for vignette */}
@@ -1955,10 +1793,10 @@ export default function App() {
         }}>
           {/* Headline */}
           <h2 style={{
-            fontFamily: "'Space Grotesk', sans-serif",
+            fontFamily: "'Sora', sans-serif",
             fontWeight: 700,
             fontSize: "clamp(2.2rem, 4vw, 3.8rem)",
-            color: "#FAFFC7",
+            color: "var(--color-lemon)",
             lineHeight: 1.1,
             margin: "0 0 16px 0"
           }}>
@@ -1970,7 +1808,7 @@ export default function App() {
             background: "rgba(20, 20, 20, 0.55)",
             backdropFilter: "blur(12px)",
             WebkitBackdropFilter: "blur(12px)",
-            border: "2px solid #FAFFC7",
+            border: "2px solid var(--color-lemon)",
             borderRadius: "20px",
             padding: "10px",
             position: "relative",
@@ -1978,10 +1816,10 @@ export default function App() {
             transition: "all 0.4s ease"
           }}>
             {/* 4 Corners (offset by -6px from edge) */}
-            <div aria-hidden="true" style={{ position: "absolute", top: -6, left: -6, width: 6, height: 6, borderRadius: "50%", background: "#FAFFC7", opacity: 0.8, zIndex: 2 }} />
-            <div aria-hidden="true" style={{ position: "absolute", top: -6, right: -6, width: 6, height: 6, borderRadius: "50%", background: "#FAFFC7", opacity: 0.8, zIndex: 2 }} />
-            <div aria-hidden="true" style={{ position: "absolute", bottom: -6, left: -6, width: 6, height: 6, borderRadius: "50%", background: "#FAFFC7", opacity: 0.8, zIndex: 2 }} />
-            <div aria-hidden="true" style={{ position: "absolute", bottom: -6, right: -6, width: 6, height: 6, borderRadius: "50%", background: "#FAFFC7", opacity: 0.8, zIndex: 2 }} />
+            <div aria-hidden="true" style={{ position: "absolute", top: -6, left: -6, width: 6, height: 6, borderRadius: "50%", background: "var(--color-lemon)", opacity: 0.8, zIndex: 2 }} />
+            <div aria-hidden="true" style={{ position: "absolute", top: -6, right: -6, width: 6, height: 6, borderRadius: "50%", background: "var(--color-lemon)", opacity: 0.8, zIndex: 2 }} />
+            <div aria-hidden="true" style={{ position: "absolute", bottom: -6, left: -6, width: 6, height: 6, borderRadius: "50%", background: "var(--color-lemon)", opacity: 0.8, zIndex: 2 }} />
+            <div aria-hidden="true" style={{ position: "absolute", bottom: -6, right: -6, width: 6, height: 6, borderRadius: "50%", background: "var(--color-lemon)", opacity: 0.8, zIndex: 2 }} />
 
             {/* iframe */}
             <YouTubeFacade videoId="CGPjBUCOn2M" title="Introduction video" borderRadius="14px" />
@@ -2017,7 +1855,7 @@ export default function App() {
                   display: "inline-block",
                   background: "transparent",
                   border: "1px solid rgba(147, 197, 253, 0.4)",
-                  color: "#93C5FD",
+                  color: "var(--color-sky)",
                   padding: "10px 24px",
                   borderRadius: "11px",
                   fontFamily: "'DM Sans', sans-serif",
@@ -2041,6 +1879,7 @@ export default function App() {
       <DesignerMind />
 
       {/* DIVIDER RIBBON */}
+      {/* no .section — decorative full-bleed marquee, intentional padding:0 and no max-width cap */}
       <section
         style={{
           background: "transparent",
@@ -2074,7 +1913,7 @@ export default function App() {
                     letterSpacing: "0.1em",
                   }}
                 >
-                  <span className="ribbon-word">BEHAVIOURAL DESIGN</span> <span style={{ color: "#F2A7C4", margin: "0 20px", opacity: 0.5 }}>★</span> <span className="ribbon-word">INTERACTION DESIGN</span> <span style={{ color: "#93C5FD", margin: "0 20px", opacity: 0.5 }}>★</span>
+                  <span className="ribbon-word">BEHAVIOURAL DESIGN</span> <span style={{ color: "var(--color-pink)", margin: "0 20px", opacity: 0.5 }}>★</span> <span className="ribbon-word">INTERACTION DESIGN</span> <span style={{ color: "var(--color-sky)", margin: "0 20px", opacity: 0.5 }}>★</span>
                 </span>
               ))}
             </div>
@@ -2083,9 +1922,8 @@ export default function App() {
       </section>
 
       {/* CASE STUDIES SECTION */}
-      <section id="work" className="case-studies-section" style={{
+      <section id="work" className="case-studies-section section" style={{
         position: "relative",
-        padding: "140px clamp(24px, 5vw, 60px)",
         background: "transparent",
         zIndex: 10,
         fontFamily: "'DM Sans', sans-serif",
@@ -2104,13 +1942,13 @@ export default function App() {
           }}
         />
 
-        <div style={{ maxWidth: "1440px", margin: "0 auto", position: "relative", zIndex: 1 }}>
+        <div style={{ position: "relative", zIndex: 1 }}>
 
           <h2 style={{
-            fontFamily: "'Space Grotesk', sans-serif",
+            fontFamily: "'Sora', sans-serif",
             fontWeight: 700,
             fontSize: "clamp(2.2rem, 4vw, 3.8rem)",
-            color: "#FAFFC7",
+            color: "var(--color-lemon)",
             textAlign: "center" as const,
             lineHeight: 1.08,
             margin: "0 0 60px 0",
@@ -2130,17 +1968,17 @@ export default function App() {
                   </>
                 ),
                 contractedBg: "transparent",
-                tag: "Civic UX", tagColor: "#F2A7C4", tagBg: "rgba(242,167,196,0.1)", tagBorder: "rgba(242,167,196,0.25)",
+                tag: "Civic UX", tagColor: "var(--color-pink)", tagBg: "rgba(242,167,196,0.1)", tagBorder: "rgba(242,167,196,0.25)",
                 name: "Margdarshak", subtitle: "Bridging welfare schemes and the families they're meant to serve",
                 star: [
-                  { color: "#F2A7C4", label: "Situation", text: caseStudiesData[0].situation },
-                  { color: "#93C5FD", label: "Task",      text: caseStudiesData[0].task },
-                  { color: "#F2A7C4", label: "Action",    text: caseStudiesData[0].actionTitle },
-                  { color: "#93C5FD", label: "Result",    text: null, metrics: caseStudiesData[0].metrics.slice(0,3) },
+                  { color: "var(--color-pink)", label: "Situation", text: caseStudiesData[0].situation },
+                  { color: "var(--color-sky)", label: "Task",      text: caseStudiesData[0].task },
+                  { color: "var(--color-pink)", label: "Action",    text: caseStudiesData[0].actionTitle },
+                  { color: "var(--color-sky)", label: "Result",    text: null, metrics: caseStudiesData[0].metrics.slice(0,3) },
                 ],
                 cta: (
                   <>
-                    <button style={{ flex: 1, background: "#FAFFC7", color: "#000", fontFamily: "'DM Sans', sans-serif", fontSize: "13px", fontWeight: 500, padding: "11px 16px", borderRadius: "9px", border: "none", cursor: "pointer", transition: "box-shadow 0.2s" }}
+                    <button style={{ flex: 1, background: "var(--color-lemon)", color: "#000", fontFamily: "'DM Sans', sans-serif", fontSize: "13px", fontWeight: 500, padding: "11px 16px", borderRadius: "9px", border: "none", cursor: "pointer", transition: "box-shadow 0.2s" }}
                       onClick={e => { e.stopPropagation(); setActiveTab(0); setShowFullCaseStudy(true); }}
                       onMouseOver={e => { e.currentTarget.style.boxShadow = "0 0 18px rgba(250,255,199,0.45)"; }}
                       onMouseOut={e => { e.currentTarget.style.boxShadow = "none"; }}>
@@ -2148,7 +1986,7 @@ export default function App() {
                     </button>
                     <a href="https://www.figma.com/proto/oKryn0vKJGZ8oZw63x1drX/Margdarshak?node-id=2285-32311&p=f&t=08OH4pGyXfe9PhPq-1&scaling=scale-down&content-scaling=fixed&page-id=1972%3A1741&starting-point-node-id=2285%3A32298&show-proto-sidebar=1"
                       target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}
-                      style={{ flex: "0 0 auto", background: "transparent", color: "#93C5FD", fontSize: "13px", fontWeight: 600, padding: "11px 14px", borderRadius: "9px", border: "1px solid rgba(147,197,253,0.3)", textDecoration: "none", display: "inline-flex", alignItems: "center", whiteSpace: "nowrap" as const, transition: "background 0.2s" }}
+                      style={{ flex: "0 0 auto", background: "transparent", color: "var(--color-sky)", fontSize: "13px", fontWeight: 600, padding: "11px 14px", borderRadius: "9px", border: "1px solid rgba(147,197,253,0.3)", textDecoration: "none", display: "inline-flex", alignItems: "center", whiteSpace: "nowrap" as const, transition: "background 0.2s" }}
                       onMouseOver={e => { (e.currentTarget as HTMLAnchorElement).style.background = "rgba(147,197,253,0.08)"; }}
                       onMouseOut={e => { (e.currentTarget as HTMLAnchorElement).style.background = "transparent"; }}>
                       Prototype ↗
@@ -2165,17 +2003,17 @@ export default function App() {
                   </>
                 ),
                 contractedBg: "linear-gradient(155deg, #0b1e36 0%, #0f2d4a 100%)",
-                tag: "Healthcare", tagColor: "#93C5FD", tagBg: "rgba(147,197,253,0.07)", tagBorder: "rgba(147,197,253,0.18)",
+                tag: "Healthcare", tagColor: "var(--color-sky)", tagBg: "rgba(147,197,253,0.07)", tagBorder: "rgba(147,197,253,0.18)",
                 name: "Murmur", subtitle: "AI-powered postpartum couples platform that reads maternal distress signals and translates them into one actionable daily nudge for the partner.",
                 star: [
-                  { color: "#F2A7C4", label: "Situation", text: caseStudiesData[1].situation },
-                  { color: "#93C5FD", label: "Task",      text: caseStudiesData[1].task },
-                  { color: "#F2A7C4", label: "Action",    text: caseStudiesData[1].actionTitle },
-                  { color: "#93C5FD", label: "Result",    text: caseStudiesData[1].result.replace(/\n+/g, ' ') },
+                  { color: "var(--color-pink)", label: "Situation", text: caseStudiesData[1].situation },
+                  { color: "var(--color-sky)", label: "Task",      text: caseStudiesData[1].task },
+                  { color: "var(--color-pink)", label: "Action",    text: caseStudiesData[1].actionTitle },
+                  { color: "var(--color-sky)", label: "Result",    text: caseStudiesData[1].result.replace(/\n+/g, ' ') },
                 ],
                 cta: (
                   <>
-                    <button style={{ flex: 1, background: "#FAFFC7", color: "#000", fontFamily: "'DM Sans', sans-serif", fontSize: "13px", fontWeight: 500, padding: "11px 16px", borderRadius: "9px", border: "none", cursor: "pointer", transition: "box-shadow 0.2s" }}
+                    <button style={{ flex: 1, background: "var(--color-lemon)", color: "#000", fontFamily: "'DM Sans', sans-serif", fontSize: "13px", fontWeight: 500, padding: "11px 16px", borderRadius: "9px", border: "none", cursor: "pointer", transition: "box-shadow 0.2s" }}
                       onClick={e => { e.stopPropagation(); setActiveTab(1); setShowMurmurCaseStudy(true); }}
                       onMouseOver={e => { e.currentTarget.style.boxShadow = "0 0 18px rgba(250,255,199,0.45)"; }}
                       onMouseOut={e => { e.currentTarget.style.boxShadow = "none"; }}>
@@ -2189,18 +2027,18 @@ export default function App() {
                 visual: (
                   <>
                     <div style={{ position: "absolute", inset: 0, background: "linear-gradient(155deg, #160828 0%, #261045 55%, #190830 100%)" }} />
-                    <svg style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} width="100" height="76" viewBox="0 0 90 70" fill="none" opacity="0.16"><circle cx="45" cy="32" r="18" stroke="#F2A7C4" strokeWidth="1.4"/><circle cx="45" cy="32" r="4" fill="#F2A7C4"/><path d="M45 14 L47 21 L45 19 L43 21 Z" fill="#F2A7C4" opacity="0.7"/><circle cx="68" cy="20" r="5.5" stroke="#FAFFC7" strokeWidth="1.2"/><circle cx="20" cy="52" r="4.5" stroke="#FAFFC7" strokeWidth="1.2"/><circle cx="70" cy="54" r="3.5" stroke="#F2A7C4" strokeWidth="1.2"/><line x1="45" y1="32" x2="68" y2="20" stroke="#F2A7C4" strokeWidth="0.7" opacity="0.4"/><line x1="45" y1="32" x2="20" y2="52" stroke="#FAFFC7" strokeWidth="0.7" opacity="0.4"/></svg>
+                    <svg style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} width="100" height="76" viewBox="0 0 90 70" fill="none" opacity="0.16"><circle cx="45" cy="32" r="18" stroke="var(--color-pink)" strokeWidth="1.4"/><circle cx="45" cy="32" r="4" fill="var(--color-pink)"/><path d="M45 14 L47 21 L45 19 L43 21 Z" fill="var(--color-pink)" opacity="0.7"/><circle cx="68" cy="20" r="5.5" stroke="var(--color-lemon)" strokeWidth="1.2"/><circle cx="20" cy="52" r="4.5" stroke="var(--color-lemon)" strokeWidth="1.2"/><circle cx="70" cy="54" r="3.5" stroke="var(--color-pink)" strokeWidth="1.2"/><line x1="45" y1="32" x2="68" y2="20" stroke="var(--color-pink)" strokeWidth="0.7" opacity="0.4"/><line x1="45" y1="32" x2="20" y2="52" stroke="var(--color-lemon)" strokeWidth="0.7" opacity="0.4"/></svg>
                     <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "50%", background: "linear-gradient(to bottom, transparent, rgba(10,5,20,0.9))" }} />
                   </>
                 ),
                 contractedBg: "linear-gradient(155deg, #160828 0%, #261045 100%)",
-                tag: "Gamify UX", tagColor: "#FAFFC7", tagBg: "rgba(250,255,199,0.06)", tagBorder: "rgba(250,255,199,0.14)",
+                tag: "Gamify UX", tagColor: "var(--color-lemon)", tagBg: "rgba(250,255,199,0.06)", tagBorder: "rgba(250,255,199,0.14)",
                 name: "Openlee", subtitle: "Hyper-local discovery platform",
                 star: [
-                  { color: "#F2A7C4", label: "Situation", text: caseStudiesData[2].situation },
-                  { color: "#93C5FD", label: "Task",      text: caseStudiesData[2].task },
-                  { color: "#F2A7C4", label: "Action",    text: caseStudiesData[2].actionTitle },
-                  { color: "#93C5FD", label: "Result",    text: caseStudiesData[2].result.replace(/\n+/g, ' ') },
+                  { color: "var(--color-pink)", label: "Situation", text: caseStudiesData[2].situation },
+                  { color: "var(--color-sky)", label: "Task",      text: caseStudiesData[2].task },
+                  { color: "var(--color-pink)", label: "Action",    text: caseStudiesData[2].actionTitle },
+                  { color: "var(--color-sky)", label: "Result",    text: caseStudiesData[2].result.replace(/\n+/g, ' ') },
                 ],
                 cta: (
                   <span style={{ flex: 1, fontFamily: "'DM Sans', sans-serif", fontSize: "12px", padding: "10px 14px", borderRadius: "9px", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.25)", background: "rgba(255,255,255,0.02)", textAlign: "center" as const, letterSpacing: "0.06em" }}>
@@ -2226,8 +2064,8 @@ export default function App() {
                         <div style={{ padding: "20px 24px 20px", background: "rgba(10,10,10,0.98)", display: "flex", flexDirection: "column" as const }}>
                           <div style={{ marginBottom: "10px" }}>
                             <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "10px", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: activeCard.tagColor, background: activeCard.tagBg, border: `1px solid ${activeCard.tagBorder}`, padding: "3px 10px", borderRadius: "9999px" }}>{activeCard.tag}</span>
-                            <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(20px, 2vw, 28px)", fontWeight: 700, color: "#fff", margin: "7px 0 3px", lineHeight: 1.1 }}>{activeCard.name}</h3>
-                            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "11px", color: "rgba(255,255,255,0.42)", margin: 0, lineHeight: 1.4 }}>{activeCard.subtitle}</p>
+                            <h3 style={{ fontFamily: "'Sora', sans-serif", fontSize: "clamp(20px, 2vw, 28px)", fontWeight: 500, color: "#fff", margin: "7px 0 3px", lineHeight: 1.1 }}>{activeCard.name}</h3>
+                            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "11px", color: "rgba(255,255,255,0.6)", margin: 0, lineHeight: 1.4 }}>{activeCard.subtitle}</p>
                           </div>
                           <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column" as const, gap: "10px" }}>
                             {activeCard.star.map((item, si) => (
@@ -2242,7 +2080,7 @@ export default function App() {
                                   ) : (
                                     <div style={{ display: "flex", gap: "5px", flexWrap: "wrap" as const, marginTop: "2px" }}>
                                       {item.metrics!.map((m, mi) => (
-                                        <div key={mi} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "6px", padding: "3px 7px" }}>
+                                        <div key={mi} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid var(--color-border-glass)", borderRadius: "6px", padding: "3px 7px" }}>
                                           <div style={{ fontSize: "12px", fontWeight: 700, color: "#fff", lineHeight: 1 }}>{m.value}</div>
                                           <div style={{ fontSize: "7px", textTransform: "uppercase" as const, color: "rgba(255,255,255,0.35)", marginTop: "1px" }}>{m.label}</div>
                                         </div>
@@ -2261,14 +2099,14 @@ export default function App() {
                   {/* ── INACTIVE CARDS COLUMN ── */}
                   <div className="bento-inactive-col">
                     {inactiveList.map(card => (
-                      <div key={card.idx} className="bento-inactive-card" style={{ flex: 1, borderRadius: "14px", border: "1.5px solid rgba(255,255,255,0.07)", cursor: "pointer", overflow: "hidden", position: "relative", transition: "border-color 0.3s ease" }} onClick={() => setActiveTab(card.idx)}>
+                      <div key={card.idx} className="bento-inactive-card" style={{ flex: 1, borderRadius: "14px", border: "1.5px solid var(--color-border-glass)", cursor: "pointer", overflow: "hidden", position: "relative", transition: "border-color 0.3s ease" }} onClick={() => setActiveTab(card.idx)}>
                         <div style={{ position: "absolute", inset: 0 }}>{card.visual}</div>
                         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.25) 55%, transparent 100%)" }} />
                         <div style={{ position: "absolute", top: "10px", left: "10px" }}>
                           <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "8px", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: card.tagColor, background: card.tagBg, border: `1px solid ${card.tagBorder}`, padding: "2px 8px", borderRadius: "9999px" }}>{card.tag}</span>
                         </div>
                         <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "8px 12px 12px" }}>
-                          <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "17px", fontWeight: 700, color: "#fff", lineHeight: 1.1, marginBottom: "3px" }}>{card.name}</div>
+                          <div style={{ fontFamily: "'Sora', sans-serif", fontSize: "17px", fontWeight: 500, color: "#fff", lineHeight: 1.1, marginBottom: "3px" }}>{card.name}</div>
                           <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "10px", color: "rgba(255,255,255,0.45)", lineHeight: 1.3, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" as const }}>{card.subtitle}</div>
                         </div>
                       </div>
@@ -2290,10 +2128,10 @@ export default function App() {
 
       {/* TESTIMONIALS SECTION */}
       <section
+        className="section"
         style={{
           position: "relative",
           background: "transparent",
-          padding: "100px clamp(24px, 5vw, 80px)",
           overflow: "hidden",
         }}
       >
@@ -2301,10 +2139,10 @@ export default function App() {
 
           {/* Headline */}
           <h2 style={{
-            fontFamily: "'Space Grotesk', sans-serif",
+            fontFamily: "'Sora', sans-serif",
             fontWeight: 700,
             fontSize: "clamp(2.2rem, 4vw, 3.8rem)",
-            color: "#FAFFC7",
+            color: "var(--color-lemon)",
             textAlign: "center" as const,
             lineHeight: 1.1,
             margin: "0 0 16px 0",
@@ -2314,7 +2152,7 @@ export default function App() {
 
           {/* Subtext */}
           <p style={{
-            fontFamily: "'Space Grotesk', sans-serif",
+            fontFamily: "'Sora', sans-serif",
             fontStyle: "italic",
             fontSize: "18px",
             color: "rgba(255,255,255,0.28)",
@@ -2433,9 +2271,9 @@ export default function App() {
                         {/* Header: obs number + source tag */}
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "20px" }}>
                           <span style={{
-                            fontFamily: "'Space Mono', monospace",
+                            fontFamily: "'DM Sans', sans-serif",
                             fontSize: "10px",
-                            color: "#F2A7C4",
+                            color: "var(--color-pink)",
                             letterSpacing: "0.2em",
                             fontWeight: 400,
                           }}>
@@ -2444,7 +2282,7 @@ export default function App() {
                           <span style={{
                             fontFamily: "'DM Sans', sans-serif",
                             fontSize: "10px",
-                            color: "#93C5FD",
+                            color: "var(--color-sky)",
                             letterSpacing: "0.14em",
                             textTransform: "uppercase" as const,
                             border: "1px solid rgba(250,255,199,0.2)",
@@ -2460,7 +2298,7 @@ export default function App() {
 
                         {/* Quote */}
                         <p style={{
-                          fontFamily: "'Space Grotesk', sans-serif",
+                          fontFamily: "'Sora', sans-serif",
                           fontStyle: "italic",
                           fontSize: "18px",
                           color: "rgba(255,255,255,0.82)",
@@ -2468,7 +2306,7 @@ export default function App() {
                           margin: "0 0 24px 0",
                           flex: 1,
                         }}>
-                          <span style={{ color: "#F2A7C4", fontSize: "12px", marginRight: "8px", verticalAlign: "middle" }}>✦</span>
+                          <span style={{ color: "var(--color-pink)", fontSize: "12px", marginRight: "8px", verticalAlign: "middle" }}>✦</span>
                           {card.quote}
                         </p>
 
@@ -2485,7 +2323,7 @@ export default function App() {
                             justifyContent: "center",
                             flexShrink: 0,
                           }}>
-                            <span style={{ color: "#F2A7C4", fontSize: "10px" }}>✦</span>
+                            <span style={{ color: "var(--color-pink)", fontSize: "10px" }}>✦</span>
                           </div>
                           <div>
                             <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "13px", color: "white", fontWeight: 400 }}>
@@ -2506,7 +2344,7 @@ export default function App() {
                           bottom: 0,
                           left: 0,
                           right: 0,
-                          background: "#FAFFC7",
+                          background: "var(--color-lemon)",
                           padding: "12px 20px",
                           borderRadius: "0 0 14px 14px",
                           zIndex: 2,
@@ -2535,17 +2373,18 @@ export default function App() {
 
       {/* WORDS & FREQUENCIES — FOLDERS SECTION */}
       <section
+        className="section"
         style={{
           position: "relative",
           background: "transparent",
-          padding: "100px clamp(24px, 5vw, 80px) 240px",
+          paddingBlockEnd: "240px", // overrides .section's 80px — folder article pages slide out below and need the room
         }}
       >
         <h2 style={{
-          fontFamily: "'Space Grotesk', sans-serif",
+          fontFamily: "'Sora', sans-serif",
           fontWeight: 700,
           fontSize: "clamp(2.2rem, 4vw, 3.8rem)",
-          color: "#FAFFC7",
+          color: "var(--color-lemon)",
           textAlign: "center" as const,
           lineHeight: 1.08,
           margin: "0 0 16px 0",
@@ -2553,7 +2392,7 @@ export default function App() {
           Words &amp; Frequencies
         </h2>
         <p style={{
-          fontFamily: "'Space Grotesk', sans-serif",
+          fontFamily: "'Sora', sans-serif",
           fontStyle: "italic",
           fontSize: "18px",
           color: "rgba(255,255,255,0.28)",
@@ -2576,7 +2415,7 @@ export default function App() {
             {
               id: "behavioural",
               name: "Behavioural Design",
-              color: "#93C5FD",
+              color: "#93C5FD", // ponytail: hex kept — used with ${color}14 hex-alpha appending
               border: "rgba(147,197,253,0.5)",
               tag: "HOW PEOPLE DECIDE",
               desc: "Notes on cognitive bias, friction, habit loops, and the invisible architecture behind every tap.",
@@ -2585,7 +2424,7 @@ export default function App() {
             {
               id: "accessibility",
               name: "Accessibility Design",
-              color: "#FAFFC7",
+              color: "#FAFFC7", // ponytail: hex kept — used with ${color}14 hex-alpha appending
               border: "rgba(250,255,199,0.45)",
               tag: "DESIGN FOR EVERYONE",
               desc: "Thinking through contrast, semantics, motion sensitivity, and what inclusive actually means in practice.",
@@ -2594,7 +2433,7 @@ export default function App() {
             {
               id: "interactive",
               name: "Interactive Design",
-              color: "#F2A7C4",
+              color: "#F2A7C4", // ponytail: hex kept — used with ${color}14 hex-alpha appending
               border: "rgba(242,167,196,0.5)",
               tag: "MOTION & MICROMOMENTS",
               desc: "Transitions, gestures, states, and the tiny details that make an interface feel alive.",
@@ -2722,9 +2561,9 @@ export default function App() {
                   {folder.tag}
                 </p>
                 <h3 style={{
-                  fontFamily: "'Space Grotesk', sans-serif",
+                  fontFamily: "'Sora', sans-serif",
                   fontSize: "26px",
-                  fontWeight: 700,
+                  fontWeight: 500,
                   color: "#FFF",
                   margin: "0 0 14px 0",
                   lineHeight: 1.15,
@@ -2781,9 +2620,9 @@ export default function App() {
                     </span>
                     {/* Heading */}
                     <p style={{
-                      fontFamily: "'Space Grotesk', sans-serif",
+                      fontFamily: "'Sora', sans-serif",
                       fontSize: "14px",
-                      fontWeight: 700,
+                      fontWeight: 500,
                       color: "#FFFFFF",
                       margin: "0 0 18px 0",
                       lineHeight: 1.3,
@@ -2880,10 +2719,10 @@ export default function App() {
       {/* ── CONTACT SECTION ── */}
       <section
         id="contact"
+        className="section"
         style={{
           position: "relative",
           background: "transparent",
-          padding: "100px clamp(24px, 5vw, 80px)",
           overflow: "hidden",
         }}
       >
@@ -2935,7 +2774,7 @@ export default function App() {
                 </filter>
               </defs>
               <rect width="800" height="500" fill="url(#cs-skyGrad)" />
-              <circle cx="150" cy="180" r="160" fill="#F2A7C4" opacity="0.02" filter="url(#cs-blur80)" />
+              <circle cx="150" cy="180" r="160" fill="var(--color-pink)" opacity="0.02" filter="url(#cs-blur80)" />
               <circle cx="650" cy="160" r="180" fill="#6D1F2A" opacity="0.034" filter="url(#cs-blur80)" />
               {/* Static background stars — no animate tags */}
               <g fill="#ffffff">
@@ -2970,34 +2809,34 @@ export default function App() {
               style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none", zIndex: 2 }}
             >
               {/* Cluster 1 — top-left ~20%, 25% */}
-              <g filter="drop-shadow(0 0 6px #F2A7C4)">
-                <line x1="18%" y1="22%" x2="23%" y2="28%" stroke="#F2A7C4" strokeWidth="0.8" opacity="0.45" />
-                <line x1="23%" y1="28%" x2="20%" y2="32%" stroke="#F2A7C4" strokeWidth="0.8" opacity="0.45" />
-                <line x1="20%" y1="32%" x2="26%" y2="30%" stroke="#F2A7C4" strokeWidth="0.8" opacity="0.45" />
-                <circle cx="18%" cy="22%" r="2.5" fill="#F2A7C4" opacity="0.9" />
-                <circle cx="23%" cy="28%" r="2.5" fill="#F2A7C4" opacity="0.9" />
-                <circle cx="20%" cy="32%" r="2.5" fill="#F2A7C4" opacity="0.9" />
-                <circle cx="26%" cy="30%" r="2.5" fill="#F2A7C4" opacity="0.9" />
+              <g filter="drop-shadow(0 0 6px var(--color-pink))">
+                <line x1="18%" y1="22%" x2="23%" y2="28%" stroke="var(--color-pink)" strokeWidth="0.8" opacity="0.45" />
+                <line x1="23%" y1="28%" x2="20%" y2="32%" stroke="var(--color-pink)" strokeWidth="0.8" opacity="0.45" />
+                <line x1="20%" y1="32%" x2="26%" y2="30%" stroke="var(--color-pink)" strokeWidth="0.8" opacity="0.45" />
+                <circle cx="18%" cy="22%" r="2.5" fill="var(--color-pink)" opacity="0.9" />
+                <circle cx="23%" cy="28%" r="2.5" fill="var(--color-pink)" opacity="0.9" />
+                <circle cx="20%" cy="32%" r="2.5" fill="var(--color-pink)" opacity="0.9" />
+                <circle cx="26%" cy="30%" r="2.5" fill="var(--color-pink)" opacity="0.9" />
               </g>
               {/* Cluster 2 — center ~48%, 20% */}
-              <g filter="drop-shadow(0 0 5px #FAFFC7)">
-                <line x1="45%" y1="18%" x2="50%" y2="22%" stroke="#FAFFC7" strokeWidth="0.7" opacity="0.4" />
-                <line x1="50%" y1="22%" x2="47%" y2="26%" stroke="#FAFFC7" strokeWidth="0.7" opacity="0.4" />
-                <line x1="50%" y1="22%" x2="53%" y2="19%" stroke="#FAFFC7" strokeWidth="0.7" opacity="0.4" />
-                <line x1="47%" y1="26%" x2="52%" y2="27%" stroke="#FAFFC7" strokeWidth="0.7" opacity="0.4" />
-                <circle cx="45%" cy="18%" r="2" fill="#FAFFC7" opacity="0.85" />
-                <circle cx="50%" cy="22%" r="2" fill="#FAFFC7" opacity="0.85" />
-                <circle cx="47%" cy="26%" r="2" fill="#FAFFC7" opacity="0.85" />
-                <circle cx="53%" cy="19%" r="2" fill="#FAFFC7" opacity="0.85" />
-                <circle cx="52%" cy="27%" r="2" fill="#FAFFC7" opacity="0.85" />
+              <g filter="drop-shadow(0 0 5px var(--color-lemon))">
+                <line x1="45%" y1="18%" x2="50%" y2="22%" stroke="var(--color-lemon)" strokeWidth="0.7" opacity="0.4" />
+                <line x1="50%" y1="22%" x2="47%" y2="26%" stroke="var(--color-lemon)" strokeWidth="0.7" opacity="0.4" />
+                <line x1="50%" y1="22%" x2="53%" y2="19%" stroke="var(--color-lemon)" strokeWidth="0.7" opacity="0.4" />
+                <line x1="47%" y1="26%" x2="52%" y2="27%" stroke="var(--color-lemon)" strokeWidth="0.7" opacity="0.4" />
+                <circle cx="45%" cy="18%" r="2" fill="var(--color-lemon)" opacity="0.85" />
+                <circle cx="50%" cy="22%" r="2" fill="var(--color-lemon)" opacity="0.85" />
+                <circle cx="47%" cy="26%" r="2" fill="var(--color-lemon)" opacity="0.85" />
+                <circle cx="53%" cy="19%" r="2" fill="var(--color-lemon)" opacity="0.85" />
+                <circle cx="52%" cy="27%" r="2" fill="var(--color-lemon)" opacity="0.85" />
               </g>
               {/* Cluster 3 — mid-right ~80%, 38% */}
-              <g filter="drop-shadow(0 0 4px #F2A7C4)">
-                <line x1="78%" y1="35%" x2="83%" y2="39%" stroke="#F2A7C4" strokeWidth="0.8" opacity="0.45" />
-                <line x1="83%" y1="39%" x2="80%" y2="43%" stroke="#F2A7C4" strokeWidth="0.8" opacity="0.45" />
-                <circle cx="78%" cy="35%" r="2" fill="#F2A7C4" opacity="0.8" />
-                <circle cx="83%" cy="39%" r="2" fill="#F2A7C4" opacity="0.8" />
-                <circle cx="80%" cy="43%" r="2" fill="#F2A7C4" opacity="0.8" />
+              <g filter="drop-shadow(0 0 4px var(--color-pink))">
+                <line x1="78%" y1="35%" x2="83%" y2="39%" stroke="var(--color-pink)" strokeWidth="0.8" opacity="0.45" />
+                <line x1="83%" y1="39%" x2="80%" y2="43%" stroke="var(--color-pink)" strokeWidth="0.8" opacity="0.45" />
+                <circle cx="78%" cy="35%" r="2" fill="var(--color-pink)" opacity="0.8" />
+                <circle cx="83%" cy="39%" r="2" fill="var(--color-pink)" opacity="0.8" />
+                <circle cx="80%" cy="43%" r="2" fill="var(--color-pink)" opacity="0.8" />
               </g>
             </svg>
 
@@ -3076,7 +2915,7 @@ export default function App() {
                 right: 0,
                 top: "10%",
                 height: "80%",
-                borderRight: "1px dashed rgba(242,167,196,0.15)",
+                borderRight: "1px dashed var(--color-border-flat)",
                 zIndex: 4,
               }}
             />
@@ -3100,7 +2939,7 @@ export default function App() {
               fontSize: "10px",
               letterSpacing: "0.28em",
               textTransform: "uppercase" as const,
-              color: "#F2A7C4",
+              color: "var(--color-pink)",
               opacity: 0.72,
               margin: "0 0 16px 0",
             }}>
@@ -3109,7 +2948,7 @@ export default function App() {
 
             {/* Headline */}
             <h2 style={{
-              fontFamily: "'Space Grotesk', sans-serif",
+              fontFamily: "'Sora', sans-serif",
               fontWeight: 700,
               fontSize: "clamp(2.2rem, 4vw, 3.8rem)",
               color: "white",
@@ -3121,7 +2960,7 @@ export default function App() {
 
             {/* Subheadline */}
             <p style={{
-              fontFamily: "'Space Grotesk', sans-serif",
+              fontFamily: "'Sora', sans-serif",
               fontStyle: "italic",
               fontSize: "1.4rem",
               color: "rgba(255,255,255,0.35)",
@@ -3256,7 +3095,7 @@ export default function App() {
                 <p style={{
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: "14px",
-                  color: "#F2A7C4",
+                  color: "var(--color-pink)",
                   textAlign: "center" as const,
                   animation: "fadeIn 0.4s ease forwards",
                   margin: 0,
@@ -3317,7 +3156,7 @@ export default function App() {
                 style={{
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: "12px",
-                  color: "#93C5FD",
+                  color: "var(--color-sky)",
                   opacity: 0.7,
                   textDecoration: "none",
                   transition: "opacity 0.2s",
@@ -3335,7 +3174,7 @@ export default function App() {
                 style={{
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: "12px",
-                  color: "#93C5FD",
+                  color: "var(--color-sky)",
                   opacity: 0.7,
                   textDecoration: "none",
                   transition: "opacity 0.2s",
@@ -3376,7 +3215,7 @@ export default function App() {
               width: "76px",
               height: "76px",
               borderRadius: "50%",
-              background: navOpen || navBtnHovered ? "#FAFFC7" : "#F2A7C4",
+              background: navOpen || navBtnHovered ? "var(--color-lemon)" : "var(--color-pink)",
               border: "none",
               cursor: "pointer",
               display: "flex",
@@ -3396,16 +3235,16 @@ export default function App() {
                   <rect width="530" height="530" fill="#D9D9D9"/>
                 </mask>
                 <g mask="url(#nav-heart-mask)">
-                  <path d="M161.673 132.598L226.355 48.5822C231.14 42.3253 236.953 37.5405 243.795 34.228C250.634 30.9155 257.719 29.2593 265.05 29.2593C272.378 29.2593 279.447 30.9155 286.256 34.228C293.065 37.5405 298.862 42.3253 303.646 48.5822L368.329 132.598L466.511 165.624C477.185 169.304 485.374 175.582 491.079 184.455C496.784 193.329 499.636 202.939 499.636 213.285C499.636 217.949 498.894 222.788 497.411 227.805C495.924 232.822 493.721 237.49 490.803 241.811L428.417 331.249L430.626 426.759C430.626 440.745 425.473 452.615 415.167 462.369C404.862 472.122 392.867 476.999 379.183 476.999C378.881 476.999 375.233 476.631 368.24 475.895L265.001 447.186L161.883 475.851C159.593 476.248 157.435 476.631 155.407 476.999C153.379 477.367 151.52 477.551 149.831 477.551C135.701 477.551 123.667 472.547 113.73 462.54C103.792 452.536 99.1916 440.425 99.9277 426.207L102.136 331.111L39.1986 241.259C35.9118 236.905 33.617 232.203 32.3141 227.154C31.0149 222.1 30.3652 217.233 30.3652 212.551C30.3652 201.877 33.2029 192.196 38.8784 183.506C44.5538 174.82 52.9418 168.859 64.0423 165.624L161.673 132.598Z" fill="#FAFFC7"/>
+                  <path d="M161.673 132.598L226.355 48.5822C231.14 42.3253 236.953 37.5405 243.795 34.228C250.634 30.9155 257.719 29.2593 265.05 29.2593C272.378 29.2593 279.447 30.9155 286.256 34.228C293.065 37.5405 298.862 42.3253 303.646 48.5822L368.329 132.598L466.511 165.624C477.185 169.304 485.374 175.582 491.079 184.455C496.784 193.329 499.636 202.939 499.636 213.285C499.636 217.949 498.894 222.788 497.411 227.805C495.924 232.822 493.721 237.49 490.803 241.811L428.417 331.249L430.626 426.759C430.626 440.745 425.473 452.615 415.167 462.369C404.862 472.122 392.867 476.999 379.183 476.999C378.881 476.999 375.233 476.631 368.24 475.895L265.001 447.186L161.883 475.851C159.593 476.248 157.435 476.631 155.407 476.999C153.379 477.367 151.52 477.551 149.831 477.551C135.701 477.551 123.667 472.547 113.73 462.54C103.792 452.536 99.1916 440.425 99.9277 426.207L102.136 331.111L39.1986 241.259C35.9118 236.905 33.617 232.203 32.3141 227.154C31.0149 222.1 30.3652 217.233 30.3652 212.551C30.3652 201.877 33.2029 192.196 38.8784 183.506C44.5538 174.82 52.9418 168.859 64.0423 165.624L161.673 132.598Z" fill="var(--color-lemon)"/>
                 </g>
-                <path d="M302.131 448.233V246.913H226.495V448.233H302.131ZM264.314 225.942C274.545 225.942 283.313 222.709 290.621 216.243C297.929 209.777 301.583 202 301.583 192.913C301.583 183.825 297.929 176.049 290.621 169.582C283.313 163.117 274.545 159.884 264.314 159.884C253.992 159.884 245.223 163.117 238.007 169.582C230.697 176.049 227.043 183.825 227.043 192.913C227.043 202 230.697 209.777 238.007 216.243C245.223 222.709 253.992 225.942 264.314 225.942Z" fill="#F2A7C4"/>
+                <path d="M302.131 448.233V246.913H226.495V448.233H302.131ZM264.314 225.942C274.545 225.942 283.313 222.709 290.621 216.243C297.929 209.777 301.583 202 301.583 192.913C301.583 183.825 297.929 176.049 290.621 169.582C283.313 163.117 274.545 159.884 264.314 159.884C253.992 159.884 245.223 163.117 238.007 169.582C230.697 176.049 227.043 183.825 227.043 192.913C227.043 202 230.697 209.777 238.007 216.243C245.223 222.709 253.992 225.942 264.314 225.942Z" fill="var(--color-pink)"/>
                 <path d="M267.053 188.718C267.053 188.718 271.707 185.685 275.494 185.841C278.881 185.98 282.728 188.718 282.728 188.718C284.202 188.216 285.14 186.56 285.14 186.56" stroke="#6D1F2A" strokeWidth="2" strokeLinecap="round"/>
                 <path d="M254.996 206.02C254.996 206.02 259.65 209.053 263.436 208.897C266.825 208.758 270.671 206.02 270.671 206.02" stroke="#6D1F2A" strokeWidth="2" strokeLinecap="round"/>
                 <path d="M258.01 188.718C258.01 188.718 253.355 185.685 249.569 185.841C246.181 185.98 242.335 188.718 242.335 188.718C240.861 188.216 239.923 186.56 239.923 186.56" stroke="#6D1F2A" strokeWidth="2" strokeLinecap="round"/>
-                <path d="M264.416 274.935L300.74 247.138C301.135 246.836 301.719 247.105 301.719 247.588V447.657C301.719 447.974 302.052 457 301.719 457L264.039 448.233L226.359 457.5C226.359 457.5 226.359 447.974 226.359 447.657V247.588C226.359 247.105 226.944 246.836 227.339 247.138L263.662 274.935C263.882 275.102 264.196 275.102 264.416 274.935Z" fill="#F2A7C4" stroke="#F2A7C4"/>
+                <path d="M264.416 274.935L300.74 247.138C301.135 246.836 301.719 247.105 301.719 247.588V447.657C301.719 447.974 302.052 457 301.719 457L264.039 448.233L226.359 457.5C226.359 457.5 226.359 447.974 226.359 447.657V247.588C226.359 247.105 226.944 246.836 227.339 247.138L263.662 274.935C263.882 275.102 264.196 275.102 264.416 274.935Z" fill="var(--color-pink)" stroke="var(--color-pink)"/>
                 <path d="M301.001 247L264.54 273.69" stroke="#6D1F2A" strokeLinecap="round"/>
                 <path d="M227.001 247L264.253 273.967" stroke="#6D1F2A" strokeLinecap="round"/>
-                <path d="M301.72 188.718C286.647 187.277 262.531 159.883 262.531 159.883C262.531 159.883 238.416 184.393 226.358 188.718C214.304 193.044 226.358 157 226.358 157H301.72C301.72 157 316.793 190.16 301.72 188.718Z" fill="#FAFFC7" stroke="#FAFFC7"/>
+                <path d="M301.72 188.718C286.647 187.277 262.531 159.883 262.531 159.883C262.531 159.883 238.416 184.393 226.358 188.718C214.304 193.044 226.358 157 226.358 157H301.72C301.72 157 316.793 190.16 301.72 188.718Z" fill="var(--color-lemon)" stroke="var(--color-lemon)"/>
               </svg>
             )}
           </motion.button>
@@ -3455,20 +3294,18 @@ export default function App() {
                 style={{
                   background: "none",
                   border: "none",
-                  fontFamily: "'Space Grotesk', sans-serif",
+                  fontFamily: "'Sora', sans-serif",
                   fontWeight: 700,
                   fontSize: "clamp(3.5rem, 9vw, 7rem)",
-                  color: "#93C5FD",
+                  color: "var(--color-sky)",
                   cursor: "pointer",
                   letterSpacing: "-0.02em",
                   lineHeight: 1.1,
                   padding: 0,
                 }}
               >
-                <span className="overlay-swap-clip">
-                  <span className="os-default">{label}</span>
-                  <span className="os-alt">{alt}</span>
-                </span>
+                <span className="os-default">{label}</span>
+                <span className="os-alt">{alt}</span>
               </motion.button>
             ))}
             <motion.a
@@ -3486,7 +3323,7 @@ export default function App() {
                 letterSpacing: "0.18em",
                 textTransform: "uppercase",
                 color: "#111",
-                background: "#FAFFC7",
+                background: "var(--color-lemon)",
                 borderRadius: "9999px",
                 padding: "14px 40px",
                 textDecoration: "none",
@@ -3521,3 +3358,4 @@ export default function App() {
     </>
   );
 }
+
