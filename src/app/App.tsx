@@ -13,6 +13,7 @@ import profileImg from "./components/Pictures/me1.png";
 import heartUrl from "../imports/logo/heart.svg";
 import starUrl from "../imports/logo/star.svg";
 import murmurBannerUrl from "../imports/Murmur/banner.png";
+import telescopeImg from "../imports/telescope.png";
 
 function YouTubeFacade({ videoId, title, borderRadius = "14px" }: { videoId: string; title: string; borderRadius?: string }) {
   const [active, setActive] = React.useState(false);
@@ -216,41 +217,24 @@ const caseTabs = [
   { title: "Openlee", sub: "Healthcare" },
 ];
 
-const HERO_NODES = [
-  // Constellation 1 (Left) - 6 stars
-  {id:0,x:50,y:150}, {id:1,x:90,y:110}, {id:2,x:140,y:130}, {id:3,x:180,y:100}, {id:4,x:120,y:180}, {id:5,x:80,y:200},
-  
-  // Constellation 2 (Center-Top) - 5 stars
-  {id:6,x:280,y:90}, {id:7,x:330,y:130}, {id:8,x:390,y:100}, {id:9,x:430,y:140}, {id:10,x:350,y:160},
-
-  // Constellation 3 (Center-Right) - 7 stars
-  {id:11,x:500,y:200}, {id:12,x:520,y:140}, {id:13,x:570,y:110}, {id:14,x:610,y:150}, {id:15,x:640,y:120}, {id:16,x:630,y:190}, {id:17,x:580,y:210},
-
-  // Constellation 4 (Far Right) - 6 stars
-  {id:18,x:690,y:170}, {id:19,x:710,y:110}, {id:20,x:750,y:90}, {id:21,x:780,y:140}, {id:22,x:760,y:190}, {id:23,x:730,y:210}
+const HERO_CONSTELLATIONS = [
+  // Large cluster — upper left, partially cropped
+  { nodes: [[-2,8],[4,14],[8,10],[14,18],[10,24],[3,22]], edges:[[0,1],[1,2],[2,3],[3,4],[4,5],[1,5]], opacity: 0.15 },
+  // Large cluster — upper center-right
+  { nodes: [[52,12],[58,7],[65,14],[62,20],[55,22],[70,9]], edges:[[0,1],[1,2],[2,3],[3,4],[4,0],[1,5]], opacity: 0.18 },
+  // Small cluster — mid left
+  { nodes: [[18,38],[22,32],[26,36]], edges:[[0,1],[1,2]], opacity: 0.12 },
+  // Small cluster — far right mid (keep clear of moon at 86%,16%)
+  { nodes: [[74,34],[78,28],[82,36],[79,42]], edges:[[0,1],[1,2],[2,3]], opacity: 0.14 },
 ];
 
-const HERO_EDGES = [
-  // C1 edges (0-1-2-3, 2-4-5, 1-4)
-  {id:0,a:0,b:1}, {id:1,a:1,b:2}, {id:2,a:2,b:3}, {id:3,a:2,b:4}, {id:4,a:4,b:5}, {id:5,a:1,b:4},
-  
-  // C2 edges (6-7-8-9, 7-10)
-  {id:6,a:6,b:7}, {id:7,a:7,b:8}, {id:8,a:8,b:9}, {id:9,a:7,b:10}, {id:10,a:8,b:10},
-
-  // C3 edges (11-12-13-14-15, 14-16-17-11, 13-17)
-  {id:11,a:11,b:12}, {id:12,a:12,b:13}, {id:13,a:13,b:14}, {id:14,a:14,b:15}, {id:15,a:14,b:16}, {id:16,a:16,b:17}, {id:17,a:17,b:11}, {id:18,a:13,b:17},
-
-  // C4 edges (18-19-20-21, 21-22-23-18, 19-23)
-  {id:19,a:18,b:19}, {id:20,a:19,b:20}, {id:21,a:20,b:21}, {id:22,a:21,b:22}, {id:23,a:22,b:23}, {id:24,a:23,b:18}, {id:25,a:19,b:23}
-];
-
-const BACKGROUND_STARS = Array.from({ length: 150 }, (_, i) => ({
+const BACKGROUND_STARS = Array.from({ length: 500 }, (_, i) => ({
   id: i,
-  x: (i * 137.5) % 800,
-  y: (i * 93.1) % 500,
-  r: (i * 0.1) % 1.2 + 0.3,
-  dur: (i * 0.3) % 3 + 2,
-  delay: (i * 0.2) % 2,
+  x: (Math.abs(Math.sin(i * 127.1 + 311.7) * 43758.5453)) % 100,
+  y: Math.pow((Math.abs(Math.sin(i * 269.5 + 183.3) * 43758.5453)) % 1, 2.8) * 100,
+  r: (Math.abs(Math.sin(i * 419.2)) % 1.2) + 0.3,
+  dur: (Math.abs(Math.sin(i * 53.7)) % 3) + 2,
+  delay: (Math.abs(Math.sin(i * 71.3)) % 2),
 }));
 
 
@@ -366,6 +350,12 @@ const caseStudiesData = [
     links: { full: "#", live: "#", promo: "#", presentation: "#" }
   },
 ];
+
+const heroSlide = {
+  enter: (dir: number) => ({ opacity: 0, x: dir > 0 ? 80 : -80 }),
+  center: { opacity: 1, x: 0 },
+  exit: (dir: number) => ({ opacity: 0, x: dir > 0 ? -80 : 80 }),
+};
 
 const ORBIT_ITEMS = [
   { label: "RESEARCH PHILOSOPHY", content: "Design starts before the screen. Empathy as a method." },
@@ -772,6 +762,40 @@ const GlobalStyles = React.memo(() => (
       border: none;
       padding: 0;
       animation: scroll-bounce 1.6s ease-in-out infinite;
+      opacity: 0.4;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      @keyframes girl-bob {
+        0%, 100% { transform: translateX(-50%) translateY(0); }
+        50% { transform: translateX(-50%) translateY(-2px); }
+      }
+      .hero-girl-bob {
+        animation: girl-bob 1.5s ease-in-out infinite;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .hero-landing-panel {
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center;
+        padding: 0 20px;
+      }
+      .hero-stats-row {
+        flex-wrap: wrap !important;
+      }
+      .hero-buttons-row {
+        flex-direction: column !important;
+        width: 100% !important;
+      }
+      .hero-buttons-row button {
+        width: 100% !important;
+      }
+      .hero-girl-positioned {
+        left: 22% !important;
+        bottom: 20% !important;
+      }
     }
 
     /* Coming Soon section animations */
@@ -1043,13 +1067,19 @@ const GlobalStyles = React.memo(() => (
 
 export default function App() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const heroWrapRef = useRef<HTMLDivElement>(null);
+  const glowRef = useRef<HTMLDivElement>(null);
   const nameRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number | null>(null);
   const aboutSvgRef = useRef<SVGSVGElement>(null);
+  const heroStarLayerRef = useRef<SVGGElement>(null);
+  const [navLogoHeart, setNavLogoHeart] = useState(false);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [navOpen, setNavOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [navBtnHovered, setNavBtnHovered] = useState(false);
+  const [heroPhase, setHeroPhase] = useState(0);
+  const [scrollDir, setScrollDir] = useState(1);
 
   const nextTestimonial = () => {
     setActiveTestimonial((prev) => (prev + 1) % TESTIMONIALS.length);
@@ -1233,6 +1263,31 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    let lastY = window.scrollY;
+    const onScroll = () => {
+      const dir = window.scrollY >= lastY ? 1 : -1;
+      setScrollDir(dir);
+      lastY = window.scrollY;
+      const phase = window.scrollY < 80 ? 0 : window.scrollY < window.innerHeight ? 1 : window.scrollY < window.innerHeight * 2 ? 2 : 3;
+      setHeroPhase(phase);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => {
+      if (!glowRef.current) return;
+      const progress = Math.max(0, Math.min(1, window.scrollY / (window.innerHeight * 1.5)));
+      const spread = progress * 180;
+      const opacity = progress * 0.97;
+      glowRef.current.style.background = `radial-gradient(circle ${spread}% at 50% 28%, rgba(255,253,224,${opacity}) 0%, rgba(255,220,120,${opacity * 0.5}) 45%, rgba(255,253,224,0) 100%)`;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
     if (!siteReady) return;
     let cancelled = false;
     const cancel = () => { cancelled = true; };
@@ -1271,6 +1326,32 @@ export default function App() {
   }, [siteReady]);
 
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if ('ontouchstart' in window) return;
+    let mouseX = 0, mouseY = 0;
+    const onMouseMove = (e: MouseEvent) => {
+      mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+      mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+      applyParallax();
+    };
+    const applyParallax = () => {
+      const layer = heroStarLayerRef.current;
+      if (!layer) return;
+      const scrollProgress = Math.min(window.scrollY / window.innerHeight, 1);
+      const tx = mouseX * 8;
+      const ty = mouseY * 8 + scrollProgress * -30;
+      layer.style.transform = `translate(${tx}px, ${ty}px)`;
+    };
+    const onScroll = () => applyParallax();
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, []);
+
+  useEffect(() => {
     const id = setInterval(() => setNavLogoHeart(v => !v), 400);
     return () => clearInterval(id);
   }, []);
@@ -1298,7 +1379,7 @@ export default function App() {
       <GlobalStyles />
 
       {/* Global Live Animated Grain Overlay */}
-      <div className="live-grain" aria-hidden="true" />
+      <div className="live-grain" aria-hidden="true" style={{ display: "none" }} />
 
       {/* Global Fixed Star Field — one render, visible across all sections */}
       <svg
@@ -1338,7 +1419,8 @@ export default function App() {
       </svg>
 
       {/* ── Hero section ── */}
-      <div ref={sectionRef} style={{ height: "100vh", position: "relative", zIndex: 10 }}>
+      <div ref={heroWrapRef} style={{ height: "450vh", position: "relative" }}>
+      <div ref={sectionRef} style={{ height: "100vh", position: "sticky", top: 0, zIndex: 10, overflow: "hidden" }}>
         <div style={{ width: "100%", height: "100%" }}>
 
           {/* Background — fixed, no drift */}
@@ -1353,6 +1435,11 @@ export default function App() {
               style={{ width: "100%", height: "100%", display: "block" }}
             >
               <defs>
+                <linearGradient id="hillGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%"   stopColor="#C8BFB2" stopOpacity="0.7" />
+                  <stop offset="50%"  stopColor="#EDE5D8" stopOpacity="0.55" />
+                  <stop offset="100%" stopColor="#BFB5A8" stopOpacity="0.35" />
+                </linearGradient>
                 <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stopColor="#000000" />
                   <stop offset="55%" stopColor="#000000" />
@@ -1364,30 +1451,87 @@ export default function App() {
                 </radialGradient>
                 <mask id="crescentMask">
                   <rect x="0" y="0" width="800" height="500" fill="white" />
-                  <circle cx="692" cy="154" r="24" fill="black" />
+                  <circle cx="89.6%" cy="22%" r="24" fill="black" />
                 </mask>
-                <filter id="blur80">
-                  <feGaussianBlur stdDeviation="80" />
+                <filter id="northStarGlow" x="-500%" y="-500%" width="1100%" height="1100%">
+                  <feGaussianBlur stdDeviation="8" result="blur" />
+                  <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+                </filter>
+                <filter id="starSoft">
+                  <feGaussianBlur stdDeviation="1.2" />
                 </filter>
               </defs>
               <rect width="800" height="500" fill="url(#skyGrad)" />
-              <circle cx="150" cy="180" r="160" fill="var(--color-pink)" opacity="0.02" filter="url(#blur80)" />
-              <circle cx="650" cy="160" r="180" fill="#6D1F2A" opacity="0.034" filter="url(#blur80)" />
-              
+
+              {/* Parallax star layers group */}
+              <g ref={heroStarLayerRef} style={{ willChange: "transform" }}>
               {/* BACKGROUND STARS (Small, unconnected, blinking) */}
               <g fill="#ffffff">
                 {BACKGROUND_STARS.map(star => (
-                  <circle key={`bg-star-${star.id}`} cx={star.x} cy={star.y} r={star.r} opacity={0.3}>
+                  <circle key={`bg-star-${star.id}`} cx={star.x + "%"} cy={star.y + "%"} r={star.r} opacity={0.3}>
                     <animate attributeName="opacity" values="0.1;0.7;0.1" dur={`${star.dur}s`} begin={`${star.delay}s`} repeatCount="indefinite" />
                   </circle>
                 ))}
               </g>
 
-              <circle cx="700" cy="160" r="64" fill="url(#moonGlow)" />
-              <circle cx="700" cy="160" r="24" fill="#EDE5D8" mask="url(#crescentMask)" />
-              <path fill="#151515" d="M0 300 C80 270 140 285 220 295 C320 308 430 260 530 280 C620 300 710 275 800 290 L800 500 L0 500 Z" />
-              <path fill="#0F0F0F" d="M0 340 C90 295 190 325 280 350 C390 375 500 300 610 325 C700 345 760 320 800 335 L800 500 L0 500 Z" />
-              <path fill="#050505" d="M0 395 C70 365 150 390 250 410 C360 430 470 380 590 400 C700 420 760 390 800 405 L800 500 L0 500 Z" />
+              {/* Static upper stars */}
+              <g fill="#ffffff">
+                {Array.from({ length: 100 }, (_, i) => (
+                  <circle
+                    key={`us-${i}`}
+                    cx={((Math.abs(Math.sin(i * 317.4 + 521.9) * 43758.5453)) % 100) + "%"}
+                    cy={((Math.abs(Math.sin(i * 193.7 + 47.3) * 43758.5453)) % 30) + "%"}
+                    r={(Math.abs(Math.sin(i * 89.1)) % 0.5) + 0.2}
+                    opacity={0.6}
+                  />
+                ))}
+              </g>
+
+              {/* 200 extra static tiny stars — top half */}
+              <g fill="#ffffff">
+                {Array.from({ length: 200 }, (_, i) => (
+                  <circle
+                    key={`ts-${i}`}
+                    cx={((Math.abs(Math.sin(i * 431.7 + 219.3) * 43758.5453)) % 100) + "%"}
+                    cy={((Math.abs(Math.sin(i * 157.9 + 83.1) * 43758.5453)) % 50) + "%"}
+                    r={(Math.abs(Math.sin(i * 61.3)) % 0.4) + 0.15}
+                    opacity={0.5}
+                  />
+                ))}
+              </g>
+
+              {/* Hand-placed irregular constellation clusters */}
+              {HERO_CONSTELLATIONS.map((cluster, ci) => (
+                <g key={`cluster-${ci}`}>
+                  {cluster.edges.map(([a, b], ei) => (
+                    <line key={`cl-${ci}-${ei}`}
+                      x1={cluster.nodes[a][0] + "%"} y1={cluster.nodes[a][1] + "%"}
+                      x2={cluster.nodes[b][0] + "%"} y2={cluster.nodes[b][1] + "%"}
+                      stroke="#E8E4C9" strokeWidth="1" opacity={cluster.opacity}
+                    />
+                  ))}
+                  {cluster.nodes.map(([nx, ny], ni) => (
+                    <circle key={`cn-${ci}-${ni}`}
+                      cx={nx + "%"} cy={ny + "%"} r={1.5}
+                      fill="#E8E4C9" opacity={0.3 + (ci * 0.05)}
+                    />
+                  ))}
+                </g>
+              ))}
+              </g>{/* end parallax group */}
+
+              {/* Moon at 86.6%,22% with crescent */}
+              <circle cx="86.6%" cy="22%" r="64" fill="url(#moonGlow)" />
+              <circle cx="86.6%" cy="22%" r="24" fill="#EDE5D8" opacity="0.85" mask="url(#crescentMask)" />
+
+              {/* North Star — cream glow, directly above girl at 30% width */}
+              <circle cx="30%" cy="26%" r="20" fill="#FFFBE0" opacity="0.06" />
+              <circle cx="30%" cy="26%" r="2" fill="#FFFBE0" filter="url(#northStarGlow)">
+                <animate attributeName="opacity" values="0.7;1;0.7" dur="4s" repeatCount="indefinite" />
+              </circle>
+
+              {/* Hills */}
+              <path fill="url(#hillGrad)" opacity="0.6" d="M0 395 C70 365 150 390 250 410 C360 430 470 380 590 400 C700 420 760 390 800 405 L800 500 L0 500 Z" />
             </svg>
           </div>
 
@@ -1397,6 +1541,7 @@ export default function App() {
             viewBox="0 0 80 80"
             aria-hidden="true"
             style={{
+              display: "none",
               position: "absolute",
               bottom: "30%",
               right: "10%",
@@ -1421,75 +1566,261 @@ export default function App() {
             <rect x="47" y="42" width="5" height="5" fill="#EACD8A" opacity="0.85"/>
           </svg>
 
-          {/* Layer 2: Girl */}
-          <img
-            src={girlImg}
-            alt=""
-            aria-hidden="true"
-            className="hero-girl"
-            fetchPriority="high"
-            decoding="async"
-            width={180}
-            height={180}
-            style={{
-              position: "absolute",
-              bottom: "18%",
-              left: "50%",
-              transform: "translateX(-30%)",
-              width: "180px",
-              height: "180px",
-              objectFit: "contain",
-              mixBlendMode: "screen",
-              zIndex: 2,
-              pointerEvents: "none",
-              userSelect: "none",
-            }}
-          />
 
           </div>{/* end background */}
 
-          {/* Product Designer label */}
-          <div style={{
-            position: "absolute",
-            top: "38%",
-            left: "50%",
-            transform: "translateX(-50%)",
-            zIndex: 10,
-            textAlign: "center",
-            pointerEvents: "none",
-          }}>
-            <span style={{
-              fontFamily: "'M PLUS Rounded 1c', sans-serif",
-              fontSize: "clamp(13px, 1.4vw, 18px)",
-              fontWeight: 700,
-              textTransform: "uppercase" as const,
-              letterSpacing: "0.3em",
-              color: "var(--color-lemon)",
-            }}>
-              Product Designer
-            </span>
+          {/* Full-screen marquee ribbon — visible only during meet-me phase */}
+          <AnimatePresence>
+            {heroPhase === 1 && (
+              <motion.div
+                key="hero-ribbon"
+                aria-hidden="true"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.3 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  zIndex: 1,
+                  pointerEvents: "none",
+                  overflow: "hidden",
+                }}
+              >
+                <div style={{ width: "130%", transform: "rotate(-3deg)" }}>
+                  <div className="marquee-track">
+                    {Array.from({ length: 6 }).map((_, i) => (
+                      <span key={i} className="marquee-text">• PRODUCT DESIGN • UX RESEARCH • CREATIVE DIRECTION&nbsp;</span>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Content overlay — phase 0: landing, phase 1: meet-me */}
+          <div
+            className="hero-content-overlay"
+            style={{
+              position: "absolute",
+              inset: 0,
+              zIndex: 10,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <AnimatePresence mode="wait" custom={scrollDir}>
+              {heroPhase === 0 ? (
+                <motion.div
+                  key="landing"
+                  custom={scrollDir}
+                  variants={heroSlide}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                  className="hero-landing-panel"
+                  style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 40 }}
+                >
+                  {/* Text content */}
+                  <div style={{ display: "flex", flexDirection: "column" }}>
+                    <motion.span
+                      initial={{ opacity: 0, y: 14 }}
+                      animate={siteReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
+                      transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                      style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, letterSpacing: "0.3em", color: "#F2EDCB", textTransform: "uppercase" as const, display: "block" }}
+                    >
+                      PRODUCT DESIGNER
+                    </motion.span>
+                    <motion.div
+                      initial={{ opacity: 0, y: 14 }}
+                      animate={siteReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
+                      transition={{ duration: 0.7, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
+                      style={{ marginTop: 8 }}
+                    >
+                      <span style={{ fontFamily: "'Sora', sans-serif", fontWeight: 700, fontSize: "clamp(2.8rem, 5vw, 4.5rem)", color: "var(--color-pink)", letterSpacing: "-0.02em", lineHeight: 1.1, display: "block" }}>
+                        Vishvara.G
+                      </span>
+                    </motion.div>
+                    <motion.p
+                      initial={{ opacity: 0, y: 14 }}
+                      animate={siteReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
+                      transition={{ duration: 0.7, delay: 0.26, ease: [0.22, 1, 0.36, 1] }}
+                      style={{ fontFamily: "'Sora', sans-serif", fontStyle: "italic", fontSize: "clamp(0.85rem, 1.2vw, 1rem)", color: "rgba(242,237,203,0.55)", marginTop: 12, marginBottom: 0 }}
+                    >
+                      Designing for the humans behind the metrics.
+                    </motion.p>
+                    <motion.div
+                      className="hero-stats-row"
+                      initial={{ opacity: 0, y: 14 }}
+                      animate={siteReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
+                      transition={{ duration: 0.7, delay: 0.34, ease: [0.22, 1, 0.36, 1] }}
+                      style={{ display: "flex", flexDirection: "row", gap: 12, marginTop: 28 }}
+                    >
+                      {[["3", "Projects"], ["2", "Domains"], ["6+", "Months"]].map(([val, label]) => (
+                        <div key={label} style={{ background: "rgba(0,0,0,0.35)", border: "1px solid rgba(242,237,203,0.15)", borderRadius: 10, padding: "10px 18px", flexShrink: 0 }}>
+                          <div style={{ fontFamily: "'Sora', sans-serif", fontWeight: 700, fontSize: 18, color: "#F2EDCB" }}>{val}</div>
+                          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 10, letterSpacing: "0.18em", color: "rgba(242,237,203,0.4)", textTransform: "uppercase" as const, marginTop: 2 }}>{label}</div>
+                        </div>
+                      ))}
+                    </motion.div>
+                    <motion.div
+                      className="hero-buttons-row"
+                      initial={{ opacity: 0, y: 14 }}
+                      animate={siteReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
+                      transition={{ duration: 0.7, delay: 0.42, ease: [0.22, 1, 0.36, 1] }}
+                      style={{ display: "flex", flexDirection: "row", gap: 12, marginTop: 24 }}
+                    >
+                      <button onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} style={{ background: "linear-gradient(135deg, var(--color-pink), #F2EDCB)", color: "#111", borderRadius: 9999, padding: "13px 28px", border: "none", fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: 13, letterSpacing: "0.06em", cursor: "pointer" }}>
+                        Contact Me
+                      </button>
+                      <a href="/Vishvara_Gandharv_Resume.pdf" download style={{ background: "transparent", border: "1px solid rgba(242,237,203,0.35)", color: "#F2EDCB", borderRadius: 9999, padding: "13px 28px", fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: 13, letterSpacing: "0.06em", textDecoration: "none", display: "inline-flex", alignItems: "center" }}>
+                        Download Resume
+                      </a>
+                    </motion.div>
+                  </div>
+
+                  {/* Profile image */}
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={siteReady ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
+                    transition={{ duration: 0.8, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+                    style={{ flexShrink: 0 }}
+                  >
+                    <img
+                      src={profileImg}
+                      alt="Vishvara Gandharv"
+                      style={{
+                        width: "clamp(160px, 18vw, 240px)",
+                        height: "clamp(200px, 24vw, 300px)",
+                        objectFit: "cover",
+                        objectPosition: "center top",
+                        borderRadius: 20,
+                        border: "1px solid rgba(242,237,203,0.18)",
+                        display: "block",
+                        boxShadow: "0 8px 40px rgba(0,0,0,0.5)",
+                      }}
+                    />
+                  </motion.div>
+                </motion.div>
+              ) : heroPhase === 1 ? (
+                <motion.div
+                  key="meetme"
+                  custom={scrollDir}
+                  variants={heroSlide}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                  style={{ position: "relative", width: "clamp(380px, 48vw, 680px)" }}
+                >
+                  {/* Video + buttons */}
+                  <div style={{ position: "relative", zIndex: 1 }}>
+                    <div className="video-card-hover" style={{
+                      background: "rgba(20,20,20,0.55)",
+                      backdropFilter: "blur(12px)",
+                      WebkitBackdropFilter: "blur(12px)",
+                      border: "none",
+                      borderRadius: "20px",
+                      padding: "10px",
+                      position: "relative",
+                      boxShadow: "0 0 60px rgba(250,255,199,0.08)",
+                    }}>
+                      <div aria-hidden="true" style={{ position: "absolute", top: -6, left: -6, width: 6, height: 6, borderRadius: "50%", background: "#93C5FD", opacity: 0.8, zIndex: 2 }} />
+                      <div aria-hidden="true" style={{ position: "absolute", top: -6, right: -6, width: 6, height: 6, borderRadius: "50%", background: "#93C5FD", opacity: 0.8, zIndex: 2 }} />
+                      <div aria-hidden="true" style={{ position: "absolute", bottom: -6, left: -6, width: 6, height: 6, borderRadius: "50%", background: "#93C5FD", opacity: 0.8, zIndex: 2 }} />
+                      <div aria-hidden="true" style={{ position: "absolute", bottom: -6, right: -6, width: 6, height: 6, borderRadius: "50%", background: "#93C5FD", opacity: 0.8, zIndex: 2 }} />
+                      <YouTubeFacade videoId="CGPjBUCOn2M" title="Introduction video" borderRadius="14px" />
+                    </div>
+
+                    <div style={{ display: "flex", gap: 12, justifyContent: "center", marginTop: 20 }}>
+                      <button onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} style={{ background: "linear-gradient(135deg, var(--color-pink), #F2EDCB)", color: "#111", borderRadius: 9999, padding: "13px 28px", border: "none", fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: 13, letterSpacing: "0.06em", cursor: "pointer" }}>
+                        Contact Me
+                      </button>
+                      <a href="/Vishvara_Gandharv_Resume.pdf" download style={{ background: "transparent", border: "1px solid rgba(242,237,203,0.35)", color: "#F2EDCB", borderRadius: 9999, padding: "13px 28px", fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: 13, letterSpacing: "0.06em", textDecoration: "none", display: "inline-flex", alignItems: "center" }}>
+                        Download Resume
+                      </a>
+                      <a href="https://www.linkedin.com/in/vishvara-gandharv" target="_blank" rel="noreferrer" style={{ display: "inline-flex", alignItems: "center", background: "transparent", border: "1px solid rgba(147,197,253,0.4)", color: "var(--color-sky)", padding: "13px 24px", borderRadius: 9999, fontFamily: "'DM Sans', sans-serif", fontSize: 13, textDecoration: "none" }}>
+                        LinkedIn
+                      </a>
+                    </div>
+                  </div>
+                </motion.div>
+              ) : heroPhase === 2 ? (
+                <motion.div
+                  key="designlens"
+                  custom={scrollDir}
+                  variants={heroSlide}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                  style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%" }}
+                >
+                  <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 48, marginTop: -40, transform: "translateX(8%)" }}>
+                  {/* Left — label */}
+                  <div style={{ flex: "0 0 auto", display: "flex", flexDirection: "column", gap: 12 }}>
+                    <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.75rem", letterSpacing: "0.25em", color: "#888", textTransform: "uppercase", margin: 0 }}>
+                      how i see design
+                    </p>
+                    <h2 style={{ fontFamily: "'Sora', sans-serif", fontWeight: 700, fontSize: "clamp(2.4rem, 4vw, 4rem)", color: "var(--color-lemon)", margin: 0, lineHeight: 1.1 }}>
+                      Design<br />Lens
+                    </h2>
+                  </div>
+
+                  {/* Right — lens in a size-corrected wrapper (810px * 0.546 ≈ 442px) */}
+                  <div style={{ width: 442, height: 442, position: "relative", flexShrink: 0 }}>
+                    <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%) scale(0.546)", transformOrigin: "center center" }}>
+                      <DesignLensSection compact />
+                    </div>
+                  </div>
+                  </div>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="designerbrain"
+                  custom={scrollDir}
+                  variants={heroSlide}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                  style={{ position: "absolute", inset: 0, background: "var(--color-bg)", zIndex: 2, overflow: "hidden" }}
+                >
+                  {/* Left label */}
+                  <div style={{ position: "absolute", left: 80, top: "50%", transform: "translateY(-50%)", zIndex: 10, display: "flex", flexDirection: "column", gap: 6 }}>
+                    <h2 style={{ fontFamily: "'Sora', sans-serif", fontWeight: 50, fontStyle: "italic", fontSize: "28px", color: "var(--foreground)", margin: 0, lineHeight: 1.15, letterSpacing: "0.02em", writingMode: "vertical-rl", transform: "rotate(180deg)", opacity: 0.55 }}>
+                      I think in systems
+                    </h2>
+                  </div>
+                  <div style={{ transform: "scale(0.72) translateX(8%) translateY(-8%)", transformOrigin: "top center", width: "100%" }}>
+                    <DesignerMind />
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
-          {/* Scroll indicator */}
-          <button
-            aria-label="Scroll to about section"
-            className="scroll-indicator"
-            onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-            style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}
-          >
-            <svg viewBox="0 0 24 24" width="28" height="28" overflow="visible" xmlns="http://www.w3.org/2000/svg">
-              <polygon points="12,4 13.9,9.4 19.6,9.5 15,13 16.7,18.5 12,15.2 7.3,18.5 9,13 4.4,9.5 10.1,9.4" fill="var(--color-lemon)" stroke="var(--color-lemon)" strokeWidth="1.5" strokeLinejoin="round" style={{ filter: "drop-shadow(0 0 6px rgba(250,255,199,0.7))" }} />
-            </svg>
-            <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "9px", letterSpacing: "0.22em", textTransform: "uppercase" as const, color: "rgba(250,255,199,0.45)" }}>Scroll Down</span>
-          </button>
 
-          {/* Name only — scrolls down while background stays fixed */}
+          {/* Scroll glow overlay — expands from star */}
+          <div ref={glowRef} style={{
+            position: "fixed",
+            inset: 0,
+            pointerEvents: "none",
+            zIndex: 8,
+          }} />
 
         </div>
       </div>
+      </div>{/* end heroWrap */}
 
 
 
+      {false && <>
       {/* ── About Me section ── */}
       {/* no .section — paddingRight: calc(40%) reserves the right half for the full-bleed profile photo panel */}
       <div
@@ -1816,10 +2147,10 @@ export default function App() {
             transition: "all 0.4s ease"
           }}>
             {/* 4 Corners (offset by -6px from edge) */}
-            <div aria-hidden="true" style={{ position: "absolute", top: -6, left: -6, width: 6, height: 6, borderRadius: "50%", background: "var(--color-lemon)", opacity: 0.8, zIndex: 2 }} />
-            <div aria-hidden="true" style={{ position: "absolute", top: -6, right: -6, width: 6, height: 6, borderRadius: "50%", background: "var(--color-lemon)", opacity: 0.8, zIndex: 2 }} />
-            <div aria-hidden="true" style={{ position: "absolute", bottom: -6, left: -6, width: 6, height: 6, borderRadius: "50%", background: "var(--color-lemon)", opacity: 0.8, zIndex: 2 }} />
-            <div aria-hidden="true" style={{ position: "absolute", bottom: -6, right: -6, width: 6, height: 6, borderRadius: "50%", background: "var(--color-lemon)", opacity: 0.8, zIndex: 2 }} />
+            <div aria-hidden="true" style={{ position: "absolute", top: -6, left: -6, width: 6, height: 6, borderRadius: "50%", background: "#93C5FD", opacity: 0.8, zIndex: 2 }} />
+            <div aria-hidden="true" style={{ position: "absolute", top: -6, right: -6, width: 6, height: 6, borderRadius: "50%", background: "#93C5FD", opacity: 0.8, zIndex: 2 }} />
+            <div aria-hidden="true" style={{ position: "absolute", bottom: -6, left: -6, width: 6, height: 6, borderRadius: "50%", background: "#93C5FD", opacity: 0.8, zIndex: 2 }} />
+            <div aria-hidden="true" style={{ position: "absolute", bottom: -6, right: -6, width: 6, height: 6, borderRadius: "50%", background: "#93C5FD", opacity: 0.8, zIndex: 2 }} />
 
             {/* iframe */}
             <YouTubeFacade videoId="CGPjBUCOn2M" title="Introduction video" borderRadius="14px" />
@@ -2784,9 +3115,6 @@ export default function App() {
               </g>
               <circle cx="700" cy="160" r="64" fill="url(#cs-moonGlow)" />
               <circle cx="700" cy="160" r="24" fill="#EDE5D8" mask="url(#cs-crescentMask)" />
-              <path fill="#151515" d="M0 300 C80 270 140 285 220 295 C320 308 430 260 530 280 C620 300 710 275 800 290 L800 500 L0 500 Z" />
-              <path fill="#0F0F0F" d="M0 340 C90 295 190 325 280 350 C390 375 500 300 610 325 C700 345 760 320 800 335 L800 500 L0 500 Z" />
-              <path fill="#050505" d="M0 395 C70 365 150 390 250 410 C360 430 470 380 590 400 C700 420 760 390 800 405 L800 500 L0 500 Z" />
             </svg>
 
             {/* Subtle dark overlay that lifts when form is focused */}
@@ -3189,6 +3517,7 @@ export default function App() {
 
         </div>
       </section>
+      </>}
 
       </div>
 

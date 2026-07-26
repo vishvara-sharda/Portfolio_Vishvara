@@ -423,22 +423,12 @@ export default function DesignerMind() {
 
   // no .section — zero side padding keeps the star field and SVG full-bleed
   return (
-    <section className="dm-section" style={{ position: 'relative', backgroundColor: 'transparent', overflow: 'hidden', padding: '120px 0 100px 0' }}>
+    <section className="dm-section" style={{ position: 'relative', backgroundColor: 'transparent', overflow: 'hidden', padding: '20px 0 0 0' }}>
 
       <DesignerMindStyles />
 
       {/* Background stars */}
       <BackgroundStars />
-
-      {/* Header */}
-      <div style={{ position:'relative', zIndex:1, padding:'0 20px' }}>
-        <h2 style={{ fontFamily:"'Sora',sans-serif", fontWeight:700, fontSize:'clamp(2.2rem,4vw,3.8rem)', color:'var(--color-lemon)', textAlign:'center', lineHeight:1.08, margin:'0 0 16px 0' }}>
-          BRAIN
-        </h2>
-        <div className="dm-header-sub" style={{ textAlign:'center', maxWidth:'820px', margin:'0 auto 80px auto', fontFamily:"'DM Sans',sans-serif", fontSize:'15px', lineHeight:1.9, color:'rgba(255,255,255,0.6)' }}>
-          <p style={{ margin:0 }}><em style={{ color:'rgba(255,255,255,0.38)' }}>it's all connected, if you're willing to follow the thread.</em></p>
-        </div>
-      </div>
 
       {/* SVG */}
       <div style={{ position:'relative', zIndex:1 }}>

@@ -22,7 +22,7 @@ function donutPath(cx: number, cy: number, outerR: number, innerR: number) {
   return `${outer} ${inner}`;
 }
 
-export default function DesignLensSection() {
+export default function DesignLensSection({ compact = false }: { compact?: boolean }) {
   const [active, setActive] = useState<number | null>(null);
   const [locked, setLocked]  = useState<number | null>(null);
 
@@ -38,8 +38,8 @@ export default function DesignLensSection() {
     });
   }
 
-  return (
-    <section className="section" style={{ background: "transparent", overflow: "hidden" }} onClick={() => { setLocked(null); setActive(null); }}>
+  const inner = (
+    <>
       <style>{`
         .dl-ring { transition: opacity 0.3s ease; }
         .dl-desc-enter { animation: dl-fade-in 0.3s ease forwards; }
@@ -47,18 +47,20 @@ export default function DesignLensSection() {
         @keyframes shadow-orbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
       `}</style>
 
-      <div style={{ textAlign: "center", marginBottom: "56px" }}>
-        <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.75rem", letterSpacing: "0.25em", color: "#888", textTransform: "uppercase", margin: "0 0 12px" }}>
-          how i see design
-        </p>
-        <h2 style={{ fontFamily: "'Sora', sans-serif", fontWeight: 700, fontSize: "clamp(2.2rem, 4vw, 3.8rem)", color: "var(--color-lemon)", margin: 0, lineHeight: 1.1 }}>
-          Design Lens
-        </h2>
-      </div>
+      {!compact && (
+        <div style={{ textAlign: "center", marginBottom: "56px" }}>
+          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.75rem", letterSpacing: "0.25em", color: "#888", textTransform: "uppercase", margin: "0 0 12px" }}>
+            how i see design
+          </p>
+          <h2 style={{ fontFamily: "'Sora', sans-serif", fontWeight: 700, fontSize: "clamp(2.2rem, 4vw, 3.8rem)", color: "var(--color-lemon)", margin: 0, lineHeight: 1.1 }}>
+            Design Lens
+          </h2>
+        </div>
+      )}
 
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "40px" }}>
         {/* barrel rim — the cylinder edge that gives depth */}
-        <div style={{ position: "relative", width: "min(900px, 92vw)", height: "min(900px, 92vw)" }}>
+        <div style={{ position: "relative", width: "min(810px, 83vw)", height: "min(810px, 83vw)" }}>
           {/* cast shadow — orbits the lens center */}
           <div style={{ position: "absolute", inset: 0, animation: "shadow-orbit 8s linear infinite", zIndex: 0 }}>
             <div style={{
@@ -74,7 +76,7 @@ export default function DesignLensSection() {
           <div style={{
             position: "absolute", inset: "1.5%",
             borderRadius: "50%",
-            background: "conic-gradient(from 208deg, rgba(255,255,255,0.30) 0deg, rgba(200,200,230,0.12) 50deg, rgba(0,0,0,0.04) 110deg, rgba(0,0,0,0.26) 190deg, rgba(0,0,0,0.58) 275deg, rgba(140,140,175,0.15) 330deg, rgba(255,255,255,0.30) 360deg)",
+            background: "conic-gradient(from 208deg, rgba(210,238,255,0.65) 0deg, rgba(150,205,255,0.22) 50deg, rgba(0,10,30,0.05) 110deg, rgba(0,0,0,0.32) 190deg, rgba(0,0,0,0.68) 275deg, rgba(130,185,240,0.25) 330deg, rgba(210,238,255,0.65) 360deg)",
             animation: "shadow-orbit 8s linear infinite",
             zIndex: 1,
             pointerEvents: "none",
@@ -84,7 +86,7 @@ export default function DesignLensSection() {
             position: "absolute", inset: "4%",
             borderRadius: "50%",
             background: "transparent",
-            boxShadow: "inset 0 -6px 24px rgba(0,0,0,0.9), inset 0 4px 14px rgba(255,255,255,0.15), 0 0 0 2px rgba(255,255,255,0.24), 0 3px 0 2px rgba(0,0,0,0.7)",
+            boxShadow: "inset 0 -8px 28px rgba(0,0,0,0.88), inset 0 5px 20px rgba(160,215,255,0.28), 0 0 0 2.5px rgba(160,215,255,0.45), 0 3px 0 2px rgba(0,0,0,0.7)",
             zIndex: 2,
             pointerEvents: "none",
           }} />
@@ -104,15 +106,42 @@ export default function DesignLensSection() {
             {rings.map((ring, i) => (
               <path key={i} id={`ring-path-${i}`} d={circularPath(CX, CY, ring.textR)} />
             ))}
-            <radialGradient id="lens-bg" cx="40%" cy="35%" r="60%">
-              <stop offset="0%" stopColor="#2a2a3e" />
-              <stop offset="60%" stopColor="#0f0d1a" />
-              <stop offset="100%" stopColor="#050308" />
+            {/* semi-transparent glass body — lets background show through */}
+            <radialGradient id="lens-bg" cx="38%" cy="32%" r="65%">
+              <stop offset="0%"   stopColor="#1a3555" stopOpacity="0.28" />
+              <stop offset="45%"  stopColor="#0a1828" stopOpacity="0.42" />
+              <stop offset="100%" stopColor="#040810" stopOpacity="0.55" />
+            </radialGradient>
+            {/* pale blue glass wash */}
+            <radialGradient id="lens-blue-wash" cx="50%" cy="50%" r="58%">
+              <stop offset="0%"   stopColor="#C0DEFF" stopOpacity="0.22" />
+              <stop offset="100%" stopColor="#93C5FD" stopOpacity="0.07" />
+            </radialGradient>
+            {/* specular highlight — bright catch-light upper-left */}
+            <radialGradient id="lens-spec" cx="27%" cy="22%" r="38%">
+              <stop offset="0%"   stopColor="#ffffff" stopOpacity="0.22" />
+              <stop offset="55%"  stopColor="#c8e8ff" stopOpacity="0.06" />
+              <stop offset="100%" stopColor="#93C5FD" stopOpacity="0"   />
+            </radialGradient>
+            {/* pink tint — reduced, just a whisper */}
+            <radialGradient id="lens-pink" cx="30%" cy="28%" r="50%">
+              <stop offset="0%"   stopColor="#F2A7C4" stopOpacity="0.05" />
+              <stop offset="100%" stopColor="#F2A7C4" stopOpacity="0"   />
+            </radialGradient>
+            {/* sky tint — lower-right refraction exit */}
+            <radialGradient id="lens-sky" cx="70%" cy="72%" r="52%">
+              <stop offset="0%"   stopColor="#93C5FD" stopOpacity="0.28" />
+              <stop offset="100%" stopColor="#93C5FD" stopOpacity="0"   />
             </radialGradient>
           </defs>
 
           {/* background + reset click */}
           <circle cx={CX} cy={CY} r={284} fill="url(#lens-bg)" stroke="rgba(255,255,255,0.06)" strokeWidth={1} onClick={() => { setLocked(null); setActive(null); }} style={{ cursor: "default" }} />
+          {/* colour tints layered over the glass */}
+          <circle cx={CX} cy={CY} r={284} fill="url(#lens-blue-wash)" pointerEvents="none" />
+          <circle cx={CX} cy={CY} r={284} fill="url(#lens-pink)"      pointerEvents="none" />
+          <circle cx={CX} cy={CY} r={284} fill="url(#lens-sky)"       pointerEvents="none" />
+          <circle cx={CX} cy={CY} r={284} fill="url(#lens-spec)"      pointerEvents="none" />
 
           {/* tick marks */}
           {Array.from({ length: 72 }).map((_, i) => {
@@ -126,8 +155,8 @@ export default function DesignLensSection() {
           {[...rings].reverse().map((ring, ri) => {
             const i = rings.length - 1 - ri;
             const isActive = displayed === i;
-            const fontSize = ring.r > 200 ? 13 : ring.r > 130 ? 11 : ring.r > 80 ? 9 : 8;
-            const subSize  = ring.r > 200 ? 11 : ring.r > 130 ? 9  : ring.r > 80 ? 8  : 7;
+            const fontSize = ring.r > 200 ? 15 : ring.r > 130 ? 13 : ring.r > 80 ? 11 : 9;
+            const subSize  = ring.r > 200 ? 12 : ring.r > 130 ? 10 : ring.r > 80 ? 9  : 8;
             return (
               <g key={i} className="dl-ring" style={{ opacity: displayed === null || isActive ? 1 : 0.2 }}>
                 <animateTransform
@@ -143,11 +172,11 @@ export default function DesignLensSection() {
                   strokeWidth={isActive ? 2 : 0.75}
                   style={{ filter: isActive ? "drop-shadow(0 0 8px rgba(255,255,255,0.5))" : "none", transition: "all 0.3s ease" }}
                 />
-                <text textAnchor="middle" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: fontSize, fontWeight: 700, letterSpacing: "0.2em", fill: isActive ? "#fff" : "rgba(255,255,255,0.7)" }}>
+                <text textAnchor="middle" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: fontSize, fontWeight: 800, letterSpacing: "0.2em", fill: isActive ? "#fff" : "rgba(255,255,255,0.7)" }}>
                   <textPath href={`#ring-path-${i}`} startOffset="25%">{ring.label}</textPath>
                 </text>
                 {ring.r > 60 && (
-                  <text textAnchor="middle" style={{ fontFamily: "'Sora', sans-serif", fontSize: subSize, fontWeight: 400, fontStyle: "italic", letterSpacing: "0.06em", fill: isActive ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.3)" }}>
+                  <text textAnchor="middle" style={{ fontFamily: "'Sora', sans-serif", fontSize: subSize, fontWeight: 600, fontStyle: "italic", letterSpacing: "0.06em", fill: isActive ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.3)" }}>
                     <textPath href={`#ring-path-${i}`} startOffset="75%">{ring.sub}</textPath>
                   </text>
                 )}
@@ -176,13 +205,20 @@ export default function DesignLensSection() {
           <div style={{
             position: "absolute", inset: "4%",
             borderRadius: "50%",
-            background: "radial-gradient(ellipse at 26% 16%, rgba(255,255,255,0.22) 0%, var(--color-border-glass) 32%, transparent 58%)",
+            background: "radial-gradient(ellipse at 26% 16%, rgba(200,228,255,0.28) 0%, rgba(147,197,253,0.08) 32%, transparent 58%)",
             zIndex: 4,
             pointerEvents: "none",
           }} />
         </div>
 
       </div>
+    </>
+  );
+
+  if (compact) return <div onClick={() => { setLocked(null); setActive(null); }}>{inner}</div>;
+  return (
+    <section className="section" style={{ background: "transparent", overflow: "hidden" }} onClick={() => { setLocked(null); setActive(null); }}>
+      {inner}
     </section>
   );
 }
