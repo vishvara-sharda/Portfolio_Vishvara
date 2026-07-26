@@ -250,10 +250,10 @@ DesignerMindStyles.displayName = 'DesignerMindStyles';
 
 export function SectionRail({ label }: { label: string }) {
   return (
-    <div style={{ position: "absolute", left: "16px", top: "50%", transform: "translateY(-50%)", display: "flex", flexDirection: "column", alignItems: "center", height: "60vh", zIndex: 10, pointerEvents: "none" }}>
+    <div style={{ position: "absolute", left: "2px", top: "50%", transform: "translateY(-50%)", display: "flex", flexDirection: "column", alignItems: "center", height: "80vh", zIndex: 10, pointerEvents: "none", overflow: "visible" }}>
       <div style={{ width: 1, flex: 1, background: "#E8E4C9", opacity: 0.18 }} />
       <div style={{ height: 10 }} />
-      <span style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontStyle: "normal", fontSize: "13px", letterSpacing: "0.22em", textTransform: "uppercase" as const, color: "#C9C4B8", opacity: 0.35, writingMode: "vertical-rl" as const, transform: "rotate(180deg)", userSelect: "none" as const }}>
+      <span style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontStyle: "normal", fontSize: "28px", letterSpacing: "0.22em", textTransform: "uppercase" as const, color: "#C9C4B8", opacity: 0.35, writingMode: "vertical-rl" as const, transform: "rotate(180deg)", userSelect: "none" as const }}>
         {label}
       </span>
       <div style={{ height: 10 }} />
