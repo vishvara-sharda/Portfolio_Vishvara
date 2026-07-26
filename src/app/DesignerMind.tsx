@@ -248,6 +248,20 @@ const DesignerMindStyles = memo(() => (
 ));
 DesignerMindStyles.displayName = 'DesignerMindStyles';
 
+export function SectionRail({ label }: { label: string }) {
+  return (
+    <div style={{ position: "absolute", left: "8px", top: "50%", transform: "translateY(-50%)", display: "flex", flexDirection: "column", alignItems: "center", height: "60vh", zIndex: 10, pointerEvents: "none" }}>
+      <div style={{ width: 1, flex: 1, background: "#E8E4C9", opacity: 0.18 }} />
+      <div style={{ height: 10 }} />
+      <span style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontStyle: "normal", fontSize: "18px", letterSpacing: "0.22em", textTransform: "uppercase" as const, color: "#C9C4B8", opacity: 0.35, writingMode: "vertical-rl" as const, transform: "rotate(180deg)", userSelect: "none" as const }}>
+        {label}
+      </span>
+      <div style={{ height: 10 }} />
+      <div style={{ width: 1, flex: 1, background: "#E8E4C9", opacity: 0.18 }} />
+    </div>
+  );
+}
+
 export default function DesignerMind() {
   const svgRef = useRef<SVGSVGElement>(null);
 
@@ -426,6 +440,8 @@ export default function DesignerMind() {
     <section className="dm-section" style={{ position: 'relative', backgroundColor: 'transparent', overflow: 'hidden', padding: '20px 0 0 0' }}>
 
       <DesignerMindStyles />
+
+      <SectionRail label="I think in systems" />
 
       {/* Background stars */}
       <BackgroundStars />

@@ -1791,12 +1791,6 @@ export default function App() {
                   transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                   style={{ position: "absolute", inset: 0, background: "var(--color-bg)", zIndex: 2, overflow: "hidden" }}
                 >
-                  {/* Left label */}
-                  <div style={{ position: "absolute", left: 80, top: "50%", transform: "translateY(-50%)", zIndex: 10, display: "flex", flexDirection: "column", gap: 6 }}>
-                    <h2 style={{ fontFamily: "'Sora', sans-serif", fontWeight: 50, fontStyle: "italic", fontSize: "28px", color: "var(--foreground)", margin: 0, lineHeight: 1.15, letterSpacing: "0.02em", writingMode: "vertical-rl", transform: "rotate(180deg)", opacity: 0.55 }}>
-                      I think in systems
-                    </h2>
-                  </div>
                   <div style={{ transform: "scale(0.72) translateX(8%) translateY(-8%)", transformOrigin: "top center", width: "100%" }}>
                     <DesignerMind />
                   </div>
