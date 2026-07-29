@@ -609,9 +609,6 @@ export default function DesignLensSection() {
 
   const showStatic = reduced || isMobile;
 
-  if (process.env.NODE_ENV !== 'production') {
-    console.log('[DesignLens]', showStatic ? `STATIC (reduced=${reduced}, mobile=${isMobile})` : 'ANIMATED', { forceMotion });
-  }
 
   return (
     <section aria-label="Design Lens" style={{ position: 'relative' }}>
