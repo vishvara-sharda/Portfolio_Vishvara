@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useRef, useState, Fragment } from "react";
+﻿import React, { useEffect, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import { motion, AnimatePresence } from 'motion/react';
 import CaseStudyPage from "./CaseStudyPage";
@@ -14,7 +14,6 @@ import profileImg from "./components/Pictures/me1.png";
 import heartUrl from "../imports/logo/heart.svg";
 import starUrl from "../imports/logo/star.svg";
 import murmurBannerUrl from "../imports/Murmur/banner.png";
-import telescopeImg from "../imports/telescope.png";
 
 function YouTubeFacade({ videoId, title, borderRadius = "14px" }: { videoId: string; title: string; borderRadius?: string }) {
   const [active, setActive] = React.useState(false);
