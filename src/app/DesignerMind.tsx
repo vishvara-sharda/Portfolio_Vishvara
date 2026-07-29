@@ -112,6 +112,21 @@ const CLUSTERS = [
     animClass: 'dm-float-6',
   },
   {
+    id: 'business_metrics', idx: 8,
+    label: 'Business Metrics', cx: 110, cy: 315, color: '#A8C4B0',
+    nodes: [
+      { id: 'bm_main', label: 'Business Metrics', dx: 0,   dy: 0,   r: 5,   primary: true,  desc: '' },
+      { id: 'bm_kpi',  label: 'KPIs',             dx: 42,  dy: -28, r: 3.5, primary: false, desc: 'Knowing what to measure before you ship' },
+      { id: 'bm_conv', label: 'Conversion',        dx: 45,  dy: 20,  r: 3,   primary: false, desc: 'Where intent becomes action' },
+      { id: 'bm_ret',  label: 'Retention',         dx: -32, dy: -38, r: 3,   primary: false, desc: 'The real test of whether design works' },
+      { id: 'bm_nps',  label: 'NPS',               dx: -38, dy: 28,  r: 3,   primary: false, desc: 'Sentiment as a signal, not a score' },
+      { id: 'bm_rev',  label: 'Revenue Impact',    dx: 12,  dy: 48,  r: 3.5, primary: false, desc: 'Design decisions always have a business cost or return' },
+    ],
+    internalEdges: [['bm_main','bm_kpi'],['bm_main','bm_conv'],['bm_main','bm_ret'],['bm_main','bm_nps'],['bm_kpi','bm_rev'],['bm_conv','bm_rev']],
+    philosophy: "Good design isn't separate from business outcomes — it IS the business outcome. I try to speak the language of metrics not because I'm chasing numbers, but because it's how I make the case for putting people first.",
+    animClass: 'dm-float-8',
+  },
+  {
     id: 'future', idx: 7,
     label: 'Future & Exploration', cx: 632, cy: 572, color: '#B8C4E8',
     nodes: [
@@ -139,6 +154,8 @@ const BRIDGES = [
   { source: 'd_main',   target: 'st_main' },
   { source: 'st_main',  target: 'c_main'  },
   { source: 'c_main',   target: 'f_main'  },
+  { source: 'bm_main',  target: 's_main'  },
+  { source: 'bm_main',  target: 'hu_main' },
 ];
 
 // Flat nodeId → absolute SVG position
@@ -152,7 +169,7 @@ function nodeClusterId(nodeId: string): string {
   const map: Record<string, string> = {
     hu: 'human_understanding', r: 'research',  s: 'strategy',
     bd: 'behavioral_design',   d: 'design',    st: 'storytelling',
-    c:  'creativity',          f: 'future',
+    c:  'creativity',          f: 'future',    bm: 'business_metrics',
   };
   return map[nodeId.split('_')[0]] || '';
 }
@@ -163,13 +180,6 @@ const ALL_NODE_IDS: string[] = CLUSTERS.reduce<string[]>((acc, c) => {
   return acc;
 }, []);
 
-// Deterministic background stars
-const BG_STARS = Array.from({ length: 60 }, (_, i) => ({
-  x: (Math.abs(Math.sin(i * 127.1 + 1) * 43758.5)) % 100,
-  y: (Math.abs(Math.sin(i * 311.7 + 2) * 43758.5)) % 100,
-  r: 0.3 + (Math.abs(Math.sin(i * 53.9)) * 0.7),
-  opacity: 0.08 + (Math.abs(Math.sin(i * 79.3)) * 0.12),
-}));
 
 type HoveredNode = { id: string; label: string; desc: string; r: number; primary: boolean; clusterColor: string };
 type HoveredLine  = { kind: 'spoke'; clusterId: string } | { kind: 'bridge'; idx: number };
@@ -223,12 +233,12 @@ const DesignerMindStyles = memo(() => (
     .dm-float-5{animation:dm-float-B 13s ease-in-out infinite 5s; will-change: transform; transform: translate3d(0,0,0); backface-visibility: hidden;}
     .dm-float-6{animation:dm-float-C 15s ease-in-out infinite 6s; will-change: transform; transform: translate3d(0,0,0); backface-visibility: hidden;}
     .dm-float-7{animation:dm-float-D  8s ease-in-out infinite 7s; will-change: transform; transform: translate3d(0,0,0); backface-visibility: hidden;}
+    .dm-float-8{animation:dm-float-B 13s ease-in-out infinite 9s; will-change: transform; transform: translate3d(0,0,0); backface-visibility: hidden;}
     @keyframes dm-spoke-pulse  { 0%,100%{opacity:.18} 50%{opacity:.40} }
     @keyframes dm-bridge-pulse { 0%,100%{opacity:.26} 50%{opacity:.50} }
     .dm-svg{width:100%;height:1000px;overflow:visible}
     @media(max-width:768px){
       .dm-svg{height:640px;pointer-events:none}
-      .dm-section{padding:60px 0 60px 0 !important}
       .dm-header-sub{margin-bottom:32px !important}
     }
     @media(prefers-reduced-motion:reduce){
@@ -250,15 +260,200 @@ DesignerMindStyles.displayName = 'DesignerMindStyles';
 
 export function SectionRail({ label }: { label: string }) {
   return (
-    <div style={{ position: "absolute", left: "4px", top: "50%", transform: "translateY(-50%)", display: "flex", flexDirection: "column", alignItems: "center", height: "80vh", zIndex: 10, pointerEvents: "none", overflow: "visible" }}>
-      <div style={{ width: 1, flex: 1, background: "#E8E4C9", opacity: 0.18 }} />
-      <div style={{ height: 10 }} />
-      <span style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontStyle: "normal", fontSize: "28px", letterSpacing: "0.22em", textTransform: "uppercase" as const, color: "#C9C4B8", opacity: 0.35, writingMode: "vertical-rl" as const, transform: "rotate(180deg)", userSelect: "none" as const }}>
-        {label}
-      </span>
-      <div style={{ height: 10 }} />
-      <div style={{ width: 1, flex: 1, background: "#E8E4C9", opacity: 0.18 }} />
+    <div style={{ position: "absolute", left: -200, top: "50%", transform: "translateY(-50%) rotate(180deg)", writingMode: "vertical-rl" as const, fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: 28, letterSpacing: "0.22em", textTransform: "uppercase" as const, color: "#C9C4B8", opacity: 0.35, zIndex: 50, pointerEvents: "none", userSelect: "none" as const }}>
+      {label}
     </div>
+  );
+}
+
+// ── DM STARFIELD ──────────────────────────────────────────────────────────────
+function dmr(s: number) { const x = Math.sin(s + 7) * 10000; return x - Math.floor(x); }
+
+const DM_STATIC = Array.from({ length: 150 }, (_, i) => ({
+  x: dmr(i * 4)     * 1200,
+  y: dmr(i * 4 + 1) * 1200,
+  r: dmr(i * 4 + 2) * 1.3 + 0.4,
+  op: dmr(i * 4 + 3) * 0.35 + 0.1,
+}));
+
+const DM_BLINK = Array.from({ length: 150 }, (_, i) => ({
+  x:   dmr((i + 150) * 4)     * 1200,
+  y:   dmr((i + 150) * 4 + 1) * 1200,
+  r:   dmr((i + 150) * 4 + 2) * 1.5 + 0.5,
+  dur: (dmr((i + 150) * 4 + 3) * 3 + 2).toFixed(1),
+  del: (dmr((i + 150) * 4)     * 6).toFixed(1),
+}));
+
+function DMStarfield() {
+  return (
+    <>
+      <style>{`
+        @keyframes dm-star-blink { 0%,100%{opacity:0.05} 50%{opacity:0.65} }
+        @media(prefers-reduced-motion:reduce){.dm-star-blink{animation:none!important;opacity:0.25}}
+      `}</style>
+      <svg
+        aria-hidden
+        viewBox="0 0 1200 1200"
+        preserveAspectRatio="xMidYMid slice"
+        style={{ position:'absolute', top:0, left:0, width:'100%', height:'100%', pointerEvents:'none', zIndex:0 }}
+      >
+        <defs>
+          {/* galaxy halo — soft disk glow */}
+          <filter id="dm-halo"  x="-80%"  y="-80%"  width="260%" height="260%"><feGaussianBlur stdDeviation="6"/></filter>
+          {/* galaxy arms — almost sharp so structure shows */}
+          <filter id="dm-arm"   x="-30%"  y="-30%"  width="160%" height="160%"><feGaussianBlur stdDeviation="1.8"/></filter>
+          {/* galaxy core — tight glow */}
+          <filter id="dm-core"  x="-60%"  y="-60%"  width="220%" height="220%"><feGaussianBlur stdDeviation="3"/></filter>
+          {/* nebula outer wisp */}
+          <filter id="dm-nw"    x="-60%"  y="-60%"  width="220%" height="220%"><feGaussianBlur stdDeviation="18"/></filter>
+          {/* nebula inner dense cloud */}
+          <filter id="dm-nd"    x="-40%"  y="-40%"  width="180%" height="180%"><feGaussianBlur stdDeviation="8"/></filter>
+          {/* nebula bright knots */}
+          <filter id="dm-nk"    x="-60%"  y="-60%"  width="220%" height="220%"><feGaussianBlur stdDeviation="3"/></filter>
+
+          <radialGradient id="dm-gal-g" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"   stopColor="#E8E4C9" stopOpacity="0.9"/>
+            <stop offset="35%"  stopColor="#C9C4B8" stopOpacity="0.3"/>
+            <stop offset="100%" stopColor="#C9C4B8" stopOpacity="0"/>
+          </radialGradient>
+        </defs>
+
+        {/* ══ NEBULAE ══ */}
+
+        {/* Warm emission nebula — top-center. Three lobes at different angles. */}
+        <g transform="translate(575,175) scale(0.45) translate(-575,-175)" opacity="0.22">
+          {/* outer wisp */}
+          <ellipse cx="570" cy="175" rx="180" ry="110" fill="#C9A96E" fillOpacity="0.07" filter="url(#dm-nw)"/>
+          {/* lobe A */}
+          <ellipse cx="555" cy="160" rx="90"  ry="55"  fill="#F2EDCB" fillOpacity="0.13" filter="url(#dm-nd)" transform="rotate(-15,555,160)"/>
+          {/* lobe B offset */}
+          <ellipse cx="620" cy="190" rx="70"  ry="42"  fill="#F2EDCB" fillOpacity="0.11" filter="url(#dm-nd)" transform="rotate(20,620,190)"/>
+          {/* lobe C — smaller, tilted */}
+          <ellipse cx="535" cy="210" rx="50"  ry="28"  fill="#F2EDCB" fillOpacity="0.1"  filter="url(#dm-nd)" transform="rotate(-40,535,210)"/>
+          {/* emission knots */}
+          <circle cx="572" cy="158" r="18" fill="#F5F0D8" fillOpacity="0.28" filter="url(#dm-nk)"/>
+          <circle cx="608" cy="182" r="12" fill="#F5F0D8" fillOpacity="0.22" filter="url(#dm-nk)"/>
+          <circle cx="545" cy="198" r="9"  fill="#F5F0D8" fillOpacity="0.18" filter="url(#dm-nk)"/>
+          {/* embedded stars */}
+          <circle cx="574" cy="156" r="1.2" fill="#fff" opacity="0.9"/>
+          <circle cx="609" cy="180" r="0.9" fill="#fff" opacity="0.8"/>
+          <circle cx="548" cy="200" r="0.8" fill="#fff" opacity="0.7"/>
+        </g>
+
+        {/* Cool reflection nebula — bottom-left. Elongated wisps. */}
+        <g transform="translate(195,948) scale(0.45) translate(-195,-948)" opacity="0.2">
+          <ellipse cx="195" cy="948" rx="200" ry="120" fill="#8BA0B8" fillOpacity="0.06" filter="url(#dm-nw)"/>
+          <ellipse cx="185" cy="935" rx="95"  ry="50"  fill="#B8C4D8" fillOpacity="0.12" filter="url(#dm-nd)" transform="rotate(-25,185,935)"/>
+          <ellipse cx="230" cy="968" rx="75"  ry="38"  fill="#B8C4D8" fillOpacity="0.1"  filter="url(#dm-nd)" transform="rotate(10,230,968)"/>
+          <ellipse cx="155" cy="960" rx="55"  ry="30"  fill="#B8C4D8" fillOpacity="0.09" filter="url(#dm-nd)" transform="rotate(-50,155,960)"/>
+          <circle cx="188" cy="932" r="16" fill="#C8D4E4" fillOpacity="0.24" filter="url(#dm-nk)"/>
+          <circle cx="232" cy="966" r="10" fill="#C8D4E4" fillOpacity="0.18" filter="url(#dm-nk)"/>
+          <circle cx="192" cy="932" r="1.1" fill="#D8E8F8" opacity="0.85"/>
+          <circle cx="234" cy="965" r="0.8" fill="#D8E8F8" opacity="0.75"/>
+        </g>
+
+        {/* Violet nebula — right. Tall irregular cloud. */}
+        <g transform="translate(1105,575) scale(0.45) translate(-1105,-575)" opacity="0.18">
+          <ellipse cx="1105" cy="575" rx="140" ry="200" fill="#9878B8" fillOpacity="0.06" filter="url(#dm-nw)"/>
+          <ellipse cx="1095" cy="555" rx="65"  ry="95"  fill="#C8B4D8" fillOpacity="0.12" filter="url(#dm-nd)" transform="rotate(-12,1095,555)"/>
+          <ellipse cx="1120" cy="610" rx="50"  ry="70"  fill="#C8B4D8" fillOpacity="0.1"  filter="url(#dm-nd)" transform="rotate(18,1120,610)"/>
+          <ellipse cx="1080" cy="540" rx="40"  ry="55"  fill="#C8B4D8" fillOpacity="0.09" filter="url(#dm-nd)" transform="rotate(-30,1080,540)"/>
+          <circle cx="1097" cy="552" r="14" fill="#D8C8E8" fillOpacity="0.26" filter="url(#dm-nk)"/>
+          <circle cx="1122" cy="608" r="9"  fill="#D8C8E8" fillOpacity="0.2"  filter="url(#dm-nk)"/>
+          <circle cx="1099" cy="550" r="1.0" fill="#E8D8F8" opacity="0.85"/>
+          <circle cx="1124" cy="607" r="0.7" fill="#E8D8F8" opacity="0.72"/>
+        </g>
+
+        {/* ══ GALAXIES ══ */}
+
+        {/* Edge-on lenticular — top-right. Thin lens with dust lane. */}
+        <g transform="translate(1020,128) rotate(-18) scale(0.4)" opacity="0.2">
+          {/* outer halo */}
+          <ellipse cx="0" cy="0" rx="88" ry="18" fill="url(#dm-gal-g)" filter="url(#dm-halo)"/>
+          {/* bright disk */}
+          <ellipse cx="0" cy="0" rx="70" ry="8"  fill="#E8E4C9" fillOpacity="0.45" filter="url(#dm-arm)"/>
+          {/* dust lane — dark strip across mid */}
+          <ellipse cx="0" cy="0" rx="55" ry="2"  fill="#0a0a0a" fillOpacity="0.5"/>
+          {/* inner bright bulge */}
+          <ellipse cx="0" cy="0" rx="22" ry="6"  fill="#F2EDCB" fillOpacity="0.65" filter="url(#dm-core)"/>
+          {/* star-like core */}
+          <circle cx="0" cy="0" r="1.8" fill="#fff" opacity="0.98"/>
+          {/* scattered foreground stars */}
+          <circle cx="38"  cy="-3"  r="0.7" fill="#E8E4C9" opacity="0.6"/>
+          <circle cx="-42" cy="2"   r="0.6" fill="#E8E4C9" opacity="0.5"/>
+          <circle cx="18"  cy="4"   r="0.5" fill="#E8E4C9" opacity="0.55"/>
+        </g>
+
+        {/* Face-on two-arm spiral — bottom-right. Visible arms + star clusters. */}
+        <g transform="translate(1048,952) scale(0.4)" opacity="0.22">
+          {/* outer disk halo */}
+          <ellipse cx="0" cy="0" rx="62" ry="58" fill="url(#dm-gal-g)" filter="url(#dm-halo)"/>
+          {/* arm A */}
+          <path d="M4 -8 Q22 -28 46 -18 Q60 -8 56 12 Q50 28 36 38"
+            stroke="#E8E4C9" strokeWidth="3.5" fill="none" strokeLinecap="round" opacity="0.55" filter="url(#dm-arm)"/>
+          {/* arm B (opposite) */}
+          <path d="M-4 8 Q-22 28 -46 18 Q-60 8 -56 -12 Q-50 -28 -36 -38"
+            stroke="#E8E4C9" strokeWidth="3.5" fill="none" strokeLinecap="round" opacity="0.55" filter="url(#dm-arm)"/>
+          {/* inner disk */}
+          <circle cx="0" cy="0" r="16" fill="#E8E4C9" fillOpacity="0.22" filter="url(#dm-core)"/>
+          {/* bulge */}
+          <circle cx="0" cy="0" r="7"  fill="#F2EDCB" fillOpacity="0.55" filter="url(#dm-core)"/>
+          {/* core */}
+          <circle cx="0" cy="0" r="2"  fill="#fff"    opacity="0.96"/>
+          {/* star clusters on arms */}
+          <circle cx="40"  cy="-15" r="1.2" fill="#E8E4C9" opacity="0.75"/>
+          <circle cx="52"  cy="4"   r="0.9" fill="#E8E4C9" opacity="0.65"/>
+          <circle cx="-40" cy="15"  r="1.2" fill="#E8E4C9" opacity="0.75"/>
+          <circle cx="-52" cy="-4"  r="0.9" fill="#E8E4C9" opacity="0.65"/>
+          <circle cx="24"  cy="-26" r="0.8" fill="#E8E4C9" opacity="0.6"/>
+          <circle cx="-24" cy="26"  r="0.8" fill="#E8E4C9" opacity="0.6"/>
+        </g>
+
+        {/* Barred spiral — bottom-center. Clear bar + bent arms. */}
+        <g transform="translate(318,1060) rotate(22) scale(0.4)" opacity="0.2">
+          <ellipse cx="0" cy="0" rx="65" ry="60" fill="url(#dm-gal-g)" filter="url(#dm-halo)"/>
+          {/* bar */}
+          <ellipse cx="0" cy="0" rx="34" ry="5"  fill="#E8E4C9" fillOpacity="0.55" filter="url(#dm-arm)"/>
+          {/* arm from right end of bar — curves up */}
+          <path d="M34 0 Q50 -20 44 -44 Q38 -58 22 -58"
+            stroke="#E8E4C9" strokeWidth="3" fill="none" strokeLinecap="round" opacity="0.5" filter="url(#dm-arm)"/>
+          {/* arm from left end — curves down */}
+          <path d="M-34 0 Q-50 20 -44 44 Q-38 58 -22 58"
+            stroke="#E8E4C9" strokeWidth="3" fill="none" strokeLinecap="round" opacity="0.5" filter="url(#dm-arm)"/>
+          {/* core */}
+          <circle cx="0" cy="0" r="8"  fill="#F2EDCB" fillOpacity="0.5"  filter="url(#dm-core)"/>
+          <circle cx="0" cy="0" r="2"  fill="#fff"    opacity="0.95"/>
+          {/* bar-end star clusters */}
+          <circle cx="34"  cy="0"   r="1.1" fill="#E8E4C9" opacity="0.7"/>
+          <circle cx="-34" cy="0"   r="1.1" fill="#E8E4C9" opacity="0.7"/>
+          <circle cx="42"  cy="-30" r="0.9" fill="#E8E4C9" opacity="0.6"/>
+          <circle cx="-42" cy="30"  r="0.9" fill="#E8E4C9" opacity="0.6"/>
+        </g>
+
+        {/* Compact elliptical — left-mid. Smooth gradient, no arms. */}
+        <g transform="translate(68,558) rotate(14) scale(0.4)" opacity="0.18">
+          <ellipse cx="0" cy="0" rx="48" ry="33" fill="url(#dm-gal-g)" filter="url(#dm-halo)"/>
+          <ellipse cx="0" cy="0" rx="28" ry="18" fill="#E8E4C9" fillOpacity="0.35" filter="url(#dm-core)"/>
+          <ellipse cx="0" cy="0" rx="12" ry="8"  fill="#F2EDCB" fillOpacity="0.55" filter="url(#dm-core)"/>
+          <circle  cx="0" cy="0" r="1.8" fill="#fff" opacity="0.95"/>
+          <circle  cx="18" cy="-8"  r="0.7" fill="#E8E4C9" opacity="0.55"/>
+          <circle  cx="-20" cy="9"  r="0.6" fill="#E8E4C9" opacity="0.5"/>
+        </g>
+
+        {/* ── Stars ── */}
+        {DM_STATIC.map((s, i) => (
+          <circle key={i} cx={s.x} cy={s.y} r={s.r} fill="#E8E4C9" opacity={s.op} />
+        ))}
+        {DM_BLINK.map((s, i) => (
+          <circle
+            key={i}
+            cx={s.x} cy={s.y} r={s.r}
+            fill="#E8E4C9"
+            style={{ animation: `dm-star-blink ${s.dur}s ease-in-out ${s.del}s infinite` }}
+          />
+        ))}
+      </svg>
+    </>
   );
 }
 
@@ -435,19 +630,16 @@ export default function DesignerMind() {
     setHoveredNode(null);
   }, []);
 
-  // no .section — zero side padding keeps the star field and SVG full-bleed
   return (
-    <section className="dm-section" style={{ position: 'relative', backgroundColor: 'transparent', overflow: 'visible', padding: '20px 0 0 0' }}>
+    <section style={{ position: 'relative', background: 'transparent', overflow: 'visible' }}>
 
+      <DMStarfield />
       <DesignerMindStyles />
 
       <SectionRail label="I think in systems" />
 
-      {/* Background stars */}
-      <BackgroundStars />
-
       {/* SVG */}
-      <div style={{ position:'relative', zIndex:1 }}>
+      <div style={{ position:'relative', zIndex:1, marginLeft:0, marginRight:'auto', maxWidth:1200, padding:'0 clamp(16px,4vw,60px)' }}>
         <svg
           ref={svgRef}
           className="dm-svg"
@@ -460,6 +652,11 @@ export default function DesignerMind() {
           {/* Dismiss-impact background tap target */}
           <rect x={0} y={0} width={VW} height={VH} fill="transparent"
             onClick={() => setImpactActive(false)} />
+
+          {/* ── LAYER 0: Cluster background circles (behind all lines) ── */}
+          {CLUSTERS.map(cluster => (
+            <circle key={`bg-${cluster.id}`} cx={cluster.cx} cy={cluster.cy} r={68} fill="black" opacity={1} />
+          ))}
 
           {/* ── LAYER 1: Impact spokes (Impact → each cluster, straight lines) ── */}
           {CLUSTERS.map((c, i) => {

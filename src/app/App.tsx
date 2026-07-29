@@ -4,9 +4,10 @@ import { motion, AnimatePresence } from 'motion/react';
 import CaseStudyPage from "./CaseStudyPage";
 import MurmurCaseStudyPage from "./MurmurCaseStudyPage";
 import DesignerMind from "./DesignerMind";
+import ConstellationCaseStudies from "./ConstellationCaseStudies";
+import SignalsSection from "./SignalsSection";
 import DesignLensSection from "./DesignLensSection";
-import HobbiesSection from "./HobbiesSection";
-import TeachersSection from "./TeachersSection";
+import OutsideWork from "./OutsideWork";
 import LoadingScreen from "./LoadingScreen";
 import girlImg from "../imports/ChatGPT_Image_May_26__2026__08_22_25_PM.png";
 import profileImg from "./components/Pictures/me1.png";
@@ -59,172 +60,15 @@ function seg(v: number, s: number, e: number) {
   return Math.max(0, Math.min(1, (v - s) / (e - s)));
 }
 
-interface NodeDef { id: number; cx: string; cy: string; r: number; color: string; ring: boolean; }
-interface EdgeDef { id: number; a: number; b: number; }
-
-const ABOUT_NODES: NodeDef[] = [
-  { id: 0, cx: "95.74%", cy: "53.84%", r: 3.0, color: "var(--color-pink)", ring: false },
-  { id: 1, cx: "48.17%", cy: "81.67%", r: 2.3, color: "var(--color-sky)", ring: false },
-  { id: 2, cx: "79.52%", cy: "64.58%", r: 4.4, color: "var(--color-sky)", ring: false },
-  { id: 3, cx: "41.80%", cy: "21.41%", r: 4.2, color: "var(--color-sky)", ring: false },
-  { id: 4, cx: "34.53%", cy: "32.24%", r: 2.5, color: "var(--color-sky)", ring: false },
-  { id: 5, cx: "71.78%", cy: "29.72%", r: 2.7, color: "var(--color-pink)", ring: false },
-  { id: 6, cx: "5.98%", cy: "66.91%", r: 3.7, color: "var(--color-sky)", ring: false },
-  { id: 7, cx: "36.82%", cy: "43.22%", r: 4.2, color: "var(--color-pink)", ring: false },
-  { id: 8, cx: "90.01%", cy: "20.28%", r: 4.0, color: "var(--color-sky)", ring: false },
-  { id: 9, cx: "70.06%", cy: "64.64%", r: 2.4, color: "var(--color-sky)", ring: false },
-  { id: 10, cx: "28.66%", cy: "37.75%", r: 4.1, color: "var(--color-pink)", ring: false },
-  { id: 11, cx: "24.52%", cy: "90.41%", r: 3.9, color: "var(--color-sky)", ring: true },
-  { id: 12, cx: "88.79%", cy: "81.82%", r: 3.1, color: "var(--color-pink)", ring: false },
-  { id: 13, cx: "60.86%", cy: "28.10%", r: 4.4, color: "var(--color-pink)", ring: false },
-  { id: 14, cx: "86.01%", cy: "5.46%", r: 2.6, color: "var(--color-pink)", ring: false },
-  { id: 15, cx: "16.89%", cy: "78.11%", r: 4.4, color: "var(--color-sky)", ring: false },
-  { id: 16, cx: "57.79%", cy: "39.71%", r: 2.4, color: "var(--color-pink)", ring: false },
-  { id: 17, cx: "25.25%", cy: "79.80%", r: 4.4, color: "var(--color-sky)", ring: true },
-  { id: 18, cx: "3.24%", cy: "38.40%", r: 3.5, color: "var(--color-sky)", ring: false },
-  { id: 19, cx: "47.59%", cy: "34.69%", r: 4.3, color: "var(--color-pink)", ring: false },
-  { id: 20, cx: "66.21%", cy: "88.55%", r: 4.2, color: "var(--color-sky)", ring: false },
-  { id: 21, cx: "9.23%", cy: "91.88%", r: 2.2, color: "var(--color-pink)", ring: false },
-  { id: 22, cx: "16.77%", cy: "15.41%", r: 2.9, color: "var(--color-sky)", ring: false },
-  { id: 23, cx: "93.09%", cy: "90.14%", r: 3.5, color: "var(--color-sky)", ring: false },
-  { id: 24, cx: "50.29%", cy: "94.03%", r: 3.4, color: "var(--color-sky)", ring: false },
-  { id: 25, cx: "89.25%", cy: "73.26%", r: 4.0, color: "var(--color-sky)", ring: false },
-  { id: 26, cx: "47.52%", cy: "51.87%", r: 3.1, color: "var(--color-sky)", ring: false },
-  { id: 27, cx: "44.82%", cy: "68.12%", r: 3.6, color: "var(--color-sky)", ring: false },
-  { id: 28, cx: "58.17%", cy: "69.11%", r: 2.2, color: "var(--color-pink)", ring: false },
-  { id: 29, cx: "79.10%", cy: "7.84%", r: 2.6, color: "var(--color-sky)", ring: false },
-  { id: 30, cx: "15.65%", cy: "22.14%", r: 4.3, color: "var(--color-pink)", ring: true },
-  { id: 31, cx: "71.52%", cy: "17.44%", r: 4.3, color: "var(--color-sky)", ring: false },
-  { id: 32, cx: "74.88%", cy: "88.93%", r: 4.4, color: "var(--color-pink)", ring: false },
-  { id: 33, cx: "11.57%", cy: "36.21%", r: 3.1, color: "var(--color-sky)", ring: true },
-  { id: 34, cx: "16.48%", cy: "8.47%", r: 3.0, color: "var(--color-pink)", ring: false },
-  { id: 35, cx: "43.38%", cy: "47.52%", r: 3.6, color: "var(--color-sky)", ring: false },
-  { id: 36, cx: "54.13%", cy: "18.38%", r: 3.1, color: "var(--color-pink)", ring: false },
-  { id: 37, cx: "15.50%", cy: "71.39%", r: 3.5, color: "var(--color-pink)", ring: false },
-  { id: 38, cx: "42.27%", cy: "61.79%", r: 2.1, color: "var(--color-pink)", ring: false },
-  { id: 39, cx: "69.16%", cy: "35.20%", r: 2.6, color: "var(--color-sky)", ring: false },
-  { id: 40, cx: "9.67%", cy: "15.95%", r: 3.8, color: "var(--color-sky)", ring: false },
-  { id: 41, cx: "59.32%", cy: "89.83%", r: 3.1, color: "var(--color-pink)", ring: false },
-  { id: 42, cx: "21.45%", cy: "35.74%", r: 2.2, color: "var(--color-sky)", ring: false },
-  { id: 43, cx: "20.15%", cy: "48.42%", r: 3.9, color: "var(--color-sky)", ring: false },
-  { id: 44, cx: "28.46%", cy: "21.00%", r: 2.4, color: "var(--color-sky)", ring: false },
-  { id: 45, cx: "50.74%", cy: "9.41%", r: 4.1, color: "var(--color-sky)", ring: true },
-  { id: 46, cx: "34.55%", cy: "9.71%", r: 3.6, color: "var(--color-sky)", ring: false },
-  { id: 47, cx: "27.76%", cy: "46.11%", r: 3.4, color: "var(--color-sky)", ring: false },
-  { id: 48, cx: "97.81%", cy: "27.54%", r: 4.0, color: "var(--color-sky)", ring: true },
-  { id: 49, cx: "3.65%", cy: "57.61%", r: 2.1, color: "var(--color-pink)", ring: true },
-  { id: 50, cx: "24.95%", cy: "66.83%", r: 2.5, color: "var(--color-sky)", ring: false },
-  { id: 51, cx: "52.25%", cy: "74.27%", r: 3.7, color: "var(--color-sky)", ring: false },
-  { id: 52, cx: "44.75%", cy: "11.11%", r: 4.0, color: "var(--color-sky)", ring: false },
-  { id: 53, cx: "68.64%", cy: "49.65%", r: 4.2, color: "var(--color-pink)", ring: false },
-  { id: 54, cx: "24.78%", cy: "58.66%", r: 3.4, color: "var(--color-pink)", ring: false },
-  { id: 55, cx: "85.02%", cy: "56.96%", r: 4.3, color: "var(--color-sky)", ring: false },
-  { id: 56, cx: "79.34%", cy: "37.22%", r: 2.0, color: "var(--color-pink)", ring: false },
-  { id: 57, cx: "22.86%", cy: "10.00%", r: 2.4, color: "var(--color-sky)", ring: false },
-  { id: 58, cx: "67.23%", cy: "11.68%", r: 3.8, color: "var(--color-sky)", ring: false },
-  { id: 59, cx: "38.27%", cy: "84.75%", r: 3.2, color: "var(--color-pink)", ring: false },
-  { id: 60, cx: "59.82%", cy: "50.59%", r: 3.2, color: "var(--color-pink)", ring: false },
-  { id: 61, cx: "90.76%", cy: "29.98%", r: 3.2, color: "var(--color-pink)", ring: true },
-  { id: 62, cx: "64.01%", cy: "40.18%", r: 3.2, color: "var(--color-sky)", ring: false },
-  { id: 63, cx: "72.43%", cy: "74.77%", r: 3.0, color: "var(--color-pink)", ring: false },
-  { id: 64, cx: "92.56%", cy: "67.35%", r: 2.6, color: "var(--color-sky)", ring: false },
-  { id: 65, cx: "50.15%", cy: "23.16%", r: 2.6, color: "var(--color-sky)", ring: true },
-  { id: 66, cx: "45.18%", cy: "89.41%", r: 2.3, color: "var(--color-pink)", ring: false },
-  { id: 67, cx: "4.27%", cy: "10.07%", r: 4.1, color: "var(--color-pink)", ring: true },
-  { id: 68, cx: "32.47%", cy: "55.74%", r: 4.5, color: "var(--color-pink)", ring: false },
-  { id: 69, cx: "35.16%", cy: "23.28%", r: 3.3, color: "var(--color-pink)", ring: false },
-];
-
-const ABOUT_EDGES: EdgeDef[] = [
-  { id: 0, a: 26, b: 35 },
-  { id: 1, a: 5, b: 39 },
-  { id: 2, a: 36, b: 65 },
-  { id: 3, a: 45, b: 52 },
-  { id: 4, a: 16, b: 62 },
-  { id: 5, a: 34, b: 57 },
-  { id: 6, a: 25, b: 64 },
-  { id: 7, a: 22, b: 30 },
-  { id: 8, a: 27, b: 38 },
-  { id: 9, a: 15, b: 37 },
-  { id: 10, a: 24, b: 66 },
-  { id: 11, a: 3, b: 69 },
-  { id: 12, a: 22, b: 34 },
-  { id: 13, a: 20, b: 41 },
-  { id: 14, a: 44, b: 69 },
-  { id: 15, a: 22, b: 40 },
-  { id: 16, a: 39, b: 62 },
-  { id: 17, a: 31, b: 58 },
-  { id: 18, a: 14, b: 29 },
-  { id: 19, a: 48, b: 61 },
-  { id: 20, a: 10, b: 42 },
-  { id: 21, a: 7, b: 35 },
-  { id: 22, a: 28, b: 51 },
-  { id: 23, a: 43, b: 47 },
-  { id: 24, a: 40, b: 67 },
-  { id: 25, a: 4, b: 10 },
-  { id: 26, a: 50, b: 54 },
-  { id: 27, a: 54, b: 68 },
-  { id: 28, a: 1, b: 66 },
-  { id: 29, a: 59, b: 66 },
-  { id: 30, a: 10, b: 47 },
-  { id: 31, a: 1, b: 51 },
-  { id: 32, a: 15, b: 17 },
-  { id: 33, a: 3, b: 65 },
-  { id: 34, a: 12, b: 25 },
-  { id: 35, a: 18, b: 33 },
-  { id: 36, a: 20, b: 32 },
-  { id: 37, a: 53, b: 60 },
-  { id: 38, a: 4, b: 69 },
-  { id: 39, a: 12, b: 23 },
-  { id: 40, a: 2, b: 55 },
-  { id: 41, a: 2, b: 9 },
-  { id: 42, a: 7, b: 47 },
-  { id: 43, a: 36, b: 45 },
-  { id: 44, a: 6, b: 49 },
-  { id: 45, a: 27, b: 51 },
-  { id: 46, a: 8, b: 61 },
-  { id: 47, a: 33, b: 42 },
-  { id: 48, a: 24, b: 41 },
-  { id: 49, a: 46, b: 52 },
-  { id: 50, a: 39, b: 56 },
-  { id: 51, a: 9, b: 63 },
-  { id: 52, a: 37, b: 50 },
-  { id: 53, a: 6, b: 37 },
-  { id: 54, a: 53, b: 62 },
-  { id: 55, a: 11, b: 17 },
-  { id: 56, a: 47, b: 68 },
-  { id: 57, a: 13, b: 39 },
-  { id: 58, a: 22, b: 57 },
-  { id: 59, a: 8, b: 48 },
-  { id: 60, a: 0, b: 55 },
-  { id: 61, a: 38, b: 68 },
-  { id: 62, a: 19, b: 16 },
-  { id: 63, a: 21, b: 11 },
-];
-
-const margImages = [
-  { type: 'cover', bg: '#FF6A00', label: 'margdarshakCover' },
-  { type: 'screen', bg: '#F7F3EF', label: 'margdarshakSelect' },
-  { type: 'screen', bg: '#F7F3EF', label: 'margdarshakHome' },
-  { type: 'screen', bg: '#F7F3EF', label: 'margdarshakSchemes' },
-  { type: 'screen', bg: '#F7F3EF', label: 'margdarshakGuides' },
-  { type: 'logo', bg: '#F7F3EF', label: 'margdarshakLogo' }
-];
-
-const caseTabs = [
-  { title: "Margdarshak", sub: "Civic UX" },
-  { title: "Murmur", sub: "Healthcare" },
-  { title: "Openlee", sub: "Healthcare" },
-];
 
 const HERO_CONSTELLATIONS = [
-  // Large cluster — upper left, partially cropped
+  // Large cluster â€” upper left, partially cropped
   { nodes: [[-2,8],[4,14],[8,10],[14,18],[10,24],[3,22]], edges:[[0,1],[1,2],[2,3],[3,4],[4,5],[1,5]], opacity: 0.15 },
-  // Large cluster — upper center-right
+  // Large cluster â€” upper center-right
   { nodes: [[52,12],[58,7],[65,14],[62,20],[55,22],[70,9]], edges:[[0,1],[1,2],[2,3],[3,4],[4,0],[1,5]], opacity: 0.18 },
-  // Small cluster — mid left
+  // Small cluster â€” mid left
   { nodes: [[18,38],[22,32],[26,36]], edges:[[0,1],[1,2]], opacity: 0.12 },
-  // Small cluster — far right mid (keep clear of moon at 86%,16%)
+  // Small cluster â€” far right mid (keep clear of moon at 86%,16%)
   { nodes: [[74,34],[78,28],[82,36],[79,42]], edges:[[0,1],[1,2],[2,3]], opacity: 0.14 },
 ];
 
@@ -242,7 +86,7 @@ const caseStudiesData = [
   {
     id: "margdarshak",
     tag: "Self-Initiated Project",
-    title: "Margdarshak — Empowering the Common Man",
+    title: "Margdarshak â€” Empowering the Common Man",
     subtitle: "Bridging the last-mile gap between welfare schemes and the low-income families they're meant to serve",
     meta: [
       { label: "Role", value: "Product Designer" },
@@ -258,19 +102,19 @@ const caseStudiesData = [
       { type: 'cover', label: 'Process' }
     ],
     situation: "India has 740+ central and 65+ centrally sponsored welfare schemes, yet ~58% of the salaried workforce lacks social security access. Low-income families remain excluded due to procedural, linguistic, and emotional barriers.",
-    task: "Bridge the last-mile gap between scheme entitlement and actual access. Design an intervention that reduces cognitive load, builds trust, and preserves user dignity — built on existing digital fluency.",
-    actionTitle: "Designed a three-tier inclusive system — app for independent users, guide network for low digital confidence, counselor support for users without smartphones — to reach every Indian, not just the digitally confident.",
+    task: "Bridge the last-mile gap between scheme entitlement and actual access. Design an intervention that reduces cognitive load, builds trust, and preserves user dignity â€” built on existing digital fluency.",
+    actionTitle: "Designed a three-tier inclusive system â€” app for independent users, guide network for low digital confidence, counselor support for users without smartphones â€” to reach every Indian, not just the digitally confident.",
     actions: [
       "Surfaced 3 core patterns: Awareness Gap, Fear, Digital Confidence",
       "Ran 20 primary interviews across 5 cities",
       "Applied SCAMPER to arrive at unified direction",
-      "Designed AI eligibility matching reducing 740+ to 3–5",
+      "Designed AI eligibility matching reducing 740+ to 3â€“5",
       "Built a one-time document vault and plain-language translation layer"
     ],
     result: "A tested high fidelity prototype where a 19-year-old semi-urban participant navigated the app end-to-end with no prior guidance.",
     metrics: [
-      { value: "740→3–5", label: "SCHEMES FILTERED" },
-      { value: "15→3", label: "FLOW REDUCTION" },
+      { value: "740â†’3â€“5", label: "SCHEMES FILTERED" },
+      { value: "15â†’3", label: "FLOW REDUCTION" },
       { value: "20", label: "INTERVIEWS" }
     ],
     tools: ["FigJam", "Figma Make", "Figma Design", "Maze", "ChatGPT", "Perplexity", "Claude", "Adobe Suite", "Gemini", "Flow AI", "Google Forms"],
@@ -280,7 +124,7 @@ const caseStudiesData = [
   {
     id: "murmur",
     tag: "B2B SaaS",
-    title: "Murmur — Healthcare Portal",
+    title: "Murmur â€” Healthcare Portal",
     subtitle: "AI-powered postpartum couples platform that reads maternal distress signals and translates them into one actionable daily nudge for the partner.",
     meta: [
       { label: "Role", value: "Lead Product Designer" },
@@ -293,9 +137,9 @@ const caseStudiesData = [
       { type: 'screen', label: 'Analytics' },
       { type: 'screen', label: 'Patients' }
     ],
-    situation: "22% of Indian mothers get PPD, 55% feel unsupported, 80% of fathers feel useless — yet 0 of 587 apps address the couple's emotional gap.",
-    task: "Build an AI that reads her voice, wearables, and mood — then gives him one specific, non-blaming daily action, unlocked only when both partners join.",
-    actionTitle: "Researched 59 studies, mapped 587 apps with zero competitors, and designed a multi-modal AI pipeline with a four-part nudge formula, safety guardrails, and identity restoration — none of which exist in the market.",
+    situation: "22% of Indian mothers get PPD, 55% feel unsupported, 80% of fathers feel useless â€” yet 0 of 587 apps address the couple's emotional gap.",
+    task: "Build an AI that reads her voice, wearables, and mood â€” then gives him one specific, non-blaming daily action, unlocked only when both partners join.",
+    actionTitle: "Researched 59 studies, mapped 587 apps with zero competitors, and designed a multi-modal AI pipeline with a four-part nudge formula, safety guardrails, and identity restoration â€” none of which exist in the market.",
     actions: [
       "Conducted extensive stakeholder workshops",
       "Created wireframes for the patient onboarding flow",
@@ -303,7 +147,7 @@ const caseStudiesData = [
       "Established a new clinical accessibility-focused design system",
       "Handed off production-ready assets to engineering"
     ],
-    result: "Blue ocean with zero direct competitors in an unstudied category — targeting India's 19-23.5% PPD market with cultural moats no global app can replicate.",
+    result: "Blue ocean with zero direct competitors in an unstudied category â€” targeting India's 19-23.5% PPD market with cultural moats no global app can replicate.",
     metrics: [
       { value: "+40%", label: "ONBOARDING SPEED" },
       { value: "2.5x", label: "DATA ACCURACY" },
@@ -316,7 +160,7 @@ const caseStudiesData = [
   {
     id: "openlee",
     tag: "Consumer App",
-    title: "Openlee — Social Platform",
+    title: "Openlee â€” Social Platform",
     subtitle: "Connecting communities through transparent, location-based storytelling",
     meta: [
       { label: "Role", value: "UI/UX Designer" },
@@ -349,55 +193,26 @@ const caseStudiesData = [
     deliverables: ["Brand Identity", "App UI", "Interactions", "Pitch Deck", "Asset Library"],
     links: { full: "#", live: "#", promo: "#", presentation: "#" }
   },
-];
-
-const heroSlide = {
-  enter: (dir: number) => ({ opacity: 0, x: dir > 0 ? 80 : -80 }),
-  center: { opacity: 1, x: 0 },
-  exit: (dir: number) => ({ opacity: 0, x: dir > 0 ? -80 : 80 }),
-};
-
-const ORBIT_ITEMS = [
-  { label: "RESEARCH PHILOSOPHY", content: "Design starts before the screen. Empathy as a method." },
-  { label: "PSYCHOLOGY", content: "Understanding human behavior over interface patterns." },
-  { label: "JAPANESE", content: "Learning how a new language structures thought." },
-  { label: "POTTERY", content: "Making physical things when screens feel like too much." },
-  { label: "ILLUSTRATIONS", content: "Where I think without the pressure of it being good." },
-  { label: "FAILED PROJECTS", content: "Not everything needs to ship. Fails are part of the process." }
-];
-
-const TESTIMONIALS = [
   {
-    id: 0,
-    metric: "THINKING & DEDICATION",
-    project: "Margdarshak",
-    teaser: "She has an exceptional dedication and thinking process.",
-    quote: "Sometimes I have to ask her to shut up, god she talks a lot!",
-    author: "Bhushan",
-    photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80",
-    color: "var(--color-pink)"
+    id: "behive",
+    tag: "Coming Soon",
+    title: "Behive",
+    subtitle: "Coming soon",
+    meta: [],
+    images: [],
+    situation: "Coming soon",
+    task: "Coming soon",
+    actionTitle: "Coming soon",
+    actions: [],
+    result: "Coming soon",
+    metrics: [],
+    tools: [],
+    deliverables: [],
+    links: { full: "#", live: "#", promo: "#", presentation: "#" }
   },
-  {
-    id: 1,
-    metric: "HABIT-BUILDING GAMEPLAY",
-    project: "Creditt",
-    teaser: "Turned standard budget tracking into an engaging, reward-driven behavioral habit loop.",
-    quote: "Conceptualized a budget tracking experience that treats financial discipline as a rewarding game, turning chores into positive habits.",
-    author: "Lead Designer, Creditt",
-    photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80",
-    color: "var(--color-lemon)"
-  },
-  {
-    id: 2,
-    metric: "HYPER-LOCAL COLLABORATION",
-    project: "Local Discovery App",
-    teaser: "Mapped neighbor interaction models to foster community cohesion and trust.",
-    quote: "Mapped out user journeys for hyper-local discovery, designing a seamless interaction model for neighborhood community building.",
-    author: "Co-Founder, LocalDiscovery",
-    photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&h=150&q=80",
-    color: "#B8C4E8"
-  }
 ];
+
+
 
 const GlobalStyles = React.memo(() => (
   <style>{`
@@ -685,6 +500,9 @@ const GlobalStyles = React.memo(() => (
       }
     }
 
+    /* Method Study horizontal scroll */
+    .method-study-track::-webkit-scrollbar { display: none; }
+
     /* Testimonials infinite scroll */
     .testimonial-scroll-outer {
       position: relative;
@@ -775,27 +593,217 @@ const GlobalStyles = React.memo(() => (
       }
     }
 
+    /* Hero phase 0 â€” full-bleed portrait + left text column */
+    .hero-text-col {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      padding-left: clamp(48px, 9vw, 120px);
+      max-width: 46vw;
+    }
+    .hero-portrait-wrap {
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 100%;
+      width: 48vw;
+      z-index: 1;
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.35) 18%, rgba(0,0,0,0.85) 32%, black 45%);
+      mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.35) 18%, rgba(0,0,0,0.85) 32%, black 45%);
+    }
+    .hero-portrait-top-fade {
+      width: 100%;
+      height: 100%;
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 8%);
+      mask-image: linear-gradient(to bottom, transparent 0%, black 8%);
+    }
+    .hero-portrait-img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 15%;
+    }
+    .hero-stats-inline {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+    }
+
     @media (max-width: 900px) {
       .hero-landing-panel {
-        flex-direction: column !important;
-        align-items: center !important;
-        text-align: center;
-        padding: 0 20px;
+        align-items: flex-start !important;
+        justify-content: flex-end !important;
+        padding-bottom: 40px !important;
       }
-      .hero-stats-row {
-        flex-wrap: wrap !important;
+      .hero-text-col {
+        max-width: 100% !important;
+        padding: 0 24px !important;
+      }
+      .hero-portrait-wrap {
+        left: 0 !important;
+        width: 100% !important;
+        height: 45vh !important;
+        -webkit-mask-image: linear-gradient(to top, transparent 0%, black 30%) !important;
+        mask-image: linear-gradient(to top, transparent 0%, black 30%) !important;
+      }
+      .hero-portrait-top-fade {
+        -webkit-mask-image: none !important;
+        mask-image: none !important;
+      }
+      .hero-portrait-img {
+        object-position: center top !important;
       }
       .hero-buttons-row {
         flex-direction: column !important;
         width: 100% !important;
       }
-      .hero-buttons-row button {
+      .hero-buttons-row button,
+      .hero-buttons-row a {
         width: 100% !important;
+        justify-content: center !important;
       }
-      .hero-girl-positioned {
-        left: 22% !important;
-        bottom: 20% !important;
+    }
+
+    /* â”€â”€ Meet Me section â”€â”€ */
+    .meetme-layout {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      padding: 0 clamp(32px, 6vw, 80px);
+      gap: 7%;
+      box-sizing: border-box;
+    }
+    .meetme-copy {
+      flex: 0 0 38%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .meetme-headline {
+      font-family: 'Sora', sans-serif;
+      font-weight: 300;
+      font-style: italic;
+      font-size: clamp(1.2rem, 2vw, 2rem);
+      color: rgba(232,228,201,0.70);
+      line-height: 1.6;
+      margin: 0;
+      letter-spacing: 0.01em;
+    }
+    .meetme-sub {
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(0.8rem, 1.05vw, 0.95rem);
+      color: rgba(232,228,201,0.55);
+      margin: 24px 0 0;
+      font-weight: 400;
+      line-height: 1.55;
+    }
+    .meetme-buttons {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 12px;
+      margin-top: 32px;
+    }
+    .meetme-linkedin {
+      display: inline-block;
+      margin-top: 14px;
+      margin-left: 5px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      color: rgba(232,228,201,0.5);
+      text-decoration: none;
+      letter-spacing: 0.03em;
+    }
+    .meetme-linkedin:hover { text-decoration: underline; }
+    .meetme-linkedin:focus-visible { outline: 2px solid rgba(232,228,201,0.6); outline-offset: 2px; border-radius: 2px; }
+    .meetme-video-col {
+      flex: 0 0 55%;
+      position: relative;
+    }
+    .meetme-glow {
+      position: absolute;
+      inset: -100px;
+      background: radial-gradient(ellipse at center, rgba(242,237,203,0.10) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+      transition: opacity 800ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .meetme-glow.playing { opacity: 1.15; }
+    .meetme-frame {
+      position: relative;
+      z-index: 1;
+      border: 1px solid rgba(232,228,201,0.2);
+      border-radius: 14px;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      background: #000;
+    }
+    .meetme-frame img,
+    .meetme-frame iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: none;
+      object-fit: cover;
+    }
+    .meetme-dot {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #E8E4C9;
+      opacity: 0.5;
+      z-index: 3;
+      pointer-events: none;
+    }
+    .meetme-dot-tl { top: -9px;    left: -9px;  }
+    .meetme-dot-tr { top: -9px;    right: -9px; }
+    .meetme-dot-bl { bottom: -9px; left: -9px;  }
+    .meetme-dot-br { bottom: -9px; right: -9px; }
+    .meetme-play {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      border: 1px solid rgba(232,228,201,0.4);
+      background: transparent;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      z-index: 3;
+      transition: border-color 300ms ease, box-shadow 300ms ease;
+    }
+    .meetme-play:hover {
+      border-color: rgba(232,228,201,0.7);
+      box-shadow: 0 0 20px rgba(242,237,203,0.12);
+    }
+    .meetme-play:focus-visible {
+      outline: 2px solid rgba(232,228,201,0.65);
+      outline-offset: 3px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .meetme-glow { transition: none !important; }
+    }
+    @media (max-width: 900px) {
+      .meetme-layout {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 0 24px;
+        gap: 28px;
       }
+      .meetme-copy { flex: 0 0 auto; width: 100%; order: 2; }
+      .meetme-video-col { flex: 0 0 auto; width: 100%; order: 1; }
+      .meetme-glow { inset: -55px; }
+      .meetme-buttons { flex-direction: column; width: 100%; }
+      .meetme-buttons button,
+      .meetme-buttons a { width: 100%; justify-content: center !important; }
     }
 
     /* Coming Soon section animations */
@@ -817,6 +825,11 @@ const GlobalStyles = React.memo(() => (
       to { opacity: 1; }
     }
 
+    @keyframes hp-fade-up {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
 
     @keyframes star-blink {
       0%, 100% { opacity: 0.45; }
@@ -826,20 +839,20 @@ const GlobalStyles = React.memo(() => (
       animation: star-blink 3s ease-in-out infinite;
     }
 
-    /* Contact section — input focus glow */
+    /* Contact section â€” input focus glow */
     .contact-input:focus,
     .contact-textarea:focus {
       border-color: rgba(242,167,196,0.5) !important;
       box-shadow: 0 0 0 3px rgba(242,167,196,0.08) !important;
     }
 
-    /* Contact section — placeholder color */
+    /* Contact section â€” placeholder color */
     .contact-grid input::placeholder,
     .contact-grid textarea::placeholder {
       color: rgba(255,255,255,0.22);
     }
 
-    /* Contact section — mobile layout */
+    /* Contact section â€” mobile layout */
     @media (max-width: 768px) {
       .contact-grid {
         grid-template-columns: 1fr !important;
@@ -857,7 +870,7 @@ const GlobalStyles = React.memo(() => (
       }
     }
 
-    /* About section — grid areas (desktop) */
+    /* About section â€” grid areas (desktop) */
     .about-section { justify-items: start; }
     .about-role-badge { grid-area: role; z-index: 1; }
     .about-name-block { grid-area: name; z-index: 1; }
@@ -866,7 +879,7 @@ const GlobalStyles = React.memo(() => (
     .about-ctas       { grid-area: ctas; z-index: 1; }
     .about-section .photo-card-outer { grid-area: photo; align-self: center; z-index: 1; }
 
-    /* About section — mobile responsive */
+    /* About section â€” mobile responsive */
     @media (max-width: 768px) {
       .about-section {
         grid-template-columns: 1fr !important;
@@ -911,69 +924,6 @@ const GlobalStyles = React.memo(() => (
       }
     }
 
-    /* Bento grid v2 — interactive left/right */
-    @property --bento-angle {
-      syntax: '<angle>';
-      initial-value: 0deg;
-      inherits: false;
-    }
-    @keyframes bento-border-spin {
-      to { --bento-angle: 360deg; }
-    }
-    .bento-outer {
-      --bento-angle: 0deg;
-      background:
-        linear-gradient(rgba(8,8,8,0.90), rgba(8,8,8,0.90)) padding-box,
-        linear-gradient(var(--bento-angle), rgba(250,255,199,0.95) 0%, rgba(250,255,199,0.55) 26%, rgba(250,255,199,0.05) 58%, rgba(250,255,199,0.32) 100%) border-box;
-      border: 4px solid transparent;
-      border-radius: 28px;
-      padding: 14px;
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      animation: bento-border-spin 14s linear infinite;
-      box-shadow:
-        0 4px 6px rgba(0,0,0,0.45),
-        8px 32px 70px rgba(0,0,0,0.98),
-        14px 52px 110px rgba(0,0,0,0.70),
-        inset 0 2px 0 rgba(250,255,199,0.42),
-        inset 2px 0 0 rgba(250,255,199,0.22),
-        inset 0 -14px 44px rgba(0,0,0,0.82),
-        inset -14px 0 44px rgba(0,0,0,0.52);
-    }
-    .bento-grid-v2 {
-      display: grid;
-      grid-template-columns: 57% 1fr;
-      gap: 12px;
-    }
-    .bento-inactive-col {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .bento-inactive-card:hover {
-      border-color: rgba(255,255,255,0.2) !important;
-    }
-    @media (max-width: 768px) {
-      .bento-grid-v2 {
-        grid-template-columns: 1fr;
-      }
-      .bento-inactive-col {
-        flex-direction: row;
-        height: 140px;
-      }
-    }
-
-    /* Case study tabs */
-    @media (max-width: 600px) {
-      .case-tab-title {
-        font-size: 17px !important;
-      }
-      .case-tab-sub {
-        font-size: 9px !important;
-        letter-spacing: 0.5px !important;
-        margin-top: 4px !important;
-      }
-    }
 
     /* Coming soon card */
     @media (max-width: 640px) {
@@ -986,7 +936,7 @@ const GlobalStyles = React.memo(() => (
       }
     }
 
-    /* Nav hover text swap — mirrors hover-text-swap.html exactly */
+    /* Nav hover text swap â€” mirrors hover-text-swap.html exactly */
     .nav-swap {
       display: inline-block;
       position: relative;
@@ -1031,11 +981,12 @@ const GlobalStyles = React.memo(() => (
       transform: translateY(-100%);
     }
 
-    /* Overlay nav swap — same mechanic, big text */
+    /* Overlay nav swap â€” same mechanic, big text */
     .overlay-swap {
       position: relative;
-      overflow: hidden;
+      overflow: visible;
       height: 1.1em;
+      clip-path: inset(-20% -100% 0 -100%);
     }
     .overlay-swap .os-default {
       display: block;
@@ -1065,47 +1016,256 @@ const GlobalStyles = React.memo(() => (
   `}</style>
 ));
 
+function HorizontalScrollSection({
+  siteReady, meetmeVideoPlaying, setMeetmeVideoPlaying, heroStarLayerRef,
+}: {
+  siteReady: boolean;
+  meetmeVideoPlaying: boolean;
+  setMeetmeVideoPlaying: (v: boolean) => void;
+  heroStarLayerRef: React.RefObject<SVGGElement | null>;
+}) {
+  const outerRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [activeDot, setActiveDot] = useState(0);
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 900);
+  useEffect(() => {
+    const fn = () => setIsMobile(window.innerWidth < 900);
+    window.addEventListener('resize', fn, { passive: true });
+    return () => window.removeEventListener('resize', fn);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) return;
+    const outer = outerRef.current;
+    const track = trackRef.current;
+    if (!outer || !track) return;
+
+    let sectionTop = outer.getBoundingClientRect().top + window.scrollY;
+
+    const update = () => {
+      const localScroll = window.scrollY - sectionTop;
+      const maxScroll = window.innerHeight;
+      const p = Math.max(0, Math.min(1, localScroll / maxScroll));
+      track.style.transform = `translateX(${-p * window.innerWidth}px)`;
+      const dot = Math.round(p);
+      setActiveDot(prev => prev === dot ? prev : dot);
+    };
+
+    let pending = false;
+    const onScroll = () => {
+      if (pending) return;
+      pending = true;
+      requestAnimationFrame(() => { pending = false; update(); });
+    };
+    const onResize = () => {
+      sectionTop = outer.getBoundingClientRect().top + window.scrollY;
+      update();
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onResize, { passive: true });
+    update();
+
+    const obs = new IntersectionObserver(([entry]) => {
+      if (track) track.style.willChange = entry.isIntersecting ? 'transform' : 'auto';
+    });
+    obs.observe(outer);
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onResize);
+      obs.disconnect();
+    };
+  }, [isMobile]);
+
+  const hpAnim = (delay: number): React.CSSProperties => ({
+    animation: `hp-fade-up 0.7s ${delay}s cubic-bezier(0.22,1,0.36,1) both`,
+    animationPlayState: siteReady ? 'running' : 'paused',
+  });
+
+  const heroBg = (
+    <div style={{ position: "absolute", inset: 0, overflow: "hidden", zIndex: 0 }} aria-hidden="true">
+      <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", zIndex: 0 }}>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" style={{ width: "100%", height: "100%", display: "block" }}>
+          <defs>
+            <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#000000" /><stop offset="55%" stopColor="#000000" /><stop offset="100%" stopColor="#000000" />
+            </linearGradient>
+            <radialGradient id="moonGlow">
+              <stop offset="0%" stopColor="#EDE5D8" stopOpacity="0.18" /><stop offset="100%" stopColor="#EDE5D8" stopOpacity="0" />
+            </radialGradient>
+            <mask id="crescentMask">
+              <rect x="0" y="0" width="800" height="500" fill="white" />
+              <circle cx="89.6%" cy="22%" r="24" fill="black" />
+            </mask>
+            <filter id="northStarGlow" x="-500%" y="-500%" width="1100%" height="1100%">
+              <feGaussianBlur stdDeviation="8" result="blur" />
+              <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+            </filter>
+            <filter id="starSoft"><feGaussianBlur stdDeviation="1.2" /></filter>
+          </defs>
+          <rect width="800" height="500" fill="url(#skyGrad)" />
+          <g ref={heroStarLayerRef} style={{ willChange: "transform" }}>
+            <g fill="#ffffff">
+              {BACKGROUND_STARS.map(star => (
+                <circle key={`bg-star-${star.id}`} cx={star.x + "%"} cy={star.y + "%"} r={star.r} opacity={0.3}>
+                  <animate attributeName="opacity" values="0.1;0.7;0.1" dur={`${star.dur}s`} begin={`${star.delay}s`} repeatCount="indefinite" />
+                </circle>
+              ))}
+            </g>
+            <g fill="#ffffff">
+              {Array.from({ length: 100 }, (_, i) => (
+                <circle key={`us-${i}`}
+                  cx={((Math.abs(Math.sin(i * 317.4 + 521.9) * 43758.5453)) % 100) + "%"}
+                  cy={((Math.abs(Math.sin(i * 193.7 + 47.3) * 43758.5453)) % 30) + "%"}
+                  r={(Math.abs(Math.sin(i * 89.1)) % 0.5) + 0.2} opacity={0.6}
+                />
+              ))}
+            </g>
+            <g fill="#ffffff">
+              {Array.from({ length: 200 }, (_, i) => (
+                <circle key={`ts-${i}`}
+                  cx={((Math.abs(Math.sin(i * 431.7 + 219.3) * 43758.5453)) % 100) + "%"}
+                  cy={((Math.abs(Math.sin(i * 157.9 + 83.1) * 43758.5453)) % 50) + "%"}
+                  r={(Math.abs(Math.sin(i * 61.3)) % 0.4) + 0.15} opacity={0.5}
+                />
+              ))}
+            </g>
+            {HERO_CONSTELLATIONS.map((cluster, ci) => (
+              <g key={`cluster-${ci}`}>
+                {cluster.edges.map(([a, b], ei) => (
+                  <line key={`cl-${ci}-${ei}`} x1={cluster.nodes[a][0] + "%"} y1={cluster.nodes[a][1] + "%"} x2={cluster.nodes[b][0] + "%"} y2={cluster.nodes[b][1] + "%"} stroke="#E8E4C9" strokeWidth="1" opacity={cluster.opacity} />
+                ))}
+                {cluster.nodes.map(([nx, ny], ni) => (
+                  <circle key={`cn-${ci}-${ni}`} cx={nx + "%"} cy={ny + "%"} r={1.5} fill="#E8E4C9" opacity={0.3 + (ci * 0.05)} />
+                ))}
+              </g>
+            ))}
+          </g>
+          <circle cx="86.6%" cy="22%" r="64" fill="url(#moonGlow)" />
+          <circle cx="86.6%" cy="22%" r="24" fill="#EDE5D8" opacity="0.85" mask="url(#crescentMask)" />
+        </svg>
+      </div>
+    </div>
+  );
+
+  const panelStyle = (extra: React.CSSProperties = {}): React.CSSProperties =>
+    isMobile
+      ? { width: '100vw', position: 'relative', ...extra }
+      : { width: '100vw', height: '100vh', flexShrink: 0, position: 'relative', ...extra };
+
+  const panel1 = (
+    <div tabIndex={0} aria-label="Hero" style={panelStyle({ height: isMobile ? 'auto' : '100vh', minHeight: isMobile ? '100vh' : undefined })}>
+      {heroBg}
+      <div style={{ position: "absolute", inset: 0, zIndex: 10, display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <div className="hero-landing-panel" style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center" }}>
+          <div className="hero-portrait-wrap" style={{ opacity: siteReady ? 1 : 0, transition: 'opacity 1s cubic-bezier(0.22,1,0.36,1) 0.05s' }}>
+            <div className="hero-portrait-top-fade">
+              <img src={profileImg} alt="Vishvara Gandharv, product designer" className="hero-portrait-img" />
+            </div>
+          </div>
+          <div className="hero-text-col">
+            <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, letterSpacing: "0.22em", color: "rgba(242,237,203,0.6)", textTransform: "uppercase", display: "block", ...hpAnim(0.1) }}>
+              PRODUCT DESIGNER
+            </span>
+            <div style={{ marginTop: 12, ...hpAnim(0.18) }}>
+              <span style={{ fontFamily: "'Sora', sans-serif", fontWeight: 700, fontSize: "clamp(3rem, 5.4vw, 4.86rem)", color: "var(--color-pink)", letterSpacing: "-0.02em", lineHeight: 1.1, display: "block" }}>
+                Vishvara.G
+              </span>
+            </div>
+            <p style={{ fontFamily: "'Sora', sans-serif", fontStyle: "italic", fontSize: "clamp(0.85rem, 1.2vw, 1rem)", color: "rgba(242,237,203,0.55)", marginTop: 20, marginBottom: 0, ...hpAnim(0.26) }}>
+              Designing for the humans behind the metrics.
+            </p>
+            <div className="hero-stats-inline" style={{ marginTop: 24, ...hpAnim(0.34) }}>
+              <span style={{ color: "rgba(242,237,203,0.9)" }}>3</span><span style={{ color: "rgba(242,237,203,0.45)" }}> PROJECTS</span>
+              <span style={{ color: "rgba(242,237,203,0.25)" }}> Â· </span>
+              <span style={{ color: "rgba(242,237,203,0.9)" }}>2</span><span style={{ color: "rgba(242,237,203,0.45)" }}> DOMAINS</span>
+              <span style={{ color: "rgba(242,237,203,0.25)" }}> Â· </span>
+              <span style={{ color: "rgba(242,237,203,0.9)" }}>6</span><span style={{ color: "rgba(242,237,203,0.45)" }}> MONTHS</span>
+            </div>
+            <div className="hero-buttons-row" style={{ display: "flex", flexDirection: "row", gap: 12, marginTop: 28, ...hpAnim(0.42) }}>
+              <button onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} style={{ background: "linear-gradient(135deg, var(--color-pink), #F2EDCB)", color: "#111", borderRadius: 9999, padding: "13px 28px", border: "none", fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: 13, letterSpacing: "0.06em", cursor: "pointer" }}>
+                Contact Me
+              </button>
+              <a href="/Vishvara_Gandharv_Resume.pdf" download style={{ background: "transparent", border: "1px solid rgba(242,237,203,0.35)", color: "#F2EDCB", borderRadius: 9999, padding: "13px 28px", fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: 13, letterSpacing: "0.06em", textDecoration: "none", display: "inline-flex", alignItems: "center" }}>
+                Download Resume
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const panel2 = (
+    <div tabIndex={0} aria-label="Meet Me" style={panelStyle({ height: isMobile ? 'auto' : '100vh', minHeight: isMobile ? '100vh' : undefined })}>
+      <div style={{ position: isMobile ? 'relative' : 'absolute', inset: 0, display: 'flex', alignItems: 'center', height: isMobile ? 'auto' : '100%' }}>
+        <div className="meetme-layout">
+          <div className="meetme-copy">
+            <h2 className="meetme-headline">I don't design frictionless,<br />I design to navigate<br />the friction.</h2>
+            <p className="meetme-sub">Open to product design roles globally.</p>
+            <div className="meetme-buttons">
+              <button onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} style={{ background: "linear-gradient(135deg, var(--color-pink), #F2EDCB)", color: "#111", borderRadius: 9999, padding: "13px 28px", border: "none", fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: 13, letterSpacing: "0.06em", cursor: "pointer" }}>Contact Me</button>
+              <a href="/Vishvara_Gandharv_Resume.pdf" download style={{ background: "transparent", border: "1px solid rgba(232,228,201,0.35)", color: "#E8E4C9", borderRadius: 9999, padding: "13px 28px", fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: 13, letterSpacing: "0.06em", textDecoration: "none", display: "inline-flex", alignItems: "center" }}>Download Resume</a>
+            </div>
+          </div>
+          <div className="meetme-video-col">
+            <div aria-hidden className={`meetme-glow${meetmeVideoPlaying ? " playing" : ""}`} />
+            <div className="meetme-frame">
+              <div className="meetme-dot meetme-dot-tl" aria-hidden /><div className="meetme-dot meetme-dot-tr" aria-hidden />
+              <div className="meetme-dot meetme-dot-bl" aria-hidden /><div className="meetme-dot meetme-dot-br" aria-hidden />
+              {meetmeVideoPlaying ? (
+                <iframe src="https://www.youtube-nocookie.com/embed/CGPjBUCOn2M?autoplay=1&controls=1&rel=0&modestbranding=1" title="Introduction video â€” Vishvara Gandharv" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} />
+              ) : (
+                <>
+                  <img src="https://img.youtube.com/vi/CGPjBUCOn2M/maxresdefault.jpg" alt="Video thumbnail" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+                  <button className="meetme-play" aria-label="Play introduction video" onClick={() => setMeetmeVideoPlaying(true)}>
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden><polygon points="5,2 16,9 5,16" fill="#E8E4C9" /></svg>
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  if (isMobile) {
+    return <>{panel1}{panel2}</>;
+  }
+
+  return (
+    <div ref={outerRef} style={{ height: '200vh', position: 'relative' }}>
+      <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden' }}>
+        <div ref={trackRef} style={{ display: 'flex', width: '200vw', height: '100vh' }}>
+          {panel1}{panel2}
+        </div>
+        <div aria-hidden style={{ position: 'absolute', bottom: 24, left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: 8, zIndex: 50 }}>
+          {[0,1].map(i => (
+            <div key={i} style={{ width: 6, height: 6, borderRadius: '50%', background: '#E8E4C9', opacity: activeDot === i ? 1 : 0.2, transition: 'opacity 0.3s ease' }} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const heroWrapRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
-  const nameRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number | null>(null);
-  const aboutSvgRef = useRef<SVGSVGElement>(null);
   const heroStarLayerRef = useRef<SVGGElement>(null);
-  const [navLogoHeart, setNavLogoHeart] = useState(false);
-  const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [navOpen, setNavOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [navBtnHovered, setNavBtnHovered] = useState(false);
-  const [heroPhase, setHeroPhase] = useState(0);
-  const [scrollDir, setScrollDir] = useState(1);
-
-  const nextTestimonial = () => {
-    setActiveTestimonial((prev) => (prev + 1) % TESTIMONIALS.length);
-  };
-
-  const prevTestimonial = () => {
-    setActiveTestimonial((prev) => (prev - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
-  };
-
-  const [margImage, setMargImage] = useState(0);
   const [activeTab, setActiveTab] = useState(0);
   const [showFullCaseStudy, setShowFullCaseStudy] = useState(false);
   const [showMurmurCaseStudy, setShowMurmurCaseStudy] = useState(false);
   const [siteReady, setSiteReady] = useState(false);
-  const [activeStarNode, setActiveStarNode] = useState(0);
-  const [passionTab, setPassionTab] = useState(0);
-  const [orbitHover, setOrbitHover] = useState<{ label: string, content: string } | null>(null);
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
-  const [activeFolder, setActiveFolder] = useState<string | null>(null);
-  const folderTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const testimonialScrollRef = useRef<HTMLDivElement>(null);
-  const testimonialPausedRef = useRef(false);
-  const testimonialRafRef = useRef<number>(0);
   const formRef = useRef<HTMLFormElement>(null);
   const [formStatus, setFormStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [contactFocused, setContactFocused] = useState(false);
+  const [meetmeVideoPlaying, setMeetmeVideoPlaying] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [messageError, setMessageError] = useState("");
 
@@ -1126,7 +1286,7 @@ export default function App() {
     if (msgInput) {
       const msg = msgInput.value.trim();
       if (msg.length < 20) {
-        setMessageError("Please write at least a sentence — 20 characters minimum.");
+        setMessageError("Please write at least a sentence â€” 20 characters minimum.");
         return;
       }
       const words = msg.toLowerCase().split(/\s+/).filter(w => w.length > 1);
@@ -1152,125 +1312,10 @@ export default function App() {
       })
       .catch(() => setFormStatus("error"));
   };
-  const orbitTooltipRef = useRef<HTMLDivElement>(null);
 
-
-
-  useEffect(() => {
-    const svg = aboutSvgRef.current;
-    if (!svg || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    let nodeElems: any[] = [];
-    let edgeElems: any[] = [];
-    let rafPending = false;
-    let lastE: MouseEvent | null = null;
-
-    const onMouseMove = (e: MouseEvent) => {
-      lastE = e;
-      if (rafPending) return;
-      rafPending = true;
-      requestAnimationFrame(() => {
-        rafPending = false;
-        const e = lastE!;
-        processMove(e);
-      });
-    };
-
-    const processMove = (e: MouseEvent) => {
-      if (nodeElems.length === 0) {
-        nodeElems = Array.from(svg.querySelectorAll('.c-node')).map(el => ({
-          el: el as SVGCircleElement,
-          cxP: parseFloat(el.getAttribute('cx') || '0'),
-          cyP: parseFloat(el.getAttribute('cy') || '0'),
-          color: el.getAttribute('fill') || 'white'
-        }));
-      }
-      if (edgeElems.length === 0) {
-        edgeElems = Array.from(svg.querySelectorAll('.c-line')).map(el => ({
-          el: el as SVGLineElement,
-          x1P: parseFloat(el.getAttribute('x1') || '0'),
-          y1P: parseFloat(el.getAttribute('y1') || '0'),
-          x2P: parseFloat(el.getAttribute('x2') || '0'),
-          y2P: parseFloat(el.getAttribute('y2') || '0'),
-          color: el.getAttribute('stroke') || 'white'
-        }));
-      }
-
-      const rect = svg.getBoundingClientRect();
-      const mouseX = e.clientX - rect.left;
-      const mouseY = e.clientY - rect.top;
-      const w = rect.width;
-      const h = rect.height;
-
-      const GLOW_DIST = 200;
-      const GLOW_DIST_SQ = GLOW_DIST * GLOW_DIST;
-
-      for (const n of nodeElems) {
-        const nx = (n.cxP / 100) * w;
-        const ny = (n.cyP / 100) * h;
-        const distSq = (mouseX - nx)**2 + (mouseY - ny)**2;
-        if (distSq < GLOW_DIST_SQ) {
-          const intensity = 1 - Math.sqrt(distSq) / GLOW_DIST;
-          n.el.style.strokeWidth = `${7 * intensity}px`;
-          n.el.style.opacity = '1';
-          n.el.style.filter = `drop-shadow(0 0 ${8 * Math.pow(intensity, 0.5)}px ${n.color}) drop-shadow(0 0 ${16 * intensity}px ${n.color})`;
-        } else {
-          n.el.style.strokeWidth = '';
-          n.el.style.opacity = '';
-          n.el.style.filter = '';
-        }
-      }
-
-      for (const edge of edgeElems) {
-        const x1 = (edge.x1P / 100) * w;
-        const y1 = (edge.y1P / 100) * h;
-        const x2 = (edge.x2P / 100) * w;
-        const y2 = (edge.y2P / 100) * h;
-        
-        const l2 = (x1 - x2)**2 + (y1 - y2)**2;
-        let distSq;
-        if (l2 === 0) {
-          distSq = (mouseX - x1)**2 + (mouseY - y1)**2;
-        } else {
-          let t = ((mouseX - x1) * (x2 - x1) + (mouseY - y1) * (y2 - y1)) / l2;
-          t = Math.max(0, Math.min(1, t));
-          const px = x1 + t * (x2 - x1);
-          const py = y1 + t * (y2 - y1);
-          distSq = (mouseX - px)**2 + (mouseY - py)**2;
-        }
-
-        if (distSq < GLOW_DIST_SQ) {
-          const intensity = 1 - Math.sqrt(distSq) / GLOW_DIST;
-          edge.el.style.strokeWidth = String(0.6 + 1.8 * intensity);
-          edge.el.style.opacity = String(0.22 + 0.78 * intensity);
-          edge.el.style.filter = `drop-shadow(0 0 ${6 * Math.pow(intensity, 0.5)}px ${edge.color})`;
-        } else {
-          edge.el.style.strokeWidth = '';
-          edge.el.style.opacity = '';
-          edge.el.style.filter = '';
-        }
-      }
-    };
-
-    window.addEventListener('mousemove', onMouseMove, { passive: true });
-    return () => window.removeEventListener('mousemove', onMouseMove);
-  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  useEffect(() => {
-    let lastY = window.scrollY;
-    const onScroll = () => {
-      const dir = window.scrollY >= lastY ? 1 : -1;
-      setScrollDir(dir);
-      lastY = window.scrollY;
-      const phase = window.scrollY < 80 ? 0 : window.scrollY < window.innerHeight ? 1 : window.scrollY < window.innerHeight * 2 ? 2 : 3;
-      setHeroPhase(phase);
-    };
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
@@ -1335,12 +1380,11 @@ export default function App() {
       applyParallax();
     };
     const applyParallax = () => {
-      const layer = heroStarLayerRef.current;
-      if (!layer) return;
       const scrollProgress = Math.min(window.scrollY / window.innerHeight, 1);
       const tx = mouseX * 8;
       const ty = mouseY * 8 + scrollProgress * -30;
-      layer.style.transform = `translate(${tx}px, ${ty}px)`;
+      const hero = heroStarLayerRef.current;
+      if (hero) hero.style.transform = `translate(${tx}px, ${ty}px)`;
     };
     const onScroll = () => applyParallax();
     window.addEventListener('mousemove', onMouseMove, { passive: true });
@@ -1351,26 +1395,7 @@ export default function App() {
     };
   }, []);
 
-  useEffect(() => {
-    const id = setInterval(() => setNavLogoHeart(v => !v), 400);
-    return () => clearInterval(id);
-  }, []);
 
-  useEffect(() => {
-    const el = testimonialScrollRef.current;
-    if (!el) return;
-    const speed = 0.6;
-    const step = () => {
-      if (!testimonialPausedRef.current) {
-        el.scrollLeft += speed;
-        const half = el.scrollWidth / 2;
-        if (el.scrollLeft >= half) el.scrollLeft -= half;
-      }
-      testimonialRafRef.current = requestAnimationFrame(step);
-    };
-    testimonialRafRef.current = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(testimonialRafRef.current);
-  }, []);
 
   return (
     <>
@@ -1381,7 +1406,7 @@ export default function App() {
       {/* Global Live Animated Grain Overlay */}
       <div className="live-grain" aria-hidden="true" style={{ display: "none" }} />
 
-      {/* Global Fixed Star Field — one render, visible across all sections */}
+      {/* Global Fixed Star Field â€” one render, visible across all sections */}
       <svg
         aria-hidden="true"
         style={{
@@ -1396,7 +1421,7 @@ export default function App() {
         {Array.from({ length: 750 }).map((_, i) => {
           const cx = (Math.abs(Math.sin(i * 12.9898 + 1.5) * 43758.5453) % 100) + "%";
           const cy = (Math.abs(Math.sin(i * 78.233 + 2.1) * 43758.5453) % 100) + "%";
-          // 3 strict sizes — more small, fewer large for a natural sky
+          // 3 strict sizes â€” more small, fewer large for a natural sky
           const r = i < 375 ? 0.5 : i < 625 ? 1.0 : 2.0;
           const fill = i % 3 === 0 ? "var(--color-lemon)" : i % 5 === 0 ? "#FFF" : "var(--color-pink)";
           // Even index = static, odd index = blinking (~375 each)
@@ -1418,1630 +1443,67 @@ export default function App() {
         })}
       </svg>
 
-      {/* ── Hero section ── */}
-      <div ref={heroWrapRef} style={{ height: "450vh", position: "relative" }}>
-      <div ref={sectionRef} style={{ height: "100vh", position: "sticky", top: 0, zIndex: 10, overflow: "hidden" }}>
-        <div style={{ width: "100%", height: "100%" }}>
+      {/* Scroll glow overlay */}
+      <div ref={glowRef} style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 8 }} />
 
-          {/* Background — fixed, no drift */}
-          <div style={{ position: "absolute", inset: 0, overflow: "hidden", zIndex: 0 }} aria-hidden="true">
+      {/* Hero + Meet Me horizontal scroll (200vh) */}
+      <HorizontalScrollSection
+        siteReady={siteReady}
+        meetmeVideoPlaying={meetmeVideoPlaying}
+        setMeetmeVideoPlaying={setMeetmeVideoPlaying}
+        heroStarLayerRef={heroStarLayerRef}
+      />
 
-          {/* Layer 1: Background SVG */}
-          <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", zIndex: 0 }}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 800 500"
-              preserveAspectRatio="xMidYMid slice"
-              style={{ width: "100%", height: "100%", display: "block" }}
-            >
-              <defs>
-                <linearGradient id="hillGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%"   stopColor="#C8BFB2" stopOpacity="0.7" />
-                  <stop offset="50%"  stopColor="#EDE5D8" stopOpacity="0.55" />
-                  <stop offset="100%" stopColor="#BFB5A8" stopOpacity="0.35" />
-                </linearGradient>
-                <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#000000" />
-                  <stop offset="55%" stopColor="#000000" />
-                  <stop offset="100%" stopColor="#000000" />
-                </linearGradient>
-                <radialGradient id="moonGlow">
-                  <stop offset="0%" stopColor="#EDE5D8" stopOpacity="0.18" />
-                  <stop offset="100%" stopColor="#EDE5D8" stopOpacity="0" />
-                </radialGradient>
-                <mask id="crescentMask">
-                  <rect x="0" y="0" width="800" height="500" fill="white" />
-                  <circle cx="89.6%" cy="22%" r="24" fill="black" />
-                </mask>
-                <filter id="northStarGlow" x="-500%" y="-500%" width="1100%" height="1100%">
-                  <feGaussianBlur stdDeviation="8" result="blur" />
-                  <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
-                </filter>
-                <filter id="starSoft">
-                  <feGaussianBlur stdDeviation="1.2" />
-                </filter>
-              </defs>
-              <rect width="800" height="500" fill="url(#skyGrad)" />
+      {/* Design Lens â€” scroll-driven depth animation */}
+      <div id="design-lens"><DesignLensSection /></div>
 
-              {/* Parallax star layers group */}
-              <g ref={heroStarLayerRef} style={{ willChange: "transform" }}>
-              {/* BACKGROUND STARS (Small, unconnected, blinking) */}
-              <g fill="#ffffff">
-                {BACKGROUND_STARS.map(star => (
-                  <circle key={`bg-star-${star.id}`} cx={star.x + "%"} cy={star.y + "%"} r={star.r} opacity={0.3}>
-                    <animate attributeName="opacity" values="0.1;0.7;0.1" dur={`${star.dur}s`} begin={`${star.delay}s`} repeatCount="indefinite" />
-                  </circle>
-                ))}
-              </g>
-
-              {/* Static upper stars */}
-              <g fill="#ffffff">
-                {Array.from({ length: 100 }, (_, i) => (
-                  <circle
-                    key={`us-${i}`}
-                    cx={((Math.abs(Math.sin(i * 317.4 + 521.9) * 43758.5453)) % 100) + "%"}
-                    cy={((Math.abs(Math.sin(i * 193.7 + 47.3) * 43758.5453)) % 30) + "%"}
-                    r={(Math.abs(Math.sin(i * 89.1)) % 0.5) + 0.2}
-                    opacity={0.6}
-                  />
-                ))}
-              </g>
-
-              {/* 200 extra static tiny stars — top half */}
-              <g fill="#ffffff">
-                {Array.from({ length: 200 }, (_, i) => (
-                  <circle
-                    key={`ts-${i}`}
-                    cx={((Math.abs(Math.sin(i * 431.7 + 219.3) * 43758.5453)) % 100) + "%"}
-                    cy={((Math.abs(Math.sin(i * 157.9 + 83.1) * 43758.5453)) % 50) + "%"}
-                    r={(Math.abs(Math.sin(i * 61.3)) % 0.4) + 0.15}
-                    opacity={0.5}
-                  />
-                ))}
-              </g>
-
-              {/* Hand-placed irregular constellation clusters */}
-              {HERO_CONSTELLATIONS.map((cluster, ci) => (
-                <g key={`cluster-${ci}`}>
-                  {cluster.edges.map(([a, b], ei) => (
-                    <line key={`cl-${ci}-${ei}`}
-                      x1={cluster.nodes[a][0] + "%"} y1={cluster.nodes[a][1] + "%"}
-                      x2={cluster.nodes[b][0] + "%"} y2={cluster.nodes[b][1] + "%"}
-                      stroke="#E8E4C9" strokeWidth="1" opacity={cluster.opacity}
-                    />
-                  ))}
-                  {cluster.nodes.map(([nx, ny], ni) => (
-                    <circle key={`cn-${ci}-${ni}`}
-                      cx={nx + "%"} cy={ny + "%"} r={1.5}
-                      fill="#E8E4C9" opacity={0.3 + (ci * 0.05)}
-                    />
-                  ))}
-                </g>
-              ))}
-              </g>{/* end parallax group */}
-
-              {/* Moon at 86.6%,22% with crescent */}
-              <circle cx="86.6%" cy="22%" r="64" fill="url(#moonGlow)" />
-              <circle cx="86.6%" cy="22%" r="24" fill="#EDE5D8" opacity="0.85" mask="url(#crescentMask)" />
-
-              {/* North Star — cream glow, directly above girl at 30% width */}
-              <circle cx="30%" cy="26%" r="20" fill="#FFFBE0" opacity="0.06" />
-              <circle cx="30%" cy="26%" r="2" fill="#FFFBE0" filter="url(#northStarGlow)">
-                <animate attributeName="opacity" values="0.7;1;0.7" dur="4s" repeatCount="indefinite" />
-              </circle>
-
-              {/* Hills */}
-              <path fill="url(#hillGrad)" opacity="0.6" d="M0 395 C70 365 150 390 250 410 C360 430 470 380 590 400 C700 420 760 390 800 405 L800 500 L0 500 Z" />
-            </svg>
-          </div>
-
-          {/* Layer 2: Hut (right-aligned, same ground level as girl) */}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 80 80"
-            aria-hidden="true"
-            style={{
-              display: "none",
-              position: "absolute",
-              bottom: "30%",
-              right: "10%",
-              width: "48px",
-              height: "48px",
-              zIndex: 1,
-              pointerEvents: "none",
-              userSelect: "none",
-            }}
-          >
-            <g fill="#D8D6D2" opacity="0.55">
-              <circle cx="52" cy="18" r="2"/>
-              <circle cx="55" cy="14" r="2.8"/>
-              <circle cx="53" cy="9" r="3.5"/>
-            </g>
-            <rect x="48" y="24" width="5" height="9" fill="#463328"/>
-            <path d="M20 36 L40 20 L60 36 Z" fill="#3A261A"/>
-            <path d="M25 34 L40 24 L55 34 Z" fill="#4B3223" opacity="0.7"/>
-            <rect x="24" y="34" width="32" height="24" rx="1" fill="#5E4632"/>
-            <rect x="35" y="45" width="10" height="13" rx="1" fill="#2A1C14"/>
-            <rect x="28" y="42" width="5" height="5" fill="#EACD8A" opacity="0.85"/>
-            <rect x="47" y="42" width="5" height="5" fill="#EACD8A" opacity="0.85"/>
-          </svg>
-
-
-          </div>{/* end background */}
-
-          {/* Full-screen marquee ribbon — visible only during meet-me phase */}
-          <AnimatePresence>
-            {heroPhase === 1 && (
-              <motion.div
-                key="hero-ribbon"
-                aria-hidden="true"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.3 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  zIndex: 1,
-                  pointerEvents: "none",
-                  overflow: "hidden",
-                }}
-              >
-                <div style={{ width: "130%", transform: "rotate(-3deg)" }}>
-                  <div className="marquee-track">
-                    {Array.from({ length: 6 }).map((_, i) => (
-                      <span key={i} className="marquee-text">• PRODUCT DESIGN • UX RESEARCH • CREATIVE DIRECTION&nbsp;</span>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* Content overlay — phase 0: landing, phase 1: meet-me */}
-          <div
-            className="hero-content-overlay"
-            style={{
-              position: "absolute",
-              inset: 0,
-              zIndex: 10,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <AnimatePresence mode="wait" custom={scrollDir}>
-              {heroPhase === 0 ? (
-                <motion.div
-                  key="landing"
-                  custom={scrollDir}
-                  variants={heroSlide}
-                  initial="enter"
-                  animate="center"
-                  exit="exit"
-                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                  className="hero-landing-panel"
-                  style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 40 }}
-                >
-                  {/* Text content */}
-                  <div style={{ display: "flex", flexDirection: "column" }}>
-                    <motion.span
-                      initial={{ opacity: 0, y: 14 }}
-                      animate={siteReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
-                      transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-                      style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, letterSpacing: "0.3em", color: "#F2EDCB", textTransform: "uppercase" as const, display: "block" }}
-                    >
-                      PRODUCT DESIGNER
-                    </motion.span>
-                    <motion.div
-                      initial={{ opacity: 0, y: 14 }}
-                      animate={siteReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
-                      transition={{ duration: 0.7, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
-                      style={{ marginTop: 8 }}
-                    >
-                      <span style={{ fontFamily: "'Sora', sans-serif", fontWeight: 700, fontSize: "clamp(2.8rem, 5vw, 4.5rem)", color: "var(--color-pink)", letterSpacing: "-0.02em", lineHeight: 1.1, display: "block" }}>
-                        Vishvara.G
-                      </span>
-                    </motion.div>
-                    <motion.p
-                      initial={{ opacity: 0, y: 14 }}
-                      animate={siteReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
-                      transition={{ duration: 0.7, delay: 0.26, ease: [0.22, 1, 0.36, 1] }}
-                      style={{ fontFamily: "'Sora', sans-serif", fontStyle: "italic", fontSize: "clamp(0.85rem, 1.2vw, 1rem)", color: "rgba(242,237,203,0.55)", marginTop: 12, marginBottom: 0 }}
-                    >
-                      Designing for the humans behind the metrics.
-                    </motion.p>
-                    <motion.div
-                      className="hero-stats-row"
-                      initial={{ opacity: 0, y: 14 }}
-                      animate={siteReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
-                      transition={{ duration: 0.7, delay: 0.34, ease: [0.22, 1, 0.36, 1] }}
-                      style={{ display: "flex", flexDirection: "row", gap: 12, marginTop: 28 }}
-                    >
-                      {[["3", "Projects"], ["2", "Domains"], ["6+", "Months"]].map(([val, label]) => (
-                        <div key={label} style={{ background: "rgba(0,0,0,0.35)", border: "1px solid rgba(242,237,203,0.15)", borderRadius: 10, padding: "10px 18px", flexShrink: 0 }}>
-                          <div style={{ fontFamily: "'Sora', sans-serif", fontWeight: 700, fontSize: 18, color: "#F2EDCB" }}>{val}</div>
-                          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 10, letterSpacing: "0.18em", color: "rgba(242,237,203,0.4)", textTransform: "uppercase" as const, marginTop: 2 }}>{label}</div>
-                        </div>
-                      ))}
-                    </motion.div>
-                    <motion.div
-                      className="hero-buttons-row"
-                      initial={{ opacity: 0, y: 14 }}
-                      animate={siteReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
-                      transition={{ duration: 0.7, delay: 0.42, ease: [0.22, 1, 0.36, 1] }}
-                      style={{ display: "flex", flexDirection: "row", gap: 12, marginTop: 24 }}
-                    >
-                      <button onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} style={{ background: "linear-gradient(135deg, var(--color-pink), #F2EDCB)", color: "#111", borderRadius: 9999, padding: "13px 28px", border: "none", fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: 13, letterSpacing: "0.06em", cursor: "pointer" }}>
-                        Contact Me
-                      </button>
-                      <a href="/Vishvara_Gandharv_Resume.pdf" download style={{ background: "transparent", border: "1px solid rgba(242,237,203,0.35)", color: "#F2EDCB", borderRadius: 9999, padding: "13px 28px", fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: 13, letterSpacing: "0.06em", textDecoration: "none", display: "inline-flex", alignItems: "center" }}>
-                        Download Resume
-                      </a>
-                    </motion.div>
-                  </div>
-
-                  {/* Profile image */}
-                  <motion.div
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={siteReady ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
-                    transition={{ duration: 0.8, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
-                    style={{ flexShrink: 0 }}
-                  >
-                    <img
-                      src={profileImg}
-                      alt="Vishvara Gandharv"
-                      style={{
-                        width: "clamp(160px, 18vw, 240px)",
-                        height: "clamp(200px, 24vw, 300px)",
-                        objectFit: "cover",
-                        objectPosition: "center top",
-                        borderRadius: 20,
-                        border: "1px solid rgba(242,237,203,0.18)",
-                        display: "block",
-                        boxShadow: "0 8px 40px rgba(0,0,0,0.5)",
-                      }}
-                    />
-                  </motion.div>
-                </motion.div>
-              ) : heroPhase === 1 ? (
-                <motion.div
-                  key="meetme"
-                  custom={scrollDir}
-                  variants={heroSlide}
-                  initial="enter"
-                  animate="center"
-                  exit="exit"
-                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                  style={{ position: "relative", width: "clamp(380px, 48vw, 680px)" }}
-                >
-                  {/* Video + buttons */}
-                  <div style={{ position: "relative", zIndex: 1 }}>
-                    <div className="video-card-hover" style={{
-                      background: "rgba(20,20,20,0.55)",
-                      backdropFilter: "blur(12px)",
-                      WebkitBackdropFilter: "blur(12px)",
-                      border: "none",
-                      borderRadius: "20px",
-                      padding: "10px",
-                      position: "relative",
-                      boxShadow: "0 0 60px rgba(250,255,199,0.08)",
-                    }}>
-                      <div aria-hidden="true" style={{ position: "absolute", top: -6, left: -6, width: 6, height: 6, borderRadius: "50%", background: "#93C5FD", opacity: 0.8, zIndex: 2 }} />
-                      <div aria-hidden="true" style={{ position: "absolute", top: -6, right: -6, width: 6, height: 6, borderRadius: "50%", background: "#93C5FD", opacity: 0.8, zIndex: 2 }} />
-                      <div aria-hidden="true" style={{ position: "absolute", bottom: -6, left: -6, width: 6, height: 6, borderRadius: "50%", background: "#93C5FD", opacity: 0.8, zIndex: 2 }} />
-                      <div aria-hidden="true" style={{ position: "absolute", bottom: -6, right: -6, width: 6, height: 6, borderRadius: "50%", background: "#93C5FD", opacity: 0.8, zIndex: 2 }} />
-                      <YouTubeFacade videoId="CGPjBUCOn2M" title="Introduction video" borderRadius="14px" />
-                    </div>
-
-                    <div style={{ display: "flex", gap: 12, justifyContent: "center", marginTop: 20 }}>
-                      <button onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} style={{ background: "linear-gradient(135deg, var(--color-pink), #F2EDCB)", color: "#111", borderRadius: 9999, padding: "13px 28px", border: "none", fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: 13, letterSpacing: "0.06em", cursor: "pointer" }}>
-                        Contact Me
-                      </button>
-                      <a href="/Vishvara_Gandharv_Resume.pdf" download style={{ background: "transparent", border: "1px solid rgba(242,237,203,0.35)", color: "#F2EDCB", borderRadius: 9999, padding: "13px 28px", fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: 13, letterSpacing: "0.06em", textDecoration: "none", display: "inline-flex", alignItems: "center" }}>
-                        Download Resume
-                      </a>
-                      <a href="https://www.linkedin.com/in/vishvara-gandharv" target="_blank" rel="noreferrer" style={{ display: "inline-flex", alignItems: "center", background: "transparent", border: "1px solid rgba(147,197,253,0.4)", color: "var(--color-sky)", padding: "13px 24px", borderRadius: 9999, fontFamily: "'DM Sans', sans-serif", fontSize: 13, textDecoration: "none" }}>
-                        LinkedIn
-                      </a>
-                    </div>
-                  </div>
-                </motion.div>
-              ) : heroPhase === 2 ? (
-                <motion.div
-                  key="designlens"
-                  custom={scrollDir}
-                  variants={heroSlide}
-                  initial="enter"
-                  animate="center"
-                  exit="exit"
-                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                  style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%" }}
-                >
-                  <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 48, marginTop: -40, transform: "translateX(8%)" }}>
-                  {/* Left — label */}
-                  <div style={{ flex: "0 0 auto", display: "flex", flexDirection: "column", gap: 12 }}>
-                    <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.75rem", letterSpacing: "0.25em", color: "#888", textTransform: "uppercase", margin: 0 }}>
-                      how i see design
-                    </p>
-                    <h2 style={{ fontFamily: "'Sora', sans-serif", fontWeight: 700, fontSize: "clamp(2.4rem, 4vw, 4rem)", color: "var(--color-lemon)", margin: 0, lineHeight: 1.1 }}>
-                      Design<br />Lens
-                    </h2>
-                  </div>
-
-                  {/* Right — lens in a size-corrected wrapper (810px * 0.546 ≈ 442px) */}
-                  <div style={{ width: 442, height: 442, position: "relative", flexShrink: 0 }}>
-                    <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%) scale(0.546)", transformOrigin: "center center" }}>
-                      <DesignLensSection compact />
-                    </div>
-                  </div>
-                  </div>
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="designerbrain"
-                  custom={scrollDir}
-                  variants={heroSlide}
-                  initial="enter"
-                  animate="center"
-                  exit="exit"
-                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                  style={{ position: "absolute", inset: 0, background: "var(--color-bg)", zIndex: 2, overflow: "hidden" }}
-                >
-                  <div style={{ transform: "scale(0.72) translateX(8%) translateY(-8%)", transformOrigin: "top center", width: "100%" }}>
-                    <DesignerMind />
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-
-
-          {/* Scroll glow overlay — expands from star */}
-          <div ref={glowRef} style={{
-            position: "fixed",
-            inset: 0,
-            pointerEvents: "none",
-            zIndex: 8,
-          }} />
-
+      {/* Designer Mind */}
+      <div id="designers-mind" style={{ width: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)', fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: 28, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#C9C4B8', opacity: 0.35, marginBottom: 24, userSelect: 'none' }}>
+          I think in systems
         </div>
+        <DesignerMind />
       </div>
-      </div>{/* end heroWrap */}
 
-
-
-      {false && <>
-      {/* ── About Me section ── */}
-      {/* no .section — paddingRight: calc(40%) reserves the right half for the full-bleed profile photo panel */}
-      <div
-        id="about"
-        className="about-section"
-        style={{
-          background: "transparent",
-          minHeight: "100vh",
-          paddingTop: "96px",
-          paddingBottom: "100px",
-          paddingLeft: "clamp(28px, 7vw, 100px)",
-          paddingRight: "calc(40% + clamp(20px, 3vw, 40px))",
-          display: "grid",
-          gridTemplateColumns: "1fr",
-          gridTemplateAreas: '"role" "name" "tagline" "stats" "ctas"',
-          rowGap: 0,
-          alignItems: "start",
-          position: "relative",
-        }}
-      >
-
-
-        {/* Vignette overlay */}
-        <div
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            top: 0, left: 0, right: 0, bottom: 0,
-            pointerEvents: "none",
-            zIndex: 0,
-            background: "radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.5) 100%)",
-          }}
-        />
-
-        {/* Constellation SVG */}
-        <svg
-          ref={aboutSvgRef}
-          aria-hidden="true"
-          className="constellation-svg"
-          style={{
-            position: "absolute",
-            top: 0, left: 0, right: 0, bottom: 0,
-            width: "100%",
-            height: "100%",
-            overflow: "visible",
-            zIndex: 0,
-          }}
-        >
-          {/* Visible edges */}
-          {ABOUT_EDGES.map(e => (
-            <line
-              key={e.id}
-              data-edge={String(e.id)}
-              x1={ABOUT_NODES[e.a].cx} y1={ABOUT_NODES[e.a].cy}
-              x2={ABOUT_NODES[e.b].cx} y2={ABOUT_NODES[e.b].cy}
-              stroke={ABOUT_NODES[e.a].color}
-              className="c-line"
-            />
-          ))}
-
-          {/* Nodes */}
-          {ABOUT_NODES.map(n => (
-            <g key={n.id} data-node={String(n.id)}>
-              {n.ring && (
-                <circle
-                  cx={n.cx} cy={n.cy} r={n.r + 5}
-                  fill="none" stroke={n.color}
-                  strokeWidth={0.7} opacity={0.15}
-                />
-              )}
-              <circle
-                cx={n.cx} cy={n.cy} r={n.r}
-                fill={n.color}
-                data-base-r={String(n.r)}
-                data-nc={String(n.id)}
-                className="c-node"
-                pointerEvents="none"
+      {/* CASE STUDIES + SIGNALS â€” 500 extra stars behind */}
+      <div style={{ position: 'relative' }}>
+        <svg aria-hidden style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0 }}>
+          {Array.from({ length: 500 }).map((_, i) => {
+            const cx = (Math.abs(Math.sin(i * 37.1247 + 9.2) * 43758.5453) % 100) + '%';
+            const cy = (Math.abs(Math.sin(i * 61.453  + 4.8) * 43758.5453) % 100) + '%';
+            const r  = i < 300 ? 0.5 : i < 460 ? 1.0 : 1.5;
+            const fill = i % 5 === 0 ? 'var(--color-lemon)' : i % 9 === 0 ? 'var(--color-pink)' : '#FFF';
+            const isBlinking = i < 200;
+            const delay = ((i * 17) % 50) / 10 + 's';
+            const dur   = (2.0 + ((i * 9) % 35) / 10).toFixed(1) + 's';
+            return (
+              <circle key={`cs-star-${i}`} cx={cx} cy={cy} r={r} fill={fill} opacity={0.5}
+                className={isBlinking ? 'star-blink' : undefined}
+                style={isBlinking ? { animationDelay: delay, animationDuration: dur } : undefined}
               />
-            </g>
-          ))}
+            );
+          })}
         </svg>
-
-        {/* Role overline — shining designation */}
-        <div className="about-role-badge" style={{
-          display: "inline-flex",
-          alignItems: "center",
-          margin: "0 0 36px 6px",
-          position: "relative" as const,
-          top: "28px",
-          pointerEvents: "auto",
-          width: "fit-content",
-        }}>
-          <span style={{
-            fontFamily: "'M PLUS Rounded 1c', sans-serif",
-            fontSize: "15px",
-            fontWeight: 700,
-            textTransform: "uppercase" as const,
-            letterSpacing: "0.18em",
-            color: "var(--color-lemon)",
-          }}>
-            Product Designer
-          </span>
-        </div>
-
-        {/* Name — dominant anchor */}
-        <div className="about-name-block" style={{ margin: "0 0 36px -36px", display: "flex", flexDirection: "column", gap: "8px", pointerEvents: "auto", alignItems: "flex-start" }}>
-          <h1 style={{
-            fontFamily: "'M PLUS Rounded 1c', sans-serif",
-            fontWeight: 800,
-            fontSize: "clamp(3.06rem, 7.65vw, 9rem)",
-            color: "var(--color-pink)",
-            lineHeight: 0.88,
-            letterSpacing: "-0.03em",
-            margin: 0,
-            background: "rgba(0, 0, 0, 0.08)",
-            backdropFilter: "blur(6px)",
-            WebkitBackdropFilter: "blur(6px)",
-            border: "1px solid rgba(255, 255, 255, 0.02)",
-            borderRadius: "24px",
-            padding: "12px 36px",
-            width: "fit-content",
-            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.15)",
-          }}>
-            Vishvara.G
-          </h1>
-          {/* Tagline — sits directly under name */}
-          <p className="about-tagline" style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontStyle: "italic",
-            fontWeight: 400,
-            fontSize: "14px",
-            color: "rgba(255,255,255,0.6)",
-            lineHeight: 1.5,
-            margin: 0,
-            paddingLeft: "62px",
-            textAlign: "left",
-            pointerEvents: "auto",
-          }}>
-            Designing for the humans behind the metrics.
-          </p>
-        </div>
-
-        {/* Stats (Individual Glassmorphism Cards) */}
-        <div className="about-stats" style={{
-          display: "flex",
-          gap: "clamp(12px, 2vw, 20px)",
-          margin: "0 0 36px 0",
-          pointerEvents: "auto",
-          flexWrap: "wrap",
-        }}>
-          {[["3", "Projects", "2 ongoing"], ["2", "Domains", null], ["6+", "Months", null]].map(([val, label, sub]) => (
-            <div key={label} style={{
-              background: "rgba(255, 255, 255, 0.03)",
-              backdropFilter: "blur(6px)",
-              WebkitBackdropFilter: "blur(6px)",
-              border: "1px solid rgba(255, 255, 255, 0.08)",
-              borderRadius: "16px",
-              boxShadow: "0 12px 40px rgba(0, 0, 0, 0.2)",
-              padding: "18px 24px",
-              minWidth: "110px",
-              display: "flex",
-              flexDirection: "column",
-            }}>
-              <div style={{
-                fontFamily: "'DM Sans', sans-serif",
-                color: "var(--color-sky)",
-                fontSize: "clamp(2rem, 3.5vw, 3rem)",
-                fontWeight: 700,
-                lineHeight: 1,
-              }}>{val}</div>
-              <div style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: "10px",
-                textTransform: "uppercase" as const,
-                color: "rgba(255,255,255,0.32)",
-                marginTop: "7px",
-                letterSpacing: "0.14em",
-              }}>{label}</div>
-              {sub && (
-                <div style={{
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontSize: "9px",
-                  color: "rgba(242,167,196,0.45)",
-                  marginTop: "3px",
-                  letterSpacing: "0.06em",
-                }}>{sub}</div>
-              )}
-            </div>
-          ))}
-        </div>
-
-        {/* CTAs */}
-        <div className="about-ctas" style={{ display: "flex", gap: "12px", flexWrap: "wrap" as const, pointerEvents: "auto" }}>
-          <button
-            onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-            className="btn-shine"
-            style={{
-            border: "none",
-            color: "#1a0010",
-            padding: "12px 28px",
-            borderRadius: "8px",
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: "13px",
-            fontWeight: 400,
-            letterSpacing: "0.02em",
-            cursor: "pointer",
-          }}>
-            Contact Me
-          </button>
-          <a
-            href="/Vishvara_Gandharv_Resume.pdf"
-            download="Vishvara_Gandharv_Resume.pdf"
-            style={{
-              display: "inline-block",
-              background: "transparent",
-              border: "1px solid rgba(147,197,253,0.35)",
-              color: "var(--color-sky)",
-              padding: "12px 28px",
-              borderRadius: "8px",
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: "13px",
-              letterSpacing: "0.02em",
-              cursor: "pointer",
-              textDecoration: "none",
-            }}
-          >
-            Download Resume
-          </a>
-
-        </div>
-
-        {/* Right: full-bleed photo */}
-        <div style={{
-          position: "absolute",
-          right: "60px",
-          top: 0,
-          bottom: 0,
-          width: "40%",
-          zIndex: 1,
-          overflow: "hidden",
-        }}>
-          <img
-            src={profileImg}
-            alt="Vishvara Gandharv"
-            style={{
-              display: "block",
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              objectPosition: "center top",
-            }}
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <ConstellationCaseStudies
+            caseStudiesData={caseStudiesData}
+            murmurBannerUrl={murmurBannerUrl}
+            onMargdarshakOpen={() => { setActiveTab(0); setShowFullCaseStudy(true); }}
+            onMurmurOpen={() => { setActiveTab(1); setShowMurmurCaseStudy(true); }}
           />
+          <p style={{
+            fontFamily:"'Sora',sans-serif", fontWeight:300,
+            fontSize:28, color:'#C9C4B8', opacity:0.35,
+            letterSpacing:'0.22em', textAlign:'center', margin:'0',
+          }}>Who shaped how I think, and what I'm making of it.</p>
+          <SignalsSection />
         </div>
-
       </div>
 
+      <div id="outside-work"><OutsideWork /></div>
 
-      {/* FEATURED VIDEO SECTION */}
-      <section className="section" style={{
-        position: "relative",
-        background: "transparent",
-        overflow: "hidden"
-      }}>
-        {/* Liquid background container for vignette */}
-        <div style={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none" }}>
-          {/* Vignette Overlay */}
-          <div style={{
-            position: "absolute",
-            inset: 0,
-            background: "radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.5) 100%)",
-          }} aria-hidden="true" />
-        </div>
 
-        {/* Background Marquee Ribbon */}
-        <div aria-hidden="true" style={{
-          position: "absolute",
-          top: "48%",
-          left: "-10%",
-          width: "120%",
-          transform: "rotate(-3deg) translateY(-50%)",
-          zIndex: 0,
-          pointerEvents: "none",
-          overflow: "hidden"
-        }}>
-          <div className="marquee-track">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <span key={i} className="marquee-text">
-                • PRODUCT DESIGN • UX RESEARCH • CREATIVE DIRECTION&nbsp;
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* Content Wrapper */}
-        <div style={{
-          position: "relative",
-          zIndex: 1,
-          maxWidth: "860px",
-          margin: "0 auto",
-          textAlign: "center"
-        }}>
-          {/* Headline */}
-          <h2 style={{
-            fontFamily: "'Sora', sans-serif",
-            fontWeight: 700,
-            fontSize: "clamp(2.2rem, 4vw, 3.8rem)",
-            color: "var(--color-lemon)",
-            lineHeight: 1.1,
-            margin: "0 0 16px 0"
-          }}>
-            Meet Me
-          </h2>
-
-          {/* Video Wrapper (Glassmorphism) */}
-          <div className="video-card-hover" style={{
-            background: "rgba(20, 20, 20, 0.55)",
-            backdropFilter: "blur(12px)",
-            WebkitBackdropFilter: "blur(12px)",
-            border: "2px solid var(--color-lemon)",
-            borderRadius: "20px",
-            padding: "10px",
-            position: "relative",
-            boxShadow: "0 0 60px rgba(250, 255, 199, 0.08)",
-            transition: "all 0.4s ease"
-          }}>
-            {/* 4 Corners (offset by -6px from edge) */}
-            <div aria-hidden="true" style={{ position: "absolute", top: -6, left: -6, width: 6, height: 6, borderRadius: "50%", background: "#93C5FD", opacity: 0.8, zIndex: 2 }} />
-            <div aria-hidden="true" style={{ position: "absolute", top: -6, right: -6, width: 6, height: 6, borderRadius: "50%", background: "#93C5FD", opacity: 0.8, zIndex: 2 }} />
-            <div aria-hidden="true" style={{ position: "absolute", bottom: -6, left: -6, width: 6, height: 6, borderRadius: "50%", background: "#93C5FD", opacity: 0.8, zIndex: 2 }} />
-            <div aria-hidden="true" style={{ position: "absolute", bottom: -6, right: -6, width: 6, height: 6, borderRadius: "50%", background: "#93C5FD", opacity: 0.8, zIndex: 2 }} />
-
-            {/* iframe */}
-            <YouTubeFacade videoId="CGPjBUCOn2M" title="Introduction video" borderRadius="14px" />
-          </div>
-
-          {/* Content Below */}
-          <div style={{
-            maxWidth: "560px",
-            margin: "28px auto 0",
-          }}>
-            <p style={{
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: "15px",
-              lineHeight: 1.8,
-              color: "rgba(255, 255, 255, 0.45)",
-              margin: 0
-            }}>
-              Transforming messy human behavior into clear, purposeful design. Open to product design roles globally.
-            </p>
-
-            <div className="featured-buttons-container" style={{
-              display: "flex",
-              gap: "12px",
-              justifyContent: "center",
-              marginTop: "24px"
-            }}>
-              <a
-                href="https://www.linkedin.com/in/vishvara-gandharv"
-                target="_blank"
-                rel="noreferrer"
-                className="featured-btn-secondary"
-                style={{
-                  display: "inline-block",
-                  background: "transparent",
-                  border: "1px solid rgba(147, 197, 253, 0.4)",
-                  color: "var(--color-sky)",
-                  padding: "10px 24px",
-                  borderRadius: "11px",
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontSize: "13px",
-                  cursor: "pointer",
-                  transition: "all 0.3s ease",
-                  textDecoration: "none"
-                }}>
-                Connect on LinkedIn
-              </a>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      {/* DESIGN LENS */}
-      <DesignLensSection />
-
-      {/* THE DESIGNER'S MIND (Star Map) */}
-      <DesignerMind />
-
-      {/* DIVIDER RIBBON */}
-      {/* no .section — decorative full-bleed marquee, intentional padding:0 and no max-width cap */}
-      <section
-        style={{
-          background: "transparent",
-          padding: "0",
-          marginTop: "40px",
-          marginBottom: "40px",
-          overflow: "hidden",
-          position: "relative",
-          cursor: "default",
-          zIndex: 20,
-          pointerEvents: "none"
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            whiteSpace: "nowrap",
-            width: "fit-content",
-            animation: "editorial-marquee 100s linear infinite",
-          }}
-        >
-          {Array.from({ length: 2 }).map((_, trackIdx) => (
-            <div key={trackIdx} style={{ display: "flex", gap: "60px", paddingRight: "60px" }}>
-              {Array.from({ length: 6 }).map((_, i) => (
-                <span
-                  key={i}
-                  style={{
-                    fontFamily: "'DM Sans', sans-serif",
-                    fontWeight: 700,
-                    fontSize: "clamp(3rem, 6vw, 5rem)",
-                    letterSpacing: "0.1em",
-                  }}
-                >
-                  <span className="ribbon-word">BEHAVIOURAL DESIGN</span> <span style={{ color: "var(--color-pink)", margin: "0 20px", opacity: 0.5 }}>★</span> <span className="ribbon-word">INTERACTION DESIGN</span> <span style={{ color: "var(--color-sky)", margin: "0 20px", opacity: 0.5 }}>★</span>
-                </span>
-              ))}
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* CASE STUDIES SECTION */}
-      <section id="work" className="case-studies-section section" style={{
-        position: "relative",
-        background: "transparent",
-        zIndex: 10,
-        fontFamily: "'DM Sans', sans-serif",
-        overflow: "hidden"
-      }}>
-
-        {/* Vignette overlay */}
-        <div
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            top: 0, left: 0, right: 0, bottom: 0,
-            pointerEvents: "none",
-            zIndex: 0,
-            background: "radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.5) 100%)",
-          }}
-        />
-
-        <div style={{ position: "relative", zIndex: 1 }}>
-
-          <h2 style={{
-            fontFamily: "'Sora', sans-serif",
-            fontWeight: 700,
-            fontSize: "clamp(2.2rem, 4vw, 3.8rem)",
-            color: "var(--color-lemon)",
-            textAlign: "center" as const,
-            lineHeight: 1.08,
-            margin: "0 0 60px 0",
-          }}>
-            Method Study
-          </h2>
-
-          {/* APPLE BENTO — big display box + selector row */}
-          {(() => {
-            const cards = [
-              {
-                idx: 0,
-                visual: (
-                  <>
-                    <img src="https://img.youtube.com/vi/oaA4V-_D63A/maxresdefault.jpg" alt="Margdarshak" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%", display: "block" }} />
-                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.65) 100%)" }} />
-                  </>
-                ),
-                contractedBg: "transparent",
-                tag: "Civic UX", tagColor: "var(--color-pink)", tagBg: "rgba(242,167,196,0.1)", tagBorder: "rgba(242,167,196,0.25)",
-                name: "Margdarshak", subtitle: "Bridging welfare schemes and the families they're meant to serve",
-                star: [
-                  { color: "var(--color-pink)", label: "Situation", text: caseStudiesData[0].situation },
-                  { color: "var(--color-sky)", label: "Task",      text: caseStudiesData[0].task },
-                  { color: "var(--color-pink)", label: "Action",    text: caseStudiesData[0].actionTitle },
-                  { color: "var(--color-sky)", label: "Result",    text: null, metrics: caseStudiesData[0].metrics.slice(0,3) },
-                ],
-                cta: (
-                  <>
-                    <button style={{ flex: 1, background: "var(--color-lemon)", color: "#000", fontFamily: "'DM Sans', sans-serif", fontSize: "13px", fontWeight: 500, padding: "11px 16px", borderRadius: "9px", border: "none", cursor: "pointer", transition: "box-shadow 0.2s" }}
-                      onClick={e => { e.stopPropagation(); setActiveTab(0); setShowFullCaseStudy(true); }}
-                      onMouseOver={e => { e.currentTarget.style.boxShadow = "0 0 18px rgba(250,255,199,0.45)"; }}
-                      onMouseOut={e => { e.currentTarget.style.boxShadow = "none"; }}>
-                      See how I did it →
-                    </button>
-                    <a href="https://www.figma.com/proto/oKryn0vKJGZ8oZw63x1drX/Margdarshak?node-id=2285-32311&p=f&t=08OH4pGyXfe9PhPq-1&scaling=scale-down&content-scaling=fixed&page-id=1972%3A1741&starting-point-node-id=2285%3A32298&show-proto-sidebar=1"
-                      target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}
-                      style={{ flex: "0 0 auto", background: "transparent", color: "var(--color-sky)", fontSize: "13px", fontWeight: 600, padding: "11px 14px", borderRadius: "9px", border: "1px solid rgba(147,197,253,0.3)", textDecoration: "none", display: "inline-flex", alignItems: "center", whiteSpace: "nowrap" as const, transition: "background 0.2s" }}
-                      onMouseOver={e => { (e.currentTarget as HTMLAnchorElement).style.background = "rgba(147,197,253,0.08)"; }}
-                      onMouseOut={e => { (e.currentTarget as HTMLAnchorElement).style.background = "transparent"; }}>
-                      Prototype ↗
-                    </a>
-                  </>
-                ),
-              },
-              {
-                idx: 1,
-                visual: (
-                  <>
-                    <img src={murmurBannerUrl} alt="Murmur" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", display: "block" }} />
-                    <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "50%", background: "linear-gradient(to bottom, transparent, rgba(5,14,25,0.9))" }} />
-                  </>
-                ),
-                contractedBg: "linear-gradient(155deg, #0b1e36 0%, #0f2d4a 100%)",
-                tag: "Healthcare", tagColor: "var(--color-sky)", tagBg: "rgba(147,197,253,0.07)", tagBorder: "rgba(147,197,253,0.18)",
-                name: "Murmur", subtitle: "AI-powered postpartum couples platform that reads maternal distress signals and translates them into one actionable daily nudge for the partner.",
-                star: [
-                  { color: "var(--color-pink)", label: "Situation", text: caseStudiesData[1].situation },
-                  { color: "var(--color-sky)", label: "Task",      text: caseStudiesData[1].task },
-                  { color: "var(--color-pink)", label: "Action",    text: caseStudiesData[1].actionTitle },
-                  { color: "var(--color-sky)", label: "Result",    text: caseStudiesData[1].result.replace(/\n+/g, ' ') },
-                ],
-                cta: (
-                  <>
-                    <button style={{ flex: 1, background: "var(--color-lemon)", color: "#000", fontFamily: "'DM Sans', sans-serif", fontSize: "13px", fontWeight: 500, padding: "11px 16px", borderRadius: "9px", border: "none", cursor: "pointer", transition: "box-shadow 0.2s" }}
-                      onClick={e => { e.stopPropagation(); setActiveTab(1); setShowMurmurCaseStudy(true); }}
-                      onMouseOver={e => { e.currentTarget.style.boxShadow = "0 0 18px rgba(250,255,199,0.45)"; }}
-                      onMouseOut={e => { e.currentTarget.style.boxShadow = "none"; }}>
-                      See how I did it →
-                    </button>
-                  </>
-                ),
-              },
-              {
-                idx: 2,
-                visual: (
-                  <>
-                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(155deg, #160828 0%, #261045 55%, #190830 100%)" }} />
-                    <svg style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} width="100" height="76" viewBox="0 0 90 70" fill="none" opacity="0.16"><circle cx="45" cy="32" r="18" stroke="var(--color-pink)" strokeWidth="1.4"/><circle cx="45" cy="32" r="4" fill="var(--color-pink)"/><path d="M45 14 L47 21 L45 19 L43 21 Z" fill="var(--color-pink)" opacity="0.7"/><circle cx="68" cy="20" r="5.5" stroke="var(--color-lemon)" strokeWidth="1.2"/><circle cx="20" cy="52" r="4.5" stroke="var(--color-lemon)" strokeWidth="1.2"/><circle cx="70" cy="54" r="3.5" stroke="var(--color-pink)" strokeWidth="1.2"/><line x1="45" y1="32" x2="68" y2="20" stroke="var(--color-pink)" strokeWidth="0.7" opacity="0.4"/><line x1="45" y1="32" x2="20" y2="52" stroke="var(--color-lemon)" strokeWidth="0.7" opacity="0.4"/></svg>
-                    <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "50%", background: "linear-gradient(to bottom, transparent, rgba(10,5,20,0.9))" }} />
-                  </>
-                ),
-                contractedBg: "linear-gradient(155deg, #160828 0%, #261045 100%)",
-                tag: "Gamify UX", tagColor: "var(--color-lemon)", tagBg: "rgba(250,255,199,0.06)", tagBorder: "rgba(250,255,199,0.14)",
-                name: "Openlee", subtitle: "Hyper-local discovery platform",
-                star: [
-                  { color: "var(--color-pink)", label: "Situation", text: caseStudiesData[2].situation },
-                  { color: "var(--color-sky)", label: "Task",      text: caseStudiesData[2].task },
-                  { color: "var(--color-pink)", label: "Action",    text: caseStudiesData[2].actionTitle },
-                  { color: "var(--color-sky)", label: "Result",    text: caseStudiesData[2].result.replace(/\n+/g, ' ') },
-                ],
-                cta: (
-                  <span style={{ flex: 1, fontFamily: "'DM Sans', sans-serif", fontSize: "12px", padding: "10px 14px", borderRadius: "9px", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.25)", background: "rgba(255,255,255,0.02)", textAlign: "center" as const, letterSpacing: "0.06em" }}>
-                    Case Study Coming Soon
-                  </span>
-                ),
-              },
-            ];
-
-            const activeCard = cards.find(c => c.idx === activeTab)!;
-            const inactiveList = cards.filter(c => c.idx !== activeTab).sort((a, b) => a.idx - b.idx);
-
-            return (
-              <div className="bento-outer">
-                <div className="bento-grid-v2">
-                  {/* ── BIG ACTIVE CARD ── */}
-                  <div style={{ borderRadius: "18px", border: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 8px 48px rgba(0,0,0,0.5)", overflow: "hidden" }}>
-                    <AnimatePresence mode="wait">
-                      <motion.div key={activeTab} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }} style={{ display: "flex", flexDirection: "column" as const }}>
-                        <div style={{ height: "340px", position: "relative", overflow: "hidden" }}>
-                          {activeCard.visual}
-                        </div>
-                        <div style={{ padding: "20px 24px 20px", background: "rgba(10,10,10,0.98)", display: "flex", flexDirection: "column" as const }}>
-                          <div style={{ marginBottom: "10px" }}>
-                            <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "10px", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: activeCard.tagColor, background: activeCard.tagBg, border: `1px solid ${activeCard.tagBorder}`, padding: "3px 10px", borderRadius: "9999px" }}>{activeCard.tag}</span>
-                            <h3 style={{ fontFamily: "'Sora', sans-serif", fontSize: "clamp(20px, 2vw, 28px)", fontWeight: 500, color: "#fff", margin: "7px 0 3px", lineHeight: 1.1 }}>{activeCard.name}</h3>
-                            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "11px", color: "rgba(255,255,255,0.6)", margin: 0, lineHeight: 1.4 }}>{activeCard.subtitle}</p>
-                          </div>
-                          <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column" as const, gap: "10px" }}>
-                            {activeCard.star.map((item, si) => (
-                              <li key={si} style={{ display: "flex", gap: "9px", alignItems: "flex-start", fontSize: "11px", color: "rgba(255,255,255,0.6)", lineHeight: 1.5 }}>
-                                <svg viewBox="0 0 24 24" style={{ width: "11px", height: "11px", flexShrink: 0, marginTop: "3px", overflow: "visible" }}>
-                                  <polygon points="12,4 13.9,9.4 19.6,9.5 15,13 16.7,18.5 12,15.2 7.3,18.5 9,13 4.4,9.5 10.1,9.4" fill={item.color} stroke={item.color} strokeWidth="2" strokeLinejoin="round" />
-                                </svg>
-                                <div style={{ minWidth: 0 }}>
-                                  <strong style={{ color: item.color, fontSize: "8px", textTransform: "uppercase" as const, letterSpacing: "0.9px", display: "block", marginBottom: "2px" }}>{item.label}</strong>
-                                  {item.text ? (
-                                    <span style={{ display: "block" }}>{item.text}</span>
-                                  ) : (
-                                    <div style={{ display: "flex", gap: "5px", flexWrap: "wrap" as const, marginTop: "2px" }}>
-                                      {item.metrics!.map((m, mi) => (
-                                        <div key={mi} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid var(--color-border-glass)", borderRadius: "6px", padding: "3px 7px" }}>
-                                          <div style={{ fontSize: "12px", fontWeight: 700, color: "#fff", lineHeight: 1 }}>{m.value}</div>
-                                          <div style={{ fontSize: "7px", textTransform: "uppercase" as const, color: "rgba(255,255,255,0.35)", marginTop: "1px" }}>{m.label}</div>
-                                        </div>
-                                      ))}
-                                    </div>
-                                  )}
-                                </div>
-                              </li>
-                            ))}
-                          </ul>
-                          <div style={{ display: "flex", gap: "8px", marginTop: "14px" }}>{activeCard.cta}</div>
-                        </div>
-                      </motion.div>
-                    </AnimatePresence>
-                  </div>
-                  {/* ── INACTIVE CARDS COLUMN ── */}
-                  <div className="bento-inactive-col">
-                    {inactiveList.map(card => (
-                      <div key={card.idx} className="bento-inactive-card" style={{ flex: 1, borderRadius: "14px", border: "1.5px solid var(--color-border-glass)", cursor: "pointer", overflow: "hidden", position: "relative", transition: "border-color 0.3s ease" }} onClick={() => setActiveTab(card.idx)}>
-                        <div style={{ position: "absolute", inset: 0 }}>{card.visual}</div>
-                        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.25) 55%, transparent 100%)" }} />
-                        <div style={{ position: "absolute", top: "10px", left: "10px" }}>
-                          <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "8px", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: card.tagColor, background: card.tagBg, border: `1px solid ${card.tagBorder}`, padding: "2px 8px", borderRadius: "9999px" }}>{card.tag}</span>
-                        </div>
-                        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "8px 12px 12px" }}>
-                          <div style={{ fontFamily: "'Sora', sans-serif", fontSize: "17px", fontWeight: 500, color: "#fff", lineHeight: 1.1, marginBottom: "3px" }}>{card.name}</div>
-                          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "10px", color: "rgba(255,255,255,0.45)", lineHeight: 1.3, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" as const }}>{card.subtitle}</div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            );
-          })()}
-
-        </div>
-      </section>
-
-      {/* TEACHERS I'VE NEVER MET */}
-      <TeachersSection />
-
-      {/* HOBBIES — The Other Tabs Open */}
-      <HobbiesSection />
-
-      {/* TESTIMONIALS SECTION */}
-      <section
-        className="section"
-        style={{
-          position: "relative",
-          background: "transparent",
-          overflow: "hidden",
-        }}
-      >
-<div style={{ position: "relative", zIndex: 1, maxWidth: "1000px", margin: "0 auto" }}>
-
-          {/* Headline */}
-          <h2 style={{
-            fontFamily: "'Sora', sans-serif",
-            fontWeight: 700,
-            fontSize: "clamp(2.2rem, 4vw, 3.8rem)",
-            color: "var(--color-lemon)",
-            textAlign: "center" as const,
-            lineHeight: 1.1,
-            margin: "0 0 16px 0",
-          }}>
-            Filed Notes
-          </h2>
-
-          {/* Subtext */}
-          <p style={{
-            fontFamily: "'Sora', sans-serif",
-            fontStyle: "italic",
-            fontSize: "18px",
-            color: "rgba(255,255,255,0.28)",
-            textAlign: "center" as const,
-            margin: "0 0 48px 0",
-          }}>
-            honest ones. Mostly.
-          </p>
-
-          {/* Cards grid */}
-          {(() => {
-            const prefersReduced = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-            const cards = [
-              {
-                obs: "OBS — 001",
-                source: "PRAKRTI DESIGN",
-                quote: "I particularly wish to acknowledge Vishvara for her exceptional dedication and contributions.",
-                name: "Bhushan Sharma",
-                role: "CEO & Designer · Prakriti Design",
-                sticky: "She talks a lot, god shut up Vish!",
-              },
-              {
-                obs: "OBS — 002",
-                source: "DFC HACKATHON",
-                quote: "I had the opportunity to work with Vishvara during the DFC Hackathon, and her dedication, hard work, and passion for learning UI/UX truly stood out.",
-                name: "Hitesh Kumawat",
-                role: "Product Designer · Gracker AI",
-                sticky: "She asks a lot of questions — why this, why that. Good thing I have patience.",
-              },
-              {
-                obs: "OBS — 003",
-                source: "DFC HACKATHON",
-                quote: "Vishvara has a rare quality — she doesn't just research users, she genuinely cares about them. Every insight she brings is grounded in real empathy, not just method. Working with her made our whole team think differently about who we were designing for.",
-                name: "Komal Loat",
-                role: "Senior UX/UI Designer",
-                sticky: "It's her birthday so I wrote it, otherwise she would have cried.",
-              },
-              {
-                obs: "OBS — 004",
-                source: "DFC HACKATHON",
-                quote: "Working with Vishvara was a great experience. She has exceptional research skills and is genuinely empathetic toward users. Her ability to generate insightful ideas helps create meaningful and effective solutions. I wish her all the best for a successful and bright future in UX Design.",
-                name: "Siddhesh Shimpi",
-                role: "UX Designer · Angular Minds",
-                sticky: "Her ideas were so good, I started questioning if I was even the designer.",
-              },
-              {
-                obs: "OBS — 005",
-                source: "COLLABORATOR",
-                quote: "Having studied together throughout college, I've seen how Vishvara perfectly bridges the gap between design and development. Her UI/UX insights consistently elevate every technical project we touch.",
-                name: "Shyam Singh Negi",
-                role: "DevOps/Cloud Engineer · Freelancer",
-                sticky: "She threatened me with a knife to write this.",
-              },
-            ];
-            const allCards = [...cards, ...cards];
-            let dragStart = 0;
-            let dragScrollLeft = 0;
-            return (
-              <div className="testimonial-scroll-outer">
-                <div
-                  className="testimonial-track"
-                  ref={testimonialScrollRef}
-                  onMouseEnter={() => { testimonialPausedRef.current = true; }}
-                  onMouseLeave={() => {
-                    testimonialPausedRef.current = false;
-                    const el = testimonialScrollRef.current;
-                    if (el) {
-                      const half = el.scrollWidth / 2;
-                      if (el.scrollLeft >= half) el.scrollLeft -= half;
-                    }
-                  }}
-                  onMouseDown={(e) => {
-                    const el = testimonialScrollRef.current;
-                    if (!el) return;
-                    dragStart = e.clientX;
-                    dragScrollLeft = el.scrollLeft;
-                    const onMove = (ev: MouseEvent) => {
-                      el.scrollLeft = dragScrollLeft - (ev.clientX - dragStart);
-                    };
-                    const onUp = () => {
-                      window.removeEventListener("mousemove", onMove);
-                      window.removeEventListener("mouseup", onUp);
-                    };
-                    window.addEventListener("mousemove", onMove);
-                    window.addEventListener("mouseup", onUp);
-                  }}
-                >
-                {allCards.map((card, idx) => {
-                  return (
-                    <div
-                      key={idx}
-                      className="testimonial-card"
-                      style={{
-                        background: "#1A1215",
-                        borderLeft: "2px solid rgba(250,255,199,0.25)",
-                        borderRadius: "14px",
-                        padding: "32px",
-                        position: "relative" as const,
-                        overflow: "hidden" as const,
-                        display: "flex",
-                        flexDirection: "column" as const,
-                      }}
-                    >
-                      {/* Faint ruled-line texture */}
-                      <div aria-hidden="true" style={{
-                        position: "absolute" as const,
-                        inset: 0,
-                        background: "repeating-linear-gradient(transparent, transparent 27px, rgba(242,167,196,0.04) 27px, rgba(242,167,196,0.04) 28px)",
-                        pointerEvents: "none",
-                        zIndex: 0,
-                      }} />
-
-                      {/* Card content */}
-                      <div style={{ position: "relative" as const, zIndex: 1, display: "flex", flexDirection: "column" as const, flex: 1 }}>
-
-                        {/* Header: obs number + source tag */}
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "20px" }}>
-                          <span style={{
-                            fontFamily: "'DM Sans', sans-serif",
-                            fontSize: "10px",
-                            color: "var(--color-pink)",
-                            letterSpacing: "0.2em",
-                            fontWeight: 400,
-                          }}>
-                            {card.obs}
-                          </span>
-                          <span style={{
-                            fontFamily: "'DM Sans', sans-serif",
-                            fontSize: "10px",
-                            color: "var(--color-sky)",
-                            letterSpacing: "0.14em",
-                            textTransform: "uppercase" as const,
-                            border: "1px solid rgba(250,255,199,0.2)",
-                            borderRadius: "999px",
-                            padding: "3px 10px",
-                          }}>
-                            {card.source}
-                          </span>
-                        </div>
-
-                        {/* Divider */}
-                        <div style={{ height: "1px", background: "rgba(250,255,199,0.12)", marginBottom: "20px" }} />
-
-                        {/* Quote */}
-                        <p style={{
-                          fontFamily: "'Sora', sans-serif",
-                          fontStyle: "italic",
-                          fontSize: "18px",
-                          color: "rgba(255,255,255,0.82)",
-                          lineHeight: 1.75,
-                          margin: "0 0 24px 0",
-                          flex: 1,
-                        }}>
-                          <span style={{ color: "var(--color-pink)", fontSize: "12px", marginRight: "8px", verticalAlign: "middle" }}>✦</span>
-                          {card.quote}
-                        </p>
-
-                        {/* Attribution */}
-                        <div style={{ display: "flex", alignItems: "center", gap: "10px", marginTop: "auto" }}>
-                          <div style={{
-                            width: "32px",
-                            height: "32px",
-                            borderRadius: "50%",
-                            background: "#2A1E22",
-                            border: "1px solid rgba(242,167,196,0.2)",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            flexShrink: 0,
-                          }}>
-                            <span style={{ color: "var(--color-pink)", fontSize: "10px" }}>✦</span>
-                          </div>
-                          <div>
-                            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "13px", color: "white", fontWeight: 400 }}>
-                              {card.name}
-                            </div>
-                            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "11px", color: "rgba(255,255,255,0.35)", marginTop: "2px" }}>
-                              {card.role}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Sticky note — slides up from card bottom on hover */}
-                      <div
-                        className="testimonial-sticky"
-                        style={{
-                          position: "absolute" as const,
-                          bottom: 0,
-                          left: 0,
-                          right: 0,
-                          background: "var(--color-lemon)",
-                          padding: "12px 20px",
-                          borderRadius: "0 0 14px 14px",
-                          zIndex: 2,
-                        }}
-                      >
-                        <p style={{
-                          fontFamily: "'DM Sans', sans-serif",
-                          fontSize: "12px",
-                          color: "#6D1F2A",
-                          fontWeight: 400,
-                          letterSpacing: "0.02em",
-                          margin: 0,
-                        }}>
-                          📎 "{card.sticky}"
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })}
-                </div>
-              </div>
-            );
-          })()}
-        </div>
-      </section>
-
-      {/* WORDS & FREQUENCIES — FOLDERS SECTION */}
-      <section
-        className="section"
-        style={{
-          position: "relative",
-          background: "transparent",
-          paddingBlockEnd: "240px", // overrides .section's 80px — folder article pages slide out below and need the room
-        }}
-      >
-        <h2 style={{
-          fontFamily: "'Sora', sans-serif",
-          fontWeight: 700,
-          fontSize: "clamp(2.2rem, 4vw, 3.8rem)",
-          color: "var(--color-lemon)",
-          textAlign: "center" as const,
-          lineHeight: 1.08,
-          margin: "0 0 16px 0",
-        }}>
-          Words &amp; Frequencies
-        </h2>
-        <p style={{
-          fontFamily: "'Sora', sans-serif",
-          fontStyle: "italic",
-          fontSize: "18px",
-          color: "rgba(255,255,255,0.28)",
-          maxWidth: "520px",
-          margin: "0 auto 80px auto",
-          lineHeight: 1.8,
-          textAlign: "center" as const,
-        }}>
-          topics I think, write, and obsess about.
-        </p>
-
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
-          gap: "64px",
-        }}
-          className="folders-grid"
-        >
-          {[
-            {
-              id: "behavioural",
-              name: "Behavioural Design",
-              color: "#93C5FD", // ponytail: hex kept — used with ${color}14 hex-alpha appending
-              border: "rgba(147,197,253,0.5)",
-              tag: "HOW PEOPLE DECIDE",
-              desc: "Notes on cognitive bias, friction, habit loops, and the invisible architecture behind every tap.",
-              articles: ["The Psychology of Default Settings", "When Friction Becomes a Feature", "How Anchoring Shapes Every Choice"],
-            },
-            {
-              id: "accessibility",
-              name: "Accessibility Design",
-              color: "#FAFFC7", // ponytail: hex kept — used with ${color}14 hex-alpha appending
-              border: "rgba(250,255,199,0.45)",
-              tag: "DESIGN FOR EVERYONE",
-              desc: "Thinking through contrast, semantics, motion sensitivity, and what inclusive actually means in practice.",
-              articles: ["Designing Beyond WCAG", "The Case for Plain Language", "Invisible Affordances"],
-            },
-            {
-              id: "interactive",
-              name: "Interactive Design",
-              color: "#F2A7C4", // ponytail: hex kept — used with ${color}14 hex-alpha appending
-              border: "rgba(242,167,196,0.5)",
-              tag: "MOTION & MICROMOMENTS",
-              desc: "Transitions, gestures, states, and the tiny details that make an interface feel alive.",
-              articles: ["Microinteractions That Matter", "The 100ms Rule", "Gestures That Feel Native"],
-            },
-          ].map(folder => (
-            /* paddingTop reserves space for the tab inside the card's own bounds */
-            <div
-              key={folder.id}
-              className={`folder-card${activeFolder === folder.id ? " folder-active" : ""}`}
-              onClick={() => {
-                if (folderTimerRef.current) clearTimeout(folderTimerRef.current);
-                if (activeFolder === folder.id) {
-                  setActiveFolder(null);
-                } else {
-                  setActiveFolder(folder.id);
-                  folderTimerRef.current = setTimeout(() => setActiveFolder(null), 20000);
-                }
-              }}
-              style={{ position: "relative", paddingTop: "44px", ...{ "--folder-border": folder.border, "--folder-shadow1": `${folder.color}2A`, "--folder-shadow2": `${folder.color}33`, "--folder-page-bg": `${folder.color}40` } } as React.CSSProperties}
-            >
-
-              {/* TAB — sits above the back panel; zIndex 2 covers the back panel's top-left border */}
-              <div style={{
-                position: "absolute",
-                top: 0, left: 0,
-                width: "120px", height: "44px",
-                background: `${folder.color}14`,
-                border: `1px solid ${folder.border}`,
-                borderBottom: "none",
-                borderRadius: "8px 8px 0 0",
-                zIndex: 2,
-              }} />
-
-              {/* BACK PANEL — top: 43px overlaps the tab bottom by 1px, sealing the junction.
-                  Its own top border then acts as the horizontal line to the right of the tab. */}
-              <div style={{
-                position: "absolute",
-                top: "43px",
-                left: 0,
-                right: 0,
-                bottom: 0,
-                background: `${folder.color}08`,
-                borderRadius: "0 12px 12px 12px",
-                zIndex: 0,
-              }} className="folder-back" />
-
-              {/* PAPERS — three straight pages in a perfectly aligned bundle */}
-              <div className="folder-papers" style={{ position: "relative", height: "120px", zIndex: 1 }}>
-                {/* Back page — tallest, peeks highest */}
-                <div style={{
-                  position: "absolute",
-                  bottom: 0,
-                  left: "12%",
-                  right: "12%",
-                  height: "76px",
-                  background: "rgba(255,255,255,0.025)",
-                  border: `1px solid ${folder.border}`,
-                  borderBottom: "none",
-                  borderRadius: "4px 4px 0 0",
-                }} />
-                {/* Middle page */}
-                <div style={{
-                  position: "absolute",
-                  bottom: 0,
-                  left: "12%",
-                  right: "12%",
-                  height: "70px",
-                  background: "rgba(255,255,255,0.04)",
-                  border: `1px solid ${folder.border}`,
-                  borderBottom: "none",
-                  borderRadius: "4px 4px 0 0",
-                }} />
-                {/* Front page — shortest, sits on top */}
-                <div style={{
-                  position: "absolute",
-                  bottom: 0,
-                  left: "12%",
-                  right: "12%",
-                  height: "64px",
-                  background: "rgba(255,255,255,0.055)",
-                  border: `1px solid ${folder.border}`,
-                  borderBottom: "none",
-                  borderRadius: "4px 4px 0 0",
-                }}>
-                  {[10, 22, 34, 46, 58].map(top => (
-                    <div key={top} style={{
-                      position: "absolute",
-                      left: "10px",
-                      right: "10px",
-                      top: `${top}px`,
-                      height: "1px",
-                      background: `${folder.color}28`,
-                    }} />
-                  ))}
-                </div>
-              </div>
-
-              {/* OPENING LINE — the folder's mouth edge */}
-              <div style={{
-                height: "1px",
-                background: folder.border,
-                position: "relative",
-                zIndex: 3,
-              }} />
-
-              {/* CONTENT — front of the folder */}
-              <div style={{
-                position: "relative",
-                zIndex: 2,
-                padding: "28px 24px 32px",
-                backdropFilter: "blur(18px)",
-                WebkitBackdropFilter: "blur(18px)",
-                minHeight: "220px",
-              }}>
-                <p style={{
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontSize: "9px",
-                  letterSpacing: "0.24em",
-                  color: folder.color,
-                  opacity: 0.55,
-                  textTransform: "uppercase" as const,
-                  margin: "0 0 14px 0",
-                }}>
-                  {folder.tag}
-                </p>
-                <h3 style={{
-                  fontFamily: "'Sora', sans-serif",
-                  fontSize: "26px",
-                  fontWeight: 500,
-                  color: "#FFF",
-                  margin: "0 0 14px 0",
-                  lineHeight: 1.15,
-                }}>
-                  {folder.name}
-                </h3>
-                <p style={{
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontSize: "13px",
-                  color: "rgba(255,255,255,0.38)",
-                  lineHeight: 1.75,
-                  margin: "0 0 24px 0",
-                }}>
-                  {folder.desc}
-                </p>
-                <div style={{ display: "flex", flexDirection: "column" as const, gap: "8px" }}>
-                  {[0, 1, 2].map((i) => (
-                    <div key={i} className={`freq-line freq-line-${i}`} style={{ height: "2px", borderRadius: "2px", background: `${folder.color}88` }} />
-                  ))}
-                </div>
-                <p style={{
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontSize: "9px",
-                  letterSpacing: "0.2em",
-                  color: folder.color,
-                  opacity: 0.4,
-                  textTransform: "uppercase" as const,
-                  margin: "18px 0 0 0",
-                }}>
-                  Being written →
-                </p>
-              </div>
-
-              {/* ARTICLE PAGES — A4 portrait pages side by side below the folder */}
-              <div className="folder-articles">
-                {folder.articles.map((title, i) => (
-                  <div
-                    key={i}
-                    className="folder-article-page"
-                    style={{ transitionDelay: `${i * 0.06}s`, background: `${folder.color}22` }}
-                  >
-                    {/* Number label */}
-                    <span style={{
-                      fontFamily: "'DM Sans', sans-serif",
-                      fontSize: "8px",
-                      letterSpacing: "0.24em",
-                      textTransform: "uppercase" as const,
-                      color: folder.color,
-                      opacity: 0.45,
-                      display: "block",
-                      marginBottom: "14px",
-                    }}>
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    {/* Heading */}
-                    <p style={{
-                      fontFamily: "'Sora', sans-serif",
-                      fontSize: "14px",
-                      fontWeight: 500,
-                      color: "#FFFFFF",
-                      margin: "0 0 18px 0",
-                      lineHeight: 1.3,
-                    }}>
-                      {title}
-                    </p>
-                    {/* Subtext lines */}
-                    <div style={{ display: "flex", flexDirection: "column" as const, gap: "6px" }}>
-                      {[100, 86, 72, 94, 60, 80, 68, 90, 55, 75].map((w, j) => (
-                        <div key={j} style={{
-                          width: `${w}%`,
-                          height: "1px",
-                          background: "rgba(255,255,255,0.1)",
-                          borderRadius: "1px",
-                        }} />
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-            </div>
-          ))}
-        </div>
-
-        <style>{`
-          @media (max-width: 768px) {
-            .folders-grid { grid-template-columns: 1fr !important; }
-          }
-          @keyframes freq-buzz-1 {
-            0%   { width: 32%; }
-            50%  { width: 22%; }
-            100% { width: 32%; }
-          }
-          @keyframes freq-buzz-2 {
-            0%   { width: 24%; }
-            50%  { width: 36%; }
-            100% { width: 24%; }
-          }
-          @keyframes freq-buzz-3 {
-            0%   { width: 18%; }
-            50%  { width: 28%; }
-            100% { width: 18%; }
-          }
-          .freq-line-0 { animation: freq-buzz-1 7s ease-in-out infinite; }
-          .freq-line-1 { animation: freq-buzz-2 9s ease-in-out infinite 2s; }
-          .freq-line-2 { animation: freq-buzz-3 8s ease-in-out infinite 4s; }
-          .folder-card {
-            cursor: pointer;
-          }
-          .folder-back {
-            box-shadow: inset 0 0 0 1px var(--folder-border);
-            transition: box-shadow 0.35s ease;
-          }
-          .folder-card:hover .folder-back {
-            box-shadow: inset 0 0 0 1px var(--folder-border), 0 0 36px 12px var(--folder-shadow1), 0 0 12px 3px var(--folder-shadow2);
-          }
-          .folder-articles {
-            position: absolute;
-            top: calc(100% + 20px);
-            left: 0;
-            right: 0;
-            z-index: 30;
-            display: flex;
-            gap: 10px;
-            pointer-events: none;
-          }
-          .folder-card:hover .folder-articles {
-            pointer-events: auto;
-          }
-          .folder-article-page {
-            flex: 1;
-            aspect-ratio: 210 / 297;
-            padding: 20px 16px;
-            background: rgba(12, 12, 20, 0.96);
-            border: 1px solid var(--folder-border);
-            border-radius: 4px;
-            opacity: 0;
-            transform: translateY(12px);
-            transition: opacity 0.28s ease, transform 0.32s cubic-bezier(0.25, 1, 0.5, 1);
-            overflow: hidden;
-          }
-          .folder-card:hover .folder-article-page,
-          .folder-card.folder-active .folder-article-page {
-            opacity: 1;
-            transform: translateY(0);
-          }
-          .folder-card.folder-active .folder-articles {
-            pointer-events: auto;
-          }
-        `}</style>
-      </section>
-
-      {/* ── CONTACT SECTION ── */}
+      {/* â”€â”€ CONTACT SECTION â”€â”€ */}
       <section
         id="contact"
         className="section"
@@ -3062,7 +1524,7 @@ export default function App() {
           className="contact-grid"
         >
 
-          {/* ── LEFT COLUMN — ILLUSTRATION POSTCARD ── */}
+          {/* â”€â”€ LEFT COLUMN â€” ILLUSTRATION POSTCARD â”€â”€ */}
           <div
             style={{
               position: "relative",
@@ -3072,7 +1534,7 @@ export default function App() {
             }}
             className="contact-left"
           >
-            {/* Hero SVG landscape — static, no animations */}
+            {/* Hero SVG landscape â€” static, no animations */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 800 500"
@@ -3087,12 +1549,12 @@ export default function App() {
                   <stop offset="100%" stopColor="#000000" />
                 </linearGradient>
                 <radialGradient id="cs-moonGlow">
-                  <stop offset="0%" stopColor="#EDE5D8" stopOpacity="0.18" />
-                  <stop offset="100%" stopColor="#EDE5D8" stopOpacity="0" />
+                  <stop offset="0%" stopColor="#F8F3EC" stopOpacity="0.18" />
+                  <stop offset="100%" stopColor="#F8F3EC" stopOpacity="0" />
                 </radialGradient>
                 <mask id="cs-crescentMask">
                   <rect x="0" y="0" width="800" height="500" fill="white" />
-                  <circle cx="692" cy="154" r="24" fill="black" />
+                  <circle cx="500" cy="118" r="10" fill="black" />
                 </mask>
                 <filter id="cs-blur80">
                   <feGaussianBlur stdDeviation="80" />
@@ -3101,14 +1563,32 @@ export default function App() {
               <rect width="800" height="500" fill="url(#cs-skyGrad)" />
               <circle cx="150" cy="180" r="160" fill="var(--color-pink)" opacity="0.02" filter="url(#cs-blur80)" />
               <circle cx="650" cy="160" r="180" fill="#6D1F2A" opacity="0.034" filter="url(#cs-blur80)" />
-              {/* Static background stars — no animate tags */}
+              {/* Static background stars â€” 50 across the sky */}
               <g fill="#ffffff">
-                {BACKGROUND_STARS.map(star => (
-                  <circle key={`cs-star-${star.id}`} cx={star.x} cy={star.y} r={star.r} opacity={0.3} />
+                {BACKGROUND_STARS.slice(0, 50).map(star => (
+                  <circle key={`cs-star-${star.id}`} cx={star.x + "%"} cy={star.y * 0.7 + "%"} r={star.r} opacity={0.55} />
                 ))}
               </g>
-              <circle cx="700" cy="160" r="64" fill="url(#cs-moonGlow)" />
-              <circle cx="700" cy="160" r="24" fill="#EDE5D8" mask="url(#cs-crescentMask)" />
+              <circle cx="500" cy="118" r="30" fill="url(#cs-moonGlow)" />
+              <circle cx="510" cy="118" r="10" fill="#F8F3EC" mask="url(#cs-crescentMask)" />
+
+              {/* Far hill */}
+              <path d="M-10 500 L-10 455 Q200 440 400 448 Q540 454 620 445 Q700 438 810 448 L810 500 Z" fill="#1C1C1C" />
+
+              {/* Tiny hut â€” on far hill, within visible SVG area (xâ‰ˆ580) */}
+              <g transform="translate(510, 422) scale(0.85)">
+                <circle cx="24" cy="8"  r="1.4" fill="#D8D6D2" opacity="0.3" />
+                <circle cx="26" cy="4"  r="1.8" fill="#D8D6D2" opacity="0.2" />
+                <rect x="22" y="10" width="4" height="7" fill="#463328" />
+                <path d="M8 22 L24 10 L40 22 Z" fill="#2E1E12" />
+                <rect x="10" y="21" width="28" height="18" rx="1" fill="#4A3526" />
+                <rect x="19" y="28" width="8" height="11" rx="1" fill="#1E120A" />
+                <rect x="12" y="27" width="5" height="5" fill="#EACD8A" opacity="0.8" />
+                <rect x="31" y="27" width="5" height="5" fill="#EACD8A" opacity="0.8" />
+              </g>
+
+              {/* Near hill â€” girl stands on this */}
+              <path d="M-10 500 L-10 478 Q200 468 400 474 Q580 480 810 472 L810 500 Z" fill="#111111" />
             </svg>
 
             {/* Subtle dark overlay that lifts when form is focused */}
@@ -3130,7 +1610,7 @@ export default function App() {
               aria-hidden="true"
               style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none", zIndex: 2 }}
             >
-              {/* Cluster 1 — top-left ~20%, 25% */}
+              {/* Cluster 1 â€” top-left ~20%, 25% */}
               <g filter="drop-shadow(0 0 6px var(--color-pink))">
                 <line x1="18%" y1="22%" x2="23%" y2="28%" stroke="var(--color-pink)" strokeWidth="0.8" opacity="0.45" />
                 <line x1="23%" y1="28%" x2="20%" y2="32%" stroke="var(--color-pink)" strokeWidth="0.8" opacity="0.45" />
@@ -3140,7 +1620,7 @@ export default function App() {
                 <circle cx="20%" cy="32%" r="2.5" fill="var(--color-pink)" opacity="0.9" />
                 <circle cx="26%" cy="30%" r="2.5" fill="var(--color-pink)" opacity="0.9" />
               </g>
-              {/* Cluster 2 — center ~48%, 20% */}
+              {/* Cluster 2 â€” center ~48%, 20% */}
               <g filter="drop-shadow(0 0 5px var(--color-lemon))">
                 <line x1="45%" y1="18%" x2="50%" y2="22%" stroke="var(--color-lemon)" strokeWidth="0.7" opacity="0.4" />
                 <line x1="50%" y1="22%" x2="47%" y2="26%" stroke="var(--color-lemon)" strokeWidth="0.7" opacity="0.4" />
@@ -3152,7 +1632,7 @@ export default function App() {
                 <circle cx="53%" cy="19%" r="2" fill="var(--color-lemon)" opacity="0.85" />
                 <circle cx="52%" cy="27%" r="2" fill="var(--color-lemon)" opacity="0.85" />
               </g>
-              {/* Cluster 3 — mid-right ~80%, 38% */}
+              {/* Cluster 3 â€” mid-right ~80%, 38% */}
               <g filter="drop-shadow(0 0 4px var(--color-pink))">
                 <line x1="78%" y1="35%" x2="83%" y2="39%" stroke="var(--color-pink)" strokeWidth="0.8" opacity="0.45" />
                 <line x1="83%" y1="39%" x2="80%" y2="43%" stroke="var(--color-pink)" strokeWidth="0.8" opacity="0.45" />
@@ -3169,7 +1649,7 @@ export default function App() {
               aria-hidden="true"
               style={{
                 position: "absolute",
-                bottom: "28%",
+                bottom: "1%",
                 left: "50%",
                 transform: "translateX(-50%)",
                 width: "140px",
@@ -3182,7 +1662,7 @@ export default function App() {
             />
 
 
-            {/* Postcard address lines — bottom left */}
+            {/* Postcard address lines â€” bottom left */}
             <div
               aria-hidden="true"
               style={{
@@ -3210,7 +1690,7 @@ export default function App() {
               }}>Friend</span>
             </div>
 
-            {/* 2026 label — top right */}
+            {/* 2026 label â€” top right */}
             <span
               aria-hidden="true"
               style={{
@@ -3243,7 +1723,7 @@ export default function App() {
             />
           </div>
 
-          {/* ── RIGHT COLUMN — FORM ── */}
+          {/* â”€â”€ RIGHT COLUMN â€” FORM â”€â”€ */}
           <div
             style={{
               background: "#1A1215",
@@ -3422,7 +1902,7 @@ export default function App() {
                   animation: "fadeIn 0.4s ease forwards",
                   margin: 0,
                 }}>
-                  Transmission received ✦
+                  Transmission received âœ¦
                 </p>
               ) : formStatus === "error" ? (
                 <p style={{
@@ -3463,7 +1943,7 @@ export default function App() {
                     e.currentTarget.style.filter = "brightness(1)";
                   }}
                 >
-                  {formStatus === "sending" ? "Sending…" : "Send it →"}
+                  {formStatus === "sending" ? "Sendingâ€¦" : "Send it â†’"}
                 </button>
               )}
             </form>
@@ -3488,7 +1968,7 @@ export default function App() {
               >
                 vishvara.ux@gmail.com
               </a>
-              <span style={{ color: "rgba(255,255,255,0.15)", fontSize: "14px" }}>·</span>
+              <span style={{ color: "rgba(255,255,255,0.15)", fontSize: "14px" }}>Â·</span>
               <a
                 href="https://www.linkedin.com/in/vishvara-gandharv"
                 target="_blank"
@@ -3511,11 +1991,32 @@ export default function App() {
 
         </div>
       </section>
-      </>}
+
 
       </div>
 
-      {/* ── Floating Nav Trigger (outside skew-container so position:fixed works) ── */}
+
+      {/* â”€â”€ Fixed Hill (stays at bottom of viewport as page scrolls) â”€â”€ */}
+      <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, pointerEvents: "none", zIndex: 15 }}>
+        <svg
+          viewBox="0 0 800 160"
+          preserveAspectRatio="none"
+          style={{ display: "block", width: "100%", height: "clamp(70px, 15vw, 140px)" }}
+        >
+          <defs>
+            <linearGradient id="hillGradFixed" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%"   stopColor="#E8E4C9" stopOpacity="0.3" />
+              <stop offset="50%"  stopColor="#E8E4C9" stopOpacity="0.3" />
+              <stop offset="100%" stopColor="#E8E4C9" stopOpacity="0.3" />
+            </linearGradient>
+          </defs>
+          <g transform="translate(0,-340)">
+            <path fill="url(#hillGradFixed)" d="M0 395 C70 365 150 390 250 410 C360 430 470 380 590 400 C700 420 760 390 800 405 L800 500 L0 500 Z" />
+          </g>
+        </svg>
+      </div>
+
+      {/* â”€â”€ Floating Nav Trigger (outside skew-container so position:fixed works) â”€â”€ */}
       <AnimatePresence>
         {(scrolled || navOpen) && (
           <motion.button
@@ -3532,11 +2033,11 @@ export default function App() {
             aria-label={navOpen ? "Close menu" : "Open menu"}
             style={{
               position: "fixed",
-              bottom: "64px",
+              bottom: "24px",
               right: "24px",
               zIndex: 1002,
-              width: "76px",
-              height: "76px",
+              width: "52px",
+              height: "52px",
               borderRadius: "50%",
               background: navOpen || navBtnHovered ? "var(--color-lemon)" : "var(--color-pink)",
               border: "none",
@@ -3545,13 +2046,13 @@ export default function App() {
               alignItems: "center",
               justifyContent: "center",
               boxShadow: navOpen || navBtnHovered
-                ? "0 4px 28px rgba(250,255,199,0.45)"
-                : "0 4px 28px rgba(242,167,196,0.4)",
+                ? "0 2px 12px rgba(250,255,199,0.18)"
+                : "0 2px 12px rgba(242,167,196,0.18)",
               transition: "background 0.25s ease, box-shadow 0.25s ease",
             }}
           >
             {navOpen || navBtnHovered ? (
-              <img src={starUrl} alt="" style={{ width: 40, height: 40, objectFit: "contain" }} />
+              <img src={starUrl} alt="" style={{ width: 26, height: 26, objectFit: "contain" }} />
             ) : (
               <svg width="32" height="32" viewBox="0 0 530 530" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <mask id="nav-heart-mask" style={{maskType:"alpha"} as React.CSSProperties} maskUnits="userSpaceOnUse" x="0" y="0" width="530" height="530">
@@ -3574,7 +2075,7 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* ── Nav Overlay ── */}
+      {/* â”€â”€ Nav Overlay â”€â”€ */}
       <AnimatePresence>
         {navOpen && (
           <motion.div
@@ -3598,10 +2099,10 @@ export default function App() {
             }}
           >
             {([
-              { label: "About",   alt: "my story"  },
-              { label: "Work",    alt: "the proof"  },
-              { label: "Contact", alt: "say hello"  },
-            ] as const).map(({ label, alt }, i) => (
+              { label: "About Me", alt: "my story",  id: "about"   },
+              { label: "Work",     alt: "the proof", id: "work"    },
+              { label: "Contact",  alt: "say hello", id: "contact" },
+            ] as const).map(({ label, alt, id }, i) => (
               <motion.button
                 key={label}
                 className="overlay-swap"
@@ -3611,7 +2112,7 @@ export default function App() {
                 transition={{ delay: i * 0.07, duration: 0.4, ease: [0.25, 1, 0.5, 1] }}
                 onClick={(e) => {
                   e.stopPropagation();
-                  document.getElementById(label.toLowerCase())?.scrollIntoView({ behavior: "smooth" });
+                  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
                   setNavOpen(false);
                 }}
                 style={{
