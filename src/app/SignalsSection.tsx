@@ -86,6 +86,7 @@ const SAMPLE_ITEMS: TxItem[] = [
 // ── RECEIVED constants ─────────────────────────────────────────────────────
 const TIER_R  = { 1:6,   2:3.5, 3:2   } as const;
 const TIER_OP = { 1:1.0, 2:0.6, 3:0.35 } as const;
+const TIER_FS = { 1:8,   2:9,   3:9   } as const;
 const DRIFTS  = [
   '22s 0s',  '14s 1.8s', '19s 4.5s', '17s 7s',
   '15s 2.2s','18s 5.5s', '16s 3s',   '20s 8s',
@@ -392,7 +393,7 @@ export default function SignalsSection() {
               const active = hov === s.id;
               const dimmed = hov && !active;
               const starOp = dimmed ? 0.15 : (active ? 1.0 : baseOp);
-              const nOp    = dimmed ? 0.1  : (active ? 0.9  : 0.4);
+              const nOp    = dimmed ? 0.1  : (active ? 0.9  : 0.6);
               const glow   = active
                 ? `drop-shadow(0 0 ${r*3}px rgba(232,228,201,0.85))`
                 : s.tier === 1 ? 'drop-shadow(0 0 4px rgba(232,228,201,0.35))' : 'none';
@@ -422,8 +423,8 @@ export default function SignalsSection() {
                       transformBox:'fill-box', transformOrigin:'center',
                     }} />
                   <text x={nx} y={s.y+3.5} textAnchor={anchor}
-                    fill={MUTED} fontSize="8" fontFamily="'DM Sans',sans-serif"
-                    letterSpacing="1.8" fontWeight="500" aria-hidden="true"
+                    fill={MUTED} fontSize={TIER_FS[s.tier]} fontFamily="'DM Sans',sans-serif"
+                    letterSpacing="2.1" fontWeight="500" aria-hidden="true"
                     style={{ textTransform:'uppercase', pointerEvents:'none',
                       opacity:nOp, transition:`opacity 350ms ${EASE}` }}>
                     {s.name.toUpperCase()}

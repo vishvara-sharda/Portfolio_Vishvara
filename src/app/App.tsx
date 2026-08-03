@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import { motion, AnimatePresence } from 'motion/react';
 import CaseStudyPage from "./CaseStudyPage";
@@ -61,13 +61,13 @@ function seg(v: number, s: number, e: number) {
 
 
 const HERO_CONSTELLATIONS = [
-  // Large cluster â€” upper left, partially cropped
+  // Large cluster — upper left, partially cropped
   { nodes: [[-2,8],[4,14],[8,10],[14,18],[10,24],[3,22]], edges:[[0,1],[1,2],[2,3],[3,4],[4,5],[1,5]], opacity: 0.15 },
-  // Large cluster â€” upper center-right
+  // Large cluster — upper center-right
   { nodes: [[52,12],[58,7],[65,14],[62,20],[55,22],[70,9]], edges:[[0,1],[1,2],[2,3],[3,4],[4,0],[1,5]], opacity: 0.18 },
-  // Small cluster â€” mid left
+  // Small cluster — mid left
   { nodes: [[18,38],[22,32],[26,36]], edges:[[0,1],[1,2]], opacity: 0.12 },
-  // Small cluster â€” far right mid (keep clear of moon at 86%,16%)
+  // Small cluster — far right mid (keep clear of moon at 86%,16%)
   { nodes: [[74,34],[78,28],[82,36],[79,42]], edges:[[0,1],[1,2],[2,3]], opacity: 0.14 },
 ];
 
@@ -85,7 +85,7 @@ const caseStudiesData = [
   {
     id: "margdarshak",
     tag: "Self-Initiated Project",
-    title: "Margdarshak â€” Empowering the Common Man",
+    title: "Margdarshak — Empowering the Common Man",
     subtitle: "Bridging the last-mile gap between welfare schemes and the low-income families they're meant to serve",
     meta: [
       { label: "Role", value: "Product Designer" },
@@ -101,19 +101,19 @@ const caseStudiesData = [
       { type: 'cover', label: 'Process' }
     ],
     situation: "India has 740+ central and 65+ centrally sponsored welfare schemes, yet ~58% of the salaried workforce lacks social security access. Low-income families remain excluded due to procedural, linguistic, and emotional barriers.",
-    task: "Bridge the last-mile gap between scheme entitlement and actual access. Design an intervention that reduces cognitive load, builds trust, and preserves user dignity â€” built on existing digital fluency.",
-    actionTitle: "Designed a three-tier inclusive system â€” app for independent users, guide network for low digital confidence, counselor support for users without smartphones â€” to reach every Indian, not just the digitally confident.",
+    task: "Bridge the last-mile gap between scheme entitlement and actual access. Design an intervention that reduces cognitive load, builds trust, and preserves user dignity — built on existing digital fluency.",
+    actionTitle: "Designed a three-tier inclusive system — app for independent users, guide network for low digital confidence, counselor support for users without smartphones — to reach every Indian, not just the digitally confident.",
     actions: [
       "Surfaced 3 core patterns: Awareness Gap, Fear, Digital Confidence",
       "Ran 20 primary interviews across 5 cities",
       "Applied SCAMPER to arrive at unified direction",
-      "Designed AI eligibility matching reducing 740+ to 3â€“5",
+      "Designed AI eligibility matching reducing 740+ to 3–5",
       "Built a one-time document vault and plain-language translation layer"
     ],
     result: "A tested high fidelity prototype where a 19-year-old semi-urban participant navigated the app end-to-end with no prior guidance.",
     metrics: [
-      { value: "740â†’3â€“5", label: "SCHEMES FILTERED" },
-      { value: "15â†’3", label: "FLOW REDUCTION" },
+      { value: "740→3–5", label: "SCHEMES FILTERED" },
+      { value: "15→3", label: "FLOW REDUCTION" },
       { value: "20", label: "INTERVIEWS" }
     ],
     tools: ["FigJam", "Figma Make", "Figma Design", "Maze", "ChatGPT", "Perplexity", "Claude", "Adobe Suite", "Gemini", "Flow AI", "Google Forms"],
@@ -123,7 +123,7 @@ const caseStudiesData = [
   {
     id: "murmur",
     tag: "B2B SaaS",
-    title: "Murmur â€” Healthcare Portal",
+    title: "Murmur — Healthcare Portal",
     subtitle: "AI-powered postpartum couples platform that reads maternal distress signals and translates them into one actionable daily nudge for the partner.",
     meta: [
       { label: "Role", value: "Lead Product Designer" },
@@ -136,9 +136,9 @@ const caseStudiesData = [
       { type: 'screen', label: 'Analytics' },
       { type: 'screen', label: 'Patients' }
     ],
-    situation: "22% of Indian mothers get PPD, 55% feel unsupported, 80% of fathers feel useless â€” yet 0 of 587 apps address the couple's emotional gap.",
-    task: "Build an AI that reads her voice, wearables, and mood â€” then gives him one specific, non-blaming daily action, unlocked only when both partners join.",
-    actionTitle: "Researched 59 studies, mapped 587 apps with zero competitors, and designed a multi-modal AI pipeline with a four-part nudge formula, safety guardrails, and identity restoration â€” none of which exist in the market.",
+    situation: "22% of Indian mothers get PPD, 55% feel unsupported, 80% of fathers feel useless — yet 0 of 587 apps address the couple's emotional gap.",
+    task: "Build an AI that reads her voice, wearables, and mood — then gives him one specific, non-blaming daily action, unlocked only when both partners join.",
+    actionTitle: "Researched 59 studies, mapped 587 apps with zero competitors, and designed a multi-modal AI pipeline with a four-part nudge formula, safety guardrails, and identity restoration — none of which exist in the market.",
     actions: [
       "Conducted extensive stakeholder workshops",
       "Created wireframes for the patient onboarding flow",
@@ -146,7 +146,7 @@ const caseStudiesData = [
       "Established a new clinical accessibility-focused design system",
       "Handed off production-ready assets to engineering"
     ],
-    result: "Blue ocean with zero direct competitors in an unstudied category â€” targeting India's 19-23.5% PPD market with cultural moats no global app can replicate.",
+    result: "Blue ocean with zero direct competitors in an unstudied category — targeting India's 19-23.5% PPD market with cultural moats no global app can replicate.",
     metrics: [
       { value: "+40%", label: "ONBOARDING SPEED" },
       { value: "2.5x", label: "DATA ACCURACY" },
@@ -159,7 +159,7 @@ const caseStudiesData = [
   {
     id: "openlee",
     tag: "Consumer App",
-    title: "Openlee â€” Social Platform",
+    title: "Openlee — Social Platform",
     subtitle: "Connecting communities through transparent, location-based storytelling",
     meta: [
       { label: "Role", value: "UI/UX Designer" },
@@ -592,7 +592,7 @@ const GlobalStyles = React.memo(() => (
       }
     }
 
-    /* Hero phase 0 â€” full-bleed portrait + left text column */
+    /* Hero phase 0 — full-bleed portrait + left text column */
     .hero-text-col {
       position: relative;
       z-index: 2;
@@ -666,7 +666,7 @@ const GlobalStyles = React.memo(() => (
       }
     }
 
-    /* â”€â”€ Meet Me section â”€â”€ */
+    /* ── Meet Me section ── */
     .meetme-layout {
       display: flex;
       flex-direction: row;
@@ -838,20 +838,20 @@ const GlobalStyles = React.memo(() => (
       animation: star-blink 3s ease-in-out infinite;
     }
 
-    /* Contact section â€” input focus glow */
+    /* Contact section — input focus glow */
     .contact-input:focus,
     .contact-textarea:focus {
       border-color: rgba(242,167,196,0.5) !important;
       box-shadow: 0 0 0 3px rgba(242,167,196,0.08) !important;
     }
 
-    /* Contact section â€” placeholder color */
+    /* Contact section — placeholder color */
     .contact-grid input::placeholder,
     .contact-grid textarea::placeholder {
       color: rgba(255,255,255,0.22);
     }
 
-    /* Contact section â€” mobile layout */
+    /* Contact section — mobile layout */
     @media (max-width: 768px) {
       .contact-grid {
         grid-template-columns: 1fr !important;
@@ -869,7 +869,7 @@ const GlobalStyles = React.memo(() => (
       }
     }
 
-    /* About section â€” grid areas (desktop) */
+    /* About section — grid areas (desktop) */
     .about-section { justify-items: start; }
     .about-role-badge { grid-area: role; z-index: 1; }
     .about-name-block { grid-area: name; z-index: 1; }
@@ -878,7 +878,7 @@ const GlobalStyles = React.memo(() => (
     .about-ctas       { grid-area: ctas; z-index: 1; }
     .about-section .photo-card-outer { grid-area: photo; align-self: center; z-index: 1; }
 
-    /* About section â€” mobile responsive */
+    /* About section — mobile responsive */
     @media (max-width: 768px) {
       .about-section {
         grid-template-columns: 1fr !important;
@@ -935,7 +935,7 @@ const GlobalStyles = React.memo(() => (
       }
     }
 
-    /* Nav hover text swap â€” mirrors hover-text-swap.html exactly */
+    /* Nav hover text swap — mirrors hover-text-swap.html exactly */
     .nav-swap {
       display: inline-block;
       position: relative;
@@ -980,7 +980,7 @@ const GlobalStyles = React.memo(() => (
       transform: translateY(-100%);
     }
 
-    /* Overlay nav swap â€” same mechanic, big text */
+    /* Overlay nav swap — same mechanic, big text */
     .overlay-swap {
       position: relative;
       overflow: visible;
@@ -1214,7 +1214,7 @@ function HorizontalScrollSection({
               <div className="meetme-dot meetme-dot-tl" aria-hidden /><div className="meetme-dot meetme-dot-tr" aria-hidden />
               <div className="meetme-dot meetme-dot-bl" aria-hidden /><div className="meetme-dot meetme-dot-br" aria-hidden />
               {meetmeVideoPlaying ? (
-                <iframe src="https://www.youtube-nocookie.com/embed/CGPjBUCOn2M?autoplay=1&controls=1&rel=0&modestbranding=1" title="Introduction video â€” Vishvara Gandharv" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} />
+                <iframe src="https://www.youtube-nocookie.com/embed/CGPjBUCOn2M?autoplay=1&controls=1&rel=0&modestbranding=1" title="Introduction video — Vishvara Gandharv" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} />
               ) : (
                 <>
                   <img src="https://img.youtube.com/vi/CGPjBUCOn2M/maxresdefault.jpg" alt="Video thumbnail" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
@@ -1285,7 +1285,7 @@ export default function App() {
     if (msgInput) {
       const msg = msgInput.value.trim();
       if (msg.length < 20) {
-        setMessageError("Please write at least a sentence â€” 20 characters minimum.");
+        setMessageError("Please write at least a sentence — 20 characters minimum.");
         return;
       }
       const words = msg.toLowerCase().split(/\s+/).filter(w => w.length > 1);
@@ -1405,7 +1405,7 @@ export default function App() {
       {/* Global Live Animated Grain Overlay */}
       <div className="live-grain" aria-hidden="true" style={{ display: "none" }} />
 
-      {/* Global Fixed Star Field â€” one render, visible across all sections */}
+      {/* Global Fixed Star Field — one render, visible across all sections */}
       <svg
         aria-hidden="true"
         style={{
@@ -1420,7 +1420,7 @@ export default function App() {
         {Array.from({ length: 750 }).map((_, i) => {
           const cx = (Math.abs(Math.sin(i * 12.9898 + 1.5) * 43758.5453) % 100) + "%";
           const cy = (Math.abs(Math.sin(i * 78.233 + 2.1) * 43758.5453) % 100) + "%";
-          // 3 strict sizes â€” more small, fewer large for a natural sky
+          // 3 strict sizes — more small, fewer large for a natural sky
           const r = i < 375 ? 0.5 : i < 625 ? 1.0 : 2.0;
           const fill = i % 3 === 0 ? "var(--color-lemon)" : i % 5 === 0 ? "#FFF" : "var(--color-pink)";
           // Even index = static, odd index = blinking (~375 each)
@@ -1453,7 +1453,7 @@ export default function App() {
         heroStarLayerRef={heroStarLayerRef}
       />
 
-      {/* Design Lens â€” scroll-driven depth animation */}
+      {/* Design Lens — scroll-driven depth animation */}
       <div id="design-lens"><DesignLensSection /></div>
 
       {/* Designer Mind */}
@@ -1464,7 +1464,7 @@ export default function App() {
         <DesignerMind />
       </div>
 
-      {/* CASE STUDIES + SIGNALS â€” 500 extra stars behind */}
+      {/* CASE STUDIES + SIGNALS — 500 extra stars behind */}
       <div style={{ position: 'relative' }}>
         <svg aria-hidden style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0 }}>
           {Array.from({ length: 500 }).map((_, i) => {
@@ -1502,7 +1502,7 @@ export default function App() {
       <div id="outside-work"><OutsideWork /></div>
 
 
-      {/* â”€â”€ CONTACT SECTION â”€â”€ */}
+      {/* ── CONTACT SECTION ── */}
       <section
         id="contact"
         className="section"
@@ -1523,7 +1523,7 @@ export default function App() {
           className="contact-grid"
         >
 
-          {/* â”€â”€ LEFT COLUMN â€” ILLUSTRATION POSTCARD â”€â”€ */}
+          {/* ── LEFT COLUMN — ILLUSTRATION POSTCARD ── */}
           <div
             style={{
               position: "relative",
@@ -1533,7 +1533,7 @@ export default function App() {
             }}
             className="contact-left"
           >
-            {/* Hero SVG landscape â€” static, no animations */}
+            {/* Hero SVG landscape — static, no animations */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 800 500"
@@ -1562,7 +1562,7 @@ export default function App() {
               <rect width="800" height="500" fill="url(#cs-skyGrad)" />
               <circle cx="150" cy="180" r="160" fill="var(--color-pink)" opacity="0.02" filter="url(#cs-blur80)" />
               <circle cx="650" cy="160" r="180" fill="#6D1F2A" opacity="0.034" filter="url(#cs-blur80)" />
-              {/* Static background stars â€” 50 across the sky */}
+              {/* Static background stars — 50 across the sky */}
               <g fill="#ffffff">
                 {BACKGROUND_STARS.slice(0, 50).map(star => (
                   <circle key={`cs-star-${star.id}`} cx={star.x + "%"} cy={star.y * 0.7 + "%"} r={star.r} opacity={0.55} />
@@ -1574,7 +1574,7 @@ export default function App() {
               {/* Far hill */}
               <path d="M-10 500 L-10 455 Q200 440 400 448 Q540 454 620 445 Q700 438 810 448 L810 500 Z" fill="#1C1C1C" />
 
-              {/* Tiny hut â€” on far hill, within visible SVG area (xâ‰ˆ580) */}
+              {/* Tiny hut — on far hill, within visible SVG area (x≈580) */}
               <g transform="translate(510, 422) scale(0.85)">
                 <circle cx="24" cy="8"  r="1.4" fill="#D8D6D2" opacity="0.3" />
                 <circle cx="26" cy="4"  r="1.8" fill="#D8D6D2" opacity="0.2" />
@@ -1586,7 +1586,7 @@ export default function App() {
                 <rect x="31" y="27" width="5" height="5" fill="#EACD8A" opacity="0.8" />
               </g>
 
-              {/* Near hill â€” girl stands on this */}
+              {/* Near hill — girl stands on this */}
               <path d="M-10 500 L-10 478 Q200 468 400 474 Q580 480 810 472 L810 500 Z" fill="#111111" />
             </svg>
 
@@ -1609,7 +1609,7 @@ export default function App() {
               aria-hidden="true"
               style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none", zIndex: 2 }}
             >
-              {/* Cluster 1 â€” top-left ~20%, 25% */}
+              {/* Cluster 1 — top-left ~20%, 25% */}
               <g filter="drop-shadow(0 0 6px var(--color-pink))">
                 <line x1="18%" y1="22%" x2="23%" y2="28%" stroke="var(--color-pink)" strokeWidth="0.8" opacity="0.45" />
                 <line x1="23%" y1="28%" x2="20%" y2="32%" stroke="var(--color-pink)" strokeWidth="0.8" opacity="0.45" />
@@ -1619,7 +1619,7 @@ export default function App() {
                 <circle cx="20%" cy="32%" r="2.5" fill="var(--color-pink)" opacity="0.9" />
                 <circle cx="26%" cy="30%" r="2.5" fill="var(--color-pink)" opacity="0.9" />
               </g>
-              {/* Cluster 2 â€” center ~48%, 20% */}
+              {/* Cluster 2 — center ~48%, 20% */}
               <g filter="drop-shadow(0 0 5px var(--color-lemon))">
                 <line x1="45%" y1="18%" x2="50%" y2="22%" stroke="var(--color-lemon)" strokeWidth="0.7" opacity="0.4" />
                 <line x1="50%" y1="22%" x2="47%" y2="26%" stroke="var(--color-lemon)" strokeWidth="0.7" opacity="0.4" />
@@ -1631,7 +1631,7 @@ export default function App() {
                 <circle cx="53%" cy="19%" r="2" fill="var(--color-lemon)" opacity="0.85" />
                 <circle cx="52%" cy="27%" r="2" fill="var(--color-lemon)" opacity="0.85" />
               </g>
-              {/* Cluster 3 â€” mid-right ~80%, 38% */}
+              {/* Cluster 3 — mid-right ~80%, 38% */}
               <g filter="drop-shadow(0 0 4px var(--color-pink))">
                 <line x1="78%" y1="35%" x2="83%" y2="39%" stroke="var(--color-pink)" strokeWidth="0.8" opacity="0.45" />
                 <line x1="83%" y1="39%" x2="80%" y2="43%" stroke="var(--color-pink)" strokeWidth="0.8" opacity="0.45" />
@@ -1661,7 +1661,7 @@ export default function App() {
             />
 
 
-            {/* Postcard address lines â€” bottom left */}
+            {/* Postcard address lines — bottom left */}
             <div
               aria-hidden="true"
               style={{
@@ -1689,7 +1689,7 @@ export default function App() {
               }}>Friend</span>
             </div>
 
-            {/* 2026 label â€” top right */}
+            {/* 2026 label — top right */}
             <span
               aria-hidden="true"
               style={{
@@ -1722,7 +1722,7 @@ export default function App() {
             />
           </div>
 
-          {/* â”€â”€ RIGHT COLUMN â€” FORM â”€â”€ */}
+          {/* ── RIGHT COLUMN — FORM ── */}
           <div
             style={{
               background: "#1A1215",
@@ -1901,7 +1901,7 @@ export default function App() {
                   animation: "fadeIn 0.4s ease forwards",
                   margin: 0,
                 }}>
-                  Transmission received âœ¦
+                  Transmission received ✦
                 </p>
               ) : formStatus === "error" ? (
                 <p style={{
@@ -1942,7 +1942,7 @@ export default function App() {
                     e.currentTarget.style.filter = "brightness(1)";
                   }}
                 >
-                  {formStatus === "sending" ? "Sendingâ€¦" : "Send it â†’"}
+                  {formStatus === "sending" ? "Sending…" : "Send it →"}
                 </button>
               )}
             </form>
@@ -1995,7 +1995,7 @@ export default function App() {
       </div>
 
 
-      {/* â”€â”€ Fixed Hill (stays at bottom of viewport as page scrolls) â”€â”€ */}
+      {/* ── Fixed Hill (stays at bottom of viewport as page scrolls) ── */}
       <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, pointerEvents: "none", zIndex: 15 }}>
         <svg
           viewBox="0 0 800 160"
@@ -2015,7 +2015,7 @@ export default function App() {
         </svg>
       </div>
 
-      {/* â”€â”€ Floating Nav Trigger (outside skew-container so position:fixed works) â”€â”€ */}
+      {/* ── Floating Nav Trigger (outside skew-container so position:fixed works) ── */}
       <AnimatePresence>
         {(scrolled || navOpen) && (
           <motion.button
@@ -2074,7 +2074,7 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* â”€â”€ Nav Overlay â”€â”€ */}
+      {/* ── Nav Overlay ── */}
       <AnimatePresence>
         {navOpen && (
           <motion.div
