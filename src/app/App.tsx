@@ -633,7 +633,7 @@ const GlobalStyles = React.memo(() => (
 
     @media (max-width: 900px) {
       .hero-landing-panel {
-        align-items: flex-start !important;
+        align-items: flex-end !important;
         justify-content: flex-end !important;
         padding-bottom: 40px !important;
       }
@@ -1197,7 +1197,7 @@ function HorizontalScrollSection({
   );
 
   const panel2 = (
-    <div tabIndex={0} aria-label="Meet Me" style={panelStyle({ height: isMobile ? 'auto' : '100vh', minHeight: isMobile ? '100vh' : undefined })}>
+    <div tabIndex={0} aria-label="Meet Me" style={panelStyle({ height: isMobile ? 'auto' : '100vh' })}>
       <div style={{ position: isMobile ? 'relative' : 'absolute', inset: 0, display: 'flex', alignItems: 'center', height: isMobile ? 'auto' : '100%' }}>
         <div className="meetme-layout">
           <div className="meetme-copy">

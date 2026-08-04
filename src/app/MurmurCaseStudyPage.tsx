@@ -1,6 +1,32 @@
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { ArrowLeft } from 'lucide-react';
+import fullViewHer from '../imports/Murmur/full view.png';
+import fullViewHim from '../imports/Murmur/full view man.png';
+import pvw from '../imports/Murmur/pvw.png';
+import pvm from '../imports/Murmur/pvm.png';
+import pvwGlow from '../imports/Murmur/pvw glow red.png';
+import pvmGlow from '../imports/Murmur/pvm glow red.png';
+import murmurGif from '../imports/Murmur/gif.gif';
+import f1 from '../imports/Murmur/story/f 1.png';
+import f2 from '../imports/Murmur/story/f2.png';
+import f3 from '../imports/Murmur/story/f3.png';
+import story0 from '../imports/Murmur/story/0.png';
+import story1 from '../imports/Murmur/story/1.png';
+import story2 from '../imports/Murmur/story/2.png';
+import story3 from '../imports/Murmur/story/3.png';
+import story4 from '../imports/Murmur/story/4.png';
+import story5 from '../imports/Murmur/story/5.png';
+import story6 from '../imports/Murmur/story/6.png';
+import story7 from '../imports/Murmur/story/7.png';
+const storyImgs = [story0, story1, story2, story3, story4, story5, story6, story7];
+import murmurGif2 from '../imports/Murmur/gif2.gif';
+import technicalView from '../imports/Murmur/technical view.png';
+import menTechnical from '../imports/Murmur/men techoncal.png';
+import bellies from '../imports/Murmur/bellies.png';
+import cable from '../imports/Murmur/cable.png';
+import cable2 from '../imports/Murmur/cable 2.png';
+import silicon from '../imports/Murmur/silicon.png';
 
 interface MurmurCaseStudyPageProps {
   onClose: (scrollTo?: string) => void;
@@ -109,6 +135,14 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
       data-lenis-prevent
       style={{ position: 'fixed', inset: 0, zIndex: 100, background: '#000', color: '#fff', overflowY: 'auto' }}
     >
+      <style>{`
+        @media (max-width: 480px) {
+          .murmur-nav-links { gap: 8px !important; }
+          .murmur-nav-links button { font-size: 8px !important; letter-spacing: 0.08em !important; }
+          .murmur-progress { display: none !important; }
+        }
+      `}</style>
+
       {/* Noise overlay */}
       <div
         className="pointer-events-none"
@@ -137,12 +171,12 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
           <ArrowLeft size={14} />
         </button>
 
-        <ul style={{ display: 'flex', gap: 16, listStyle: 'none', margin: 0, padding: 0, alignItems: 'center' }}>
+        <ul className="murmur-nav-links" style={{ display: 'flex', gap: 16, listStyle: 'none', margin: 0, padding: 0, alignItems: 'center' }}>
           {NAV_SECTIONS.map(s => (
             <li key={s.id}>
               <button
                 onClick={() => scrollTo(s.id)}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#6B7280', fontSize: 10, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', fontFamily: "'DM Sans', sans-serif', transition: 'color 0.2s'" }}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#6B7280', fontSize: 10, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', fontFamily: "'DM Sans', sans-serif", transition: 'color 0.2s' }}
                 onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = 'var(--color-lemon)'; }}
                 onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = '#6B7280'; }}
               >
@@ -158,7 +192,7 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
       </nav>
 
       {/* Right progress bar */}
-      <div style={{ position: 'fixed', right: 24, top: '50%', transform: 'translateY(-50%)', zIndex: 120, height: '40vh', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16, pointerEvents: 'none' }}>
+      <div className="murmur-progress" style={{ position: 'fixed', right: 24, top: '50%', transform: 'translateY(-50%)', zIndex: 120, height: '40vh', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16, pointerEvents: 'none' }}>
         <span ref={xpTextRef} style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.2em', color: '#6B7280', textTransform: 'uppercase', writingMode: 'vertical-rl', transform: 'rotate(180deg)', height: 40, display: 'flex', justifyContent: 'center', alignItems: 'center', fontFamily: "'DM Sans', sans-serif" }}>0%</span>
         <div style={{ width: 6, flex: 1, background: '#1E1E1E', border: '1px solid #333', borderRadius: 999, overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
           <div ref={progressBarRef} style={{ width: '100%', height: '0%', background: 'linear-gradient(to bottom, var(--color-lemon), rgba(232,228,201,0.3))', transition: 'height 0.3s ease' }} />
@@ -167,13 +201,13 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
 
       {/* ─── SECTION 1 — HEADER ─────────────────────────────────────── */}
       <section style={{ paddingTop: 160, paddingBottom: 96, borderBottom: '1px solid #222' }}>
-        <motion.div style={{ maxWidth: 960, margin: '0 auto', padding: '0 32px' }} {...fadeUp}>
+        <motion.div style={{ maxWidth: 960, margin: '0 auto', padding: '0 clamp(16px, 5vw, 32px)' }} {...fadeUp}>
           <SectionLabel>Murmur — Case Study</SectionLabel>
           <TextPH large>[TEXT: PROJECT TITLE — one word or short phrase]</TextPH>
           <div style={{ height: 16 }} />
           <TextPH>[TEXT: ONE-LINE DESCRIPTION — max 15 words, says what the project is]</TextPH>
           <div style={{ height: 32 }} />
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1, background: '#222', border: '1px solid #222', borderRadius: 16, overflow: 'hidden' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 1, background: '#222', border: '1px solid #222', borderRadius: 16, overflow: 'hidden' }}>
             {[['ROLE', '[TEXT: 3–6 words]'], ['SKILLS', '[TEXT: 4–6 items]'], ['TOOLS', '[TEXT: 4–6 items]']].map(([label, ph]) => (
               <div key={label} style={{ background: '#0a0a0a', padding: '20px 24px', display: 'flex', flexDirection: 'column', gap: 8 }}>
                 <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#6B7280', fontFamily: "'DM Sans', sans-serif" }}>{label}</span>
@@ -182,12 +216,14 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
             ))}
           </div>
           <div style={{ height: 32 }} />
-          <ImgPH label="HEADER BACKGROUND — soft ivory texture, very subtle, or leave plain" />
+          <img src={murmurGif} alt="Murmur" style={{ width: '100%', borderRadius: 16, display: 'block' }} />
+          <div style={{ height: 16 }} />
+          <img src={murmurGif2} alt="Murmur 2" style={{ width: '100%', borderRadius: 16, display: 'block' }} />
         </motion.div>
       </section>
 
       {/* ─── SECTION 2 — VIDEO ──────────────────────────────────────── */}
-      <section style={{ padding: '96px 32px', borderBottom: '1px solid #222', textAlign: 'center' }}>
+      <section style={{ padding: '96px clamp(16px, 5vw, 32px)', borderBottom: '1px solid #222', textAlign: 'center' }}>
         <motion.div style={{ maxWidth: 960, margin: '0 auto' }} {...fadeUp}>
           <SectionLabel>Video</SectionLabel>
           <div style={{ width: '100%', aspectRatio: '16/9', border: '1px dashed rgba(232,228,201,0.2)', borderRadius: 16, background: 'rgba(232,228,201,0.03)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(232,228,201,0.35)', fontSize: 13, fontFamily: "'DM Sans', sans-serif", letterSpacing: '0.06em' }}>
@@ -200,13 +236,13 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
 
       {/* ─── SECTION 3 — THE STORYBOOK ──────────────────────────────── */}
       <section id="cs-story" style={{ padding: '96px 0', borderBottom: '1px solid #222' }}>
-        <motion.div style={{ maxWidth: 960, margin: '0 auto', padding: '0 32px' }} {...fadeUp}>
+        <motion.div style={{ maxWidth: 960, margin: '0 auto', padding: '0 clamp(16px, 5vw, 32px)' }} {...fadeUp}>
           <SectionLabel>The Storybook</SectionLabel>
         </motion.div>
 
         {/* Slide strip */}
         <div
-          style={{ display: 'flex', gap: 16, overflowX: 'auto', padding: '32px 32px', scrollSnapType: 'x mandatory', cursor: 'grab', userSelect: 'none' }}
+          style={{ display: 'flex', gap: 16, overflowX: 'auto', padding: '32px clamp(16px, 5vw, 32px)', scrollSnapType: 'x mandatory', cursor: 'grab', userSelect: 'none' }}
           className="hide-scrollbar"
           onMouseDown={e => {
             const el = e.currentTarget;
@@ -220,10 +256,10 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
           }}
         >
           {[
-            { type: 'illus', n: 1 }, { type: 'illus', n: 2 }, { type: 'fact', n: 1 },
-            { type: 'illus', n: 3 }, { type: 'fact', n: 2 }, { type: 'illus', n: 4 },
-            { type: 'fact', n: 3 }, { type: 'illus', n: 5 }, { type: 'fact', n: 4 },
-            { type: 'illus', n: 6 }, { type: 'fact', n: 5 }, { type: 'illus', n: 7 },
+            { type: 'illus', n: 1 }, { type: 'illus', n: 2 },
+            { type: 'illus', n: 3 }, { type: 'illus', n: 4 }, { type: 'fact', n: 1, img: f1 },
+            { type: 'illus', n: 5 },
+            { type: 'illus', n: 6 }, { type: 'fact', n: 4, img: f3 }, { type: 'illus', n: 7 }, { type: 'illus', n: 8 }, { type: 'fact', n: 3, img: f2 },
             { type: 'statement', n: 0 },
           ].map((slide, i) => (
             <motion.div
@@ -241,18 +277,18 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
             >
               {slide.type === 'illus' && (
                 <>
-                  <div style={{ height: 220, background: 'rgba(232,228,201,0.04)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(232,228,201,0.25)', fontSize: 12, fontFamily: "'DM Sans', sans-serif", letterSpacing: '0.06em', borderBottom: '1px solid #222' }}>
-                    [IMG: SCENE 0{slide.n}]
-                  </div>
+                  <img
+                    src={storyImgs[slide.n - 1]}
+                    alt={`Scene ${slide.n}`}
+                    style={{ width: '100%', height: 360, objectFit: 'cover', display: 'block', borderBottom: '1px solid #222' }}
+                  />
                   <div style={{ padding: '14px 16px', color: 'rgba(232,228,201,0.4)', fontSize: 12, fontFamily: "'DM Sans', sans-serif" }}>[TEXT: CAPTION 0{slide.n}]</div>
                 </>
               )}
               {slide.type === 'fact' && (
-                <div style={{ padding: 32, display: 'flex', flexDirection: 'column', gap: 12, minHeight: 260, justifyContent: 'center' }}>
-                  <div style={{ height: 80, border: '1px dashed rgba(232,228,201,0.15)', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(232,228,201,0.2)', fontSize: 10, fontFamily: "'DM Sans', sans-serif", marginBottom: 16 }}>[IMG: IVORY BOTANICAL BACKGROUND]</div>
-                  <span style={{ fontFamily: "'Sora', sans-serif", fontWeight: 700, fontSize: 16, color: 'rgba(232,228,201,0.7)' }}>[TEXT: FACT 0{slide.n} — LINE 1, 5–6 words]</span>
-                  <span style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: 14, color: 'rgba(232,228,201,0.4)' }}>[TEXT: FACT 0{slide.n} — LINE 2, 5–6 words]</span>
-                </div>
+                'img' in slide && slide.img
+                  ? <img src={slide.img} alt={`fact ${slide.n}`} style={{ width: '100%', height: 360, objectFit: 'cover', display: 'block' }} />
+                  : <div style={{ height: 360, border: '1px dashed rgba(232,228,201,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(232,228,201,0.2)', fontSize: 10, fontFamily: "'DM Sans', sans-serif" }}>[IMG: IVORY BOTANICAL BACKGROUND]</div>
               )}
               {slide.type === 'statement' && (
                 <div style={{ padding: 40, minHeight: 300, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -265,17 +301,17 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
       </section>
 
       {/* ─── SECTION 4 — TRANSITION ─────────────────────────────────── */}
-      <section style={{ padding: '80px 32px', borderBottom: '1px solid #222', textAlign: 'center' }}>
+      <section style={{ padding: '80px clamp(16px, 5vw, 32px)', borderBottom: '1px solid #222', textAlign: 'center' }}>
         <motion.p style={{ maxWidth: 640, margin: '0 auto', fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: 18, color: 'rgba(232,228,201,0.4)', fontStyle: 'italic' }} {...fadeUp}>
           [TEXT: TRANSITION LINE — one sentence bridging story to research]
         </motion.p>
       </section>
 
       {/* ─── SECTION 5 — WHAT THE RESEARCH FOUND ───────────────────── */}
-      <section id="cs-research" style={{ padding: '96px 32px', borderBottom: '1px solid #222' }}>
+      <section id="cs-research" style={{ padding: '96px clamp(16px, 5vw, 32px)', borderBottom: '1px solid #222' }}>
         <motion.div style={{ maxWidth: 960, margin: '0 auto' }} {...fadeUp}>
           <SectionLabel>What the Research Found</SectionLabel>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(420px, 1fr))', gap: 24 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(420px, 100%), 1fr))', gap: 24 }}>
             {[1, 2, 3, 4].map(n => (
               <motion.div
                 key={n}
@@ -315,12 +351,12 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
       </section>
 
       {/* ─── SECTION 6 — RESEARCH PROCESS ──────────────────────────── */}
-      <section style={{ padding: '96px 32px', borderBottom: '1px solid #222' }}>
+      <section style={{ padding: '96px clamp(16px, 5vw, 32px)', borderBottom: '1px solid #222' }}>
         <motion.div style={{ maxWidth: 960, margin: '0 auto' }} {...fadeUp}>
           <SectionLabel>Research Process</SectionLabel>
           <TextPH muted>[TEXT: SECTION INTRO — 2 lines on how the research was run]</TextPH>
           <div style={{ height: 32 }} />
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16 }}>
             <ImgPH label="SCANNED HANDWRITTEN NOTES ×N" tall />
             <ImgPH label="INTERVIEW PHOTOS ×N — faces blurred or cropped" tall />
             <ImgPH label="SYNTHESIS / AFFINITY MAPPING ×N" tall />
@@ -331,12 +367,12 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
       </section>
 
       {/* ─── SECTION 7 — IDEATION ───────────────────────────────────── */}
-      <section style={{ padding: '96px 32px', borderBottom: '1px solid #222' }}>
+      <section style={{ padding: '96px clamp(16px, 5vw, 32px)', borderBottom: '1px solid #222' }}>
         <motion.div style={{ maxWidth: 960, margin: '0 auto' }} {...fadeUp}>
           <SectionLabel>Ideation</SectionLabel>
           <TextPH muted>[TEXT: IDEATION SUMMARY — exactly 2 lines]</TextPH>
           <div style={{ height: 32 }} />
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16 }}>
             <ImgPH label="STICKY NOTES ×N" tall />
             <ImgPH label="SKETCHES ×N" tall />
             <ImgPH label="EARLY CONCEPTS ×N" tall />
@@ -345,7 +381,7 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
       </section>
 
       {/* ─── SECTION 8 — THE DESIGN QUESTION ───────────────────────── */}
-      <section style={{ padding: '120px 32px', borderBottom: '1px solid #222', textAlign: 'center' }}>
+      <section style={{ padding: '120px clamp(16px, 5vw, 32px)', borderBottom: '1px solid #222', textAlign: 'center' }}>
         <motion.p
           style={{ maxWidth: 720, margin: '0 auto', fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: 28, color: 'rgba(232,228,201,0.55)', lineHeight: 1.45 }}
           {...fadeUp}
@@ -355,14 +391,41 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
       </section>
 
       {/* ─── SECTION 9 — THE SOLUTION ───────────────────────────────── */}
-      <section id="cs-solution" style={{ padding: '96px 32px', borderBottom: '1px solid #222' }}>
+      <section id="cs-solution" style={{ padding: '96px clamp(16px, 5vw, 32px)', borderBottom: '1px solid #222' }}>
         <motion.div style={{ maxWidth: 960, margin: '0 auto' }} {...fadeUp}>
           <SectionLabel>The Solution</SectionLabel>
 
-          {/* 9a */}
-          <ImgPH label="HERO SHOT — final product, plain background, full width" tall />
-          <div style={{ height: 12 }} />
-          <TextPH muted>[TEXT: HERO CAPTION — max 10 words]</TextPH>
+          {/* 9a — full shot: Her / Him */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 32 }}>
+            {([
+              { label: 'Her', glow: pvwGlow, pv: pvw,  pvPos: 'center center', full: fullViewHer, fullPos: 'center 40%' },
+              { label: 'Him', glow: pvmGlow, pv: pvm,  pvPos: 'center center', full: fullViewHim, fullPos: 'center top' },
+            ] as const).map(({ label, glow, pv, pvPos, full, fullPos }) => (
+              <div key={label} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                <h3 style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: 22, color: 'rgba(232,228,201,0.7)', marginBottom: 4, letterSpacing: '-0.02em' }}>
+                  {label}
+                </h3>
+                {/* glow — visible immediately */}
+                <div style={{ aspectRatio: '1 / 1', borderRadius: 16, overflow: 'hidden' }}>
+                  <img src={glow} alt={`${label} glow`} style={{ width: '100%', height: '100%', display: 'block', objectFit: 'cover', objectPosition: 'center center' }} />
+                </div>
+                {/* normal pv — fades in on scroll */}
+                <motion.div
+                  initial={{ opacity: 0, y: 32 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={{ duration: 0.7, ease: [0.25, 1, 0.5, 1] }}
+                  style={{ aspectRatio: '1 / 1', borderRadius: 16, overflow: 'hidden' }}
+                >
+                  <img src={pv} alt={`${label} product view`} style={{ width: '100%', height: '100%', display: 'block', objectFit: 'cover', objectPosition: pvPos }} />
+                </motion.div>
+                {/* full body */}
+                <div style={{ aspectRatio: '1774 / 887', borderRadius: 16, overflow: 'hidden' }}>
+                  <img src={full} alt={`${label} full view`} style={{ width: '100%', height: '100%', display: 'block', objectFit: 'cover', objectPosition: fullPos }} />
+                </div>
+              </div>
+            ))}
+          </div>
           <div style={{ height: 48 }} />
 
           {/* 9b */}
@@ -373,10 +436,14 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
           <h3 style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: 20, color: 'rgba(232,228,201,0.5)', marginBottom: 24 }}>
             [TEXT: SUBSECTION HEADING — "I didn't forget the technicalities"]
           </h3>
-          <ImgPH label="PRODUCT WITH CALLOUTS — annotated product photo or diagram" tall />
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16 }}>
+            {[technicalView, menTechnical].map((src, i) => (
+              <img key={i} src={src} alt={`technical view ${i + 1}`} style={{ width: '100%', borderRadius: 16, display: 'block' }} />
+            ))}
+          </div>
           <div style={{ height: 40 }} />
 
-          {[1, 2, 3, 4, 5, 6].map(n => (
+          {[1, 2, 3, 4].map(n => (
             <motion.div
               key={n}
               initial={{ opacity: 0, y: 24 }}
@@ -391,7 +458,16 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
                 <em style={{ fontSize: 11, color: '#6B7280', fontFamily: "'DM Sans', sans-serif" }}>[TEXT: MECHANISM {n}]</em>
               </div>
               <TextPH muted>[TEXT: DECISION BODY {n} — 2 sentences, second one short]</TextPH>
-              <ImgPH label={`DETAIL SHOT ${n} — optional`} />
+              {n === 1
+                ? <img src={bellies} alt="detail shot 1" style={{ width: '50%', borderRadius: 12, display: 'block', margin: '0 auto' }} />
+                : n === 2
+                ? <img src={cable2} alt="detail shot 2" style={{ width: '30%', borderRadius: 12, display: 'block', margin: '0 auto' }} />
+                : n === 3
+                ? <img src={cable} alt="detail shot 3" style={{ width: '30%', borderRadius: 12, display: 'block', margin: '0 auto' }} />
+                : n === 4
+                ? <img src={silicon} alt="detail shot 4" style={{ width: '50%', borderRadius: 12, display: 'block', margin: '0 auto' }} />
+                : <ImgPH label={`DETAIL SHOT ${n} — optional`} />
+              }
             </motion.div>
           ))}
 
@@ -402,7 +478,7 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
       </section>
 
       {/* ─── SECTION 10 — THE BUSINESS ──────────────────────────────── */}
-      <section id="cs-business" style={{ padding: '96px 32px', borderBottom: '1px solid #222' }}>
+      <section id="cs-business" style={{ padding: '96px clamp(16px, 5vw, 32px)', borderBottom: '1px solid #222' }}>
         <motion.div style={{ maxWidth: 960, margin: '0 auto' }} {...fadeUp}>
           <SectionLabel>The Business</SectionLabel>
           <TextPH>[TEXT: FRAMING LINE — one sentence: how this would work, and what would have to be true]</TextPH>
@@ -415,18 +491,6 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
           <ImgPH label="PURCHASE MOMENT VISUAL — optional" />
           <div style={{ height: 48 }} />
 
-          {/* 10b */}
-          <h3 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: 14, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#6B7280', marginBottom: 16 }}>Website</h3>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
-            {['customisation flow', 'checkout', 'address confirmation'].map(label => (
-              <div key={label}>
-                <ImgPH label={`WEBSITE MOCKUP — ${label}`} tall />
-                <div style={{ height: 8 }} />
-                <TextPH muted>{`[TEXT: MOCKUP CAPTION — ${label}]`}</TextPH>
-              </div>
-            ))}
-          </div>
-          <div style={{ height: 48 }} />
 
           {/* 10c */}
           <h3 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: 14, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#6B7280', marginBottom: 16 }}>The unit model</h3>
@@ -456,12 +520,12 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
       </section>
 
       {/* ─── SECTION 11 — PROTOTYPE ─────────────────────────────────── */}
-      <section style={{ padding: '96px 32px', borderBottom: '1px solid #222' }}>
+      <section style={{ padding: '96px clamp(16px, 5vw, 32px)', borderBottom: '1px solid #222' }}>
         <motion.div style={{ maxWidth: 960, margin: '0 auto' }} {...fadeUp}>
           <SectionLabel>Prototype</SectionLabel>
           <TextPH muted>[TEXT: SECTION INTRO — 1–2 lines on what was built and why]</TextPH>
           <div style={{ height: 32 }} />
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 16 }}>
             {['full view — angle 1', 'full view — angle 2', 'full view — angle 3', 'detail crop — mechanism 1', 'detail crop — mechanism 2', 'full view — angle 4 (optional)'].map(label => (
               <ImgPH key={label} label={`PROTOTYPE — ${label}`} tall />
             ))}
@@ -472,12 +536,12 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
       </section>
 
       {/* ─── SECTION 12 — REACTIONS ─────────────────────────────────── */}
-      <section style={{ padding: '96px 32px', borderBottom: '1px solid #222' }}>
+      <section style={{ padding: '96px clamp(16px, 5vw, 32px)', borderBottom: '1px solid #222' }}>
         <motion.div style={{ maxWidth: 960, margin: '0 auto' }} {...fadeUp}>
           <SectionLabel>Reactions</SectionLabel>
           <TextPH muted>[TEXT: FRAMING LINE — states plainly that this is first-response reactions, not a structured usability test]</TextPH>
           <div style={{ height: 32 }} />
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16 }}>
             {[1, 2, 3].map(n => (
               <div key={n}>
                 <ImgPH label={`PERSON HOLDING PROTOTYPE ${n}`} tall />
@@ -492,7 +556,7 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
       </section>
 
       {/* ─── SECTION 13 — WHAT I WOULD DO DIFFERENTLY ──────────────── */}
-      <section style={{ padding: '96px 32px', borderBottom: '1px solid #222' }}>
+      <section style={{ padding: '96px clamp(16px, 5vw, 32px)', borderBottom: '1px solid #222' }}>
         <motion.div style={{ maxWidth: 960, margin: '0 auto' }} {...fadeUp}>
           <SectionLabel>What I Would Do Differently</SectionLabel>
           <TextPH muted>[TEXT: SECTION HEADING]</TextPH>
@@ -517,7 +581,7 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
 
       {/* ─── SECTION 14 — FINAL THOUGHTS ────────────────────────────── */}
       {/* Plain text only — no imagery, no background */}
-      <section style={{ padding: '160px 32px' }}>
+      <section style={{ padding: '160px clamp(16px, 5vw, 32px)' }}>
         <motion.p
           style={{ maxWidth: 600, margin: '0 auto', fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: 22, color: 'rgba(232,228,201,0.45)', lineHeight: 1.6, textAlign: 'center', fontStyle: 'italic' }}
           {...fadeUp}
