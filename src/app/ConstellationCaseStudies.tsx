@@ -39,18 +39,7 @@ const CONS: ConsDef[] = [
     driftKf: 'cs-drift-1', driftDur: '12s', driftDelay: '4s',
   },
   {
-    id: 'openlee', number: '03', name: 'Openlee', category: 'Gamify UX', timeline: 'April 2026',
-    cx: 880, cy: 255,
-    nodes: [
-      { dx: -22, dy: -54 }, { dx: 20, dy: -44 }, { dx: 52, dy: -16 },
-      { dx: 56,  dy: 22  }, { dx: 18, dy: 52  }, { dx: -24, dy: 40 },
-      { dx: -50, dy:  2  },
-    ],
-    edges: [[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,0],[1,4],[2,5]],
-    driftKf: 'cs-drift-2', driftDur: '16s', driftDelay: '7s',
-  },
-  {
-    id: 'behive', number: '04', name: 'Behive', category: 'Coming Soon', timeline: 'July 2026',
+    id: 'behive', number: '03', name: 'Behive', category: 'Coming Soon', timeline: 'July 2026',
     cx: 1200, cy: 110,
     nodes: [
       { dx: -20, dy: -44 }, { dx: 28, dy: -32 }, { dx: 48, dy: 8 },
@@ -171,8 +160,8 @@ export default function ConstellationCaseStudies({
 
   const onKey = useCallback((e: React.KeyboardEvent, i: number) => {
     if (e.key === 'Enter' || e.key === ' ')   { e.preventDefault(); activate(i); }
-    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); activate((i + 1) % 4); }
-    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   { e.preventDefault(); activate((i + 3) % 4); }
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); activate((i + 1) % 3); }
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   { e.preventDefault(); activate((i + 2) % 3); }
   }, [activate]);
 
   // Opacity helpers — no filter:blur, just opacity
@@ -197,12 +186,6 @@ export default function ConstellationCaseStudies({
       { label: 'Result',   text: caseStudiesData[1].result.replace(/\n+/g, ' ') },
     ],
     [
-      { label: 'Situation', text: caseStudiesData[2].situation },
-      { label: 'Task',      text: caseStudiesData[2].task },
-      { label: 'Action',   text: caseStudiesData[2].actionTitle },
-      { label: 'Result',   text: caseStudiesData[2].result.replace(/\n+/g, ' ') },
-    ],
-    [
       { label: 'Situation', text: 'Coming soon' },
       { label: 'Task',      text: 'Coming soon' },
       { label: 'Action',   text: 'Coming soon' },
@@ -213,7 +196,6 @@ export default function ConstellationCaseStudies({
   const descs = [
     'Bridging welfare schemes and the families they\'re meant to serve',
     'AI-powered postpartum couples platform that reads maternal distress signals and translates them into one actionable daily nudge for the partner',
-    'Hyper-local discovery platform built for the generation that lives nearby',
     'Coming soon',
   ];
 

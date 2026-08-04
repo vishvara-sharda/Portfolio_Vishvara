@@ -27,6 +27,20 @@ import bellies from '../imports/Murmur/bellies.png';
 import cable from '../imports/Murmur/cable.png';
 import cable2 from '../imports/Murmur/cable 2.png';
 import silicon from '../imports/Murmur/silicon.png';
+import ideation1 from '../imports/Murmur/ideation/1.jpeg';
+import ideation2 from '../imports/Murmur/ideation/2.jpeg';
+import ideation3 from '../imports/Murmur/ideation/3.jpeg';
+import ideation4 from '../imports/Murmur/ideation/4.jpeg';
+import ideation5 from '../imports/Murmur/ideation/5.jpeg';
+import ideation6 from '../imports/Murmur/ideation/6.jpeg';
+import ideation7 from '../imports/Murmur/ideation/7.jpeg';
+const ideationImgs = [ideation1, ideation2, ideation3, ideation4, ideation5, ideation6, ideation7];
+import research1 from '../imports/Murmur/research/1.png';
+import research2 from '../imports/Murmur/research/2.png';
+import research3 from '../imports/Murmur/research/3.png';
+const researchImgs = [research1, research2, research3];
+import researchP1 from '../imports/Murmur/research/p1.png';
+import researchP2 from '../imports/Murmur/research/p2.png';
 
 interface MurmurCaseStudyPageProps {
   onClose: (scrollTo?: string) => void;
@@ -89,11 +103,54 @@ const SectionLabel = ({ children }: { children: string }) => (
 
 const NOISE_SVG = "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
 
+const PREVALENCE_DATA = [
+  { lines: ['Antenatal', 'depression'], value: 17.7 },
+  { lines: ['Postpartum', 'depression'], value: 22.0 },
+  { lines: ['Postnatal anxiety', '(self-reported)'], value: 24.4 },
+  { lines: ['Anxiety disorder', '(diagnosed)'], value: 16.0 },
+];
+
+const PrevalenceChart = () => {
+  const max = 24.4;
+  const chartH = 170;
+  const barW = 90;
+  const gap = 36;
+  const baseline = 210;
+  const totalW = PREVALENCE_DATA.length * barW + (PREVALENCE_DATA.length - 1) * gap;
+  return (
+    <div style={{ width: '100%', border: '1px dashed rgba(232,228,201,0.15)', borderRadius: 12, background: 'rgba(232,228,201,0.03)', padding: '28px 24px' }}>
+      <span style={{ display: 'block', fontFamily: "'Sora', sans-serif", fontStyle: 'italic', fontWeight: 300, fontSize: 14, color: 'rgba(232,228,201,0.5)', marginBottom: 20 }}>
+        Pooled prevalence, India
+      </span>
+      <svg viewBox={`0 0 ${totalW} 260`} style={{ width: '100%', height: 'auto', display: 'block' }}>
+        <line x1={0} y1={baseline} x2={totalW} y2={baseline} stroke="rgba(232,228,201,0.2)" strokeWidth={1} />
+        {PREVALENCE_DATA.map((d, i) => {
+          const h = (d.value / max) * chartH;
+          const x = i * (barW + gap);
+          const y = baseline - h;
+          return (
+            <g key={d.lines.join(' ')}>
+              <rect x={x} y={y} width={barW} height={h} rx={4} fill="var(--color-lemon)" opacity={0.85} />
+              <text x={x + barW / 2} y={y - 14} textAnchor="middle" fontFamily="'Sora', sans-serif" fontWeight={600} fontSize={22} fill="#F2EDCB">
+                {d.value}%
+              </text>
+              <text x={x + barW / 2} y={baseline + 24} textAnchor="middle" fontFamily="'DM Sans', sans-serif" fontSize={12} fill="rgba(232,228,201,0.55)">
+                {d.lines.map((line, li) => (
+                  <tspan key={line} x={x + barW / 2} dy={li === 0 ? 0 : 16}>{line}</tspan>
+                ))}
+              </text>
+            </g>
+          );
+        })}
+      </svg>
+    </div>
+  );
+};
+
 const NAV_SECTIONS = [
   { id: 'cs-story',     label: 'Story' },
   { id: 'cs-research',  label: 'Research' },
   { id: 'cs-solution',  label: 'Solution' },
-  { id: 'cs-business',  label: 'Business' },
 ];
 
 export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProps) {
@@ -203,15 +260,21 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
       <section style={{ paddingTop: 160, paddingBottom: 96, borderBottom: '1px solid #222' }}>
         <motion.div style={{ maxWidth: 960, margin: '0 auto', padding: '0 clamp(16px, 5vw, 32px)' }} {...fadeUp}>
           <SectionLabel>Murmur — Case Study</SectionLabel>
-          <TextPH large>[TEXT: PROJECT TITLE — one word or short phrase]</TextPH>
+          <span style={{ display: 'block', fontFamily: "'Sora', sans-serif", fontWeight: 600, fontSize: 44, color: '#F2EDCB', letterSpacing: '-0.02em', lineHeight: 1.1 }}>Murmur</span>
           <div style={{ height: 16 }} />
-          <TextPH>[TEXT: ONE-LINE DESCRIPTION — max 15 words, says what the project is]</TextPH>
+          <span style={{ display: 'block', fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: 'rgba(232,228,201,0.6)', lineHeight: 1.6 }}>A paired object that keeps two people connected through pregnancy and early postpartum.</span>
           <div style={{ height: 32 }} />
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 1, background: '#222', border: '1px solid #222', borderRadius: 16, overflow: 'hidden' }}>
-            {[['ROLE', '[TEXT: 3–6 words]'], ['SKILLS', '[TEXT: 4–6 items]'], ['TOOLS', '[TEXT: 4–6 items]']].map(([label, ph]) => (
+            {([
+              ['ROLE', ['Team research & design']],
+              ['SKILLS', ['Primary research', 'Interaction design', 'Product strategy', 'Systems thinking']],
+              ['TOOLS', ['9 interviews · 12 voices', 'Literature review', 'Competitive analysis', 'Constraint mapping']],
+            ] as const).map(([label, items]) => (
               <div key={label} style={{ background: '#0a0a0a', padding: '20px 24px', display: 'flex', flexDirection: 'column', gap: 8 }}>
                 <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#6B7280', fontFamily: "'DM Sans', sans-serif" }}>{label}</span>
-                <span style={{ fontSize: 13, color: 'rgba(232,228,201,0.4)', fontFamily: "'DM Sans', sans-serif" }}>{ph}</span>
+                {items.map(item => (
+                  <span key={item} style={{ fontSize: 13, color: 'rgba(232,228,201,0.7)', fontFamily: "'DM Sans', sans-serif" }}>{item}</span>
+                ))}
               </div>
             ))}
           </div>
@@ -282,7 +345,6 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
                     alt={`Scene ${slide.n}`}
                     style={{ width: '100%', height: 360, objectFit: 'cover', display: 'block', borderBottom: '1px solid #222' }}
                   />
-                  <div style={{ padding: '14px 16px', color: 'rgba(232,228,201,0.4)', fontSize: 12, fontFamily: "'DM Sans', sans-serif" }}>[TEXT: CAPTION 0{slide.n}]</div>
                 </>
               )}
               {slide.type === 'fact' && (
@@ -292,7 +354,7 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
               )}
               {slide.type === 'statement' && (
                 <div style={{ padding: 40, minHeight: 300, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <span style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: 20, color: 'rgba(232,228,201,0.6)', textAlign: 'center', lineHeight: 1.5 }}>[TEXT: PROBLEM STATEMENT — 2 lines, large type]</span>
+                  <span style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: 20, color: 'rgba(232,228,201,0.6)', textAlign: 'center', lineHeight: 1.5 }}>He thought care meant data. She needed presence.</span>
                 </div>
               )}
             </motion.div>
@@ -300,52 +362,64 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
         </div>
       </section>
 
-      {/* ─── SECTION 4 — TRANSITION ─────────────────────────────────── */}
-      <section style={{ padding: '80px clamp(16px, 5vw, 32px)', borderBottom: '1px solid #222', textAlign: 'center' }}>
-        <motion.p style={{ maxWidth: 640, margin: '0 auto', fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: 18, color: 'rgba(232,228,201,0.4)', fontStyle: 'italic' }} {...fadeUp}>
-          [TEXT: TRANSITION LINE — one sentence bridging story to research]
-        </motion.p>
-      </section>
-
       {/* ─── SECTION 5 — WHAT THE RESEARCH FOUND ───────────────────── */}
       <section id="cs-research" style={{ padding: '96px clamp(16px, 5vw, 32px)', borderBottom: '1px solid #222' }}>
         <motion.div style={{ maxWidth: 960, margin: '0 auto' }} {...fadeUp}>
           <SectionLabel>What the Research Found</SectionLabel>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 32 }}>
+            {[researchP1, researchP2].map((src, i) => (
+              <div key={i} style={{ aspectRatio: '4 / 3', borderRadius: 12, overflow: 'hidden' }}>
+                <img src={src} alt={`Research finding ${i + 1}`} style={{ width: '100%', height: '100%', display: 'block', objectFit: 'cover' }} />
+              </div>
+            ))}
+          </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(420px, 100%), 1fr))', gap: 24 }}>
-            {[1, 2, 3, 4].map(n => (
+            {[
+              {
+                headline: 'She cannot ask, even when he is willing',
+                body: "The barrier wasn't his attitude. In two of three cases the partner was available and willing; the cost was in the asking itself.",
+                quote: '"He was extremely supportive, and she still feared asking."',
+                attribution: 'Mother, first child',
+              },
+              {
+                headline: 'He cannot see her state, and finds out too late',
+                body: 'He is not indifferent, he is uninformed. Two fathers were assembling guidance from Google, ChatGPT, and calls to their mothers.',
+                quote: '"Now I feel it was my mistake."',
+                attribution: 'Father, in hindsight',
+              },
+              {
+                headline: 'Distance is common, and not always geographic',
+                body: 'Three of nine participants were navigating distance. One of those three was in the same house.',
+                quote: '"Husband on a US shift, 4 PM to 3 AM. Uninvolved."',
+                attribution: 'Mother',
+              },
+              {
+                headline: "No margin, her available effort is close to zero",
+                body: 'Ten to fifteen minutes a day was described as too demanding. This is the constraint that kills most products in this space.',
+                quote: '"No other option."',
+                attribution: "Mother, on suppressing her own emotions to keep caregiving",
+              },
+            ].map((finding, n) => (
               <motion.div
-                key={n}
+                key={finding.headline}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
                 transition={{ duration: 0.5, delay: n * 0.08, ease: [0.25, 1, 0.5, 1] }}
                 style={{ padding: 28, border: '1px solid #222', borderRadius: 16, background: '#0a0a0a', display: 'flex', flexDirection: 'column', gap: 12 }}
               >
-                <TextPH>[TEXT: FINDING HEADLINE {n} — max 10 words]</TextPH>
-                <TextPH muted>[TEXT: FINDING BODY {n} — 1–2 sentences]</TextPH>
+                <span style={{ display: 'block', fontFamily: "'DM Sans', sans-serif", fontSize: 17, fontWeight: 600, color: '#F2EDCB', lineHeight: 1.4 }}>{finding.headline}</span>
+                <span style={{ display: 'block', fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: 'rgba(232,228,201,0.55)', lineHeight: 1.6 }}>{finding.body}</span>
                 <div style={{ borderLeft: '2px solid var(--color-lemon)', paddingLeft: 16, marginTop: 8 }}>
-                  <span style={{ display: 'block', color: 'rgba(232,228,201,0.45)', fontSize: 13, fontFamily: "'Sora', sans-serif", fontStyle: 'italic', lineHeight: 1.6 }}>[QUOTE: PARTICIPANT QUOTE {n}]</span>
-                  <span style={{ display: 'block', color: '#6B7280', fontSize: 11, marginTop: 6, fontFamily: "'DM Sans', sans-serif" }}>— [TEXT: ATTRIBUTION {n}]</span>
+                  <span style={{ display: 'block', color: 'rgba(232,228,201,0.45)', fontSize: 13, fontFamily: "'Sora', sans-serif", fontStyle: 'italic', lineHeight: 1.6 }}>{finding.quote}</span>
+                  <span style={{ display: 'block', color: '#6B7280', fontSize: 11, marginTop: 6, fontFamily: "'DM Sans', sans-serif" }}>— {finding.attribution}</span>
                 </div>
               </motion.div>
             ))}
           </div>
 
-          <motion.div
-            style={{ marginTop: 32, padding: 32, border: '1px solid rgba(232,228,201,0.15)', borderRadius: 16, background: 'rgba(232,228,201,0.03)' }}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
-          >
-            <TextPH>[TEXT: COUNTER-FINDING HEADLINE — the finding that cuts against the project]</TextPH>
-            <TextPH muted>[TEXT: COUNTER-FINDING BODY — 2–3 sentences]</TextPH>
-          </motion.div>
-
           <div style={{ marginTop: 32 }}>
-            <ImgPH label="FINDINGS MATRIX or SPIRAL DIAGRAM" tall />
-            <div style={{ height: 8 }} />
-            <TextPH muted>[TEXT: DIAGRAM CAPTION — one line]</TextPH>
+            <PrevalenceChart />
           </div>
         </motion.div>
       </section>
@@ -354,15 +428,48 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
       <section style={{ padding: '96px clamp(16px, 5vw, 32px)', borderBottom: '1px solid #222' }}>
         <motion.div style={{ maxWidth: 960, margin: '0 auto' }} {...fadeUp}>
           <SectionLabel>Research Process</SectionLabel>
-          <TextPH muted>[TEXT: SECTION INTRO — 2 lines on how the research was run]</TextPH>
+          <span style={{ display: 'block', fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(232,228,201,0.5)', marginBottom: 16 }}>
+            The real insights:
+          </span>
+          <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
+            {[
+              'Asking costs her five things: assessment, formulation, timing, exposure, and risk',
+              'He is lost, not absent, building guidance from Google and ChatGPT',
+              'Distance is a third of the sample, one of them in the same house',
+              'Her effort budget is zero, ten minutes felt like too much',
+            ].map((point, i) => (
+              <motion.li
+                key={point}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.07, ease: [0.25, 1, 0.5, 1] }}
+                style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}
+              >
+                <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 700, color: 'var(--color-lemon)', marginTop: 2, flexShrink: 0 }}>0{i + 1}</span>
+                <span style={{ color: 'rgba(232,228,201,0.55)', fontSize: 14, fontFamily: "'DM Sans', sans-serif", lineHeight: 1.6 }}>{point}</span>
+              </motion.li>
+            ))}
+          </ul>
           <div style={{ height: 32 }} />
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16 }}>
-            <ImgPH label="SCANNED HANDWRITTEN NOTES ×N" tall />
-            <ImgPH label="INTERVIEW PHOTOS ×N — faces blurred or cropped" tall />
-            <ImgPH label="SYNTHESIS / AFFINITY MAPPING ×N" tall />
+          <div
+            style={{ display: 'flex', gap: 16, overflowX: 'auto', scrollSnapType: 'x mandatory', cursor: 'grab', userSelect: 'none' }}
+            className="hide-scrollbar"
+            onMouseDown={e => {
+              const el = e.currentTarget; el.style.cursor = 'grabbing';
+              const startX = e.pageX - el.offsetLeft, startScroll = el.scrollLeft;
+              const onMove = (ev: MouseEvent) => { el.scrollLeft = startScroll - (ev.pageX - el.offsetLeft - startX); };
+              const onUp = () => { el.style.cursor = 'grab'; window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp); };
+              window.addEventListener('mousemove', onMove);
+              window.addEventListener('mouseup', onUp);
+            }}
+          >
+            {researchImgs.map((src, i) => (
+              <div key={i} style={{ flexShrink: 0, width: '70%', scrollSnapAlign: 'start', aspectRatio: '4 / 3', borderRadius: 12, overflow: 'hidden' }}>
+                <img src={src} alt={`Research ${i + 1}`} style={{ width: '100%', height: '100%', display: 'block', objectFit: 'cover', pointerEvents: 'none' }} />
+              </div>
+            ))}
           </div>
-          <div style={{ height: 12 }} />
-          <TextPH muted>[TEXT: CAPTIONS — one short line per image or image group]</TextPH>
         </motion.div>
       </section>
 
@@ -370,12 +477,16 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
       <section style={{ padding: '96px clamp(16px, 5vw, 32px)', borderBottom: '1px solid #222' }}>
         <motion.div style={{ maxWidth: 960, margin: '0 auto' }} {...fadeUp}>
           <SectionLabel>Ideation</SectionLabel>
-          <TextPH muted>[TEXT: IDEATION SUMMARY — exactly 2 lines]</TextPH>
+          <span style={{ display: 'block', fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: 'rgba(232,228,201,0.55)', lineHeight: 1.6 }}>
+            Every direction that required effort from her was ruled out. The question became: what if the product did the asking, and she only had to accept?
+          </span>
           <div style={{ height: 32 }} />
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16 }}>
-            <ImgPH label="STICKY NOTES ×N" tall />
-            <ImgPH label="SKETCHES ×N" tall />
-            <ImgPH label="EARLY CONCEPTS ×N" tall />
+            {ideationImgs.map((src, i) => (
+              <div key={i} style={{ aspectRatio: '1 / 1', borderRadius: 12, overflow: 'hidden' }}>
+                <img src={src} alt={`Ideation ${i + 1}`} style={{ width: '100%', height: '100%', display: 'block', objectFit: 'cover' }} />
+              </div>
+            ))}
           </div>
         </motion.div>
       </section>
@@ -386,7 +497,7 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
           style={{ maxWidth: 720, margin: '0 auto', fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: 28, color: 'rgba(232,228,201,0.55)', lineHeight: 1.45 }}
           {...fadeUp}
         >
-          [TEXT: DESIGN QUESTION — one sentence]
+          How might a shared object keep two people connected, without asking anything of a depleted mother, and without telling either of them what to feel?
         </motion.p>
       </section>
 
@@ -429,7 +540,21 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
           <div style={{ height: 48 }} />
 
           {/* 9b */}
-          <TextPH>[TEXT: SOLUTION OVERVIEW — 2–3 sentences, high level, no technical detail]</TextPH>
+          <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 14 }}>
+            {[
+              ['Two paired figures', 'physical presence that needs no screen, no ask'],
+              ['Five ambient states', 'connection felt, never notified'],
+              ['The daily ask', 'she accepts, never forms a request'],
+              ['Nine monthly plates', 'her body becomes visible without words'],
+              ['Twelve body cards', 'understanding replaces instruction'],
+              ['The library', 'so feeling lost never becomes absence'],
+            ].map(([label, desc]) => (
+              <li key={label} style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, lineHeight: 1.6 }}>
+                <span style={{ color: '#F2EDCB', fontWeight: 600 }}>{label}</span>
+                <span style={{ color: 'rgba(232,228,201,0.55)' }}>: {desc}</span>
+              </li>
+            ))}
+          </ul>
           <div style={{ height: 48 }} />
 
           {/* 9c */}
@@ -443,9 +568,33 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
           </div>
           <div style={{ height: 40 }} />
 
-          {[1, 2, 3, 4].map(n => (
+          {[
+            {
+              label: 'No sensor, no screen', mechanism: 'presence through touch alone',
+              body: 'The belly is the only part that moves: nine magnetic plates, each slightly larger, handed from her to him once a month. The ritual lives in the physical world, not on a screen.',
+              filled: true,
+              image: <img src={bellies} alt="detail shot — belly plates" style={{ width: '50%', borderRadius: 12, display: 'block', margin: '0 auto' }} />,
+            },
+            {
+              label: 'Magnetic charging', mechanism: 'no port, no damage',
+              body: 'Silicone degrades at a port: repeated insertion cracks and chips the material over time. A magnetic puck charges through contact, leaving the surface intact.',
+              filled: true,
+              image: (
+                <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
+                  <img src={cable} alt="detail shot — cable connector" style={{ width: '30%', borderRadius: 12, display: 'block' }} />
+                  <img src={cable2} alt="detail shot — cable connector, detached" style={{ width: '30%', borderRadius: 12, display: 'block' }} />
+                </div>
+              ),
+            },
+            {
+              label: 'Touch sensing', mechanism: 'the only input it needs',
+              body: 'A copper capacitive pad beneath the silicone detects whether a hand is present: no buttons, no gestures, nothing to learn. The only thing it knows is whether you are holding it.',
+              filled: true,
+              image: <img src={silicon} alt="detail shot — silicon body" style={{ width: '50%', borderRadius: 12, display: 'block', margin: '0 auto' }} />,
+            },
+          ].map(d => (
             <motion.div
-              key={n}
+              key={d.label}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
@@ -453,69 +602,23 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
               style={{ padding: '24px 28px', border: '1px solid #222', borderRadius: 12, marginBottom: 16, background: '#0a0a0a', display: 'flex', flexDirection: 'column', gap: 10 }}
             >
               <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-                <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(232,228,201,0.6)', fontFamily: "'DM Sans', sans-serif" }}>[TEXT: DECISION LABEL {n}]</span>
+                <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(232,228,201,0.6)', fontFamily: "'DM Sans', sans-serif" }}>{d.label}</span>
                 <span style={{ color: '#444' }}>·</span>
-                <em style={{ fontSize: 11, color: '#6B7280', fontFamily: "'DM Sans', sans-serif" }}>[TEXT: MECHANISM {n}]</em>
+                <em style={{ fontSize: 11, color: '#6B7280', fontFamily: "'DM Sans', sans-serif" }}>{d.mechanism}</em>
               </div>
-              <TextPH muted>[TEXT: DECISION BODY {n} — 2 sentences, second one short]</TextPH>
-              {n === 1
-                ? <img src={bellies} alt="detail shot 1" style={{ width: '50%', borderRadius: 12, display: 'block', margin: '0 auto' }} />
-                : n === 2
-                ? <img src={cable2} alt="detail shot 2" style={{ width: '30%', borderRadius: 12, display: 'block', margin: '0 auto' }} />
-                : n === 3
-                ? <img src={cable} alt="detail shot 3" style={{ width: '30%', borderRadius: 12, display: 'block', margin: '0 auto' }} />
-                : n === 4
-                ? <img src={silicon} alt="detail shot 4" style={{ width: '50%', borderRadius: 12, display: 'block', margin: '0 auto' }} />
-                : <ImgPH label={`DETAIL SHOT ${n} — optional`} />
+              {d.filled
+                ? <span style={{ color: 'rgba(232,228,201,0.55)', fontSize: 14, fontFamily: "'DM Sans', sans-serif", lineHeight: 1.6 }}>{d.body}</span>
+                : <TextPH muted>{d.body}</TextPH>
               }
+              {d.image}
             </motion.div>
           ))}
 
           {/* 9d */}
           <div style={{ height: 48 }} />
-          <TextPH>[TEXT: EMOTIONAL REASONING — 2–3 paragraphs on what the product refuses and why]</TextPH>
-        </motion.div>
-      </section>
-
-      {/* ─── SECTION 10 — THE BUSINESS ──────────────────────────────── */}
-      <section id="cs-business" style={{ padding: '96px clamp(16px, 5vw, 32px)', borderBottom: '1px solid #222' }}>
-        <motion.div style={{ maxWidth: 960, margin: '0 auto' }} {...fadeUp}>
-          <SectionLabel>The Business</SectionLabel>
-          <TextPH>[TEXT: FRAMING LINE — one sentence: how this would work, and what would have to be true]</TextPH>
-          <div style={{ height: 48 }} />
-
-          {/* 10a */}
-          <h3 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: 14, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#6B7280', marginBottom: 16 }}>Purchase and gifting</h3>
-          <TextPH muted>[TEXT: PURCHASE BODY — 2–3 sentences]</TextPH>
-          <div style={{ height: 16 }} />
-          <ImgPH label="PURCHASE MOMENT VISUAL — optional" />
-          <div style={{ height: 48 }} />
-
-
-          {/* 10c */}
-          <h3 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: 14, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#6B7280', marginBottom: 16 }}>The unit model</h3>
-          <TextPH muted>[TEXT: UNIT MODEL — 2–3 sentences]</TextPH>
-          <ImgPH label="UNIT MODEL DIAGRAM — optional" />
-          <div style={{ height: 12 }} />
-          <TextPH>[TEXT: THE TRADE — 1–2 sentences naming the cost of the choice, not just the benefit]</TextPH>
-          <div style={{ height: 48 }} />
-
-          {/* 10d */}
-          <h3 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: 14, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#6B7280', marginBottom: 16 }}>Retention</h3>
-          <TextPH muted>[TEXT: RETENTION MECHANISMS — 2–3 sentences]</TextPH>
-          <TextPH muted>[TEXT: THE ENDING — 1 sentence on the product having a natural end]</TextPH>
-          <div style={{ height: 48 }} />
-
-          {/* 10e */}
-          <h3 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: 14, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#6B7280', marginBottom: 16 }}>[TEXT: SECTION HEADING — What would have to be true]</h3>
-          <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
-            {[1, 2, 3, 4].map(n => (
-              <li key={n} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-                <span style={{ width: 20, height: 20, borderRadius: '50%', border: '1px solid #333', background: '#111', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 9, color: '#6B7280', fontFamily: "'DM Sans', sans-serif" }}>{n}</span>
-                <span style={{ color: 'rgba(232,228,201,0.35)', fontSize: 13, fontFamily: "'DM Sans', sans-serif", lineHeight: 1.6 }}>[TEXT: UNTESTED ASSUMPTION {n}]</span>
-              </li>
-            ))}
-          </ul>
+          <span style={{ display: 'block', fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: 'rgba(232,228,201,0.6)', lineHeight: 1.7 }}>
+            Murmur refuses to score, track, or remind, because the moment it measures him, the bond becomes a chore system.
+          </span>
         </motion.div>
       </section>
 

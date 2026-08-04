@@ -157,42 +157,6 @@ const caseStudiesData = [
     links: { full: "#", live: "#", promo: "#", presentation: "#" }
   },
   {
-    id: "openlee",
-    tag: "Consumer App",
-    title: "Openlee — Social Platform",
-    subtitle: "Connecting communities through transparent, location-based storytelling",
-    meta: [
-      { label: "Role", value: "UI/UX Designer" },
-      { label: "Timeline", value: "4 months" },
-      { label: "Team", value: "Openlee Startup" }
-    ],
-    images: [
-      { type: 'cover', label: 'Brand Concept' },
-      { type: 'screen', label: 'Feed Flow' },
-      { type: 'screen', label: 'Map View' },
-      { type: 'screen', label: 'Profile' }
-    ],
-    situation: "Communities are increasingly disconnected despite social media. Localized information is fragmented across Nextdoor, Facebook groups, and physical bulletin boards.",
-    task: "Design an intuitive mobile-first platform that makes local discovery engaging and helps users feel connected to their immediate surroundings.",
-    actionTitle: "Core Sprints",
-    actions: [
-      "Mapped user journeys for hyper-local discovery",
-      "Designed an interactive, gesture-based map interface",
-      "Prototyped the immersive storytelling submission flow",
-      "Created a vibrant, Gen-Z friendly visual identity",
-      "Conducted usability testing with college campuses"
-    ],
-    result: "Achieved a highly engaging prototype that secured seed funding. The gesture-based map interaction increased time-on-task satisfaction significantly compared to traditional list views.",
-    metrics: [
-      { value: "1.2M", label: "SEED FUNDING" },
-      { value: "+60%", label: "UX SATISFACTION" },
-      { value: "300+", label: "BETA SIGNUPS" }
-    ],
-    tools: ["Figma", "Principle", "Framer", "Illustrator"],
-    deliverables: ["Brand Identity", "App UI", "Interactions", "Pitch Deck", "Asset Library"],
-    links: { full: "#", live: "#", promo: "#", presentation: "#" }
-  },
-  {
     id: "behive",
     tag: "Coming Soon",
     title: "Behive",
