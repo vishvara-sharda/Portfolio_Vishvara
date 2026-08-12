@@ -1126,28 +1126,22 @@ function HorizontalScrollSection({
             <div className="hero-portrait-top-fade">
               <img src={profileImg} alt="Vishvara Gandharv, product designer" className="hero-portrait-img" />
             </div>
-            {/* Name label — bottom-right of portrait */}
-            <div style={{
-              position: 'absolute',
-              bottom: 18,
-              right: 18,
-              ...hpAnim(0.5),
-            }}>
+          </div>
+          <div className="hero-text-col">
+            {/* Vishvara.G — name above UX Researcher */}
+            <div style={{ ...hpAnim(0.04), marginBottom: 8 }}>
               <span style={{
                 fontFamily: "'Sora', sans-serif",
                 fontWeight: 700,
-                fontSize: 'clamp(1.2rem, 2vw, 1.7rem)',
-                color: 'var(--color-pink)',
-                letterSpacing: '-0.01em',
-                lineHeight: 1,
-                display: 'block',
-                textShadow: '0 2px 16px rgba(0,0,0,0.7)',
+                fontSize: "clamp(0.7rem, 1.1vw, 0.95rem)",
+                color: "var(--color-pink)",
+                letterSpacing: "0.04em",
+                lineHeight: 1.1,
+                display: "block",
               }}>
                 Vishvara.G
               </span>
             </div>
-          </div>
-          <div className="hero-text-col">
             {/* UX Researcher — top smaller line in sky-blue */}
             <div style={{ ...hpAnim(0.08) }}>
               <span style={{
