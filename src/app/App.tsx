@@ -596,37 +596,78 @@ const GlobalStyles = React.memo(() => (
     }
 
     @media (max-width: 900px) {
+      /* Stack: photo on top, text below — fills full viewport */
       .hero-landing-panel {
-        align-items: flex-end !important;
-        justify-content: flex-end !important;
-        padding-bottom: 40px !important;
-      }
-      .hero-text-col {
-        max-width: 100% !important;
-        padding: 0 24px !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        justify-content: space-between !important;
+        padding-bottom: 0 !important;
+        position: relative !important;
+        min-height: 100vh;
       }
       .hero-portrait-wrap {
-        left: 0 !important;
+        position: relative !important;
+        left: auto !important;
+        right: auto !important;
+        top: auto !important;
         width: 100% !important;
-        height: 45vh !important;
-        -webkit-mask-image: linear-gradient(to top, transparent 0%, black 30%) !important;
-        mask-image: linear-gradient(to top, transparent 0%, black 30%) !important;
+        height: 52vh !important;
+        min-height: 280px !important;
+        max-height: 420px !important;
+        -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%) !important;
+        mask-image: linear-gradient(to bottom, black 70%, transparent 100%) !important;
+        flex-shrink: 0;
       }
       .hero-portrait-top-fade {
+        width: 100%;
+        height: 100%;
         -webkit-mask-image: none !important;
         mask-image: none !important;
       }
       .hero-portrait-img {
         object-position: center top !important;
       }
+      .hero-text-col {
+        position: relative !important;
+        z-index: 2 !important;
+        max-width: 100% !important;
+        padding: 12px 24px 36px !important;
+        background: transparent;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+      /* Scale down all hero text on mobile */
+      .hero-text-col .hero-role-big {
+        font-size: clamp(2rem, 10.5vw, 2.6rem) !important;
+        line-height: 0.92 !important;
+      }
+      .hero-text-col .hero-role-small {
+        font-size: clamp(1rem, 4.5vw, 1.4rem) !important;
+      }
+      .hero-text-col .hero-caption {
+        font-size: 0.8rem !important;
+      }
       .hero-buttons-row {
         flex-direction: column !important;
         width: 100% !important;
+        margin-top: 16px !important;
       }
       .hero-buttons-row button,
       .hero-buttons-row a {
         width: 100% !important;
         justify-content: center !important;
+        padding: 14px 20px !important;
+        font-size: 14px !important;
+      }
+    }
+    /* Extra-small phones */
+    @media (max-width: 480px) {
+      .hero-portrait-wrap {
+        height: 48vh !important;
+        min-height: 240px !important;
+        max-height: 360px !important;
       }
     }
 
@@ -1120,8 +1161,14 @@ function HorizontalScrollSection({
   const panel1 = (
     <div tabIndex={0} aria-label="Hero" style={panelStyle({ height: isMobile ? 'auto' : '100vh', minHeight: isMobile ? '100vh' : undefined })}>
       {heroBg}
-      <div style={{ position: "absolute", inset: 0, zIndex: 10, display: "flex", justifyContent: "center", alignItems: "center" }}>
-        <div className="hero-landing-panel" style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center" }}>
+      <div style={isMobile
+        ? { position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', width: '100%' }
+        : { position: 'absolute', inset: 0, zIndex: 10, display: 'flex', justifyContent: 'center', alignItems: 'center' }
+      }>
+        <div className="hero-landing-panel" style={isMobile
+          ? { display: 'flex', flexDirection: 'column', width: '100%' }
+          : { position: 'absolute', inset: 0, display: 'flex', alignItems: 'center' }
+        }>
           <div className="hero-portrait-wrap" style={{ opacity: siteReady ? 1 : 0, transition: 'opacity 1s cubic-bezier(0.22,1,0.36,1) 0.05s', position: 'relative' }}>
             <div className="hero-portrait-top-fade">
               <img src={profileImg} alt="Vishvara Gandharv, product designer" className="hero-portrait-img" />
@@ -1144,7 +1191,7 @@ function HorizontalScrollSection({
             </div>
             {/* UX Researcher — top smaller line in sky-blue */}
             <div style={{ ...hpAnim(0.08) }}>
-              <span style={{
+              <span className="hero-role-small" style={{
                 fontFamily: "'Sora', sans-serif",
                 fontWeight: 400,
                 fontSize: "clamp(1.1rem, 2.2vw, 1.9rem)",
@@ -1158,7 +1205,7 @@ function HorizontalScrollSection({
             </div>
             {/* PRODUCT DESIGNER — large bold pink */}
             <div style={{ marginTop: 4, ...hpAnim(0.16) }}>
-              <span style={{
+              <span className="hero-role-big" style={{
                 fontFamily: "'Sora', sans-serif",
                 fontWeight: 800,
                 fontSize: "clamp(2.8rem, 6.5vw, 5.8rem)",
@@ -1172,7 +1219,7 @@ function HorizontalScrollSection({
               }}>
                 PRODUCT
               </span>
-              <span style={{
+              <span className="hero-role-big" style={{
                 fontFamily: "'Sora', sans-serif",
                 fontWeight: 800,
                 fontSize: "clamp(2.8rem, 6.5vw, 5.8rem)",
@@ -1189,7 +1236,7 @@ function HorizontalScrollSection({
             </div>
             {/* UI Designer — bottom smaller line in sky-blue */}
             <div style={{ marginTop: 8, ...hpAnim(0.24) }}>
-              <span style={{
+              <span className="hero-role-small" style={{
                 fontFamily: "'Sora', sans-serif",
                 fontWeight: 400,
                 fontSize: "clamp(1.1rem, 2.2vw, 1.9rem)",
@@ -1203,7 +1250,7 @@ function HorizontalScrollSection({
             </div>
             {/* Bottom caption */}
             <div style={{ marginTop: 20, ...hpAnim(0.32) }}>
-              <span style={{
+              <span className="hero-caption" style={{
                 fontFamily: "'DM Sans', sans-serif",
                 fontWeight: 700,
                 fontSize: "clamp(0.7rem, 1vw, 0.88rem)",
