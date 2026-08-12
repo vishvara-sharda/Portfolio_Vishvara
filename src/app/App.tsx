@@ -124,7 +124,7 @@ const caseStudiesData = [
     id: "murmur",
     tag: "B2B SaaS",
     title: "Murmur — Healthcare Portal",
-    subtitle: "AI-powered postpartum couples platform that reads maternal distress signals and translates them into one actionable daily nudge for the partner.",
+    subtitle: "Murmur is a shared object designed to keep couples emotionally connected during pregnancy and postpartum. It works without asking anything of an exhausted mother — instead carrying the emotional signal for her, so her partner knows how she feels without her having to say a word.",
     meta: [
       { label: "Role", value: "Lead Product Designer" },
       { label: "Timeline", value: "6 months" },
@@ -136,9 +136,9 @@ const caseStudiesData = [
       { type: 'screen', label: 'Analytics' },
       { type: 'screen', label: 'Patients' }
     ],
-    situation: "22% of Indian mothers get PPD, 55% feel unsupported, 80% of fathers feel useless — yet 0 of 587 apps address the couple's emotional gap.",
-    task: "Build an AI that reads her voice, wearables, and mood — then gives him one specific, non-blaming daily action, unlocked only when both partners join.",
-    actionTitle: "Researched 59 studies, mapped 587 apps with zero competitors, and designed a multi-modal AI pipeline with a four-part nudge formula, safety guardrails, and identity restoration — none of which exist in the market.",
+    situation: "New parents in India were quietly falling apart during pregnancy and after birth. Mothers couldn't ask for help even when their partners were willing, and fathers had no way to see what their partners were going through.",
+    task: "Design something that keeps couples emotionally connected during this period — without adding any effort to an already exhausted mother, and without making either person feel told what to do.",
+    actionTitle: "Interviewed 12 people (mothers and fathers), reviewed 7 product categories, and dug into research. Used all of that to map the real barrier — not willingness, but the cost of asking — and built design constraints directly from what participants said.",
     actions: [
       "Conducted extensive stakeholder workshops",
       "Created wireframes for the patient onboarding flow",
@@ -146,7 +146,7 @@ const caseStudiesData = [
       "Established a new clinical accessibility-focused design system",
       "Handed off production-ready assets to engineering"
     ],
-    result: "Blue ocean with zero direct competitors in an unstudied category — targeting India's 19-23.5% PPD market with cultural moats no global app can replicate.",
+    result: "Defined a clear product direction: a shared object that carries the asking for her, gives him specific direction (not just encouragement), and works across distance by default. Ruled out content libraries, motivation-dependent features, and anything that puts effort on the mother.",
     metrics: [
       { value: "+40%", label: "ONBOARDING SPEED" },
       { value: "2.5x", label: "DATA ACCURACY" },
