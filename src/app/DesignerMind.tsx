@@ -1,4 +1,4 @@
-﻿import React, { useState, useMemo, useRef, useCallback, useEffect, memo } from 'react';
+import React, { useState, useMemo, useRef, useCallback, useEffect, memo } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -239,7 +239,12 @@ const DesignerMindStyles = memo(() => (
     .dm-svg{width:100%;height:1000px;overflow:visible}
     @media(max-width:768px){
       .dm-svg{height:640px;pointer-events:none}
+      .dm-svg-wrap{display:none !important}
       .dm-header-sub{margin-bottom:32px !important}
+      .dm-mobile-grid{display:grid !important}
+    }
+    @media(min-width:769px){
+      .dm-mobile-grid{display:none !important}
     }
     @media(prefers-reduced-motion:reduce){
       .dm-float-0,.dm-float-1,.dm-float-2,.dm-float-3,
@@ -638,8 +643,76 @@ export default function DesignerMind() {
 
       <SectionRail label="I think in systems" />
 
-      {/* SVG */}
-      <div style={{ position:'relative', zIndex:1, marginLeft:0, marginRight:'auto', maxWidth:1200, padding:'0 clamp(16px,4vw,60px)' }}>
+      {/* ── Mobile map of system headings (hidden on desktop) ── */}
+      <div className="dm-mobile-grid section" style={{ display: 'none', padding: '0 20px 60px' }}>
+        <svg viewBox="0 0 320 540" style={{ width: '100%', height: 'auto', overflow: 'visible' }}>
+          {/* Lines */}
+          <g stroke="rgba(232,228,201,0.2)" strokeWidth="1.5" strokeDasharray="4 6">
+            <line x1="160" y1="40" x2="70" y2="120" />
+            <line x1="160" y1="40" x2="250" y2="120" />
+            <line x1="70" y1="120" x2="160" y2="200" />
+            <line x1="250" y1="120" x2="160" y2="200" />
+            <line x1="160" y1="200" x2="70" y2="280" />
+            <line x1="160" y1="200" x2="250" y2="280" />
+            <line x1="70" y1="280" x2="160" y2="360" />
+            <line x1="250" y1="280" x2="160" y2="360" />
+            <line x1="160" y1="360" x2="70" y2="440" />
+            <line x1="160" y1="360" x2="250" y2="440" />
+          </g>
+
+          {/* Nodes */}
+          {(() => {
+            const positions = [
+              { cx: 160, cy: 40, align: 'middle' as const }, // Human Understanding
+              { cx: 70, cy: 120, align: 'start' as const }, // Research
+              { cx: 160, cy: 200, align: 'middle' as const }, // Strategy
+              { cx: 70, cy: 280, align: 'start' as const }, // Behavioral Design
+              { cx: 250, cy: 280, align: 'end' as const }, // Design
+              { cx: 160, cy: 360, align: 'middle' as const }, // Storytelling
+              { cx: 70, cy: 440, align: 'start' as const }, // Creativity
+              { cx: 250, cy: 440, align: 'end' as const }, // Future
+              { cx: 250, cy: 120, align: 'end' as const }, // Business Metrics
+            ];
+            
+            return CLUSTERS.map((c, i) => {
+              const pos = positions[i];
+              if (!pos) return null;
+              
+              // Text offset based on alignment
+              const textYOffset = 24;
+              const textXOffset = pos.align === 'start' ? -30 : pos.align === 'end' ? 30 : 0;
+              const actualAlign = pos.align === 'start' ? 'start' : pos.align === 'end' ? 'end' : 'middle';
+              
+              return (
+                <g key={c.id}>
+                  {/* Glow */}
+                  <circle cx={pos.cx} cy={pos.cy} r="16" fill={c.color} opacity="0.15" />
+                  {/* Core */}
+                  <circle cx={pos.cx} cy={pos.cy} r="6" fill={c.color} />
+                  <circle cx={pos.cx} cy={pos.cy} r="2" fill="#FFF" />
+                  
+                  {/* Label */}
+                  <text
+                    x={pos.cx + textXOffset}
+                    y={pos.cy + textYOffset}
+                    textAnchor={actualAlign}
+                    fill="#E8E4C9"
+                    fontSize="12"
+                    fontFamily="'Sora', sans-serif"
+                    fontWeight="500"
+                    style={{ textShadow: '0 2px 8px rgba(0,0,0,0.8)' }}
+                  >
+                    {c.label}
+                  </text>
+                </g>
+              );
+            });
+          })()}
+        </svg>
+      </div>
+
+      {/* SVG — hidden on mobile */}
+      <div className="dm-svg-wrap" style={{ position:'relative', zIndex:1, marginLeft:0, marginRight:'auto', maxWidth:1200, padding:'0 clamp(16px,4vw,60px)' }}>
         <svg
           ref={svgRef}
           className="dm-svg"
