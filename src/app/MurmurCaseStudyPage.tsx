@@ -279,23 +279,13 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
             ))}
           </div>
           <div style={{ height: 32 }} />
-          <img src={murmurGif} alt="Murmur" style={{ width: '100%', borderRadius: 16, display: 'block' }} />
+          <img loading="lazy" src={murmurGif} alt="Murmur" style={{ width: '100%', borderRadius: 16, display: 'block' }} />
           <div style={{ height: 16 }} />
-          <img src={murmurGif2} alt="Murmur 2" style={{ width: '100%', borderRadius: 16, display: 'block' }} />
+          <img loading="lazy" src={murmurGif2} alt="Murmur 2" style={{ width: '100%', borderRadius: 16, display: 'block' }} />
         </motion.div>
       </section>
 
-      {/* ─── SECTION 2 — VIDEO ──────────────────────────────────────── */}
-      <section style={{ padding: '96px clamp(16px, 5vw, 32px)', borderBottom: '1px solid #222', textAlign: 'center' }}>
-        <motion.div style={{ maxWidth: 960, margin: '0 auto' }} {...fadeUp}>
-          <SectionLabel>Video</SectionLabel>
-          <div style={{ width: '100%', aspectRatio: '16/9', border: '1px dashed rgba(232,228,201,0.2)', borderRadius: 16, background: 'rgba(232,228,201,0.03)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(232,228,201,0.35)', fontSize: 13, fontFamily: "'DM Sans', sans-serif", letterSpacing: '0.06em' }}>
-            [VIDEO: PROJECT WALKTHROUGH — under 2 minutes]
-          </div>
-          <div style={{ height: 16 }} />
-          <TextPH>[TEXT: VIDEO CAPTION — max 10 words]</TextPH>
-        </motion.div>
-      </section>
+
 
       {/* ─── SECTION 3 — THE STORYBOOK ──────────────────────────────── */}
       <section id="cs-story" style={{ padding: '96px 0', borderBottom: '1px solid #222' }}>
@@ -349,7 +339,7 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
               )}
               {slide.type === 'fact' && (
                 'img' in slide && slide.img
-                  ? <img src={slide.img} alt={`fact ${slide.n}`} style={{ width: '100%', height: 360, objectFit: 'cover', display: 'block' }} />
+                  ? <img loading="lazy" src={slide.img} alt={`fact ${slide.n}`} style={{ width: '100%', height: 360, objectFit: 'cover', display: 'block' }} />
                   : <div style={{ height: 360, border: '1px dashed rgba(232,228,201,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(232,228,201,0.2)', fontSize: 10, fontFamily: "'DM Sans', sans-serif" }}>[IMG: IVORY BOTANICAL BACKGROUND]</div>
               )}
               {slide.type === 'statement' && (
@@ -369,7 +359,7 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 32 }}>
             {[researchP1, researchP2].map((src, i) => (
               <div key={i} style={{ aspectRatio: '4 / 3', borderRadius: 12, overflow: 'hidden' }}>
-                <img src={src} alt={`Research finding ${i + 1}`} style={{ width: '100%', height: '100%', display: 'block', objectFit: 'cover' }} />
+                <img loading="lazy" src={src} alt={`Research finding ${i + 1}`} style={{ width: '100%', height: '100%', display: 'block', objectFit: 'cover' }} />
               </div>
             ))}
           </div>
@@ -466,7 +456,7 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
           >
             {researchImgs.map((src, i) => (
               <div key={i} style={{ flexShrink: 0, width: '70%', scrollSnapAlign: 'start', aspectRatio: '4 / 3', borderRadius: 12, overflow: 'hidden' }}>
-                <img src={src} alt={`Research ${i + 1}`} style={{ width: '100%', height: '100%', display: 'block', objectFit: 'cover', pointerEvents: 'none' }} />
+                <img loading="lazy" src={src} alt={`Research ${i + 1}`} style={{ width: '100%', height: '100%', display: 'block', objectFit: 'cover', pointerEvents: 'none' }} />
               </div>
             ))}
           </div>
@@ -484,7 +474,7 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16 }}>
             {ideationImgs.map((src, i) => (
               <div key={i} style={{ aspectRatio: '1 / 1', borderRadius: 12, overflow: 'hidden' }}>
-                <img src={src} alt={`Ideation ${i + 1}`} style={{ width: '100%', height: '100%', display: 'block', objectFit: 'cover' }} />
+                <img loading="lazy" src={src} alt={`Ideation ${i + 1}`} style={{ width: '100%', height: '100%', display: 'block', objectFit: 'cover' }} />
               </div>
             ))}
           </div>
@@ -518,7 +508,7 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
                 </h3>
                 {/* glow — visible immediately */}
                 <div style={{ aspectRatio: '1 / 1', borderRadius: 16, overflow: 'hidden' }}>
-                  <img src={glow} alt={`${label} glow`} style={{ width: '100%', height: '100%', display: 'block', objectFit: 'cover', objectPosition: 'center center' }} />
+                  <img loading="lazy" src={glow} alt={`${label} glow`} style={{ width: '100%', height: '100%', display: 'block', objectFit: 'cover', objectPosition: 'center center' }} />
                 </div>
                 {/* normal pv — fades in on scroll */}
                 <motion.div
@@ -528,11 +518,11 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
                   transition={{ duration: 0.7, ease: [0.25, 1, 0.5, 1] }}
                   style={{ aspectRatio: '1 / 1', borderRadius: 16, overflow: 'hidden' }}
                 >
-                  <img src={pv} alt={`${label} product view`} style={{ width: '100%', height: '100%', display: 'block', objectFit: 'cover', objectPosition: pvPos }} />
+                  <img loading="lazy" src={pv} alt={`${label} product view`} style={{ width: '100%', height: '100%', display: 'block', objectFit: 'cover', objectPosition: pvPos }} />
                 </motion.div>
                 {/* full body */}
                 <div style={{ aspectRatio: '1774 / 887', borderRadius: 16, overflow: 'hidden' }}>
-                  <img src={full} alt={`${label} full view`} style={{ width: '100%', height: '100%', display: 'block', objectFit: 'cover', objectPosition: fullPos }} />
+                  <img loading="lazy" src={full} alt={`${label} full view`} style={{ width: '100%', height: '100%', display: 'block', objectFit: 'cover', objectPosition: fullPos }} />
                 </div>
               </div>
             ))}
@@ -573,7 +563,7 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
               label: 'No sensor, no screen', mechanism: 'presence through touch alone',
               body: 'The belly is the only part that moves: nine magnetic plates, each slightly larger, handed from her to him once a month. The ritual lives in the physical world, not on a screen.',
               filled: true,
-              image: <img src={bellies} alt="detail shot — belly plates" style={{ width: '50%', borderRadius: 12, display: 'block', margin: '0 auto' }} />,
+              image: <img loading="lazy" src={bellies} alt="detail shot — belly plates" style={{ width: '50%', borderRadius: 12, display: 'block', margin: '0 auto' }} />,
             },
             {
               label: 'Magnetic charging', mechanism: 'no port, no damage',
@@ -581,8 +571,8 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
               filled: true,
               image: (
                 <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
-                  <img src={cable} alt="detail shot — cable connector" style={{ width: '30%', borderRadius: 12, display: 'block' }} />
-                  <img src={cable2} alt="detail shot — cable connector, detached" style={{ width: '30%', borderRadius: 12, display: 'block' }} />
+                  <img loading="lazy" src={cable} alt="detail shot — cable connector" style={{ width: '30%', borderRadius: 12, display: 'block' }} />
+                  <img loading="lazy" src={cable2} alt="detail shot — cable connector, detached" style={{ width: '30%', borderRadius: 12, display: 'block' }} />
                 </div>
               ),
             },
@@ -590,7 +580,7 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
               label: 'Touch sensing', mechanism: 'the only input it needs',
               body: 'A copper capacitive pad beneath the silicone detects whether a hand is present: no buttons, no gestures, nothing to learn. The only thing it knows is whether you are holding it.',
               filled: true,
-              image: <img src={silicon} alt="detail shot — silicon body" style={{ width: '50%', borderRadius: 12, display: 'block', margin: '0 auto' }} />,
+              image: <img loading="lazy" src={silicon} alt="detail shot — silicon body" style={{ width: '50%', borderRadius: 12, display: 'block', margin: '0 auto' }} />,
             },
           ].map(d => (
             <motion.div
