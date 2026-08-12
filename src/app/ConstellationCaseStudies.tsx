@@ -40,7 +40,7 @@ const CONS: ConsDef[] = [
   },
   {
     id: 'behive', number: '03', name: 'Behive', category: 'Coming Soon', timeline: 'July 2026',
-    cx: 1200, cy: 110,
+    cx: 880, cy: 255,
     nodes: [
       { dx: -20, dy: -44 }, { dx: 28, dy: -32 }, { dx: 48, dy: 8 },
       { dx: 16,  dy: 44  }, { dx: -38, dy: 20  },
@@ -195,7 +195,7 @@ export default function ConstellationCaseStudies({
 
   const descs = [
     'Bridging welfare schemes and the families they\'re meant to serve',
-    'AI-powered postpartum couples platform that reads maternal distress signals and translates them into one actionable daily nudge for the partner',
+    'Murmur is a shared object designed to keep couples emotionally connected during pregnancy and postpartum. It works without asking anything of an exhausted mother — instead carrying the emotional signal for her, so her partner knows how she feels without her having to say a word.',
     'Coming soon',
   ];
 
@@ -215,18 +215,24 @@ export default function ConstellationCaseStudies({
       />
     );
     return (
-      <div style={{ position: 'relative', width: '100%', height: '100%', background: 'linear-gradient(155deg,#160828 0%,#261045 55%,#190830 100%)' }}>
-        <svg style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)' }}
-          width="110" height="84" viewBox="0 0 90 70" fill="none" opacity="0.28">
-          <circle cx="45" cy="32" r="18" stroke="#E8E4C9" strokeWidth="1.4"/>
-          <circle cx="45" cy="32" r="4" fill="#E8E4C9"/>
-          <path d="M45 14 L47 21 L45 19 L43 21 Z" fill="#E8E4C9" opacity="0.7"/>
-          <circle cx="68" cy="20" r="5.5" stroke="#E8E4C9" strokeWidth="1.2"/>
-          <circle cx="20" cy="52" r="4.5" stroke="#E8E4C9" strokeWidth="1.2"/>
-          <circle cx="70" cy="54" r="3.5" stroke="#E8E4C9" strokeWidth="1.2"/>
-          <line x1="45" y1="32" x2="68" y2="20" stroke="#E8E4C9" strokeWidth="0.7" opacity="0.35"/>
-          <line x1="45" y1="32" x2="20" y2="52" stroke="#E8E4C9" strokeWidth="0.7" opacity="0.35"/>
+      <div style={{ position: 'relative', width: '100%', height: '100%', background: 'linear-gradient(155deg,#0a0014 0%,#1a0835 55%,#0d0420 100%)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
+        {/* Soft glow behind text */}
+        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 50% 50%, rgba(242,167,196,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
+        {/* Tiny constellation dots */}
+        <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }} viewBox="0 0 360 270" fill="none" opacity="0.2">
+          <circle cx="80" cy="60" r="1.5" fill="#E8E4C9"/>
+          <circle cx="290" cy="40" r="1" fill="#E8E4C9"/>
+          <circle cx="320" cy="210" r="1.5" fill="#E8E4C9"/>
+          <circle cx="40" cy="220" r="1" fill="#E8E4C9"/>
+          <circle cx="180" cy="30" r="1" fill="#F2A7C4"/>
+          <circle cx="250" cy="180" r="1" fill="#F2A7C4"/>
         </svg>
+        {/* COMING SOON badge */}
+        <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: 'var(--color-pink)', border: '1px solid rgba(242,167,196,0.35)', borderRadius: 99, padding: '4px 12px', position: 'relative' }}>
+          Coming Soon
+        </span>
+        <span style={{ fontFamily: "'Sora',sans-serif", fontWeight: 600, fontSize: 22, color: '#E8E4C9', letterSpacing: '-0.02em', position: 'relative' }}>Behive</span>
+        <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 10, color: 'rgba(232,228,201,0.35)', letterSpacing: '0.1em', position: 'relative' }}>July 2026</span>
       </div>
     );
   }
@@ -306,8 +312,6 @@ export default function ConstellationCaseStudies({
               <line x1={200} y1={200} x2={540} y2={125}
                 stroke="#E8E4C9" strokeWidth={0.8} strokeDasharray="5 8" opacity={0.3} />
               <line x1={540} y1={125} x2={880} y2={255}
-                stroke="#E8E4C9" strokeWidth={0.8} strokeDasharray="5 8" opacity={0.3} />
-              <line x1={880} y1={255} x2={1200} y2={110}
                 stroke="#E8E4C9" strokeWidth={0.8} strokeDasharray="5 8" opacity={0.3} />
             </g>
 
@@ -443,6 +447,18 @@ export default function ConstellationCaseStudies({
                   {descs[focused]}
                 </p>
 
+                {focused === 2 ? (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 26 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                      <div style={{ flex: 1, height: 1, background: 'rgba(232,228,201,0.1)' }} />
+                      <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: 'var(--color-pink)', border: '1px solid rgba(242,167,196,0.3)', borderRadius: 99, padding: '5px 14px' }}>Coming Soon</span>
+                      <div style={{ flex: 1, height: 1, background: 'rgba(232,228,201,0.1)' }} />
+                    </div>
+                    <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 13, color: 'rgba(232,228,201,0.4)', margin: 0, lineHeight: 1.6 }}>
+                      This case study is currently in progress. Check back in July 2026.
+                    </p>
+                  </div>
+                ) : (
                 <ul style={{ listStyle: 'none', margin: '0 0 26px 0', padding: 0, display: 'flex', flexDirection: 'column', gap: '13px' }}>
                   {stars[focused].map((s, si) => (
                     <li key={si} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start', fontSize: '12px', color: 'rgba(232,228,201,0.6)', lineHeight: 1.6 }}>
@@ -467,6 +483,7 @@ export default function ConstellationCaseStudies({
                     </li>
                   ))}
                 </ul>
+                )}
 
                 <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
                   {renderCta(focused)}
