@@ -1128,23 +1128,77 @@ function HorizontalScrollSection({
             </div>
           </div>
           <div className="hero-text-col">
-            <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, letterSpacing: "0.22em", color: "rgba(242,237,203,0.6)", textTransform: "uppercase", display: "block", ...hpAnim(0.1) }}>
-              PRODUCT DESIGNER
-            </span>
-            <div style={{ marginTop: 12, ...hpAnim(0.18) }}>
-              <span style={{ fontFamily: "'Sora', sans-serif", fontWeight: 700, fontSize: "clamp(3rem, 5.4vw, 4.86rem)", color: "var(--color-pink)", letterSpacing: "-0.02em", lineHeight: 1.1, display: "block" }}>
-                Vishvara.G
+            {/* UX Researcher — top smaller line in sky-blue */}
+            <div style={{ ...hpAnim(0.08) }}>
+              <span style={{
+                fontFamily: "'Sora', sans-serif",
+                fontWeight: 400,
+                fontSize: "clamp(1.1rem, 2.2vw, 1.9rem)",
+                color: "var(--color-sky)",
+                letterSpacing: "-0.01em",
+                lineHeight: 1.2,
+                display: "block",
+              }}>
+                UX Researcher
               </span>
             </div>
-            <p style={{ fontFamily: "'Sora', sans-serif", fontStyle: "italic", fontSize: "clamp(0.85rem, 1.2vw, 1rem)", color: "rgba(242,237,203,0.55)", marginTop: 20, marginBottom: 0, ...hpAnim(0.26) }}>
-              Designing for the humans behind the metrics.
-            </p>
-            <div className="hero-stats-inline" style={{ marginTop: 24, ...hpAnim(0.34) }}>
-              <span style={{ color: "rgba(242,237,203,0.9)" }}>3</span><span style={{ color: "rgba(242,237,203,0.45)" }}> PROJECTS</span>
-              <span style={{ color: "rgba(242,237,203,0.25)" }}> Â· </span>
-              <span style={{ color: "rgba(242,237,203,0.9)" }}>2</span><span style={{ color: "rgba(242,237,203,0.45)" }}> DOMAINS</span>
-              <span style={{ color: "rgba(242,237,203,0.25)" }}> Â· </span>
-              <span style={{ color: "rgba(242,237,203,0.9)" }}>6</span><span style={{ color: "rgba(242,237,203,0.45)" }}> MONTHS</span>
+            {/* PRODUCT DESIGNER — large bold pink */}
+            <div style={{ marginTop: 4, ...hpAnim(0.16) }}>
+              <span style={{
+                fontFamily: "'Sora', sans-serif",
+                fontWeight: 800,
+                fontSize: "clamp(2.8rem, 6.5vw, 5.8rem)",
+                background: "linear-gradient(135deg, var(--color-pink) 30%, #F8C8D8 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                letterSpacing: "-0.03em",
+                lineHeight: 0.95,
+                display: "block",
+              }}>
+                PRODUCT
+              </span>
+              <span style={{
+                fontFamily: "'Sora', sans-serif",
+                fontWeight: 800,
+                fontSize: "clamp(2.8rem, 6.5vw, 5.8rem)",
+                background: "linear-gradient(135deg, var(--color-pink) 30%, #F8C8D8 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                letterSpacing: "-0.03em",
+                lineHeight: 0.95,
+                display: "block",
+              }}>
+                DESIGNER
+              </span>
+            </div>
+            {/* UI Designer — bottom smaller line in sky-blue */}
+            <div style={{ marginTop: 8, ...hpAnim(0.24) }}>
+              <span style={{
+                fontFamily: "'Sora', sans-serif",
+                fontWeight: 400,
+                fontSize: "clamp(1.1rem, 2.2vw, 1.9rem)",
+                color: "var(--color-sky)",
+                letterSpacing: "-0.01em",
+                lineHeight: 1.2,
+                display: "block",
+              }}>
+                UI Designer
+              </span>
+            </div>
+            {/* Bottom caption */}
+            <div style={{ marginTop: 20, ...hpAnim(0.32) }}>
+              <span style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontWeight: 700,
+                fontSize: "clamp(0.7rem, 1vw, 0.88rem)",
+                color: "rgba(242,237,203,0.75)",
+                letterSpacing: "0.01em",
+                display: "block",
+              }}>
+                Worked under multiple senior designers
+              </span>
             </div>
             <div className="hero-buttons-row" style={{ display: "flex", flexDirection: "row", gap: 12, marginTop: 28, ...hpAnim(0.42) }}>
               <button onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} style={{ background: "linear-gradient(135deg, var(--color-pink), #F2EDCB)", color: "#111", borderRadius: 9999, padding: "13px 28px", border: "none", fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: 13, letterSpacing: "0.06em", cursor: "pointer" }}>
