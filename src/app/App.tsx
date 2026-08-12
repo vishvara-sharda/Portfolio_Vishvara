@@ -1122,9 +1122,29 @@ function HorizontalScrollSection({
       {heroBg}
       <div style={{ position: "absolute", inset: 0, zIndex: 10, display: "flex", justifyContent: "center", alignItems: "center" }}>
         <div className="hero-landing-panel" style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center" }}>
-          <div className="hero-portrait-wrap" style={{ opacity: siteReady ? 1 : 0, transition: 'opacity 1s cubic-bezier(0.22,1,0.36,1) 0.05s' }}>
+          <div className="hero-portrait-wrap" style={{ opacity: siteReady ? 1 : 0, transition: 'opacity 1s cubic-bezier(0.22,1,0.36,1) 0.05s', position: 'relative' }}>
             <div className="hero-portrait-top-fade">
               <img src={profileImg} alt="Vishvara Gandharv, product designer" className="hero-portrait-img" />
+            </div>
+            {/* Name label — bottom-right of portrait */}
+            <div style={{
+              position: 'absolute',
+              bottom: 18,
+              right: 18,
+              ...hpAnim(0.5),
+            }}>
+              <span style={{
+                fontFamily: "'Sora', sans-serif",
+                fontWeight: 700,
+                fontSize: 'clamp(1.2rem, 2vw, 1.7rem)',
+                color: 'var(--color-pink)',
+                letterSpacing: '-0.01em',
+                lineHeight: 1,
+                display: 'block',
+                textShadow: '0 2px 16px rgba(0,0,0,0.7)',
+              }}>
+                Vishvara.G
+              </span>
             </div>
           </div>
           <div className="hero-text-col">
