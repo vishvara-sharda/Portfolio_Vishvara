@@ -7,7 +7,8 @@ import pvw from '../imports/Murmur/pvw.png';
 import pvm from '../imports/Murmur/pvm.png';
 import pvwGlow from '../imports/Murmur/pvw glow red.png';
 import pvmGlow from '../imports/Murmur/pvm glow red.png';
-import murmurGif from '../imports/Murmur/gif.gif';
+import femaleVid from '../imports/Murmur/female.mp4';
+import maleVid from '../imports/Murmur/male.mp4';
 import f1 from '../imports/Murmur/story/f 1.png';
 import f2 from '../imports/Murmur/story/f2.png';
 import f3 from '../imports/Murmur/story/f3.png';
@@ -20,7 +21,6 @@ import story5 from '../imports/Murmur/story/5.png';
 import story6 from '../imports/Murmur/story/6.png';
 import story7 from '../imports/Murmur/story/7.png';
 const storyImgs = [story0, story1, story2, story3, story4, story5, story6, story7];
-import murmurGif2 from '../imports/Murmur/gif2.gif';
 import technicalView from '../imports/Murmur/technical view.png';
 import menTechnical from '../imports/Murmur/men techoncal.png';
 import bellies from '../imports/Murmur/bellies.png';
@@ -279,9 +279,9 @@ export default function MurmurCaseStudyPage({ onClose }: MurmurCaseStudyPageProp
             ))}
           </div>
           <div style={{ height: 32 }} />
-          <img loading="lazy" src={murmurGif} alt="Murmur" style={{ width: '100%', borderRadius: 16, display: 'block' }} />
+          <video src={femaleVid} autoPlay loop muted playsInline style={{ width: '100%', borderRadius: 16, display: 'block', backgroundColor: '#000' }} />
           <div style={{ height: 16 }} />
-          <img loading="lazy" src={murmurGif2} alt="Murmur 2" style={{ width: '100%', borderRadius: 16, display: 'block' }} />
+          <video src={maleVid} autoPlay loop muted playsInline style={{ width: '100%', borderRadius: 16, display: 'block', backgroundColor: '#000' }} />
         </motion.div>
       </section>
 
